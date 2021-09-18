@@ -1,4 +1,4 @@
-//³»³óÀå ÄÁÆ®·Ñ·¯
+//ë‚´ë†ì¥ ì»¨íŠ¸ë¡¤ëŸ¬
 package com.hta.project.controller;
 
 import org.slf4j.Logger;
@@ -30,12 +30,14 @@ public class OkyMynongController {
 	
 	@RequestMapping(value="/createProcess", method = RequestMethod.POST)
 	public ModelAndView createmyhomeprocess(@RequestParam("MYNONG_NAME") String name) {
-		logger.info("ÀÔ·ÂÇÑ ³»³óÀå ÀÌ¸§ :" +name);
-	    okymynongservice.insertName(name);
+		logger.info("ì…ë ¥í•œ ë‚´ë†ì¥ ì´ë¦„ :" +name);
+		
+		int result = okymynongservice.insertName(name);
+		System.out.println(result);
 		return null;
 	}
 
-	//@ResponseBody¿¡ ÀÇÇØ HttpÀÇ Body¿¡ Ãß°¡µÇ¾î Àü¼ÛµË´Ï´Ù.
+	//@ResponseBodyì— ì˜í•´ Httpì˜ Bodyì— ì¶”ê°€ë˜ì–´ ì „ì†¡ë©ë‹ˆë‹¤.
     @ResponseBody
     @RequestMapping(value = "/namecheck")
     public int namecheck(String MYNONG_NAME) {
