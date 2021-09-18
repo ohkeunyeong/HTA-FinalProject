@@ -2,10 +2,10 @@ package com.hta.project.service;
 
 public interface OkyMynongService {
 	
-	//³óÀå ÀÌ¸§ »ı¼º
+	//ë†ì¥ ì´ë¦„ ìƒì„±
 	public int insertName(String name);
 
-	//³óÀå ÀÌ¸§ Áßº¹È®ÀÎ
+	//ë†ì¥ ì´ë¦„ ì¤‘ë³µí™•ì¸
 	public int isName(String MYNONG_NAME);
 
 
