@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!--  SQL 맵퍼 파일은 xml이기 때문에 제일 먼저 xml 선언이 옵니다. -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="Jiks">
+ 
+  	<insert id="insert" parameterType="jik">
+  	
+  	<selectKey keyProperty="jik_num" resultType="int" order="BEFORE">
+  		select NVL(max("jik_num"),0)+1 from jik
+  	</selectKey>
+ 			INSERT INTO jik
+ 			(jik_NUM,
+ 			 nick,jik_SUBJECT,
+ 			 jik_CONTENT, jik_FILE, jik_ORIGINAL,
+ 			 jik_READCOUNT, jik_DATE)
+ 			VALUES
+ 			 (#{jik_NUM},
+ 			  #{nick},#{jik_SUBJECT},
+ 			  #{jik_CONTENT},#{jik_FILE, jdbcType=VARCHAR},
+ 			  #{jik_ORIGINAL, jdbcType=VARCHAR},
+ 			  #{jik_READCOUNT}, sysdate)
+ 	</insert>
+ 
+ 	 <select id="count" resultType="int">
+ 			select count(*) from jik
+ 	 </select>
+ 	 
+  	<select id="list" resultType="jik" parameterType="map">
+ 			select * 
+ 			from (select ROWNUM RNUM, b.*
+				   from 
+				   		(select * from jik 
+						 order by jik_num DESC) b
+					) 
+			where		
+			 <![CDATA[
+			  RNUM>= #{start} and RNUM <= #{end}
+ 			]]>
+ 	</select>
+
+ 	
+ </mapper>
