@@ -13,4 +13,4 @@ CREATE TABLE ORDER_DETAIL(
 
 select * from order_detail;
 
---아직 실행 안함 09.17
+-- 실행함 9.19

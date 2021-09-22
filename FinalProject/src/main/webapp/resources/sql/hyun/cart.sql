@@ -8,10 +8,10 @@ CREATE TABLE CART(
   ADD_DATE           DATE		    default sysdate,  -- 장바구니에 담은 날짜 
   PRIMARY KEY (CART_NUM),
   FOREIGN KEY (PRODUCT_CODE) REFERENCES PRODUCT (PRODUCT_CODE),
-  FOREIGN KEY (ID) REFERENCES MEMBER (ID),
+  FOREIGN KEY (ID) REFERENCES MEMBER (ID)
 );
 
 
 select * from cart;
 
---아직 실행 안함 09.17
+--실행함 9.19
