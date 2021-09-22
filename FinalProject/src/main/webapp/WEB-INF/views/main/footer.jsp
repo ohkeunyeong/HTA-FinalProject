@@ -8,5 +8,12 @@
 </head>
 <body>
 
+<div class="jumbotron text-center jumbotron-fluid" style="margin-bottom:0">
+  <p>Created by 파이리</p>
+  <p>Contact Us</p>
+  <p>Email</p> 
+</div>
+
+
 </body>
 </html>
