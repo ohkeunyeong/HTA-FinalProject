@@ -29,5 +29,17 @@ public class AdminController {
 		logger.info("Admin userlist()");
 		return "jjs/admin/userlist";
 	}
+	
+	@GetMapping("/userInfo")
+	public String userinfo() {
+		logger.info("Admin userinfo()");
+		return "jjs/admin/userinfo";
+	}
+	
+	@GetMapping("/postlist")
+	public String postlist() {
+		logger.info("Admin postlist()");
+		return "jjs/admin/postlist";
+	}
 
 }

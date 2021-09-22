@@ -3,7 +3,7 @@
 <style>
 	.aside{
 		width : 280px;
-		font-size : 30px;
+		font-size : 25px;
 		float : left;
 	}
 	
@@ -20,14 +20,14 @@
 	}
 </style>
 <div class="p-3 aside">
-	<a href="#" class="text-dark p-3"><span>Admin</span></a>
+	<a href="main" class="text-dark p-3"><span>Admin</span></a>
 	<hr>
 	<ul class="list-group">
 		<li class="list-group-item list-group-item-action">
 			<a href="${pageContext.servletContext.contextPath}/admin/userlist"><i class="fas fa-users"></i>&nbsp;&nbsp;회원목록</a>
 		</li>
 		<li class="list-group-item list-group-item-action">
-			<a href="#"><i class="fas fa-clipboard p-2"></i>&nbsp;&nbsp;게시물 관리</a>
+			<a href="${pageContext.servletContext.contextPath}/admin/postlist"><i class="fas fa-clipboard p-2"></i>&nbsp;&nbsp;게시물 관리</a>
 		</li>
 		<li class="list-group-item list-group-item-action">
 			<a href="#"><i class="fas fa-store"></i>&nbsp;&nbsp;주말장터 관리</a>
