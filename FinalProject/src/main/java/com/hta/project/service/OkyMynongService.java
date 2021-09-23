@@ -7,6 +7,9 @@ public interface OkyMynongService {
 
 	//농장 이름 중복확인
 	public int isName(String MYNONG_NAME);
+	
+	//아이디 검색
+	public int isId(String id);
 
 
 

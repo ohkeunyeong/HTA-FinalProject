@@ -1,6 +1,8 @@
 //내농장 컨트롤러
 package com.hta.project.controller;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.hta.project.domain.OkyMynong;
 import com.hta.project.service.OkyMynongService;
 
 @Controller
@@ -45,4 +46,11 @@ public class OkyMynongController {
      	return result;
     }
 
+//    @ResponseBody
+//    @RequestMapping(value = "/idcheck")
+//    public Map<String, Object> idcheck(String id) {
+//    	logger.info("검색한 유저 아이디 :" +id);
+//    	List<>
+//     	return ;
+//    }
 }
