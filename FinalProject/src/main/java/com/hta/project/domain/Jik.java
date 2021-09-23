@@ -1,9 +1,4 @@
-/*
- 	�����ͺ��̽�, �����Ͻ� ��ü, �� ��ü���� ������ ���� �����ϰų�
- 	�����ͺ��̽�, �����Ͻ� ��ü, �� ��ü�� ���� ���� �����ϴ� ��ü��
- 	������ ��ü(Domain Object)
- 	�Ǵ� ������ ��(Domain Model)�̶� �Ѵ�.
- */
+
 package com.hta.project.domain;
 
 import org.springframework.web.multipart.MultipartFile;

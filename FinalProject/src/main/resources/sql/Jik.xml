@@ -4,22 +4,22 @@
   
  <mapper namespace="Jiks">
  
-  	<insert id="insert" parameterType="jik">
+ 	<insert id="insert" parameterType="jik">
   	
   	<selectKey keyProperty="jik_num" resultType="int" order="BEFORE">
-  		select NVL(max("jik_num"),0)+1 from jik
+  		select NVL(max(jik_num),0)+1 from jik
   	</selectKey>
  			INSERT INTO jik
- 			(jik_NUM,
- 			 nick,jik_SUBJECT,
- 			 jik_CONTENT, jik_FILE, jik_ORIGINAL,
- 			 jik_READCOUNT, jik_DATE)
+ 			(jik_num,
+ 			 nick, jik_subject,
+ 			 jik_content, jik_file, jik_original,
+ 			 jik_readcount,jik_date)
  			VALUES
- 			 (#{jik_NUM},
- 			  #{nick},#{jik_SUBJECT},
- 			  #{jik_CONTENT},#{jik_FILE, jdbcType=VARCHAR},
- 			  #{jik_ORIGINAL, jdbcType=VARCHAR},
- 			  #{jik_READCOUNT}, sysdate)
+ 			 (#{jik_num},
+ 			  #{nick},#{jik_subject},
+ 			  #{jik_content},#{jik_file, jdbcType=VARCHAR},
+ 			  #{jik_original, jdbcType=VARCHAR},
+ 			  #{jik_readcount},sysdate)
  	</insert>
  
  	 <select id="count" resultType="int">
@@ -38,6 +38,8 @@
 			  RNUM>= #{start} and RNUM <= #{end}
  			]]>
  	</select>
+ 	
+
 
  	
  </mapper>

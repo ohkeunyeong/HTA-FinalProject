@@ -56,7 +56,7 @@
         주말 장터
       </a>
       <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">직거래 장터</a>
+        <a class="dropdown-item" href="${pageContext.request.contextPath}/jik/list">직거래 장터</a>
       </div>
     </li>
     

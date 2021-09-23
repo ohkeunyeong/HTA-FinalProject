@@ -4,10 +4,10 @@
 
 <configuration>
      <typeAliases>
-        <typeAlias alias="mynong"     type="com.hta.project.domain.OkyMynong" />
-        <typeAlias alias="report" type="com.hta.project.domain.Report" />
-        <typeAlias alias="jik" 		type="com.hta.project.domain.Jik" />
-		    <typeAlias alias="jik_comm" type="com.hta.project.domain.Jik_Comm" />
+        <typeAlias alias="mynong"    	type="com.hta.project.domain.OkyMynong" />
+        <typeAlias alias="report" 	 	type="com.hta.project.domain.Report" />
+        <typeAlias alias="jik" 		   	type="com.hta.project.domain.Jik" />
+		<typeAlias alias="jik_comm" 	type="com.hta.project.domain.Jik_Comm" />
      </typeAliases>
          
      <mappers>
