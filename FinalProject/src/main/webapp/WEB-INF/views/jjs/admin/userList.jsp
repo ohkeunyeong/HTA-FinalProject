@@ -21,12 +21,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">회원 목록</h1>
+            <h1 class="m-0 text-dark">회원목록</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/main">Home</a></li>
-              <li class="breadcrumb-item active">회원 목록</li>
+              <li class="breadcrumb-item"><a href="main">Home</a></li>
+              <li class="breadcrumb-item active">회원목록</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -45,91 +45,95 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                    </div>
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="아이디 입력">
                   </div>
                 </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0" style="height: 480px;">
-                <table class="table table-head-fixed text-nowrap table-hover">
+                <table class="table table-head-fixed text-nowrap">
                   <thead>
                     <tr>
-                      <th>아이디</th>
                       <th>이름</th>
+                      <th>아이디</th>
                       <th>닉네임</th>
-                      <th>농장이름</th>
+                      <th>내농장</th>
                       <th>회원등급</th>
-                      <th>삭제</th>
+                      <th>이메일</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td><a href="userInfo">javas</a></td>
-						<td>자바</td>
-						<td>javaSCR</td>
-						<td>JavaFarm</td>
-						<td>농장멤버</td>
-                      <td><button type="button" class="btn btn-danger">삭제</button></td>
+                      <td>자바</td>
+                      <td><a href="userInfo">java</a></td>
+                      <td>javas</td>
+                      <td>JavaFarm</td>
+                      <td>농장멤버</td>
+                      <td>javas@naver.com</td>
                     </tr>
                     <tr>
-                      <td><a href="userInfo">javas</a></td>
-						<td>자바</td>
-						<td>javaSCR</td>
-						<td>JavaFarm</td>
-						<td>농장멤버</td>
-                      <td><button type="button" class="btn btn-danger">삭제</button></td>
+                      <td>자바</td>
+                      <td><a href="userInfo">java</a></td>
+                      <td>javas</td>
+                      <td>JavaFarm</td>
+                      <td>농장멤버</td>
+                      <td>javas@naver.com</td>
                     </tr>
                     <tr>
-                      <td><a href="userInfo">javas</a></td>
-						<td>자바</td>
-						<td>javaSCR</td>
-						<td>JavaFarm</td>
-						<td>농장멤버</td>
-                      <td><button type="button" class="btn btn-danger">삭제</button></td>
+                      <td>자바</td>
+                      <td><a href="userInfo">java</a></td>
+                      <td>javas</td>
+                      <td>JavaFarm</td>
+                      <td>농장멤버</td>
+                      <td>javas@naver.com</td>
                     </tr>
                     <tr>
-                      <td><a href="userInfo">javas</a></td>
-						<td>자바</td>
-						<td>javaSCR</td>
-						<td>JavaFarm</td>
-						<td>농장멤버</td>
-                      <td><button type="button" class="btn btn-danger">삭제</button></td>
+                      <td>자바</td>
+                      <td><a href="userInfo">java</a></td>
+                      <td>javas</td>
+                      <td>JavaFarm</td>
+                      <td>농장멤버</td>
+                      <td>javas@naver.com</td>
                     </tr>
                     <tr>
-                      <td><a href="userInfo">javas</a></td>
-						<td>자바</td>
-						<td>javaSCR</td>
-						<td>JavaFarm</td>
-						<td>농장멤버</td>
-                      <td><button type="button" class="btn btn-danger">삭제</button></td>
+                      <td>자바</td>
+                      <td><a href="userInfo">java</a></td>
+                      <td>javas</td>
+                      <td>JavaFarm</td>
+                      <td>농장멤버</td>
+                      <td>javas@naver.com</td>
                     </tr>
                     <tr>
-                      <td><a href="userInfo">javas</a></td>
-						<td>자바</td>
-						<td>javaSCR</td>
-						<td>JavaFarm</td>
-						<td>농장멤버</td>
-                      <td><button type="button" class="btn btn-danger">삭제</button></td>
+                      <td>자바</td>
+                      <td><a href="userInfo">java</a></td>
+                      <td>javas</td>
+                      <td>JavaFarm</td>
+                      <td>농장멤버</td>
+                      <td>javas@naver.com</td>
                     </tr>
                     <tr>
-                      <td><a href="userInfo">javas</a></td>
-						<td>자바</td>
-						<td>javaSCR</td>
-						<td>JavaFarm</td>
-						<td>농장멤버</td>
-                      <td><button type="button" class="btn btn-danger">삭제</button></td>
+                      <td>자바</td>
+                      <td><a href="userInfo">java</a></td>
+                      <td>javas</td>
+                      <td>JavaFarm</td>
+                      <td>농장멤버</td>
+                      <td>javas@naver.com</td>
                     </tr>
                     <tr>
-                      <td><a href="userInfo">javas</a></td>
-						<td>자바</td>
-						<td>javaSCR</td>
-						<td>JavaFarm</td>
-						<td>농장멤버</td>
-                      <td><button type="button" class="btn btn-danger">삭제</button></td>
+                      <td>자바</td>
+                      <td><a href="userInfo">java</a></td>
+                      <td>javas</td>
+                      <td>JavaFarm</td>
+                      <td>농장멤버</td>
+                      <td>javas@naver.com</td>
+                    </tr>
+                    <tr>
+                      <td>자바</td>
+                      <td><a href="userInfo">java</a></td>
+                      <td>javas</td>
+                      <td>JavaFarm</td>
+                      <td>농장멤버</td>
+                      <td>javas@naver.com</td>
                     </tr>
                   </tbody>
                 </table>
@@ -165,3 +169,4 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 </body>
 </html>
+

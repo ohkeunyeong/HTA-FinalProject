@@ -21,25 +21,31 @@ public class AdminController {
 	@GetMapping(value="/main")
 	public String main() {
 		logger.info("Admin main()");
-		return "jjs/admin/main2";
+		return "jjs/admin/main";
 	}
 	
-	@GetMapping("/userlist")
-	public String userlist() {
-		logger.info("Admin userlist()");
-		return "jjs/admin/list";
+	@GetMapping("/userList")
+	public String userList() {
+		logger.info("Admin userList()");
+		return "jjs/admin/userList";
 	}
 	
 	@GetMapping("/userInfo")
-	public String userinfo() {
-		logger.info("Admin userinfo()");
-		return "jjs/admin/userinfo";
+	public String userInfo() {
+		logger.info("Admin userInfo()");
+		return "jjs/admin/userInfo";
 	}
 	
-	@GetMapping("/postlist")
-	public String postlist() {
-		logger.info("Admin postlist()");
-		return "jjs/admin/postlist";
+	@GetMapping("/postList")
+	public String postList() {
+		logger.info("Admin postList()");
+		return "jjs/admin/postList";
+	}
+	
+	@GetMapping("/noticeDetail")
+	public String noticeDetail() {
+		logger.info("Admin noticeDetail()");
+		return "jjs/admin/noticeDetail";
 	}
 
 }
