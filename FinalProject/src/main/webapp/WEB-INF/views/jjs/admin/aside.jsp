@@ -2,9 +2,7 @@
     pageEncoding="UTF-8"%>
 <style>
 	.aside{
-		width : 280px;
-		font-size : 25px;
-		float : left;
+		margin-top : 2rem;
 	}
 	
 	.list-group-item{
@@ -19,7 +17,7 @@
 		color : black;
 	}
 </style>
-<div class="p-3 aside">
+<div class="col-3 float-left aside">
 	<a href="main" class="text-dark p-3"><span>Admin</span></a>
 	<hr>
 	<ul class="list-group">

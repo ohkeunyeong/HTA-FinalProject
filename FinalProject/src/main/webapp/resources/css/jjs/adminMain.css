@@ -1,0 +1,8 @@
+@charset "UTF-8";
+.card-header > span{
+	font-size : 1.25rem;
+}
+
+.card-header > a{
+	color : black;
+}

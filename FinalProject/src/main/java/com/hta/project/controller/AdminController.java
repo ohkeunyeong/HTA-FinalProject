@@ -21,13 +21,13 @@ public class AdminController {
 	@GetMapping(value="/main")
 	public String main() {
 		logger.info("Admin main()");
-		return "jjs/admin/main";
+		return "jjs/admin/main2";
 	}
 	
 	@GetMapping("/userlist")
 	public String userlist() {
 		logger.info("Admin userlist()");
-		return "jjs/admin/userlist";
+		return "jjs/admin/list";
 	}
 	
 	@GetMapping("/userInfo")
