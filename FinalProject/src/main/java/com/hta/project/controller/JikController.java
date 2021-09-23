@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,18 +49,17 @@ public class JikController {
 	@Autowired
 	private Jik_CommService jik_commService;
 	
-	// �۾���
+	//savefolder.properties에서 작성한 savefoldername 속성의 값을 String saveFolder에 주입합니다.
+	@Value("${savefoldername}")
+	private String saveFolder;
+	
+
 	@GetMapping(value = "/write")
 	//@RequestMapping(value="/write",method=RequestMethod.GET)
 	public String jik_write() {
 		return "chang/Jik/jik_write";
 	}
-	/*
-	 * 
-	 * ������ �����̳ʴ� �Ű����� jik��ü�� �����ϰ�
-	 * jik��ü�� setter �޼������ ȣ���Ͽ� ����� �Է°��� �����մϴ�.
-	 * �Ű������� �̸��� setter�� property�� ��ġ�ϸ� �˴ϴ�.
-	 */
+
 	@PostMapping("/add")
 	//@RequestMapping(value="/write",method=RequestMethod.POST)
 	public String add(Jik jik, HttpServletRequest request)
@@ -68,60 +68,55 @@ public class JikController {
 		MultipartFile uploadfile = jik.getUploadfile();
 		
 		if (!uploadfile.isEmpty()) {
-			String fileName = uploadfile.getOriginalFilename();//���� ���ϸ�
-			jik.setJik_original(fileName);// ���� ���ϸ� ����
+			String fileName = uploadfile.getOriginalFilename();
+			jik.setJik_original(fileName);
 			String saveFolder =
 					request.getSession().getServletContext().getRealPath("resources")
 					+"/upload/";
 			String fileDBName = fileDBName(fileName, saveFolder);
 			logger.info("fileDBName =" + fileDBName);
 			
-			//transferTo(File path) : ���ε��� ������ �Ű������� ��ο� �����մϴ�.
+			
 			uploadfile.transferTo(new File(saveFolder + fileDBName));
 			
-			//�ٲ� ���ϸ����� ����
+			
 			jik.setJik_file(fileDBName);
 		}
-		jikService.insertJik(jik); // ����޼��� ȣ��
+		jikService.insertJik(jik); 
 		
 		return "redirect:chang/jik/list";
 	}
 	
 	private String fileDBName(String fileName, String saveFolder) {
-		// ���ο� ���� �̸� : ���� ��+��+��
+		
 		Calendar c = Calendar.getInstance();
-		int year = c.get(Calendar.YEAR); // ���� �⵵ ���մϴ�.
-		int month =  c.get(Calendar.MONTH) + 1; // ���� �� ���մϴ�.
-		int date =  c.get(Calendar.DATE); // ���� �� ���մϴ�.
+		int year = c.get(Calendar.YEAR); 
+		int month =  c.get(Calendar.MONTH) + 1; 
+		int date =  c.get(Calendar.DATE); 
 		
 		String homedir = saveFolder + year + "-" + month + "-" + date;
 		logger.info(homedir);
 		File path1 = new File(homedir);
 		if(!(path1.exists())) {
-			path1.mkdir();//���ο� ������ ����
+			path1.mkdir();
 		}
 		
-		// ������ ���մϴ�.
+	
 		Random r = new Random();
 		int random = r.nextInt(100000000);
 		
-		/**** Ȯ���� ���ϱ� ���� ****/
+	
 		int index = fileName.lastIndexOf(".");
-		// ���ڿ����� Ư�� ���ڿ��� ��ġ ��(index)�� ��ȯ�Ѵ�.
-		// indexOf�� ó�� �߰ߵǴ� ���ڿ��� ���� index�� ��ȯ�ϴ� �ݸ�,
-		// lastIndexOf�� ���������� �߰ߵǴ� ���ڿ��� index�� ��ȯ�մϴ�.
-		// (���ϸ� ���� ������ ���� ��� �� �������� �߰ߵǴ� ���ڿ��� ��ġ�� �����մϴ�.)
+		
 		logger.info("index = " + index);
 		
 		String fileExtension = fileName.substring(index + 1);
 		logger.info("fileExtension = " + fileExtension);
-		/**** Ȯ���� ���ϱ� �� ****/
 		
-		// ���ο� ���ϸ�
 		String refileName = "bbs" + year + month +date + random + "." + fileExtension;
 		logger.info("refileName = " + refileName);
 		
-		//����Ŭ ��� ����� ���� ��
+	
 		String fileDBName = "/" + year + "-" +month+ "-" +date+"/"+refileName;
 		logger.info("fileDBName = " + fileDBName);
 		return fileDBName;
@@ -132,23 +127,23 @@ public class JikController {
 			@RequestParam(value="page",defaultValue="1",required=false) int page,
 			ModelAndView mv) {
 		
-		int limit = 10; //�� �������� ������ �Խ��� ����� ��
+		int limit = 10;
 		
-		int listcount = jikService.getListCount();//�� ����Ʈ ���� �޾ƿɴϴ�.
+		int listcount = jikService.getListCount();
 		
-		//�� ������ �� 
+		
 		int maxpage = (listcount + limit - 1) / limit;
 		
-		//���� ������ �׷쿡�� ������ ���� ������ ��(1, 11, 21 �� ...)
+		
 		int startpage = ((page-1)/10) * 10 + 1;
 		
-		//���� ������ �׷쿡�� ������ ������ ������ ��(10, 20, 30 �� ...)
+	
 		int endpage = startpage + 10 - 1;
 		
 		if(endpage > maxpage)
 			endpage = maxpage;
 		
-		List<Jik> jiklist = jikService.getJikList(page, limit);//����Ʈ�� �޾ƿ�
+		List<Jik> jiklist = jikService.getJikList(page, limit);
 		
 		mv.setViewName("chang/Jik/jik_list");
 		mv.addObject("page",page);
@@ -169,21 +164,21 @@ public class JikController {
 			@RequestParam(value="limit",defaultValue="10",required=false) int limit
 			) {
 		
-		int listcount = jikService.getListCount();//�� ����Ʈ ���� �޾ƿɴϴ�.
+		int listcount = jikService.getListCount();
 		
-		//�� ������ �� 
+		
 		int maxpage = (listcount + limit - 1) / limit;
 		
-		//���� ������ �׷쿡�� ������ ���� ������ ��(1, 11, 21 �� ...)
+		
 		int startpage = ((page-1)/10) * 10 + 1;
 		
-		//���� ������ �׷쿡�� ������ ������ ������ ��(10, 20, 30 �� ...)
+		
 		int endpage = startpage + 10 - 1;
 		
 		if(endpage > maxpage)
 			endpage = maxpage;
 		
-		List<Jik> jiklist = jikService.getJikList(page, limit);//����Ʈ�� �޾ƿ�
+		List<Jik> jiklist = jikService.getJikList(page, limit);
 		
 		Map<String, Object> map = new HashMap<String,Object>();
 		map.put("page",page);
@@ -195,19 +190,19 @@ public class JikController {
 		map.put("limit",limit);
 		return map;
 	}
-	//detail?num=9 ��û�� �Ķ���� num�� ���� int num�� �����մϴ�.
+	
 	@GetMapping(value = "/detail")
 	public ModelAndView jik_detail(int num, ModelAndView mv,
 			HttpServletRequest request) {
 		Jik jik = jikService.getDetail(num);
-		//jik=null;  //error ������ �̵� Ȯ���ϰ��� ���Ƿ� �����մϴ�.
+		
 		if(jik == null) {
-			logger.info("�󼼺��� ����");
+			logger.info("상세보기 실패");
 			mv.setViewName("error/error");
 			mv.addObject("url", request.getRequestURL());
-			mv.addObject("message", "�󼼺��� �����Դϴ�.");
+			mv.addObject("message", "상세보기 실패입니다.");
 		}else {
-			logger.info("�󼼺��� ����");
+			logger.info("상세보기 성공");
 			int count = jik_commService.getListCount(num);
 			mv.setViewName("jik/jik_view");
 			mv.addObject("count", count);
@@ -225,7 +220,7 @@ public class JikController {
 		if(jik == null) {
 			mv.setViewName("error/error");
 			mv.addObject("url",request.getRequestURL());
-			mv.addObject("message", "�Խ��� �亯�� �������� ����");
+			mv.addObject("message", "게시판 답변글 가져오기 실패");
 		}else {
 			mv.addObject("jikdata", jik);
 			mv.setViewName("jik/jik_reply");
@@ -242,11 +237,11 @@ public class JikController {
 			if(result == 0) {
 				mv.setViewName("error/error");
 				mv.addObject("url", request.getRequestURL());
-				mv.addObject("message", "�Խ��� �亯 ó�� ����");
+				mv.addObject("message", "게시판 답변 처리 실패");
 			}else {
 				//mv.setViewName("redirect:list");
 				mv.setViewName("redirect:detail?num="+jik.getJik_num());
-				//selectKey���� ���� �޾ƿ� ��.
+			
 			}
 			return mv;
 		}
@@ -258,17 +253,16 @@ public class JikController {
 			Jik jikdata =jikService.getDetail(num);
 			
 			if(jikdata == null) {
-				logger.info("�������� ����");
+				logger.info("수정보기 실패");
 				mv.setViewName("error/error");
 				mv.addObject("url", request.getRequestURL());
-				mv.addObject("message", "���� ������ �ε�����");
+				mv.addObject("message", "수정 페이지 로딩실패");
 				return mv;
 			}
-			logger.info("���� �󼼺��� ����");
-			// ���� �� �������� �̵��� �� ���� �� ������ �����ֱ� ������ jikdata ��ü��
-			// ModelAndView ��ü�� �����մϴ�.
+			logger.info("수정 상세보기 성공");
+			
 			mv.addObject("jikdata", jikdata);
-			//�� ���� �� �������� �̵��ϱ� ���� ��θ� �����մϴ�.
+			
 			mv.setViewName("jik/jik_modify");
 			return mv;
 		}
@@ -281,18 +275,17 @@ public class JikController {
 			HttpServletResponse response) throws Exception{
 		
 		String savePath = "resources/upload";
-		// ������ ���� ȯ�� ������ ��� �ִ� ��ü�� �����մϴ�.
+		
 		ServletContext context = request.getSession().getServletContext();
 		String sDownloadPath = context.getRealPath(savePath);
 		
 		// String sFilePath = sDownloadPath + "\\" + fileName;
-		// "\" �߰��ϱ� ���� "\\" ����մϴ�.
+		
 		String sFilePath = sDownloadPath + "/" + filename;
 		logger.info(sFilePath);
 		
 		byte b[] = new byte[4096];
 		
-		// sFilePath�� �ִ� ������ MimeType�� �����ݴϴ�.
 		String sMimeType = context.getMimeType(sFilePath);
 		logger.info("sMimeType>>>" + sMimeType);
 		
@@ -301,30 +294,25 @@ public class JikController {
 		
 		response.setContentType(sMimeType);
 		
-		// - �� �κ��� �ѱ� ���ϸ��� ������ ���� ������ �ݴϴ�.
 		String sEncoding = new String(original.getBytes("utf-8"), "ISO-8859-1");
 		//logger.info(sEncoding);
 		
-		/*
-		 * Content-Disposition: attachment;
-		 *  �������� �ش� Content�� ó������ �ʰ�, �ٿ�ε��ϰ� �˴ϴ�.
-		 */
+
 		response.setHeader("Content-Disposition", "attachment; filename="
 							+ sEncoding);
-		//Package Explorer- ������Ʈ ��Ŭ�� - Properties - Project facets���� �ڹ� ���� 1.8�� ����
+	
 		try (
-				// �� ���������� ��� ��Ʈ�� �����մϴ�. (�ڵ����� close() )
+			
 				BufferedOutputStream out2 =
 						new BufferedOutputStream(response.getOutputStream());
-				// sFilePath�� ������ ���Ͽ� ���� �Է� ��Ʈ���� �����մϴ�.
+				
 				BufferedInputStream in=
 						new BufferedInputStream(new FileInputStream(sFilePath));)
 		{
 			int numRead;
-			// read(b, 0, b.length) : ����Ʈ �迭 b�� 0�� ���� b.length
-			// ũ�� ��ŭ �о�ɴϴ�.
-			while ((numRead = in.read(b, 0, b.length)) != -1) {//���� �����Ͱ� �����ϴ� ���
-				// ����Ʈ �迭 b�� 0�� ���� numReadũ�� ��ŭ �������� ���
+			
+			while ((numRead = in.read(b, 0, b.length)) != -1) {
+				
 				out2.write(b, 0, numRead);
 			}
 		} catch (Exception e) {

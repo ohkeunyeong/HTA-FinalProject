@@ -69,8 +69,7 @@ public class JikServiceImpl implements JikService{
 
 	@Override
 	public void insertJik(Jik jik) {
-		// TODO Auto-generated method stub
-		
+		dao.insertJik(jik);
 	}
 
 	@Override
