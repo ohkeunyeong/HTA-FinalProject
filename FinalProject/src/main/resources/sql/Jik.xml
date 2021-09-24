@@ -13,13 +13,13 @@
  			(jik_num,
  			 nick, jik_subject,
  			 jik_content, jik_file, jik_original,
- 			 jik_readcount,jik_date)
+ 			 jik_readcount,jik_date,jik_like)
  			VALUES
  			 (#{jik_num},
- 			  #{nick},#{jik_subject},
+ 			  #{nick, jdbcType=VARCHAR},#{jik_subject},
  			  #{jik_content},#{jik_file, jdbcType=VARCHAR},
  			  #{jik_original, jdbcType=VARCHAR},
- 			  #{jik_readcount},sysdate)
+ 			  #{jik_readcount},sysdate,#{jik_like})
  	</insert>
  
  	 <select id="count" resultType="int">

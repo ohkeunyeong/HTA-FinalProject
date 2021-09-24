@@ -59,8 +59,8 @@
 	<c:forEach var="b" items="${jiklist}">	
 	<tr>
 	  <td><%--번호 --%>
-		<c:out value="${jik_num}"/><%-- num 출력 --%>		
-		<c:set var="num" value="${jik_num-1}"/>	<%-- num=num-1; 의미--%>	
+		<c:out value="${num}"/><%-- num 출력 --%>		
+		<c:set var="num" value="${num-1}"/>	<%-- num=num-1; 의미--%>	
 	  </td>
 	  <td><%--제목 --%>
 	     <div>			
