@@ -1,9 +1,13 @@
 package com.hta.project.service;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hta.project.dao.OkyMynongDAO;
+import com.hta.project.domain.OkyImsi;
 
 @Service
 public class OkyMynongServiceImpl implements OkyMynongService {
@@ -37,5 +41,18 @@ public class OkyMynongServiceImpl implements OkyMynongService {
 			result = 0;
 		}
 		return result;
+	}
+
+
+	@Override
+	public List<OkyImsi> getUserList(String id) {
+		return dao.getUserList(id);
+	}
+
+
+	@Override
+	public void insertNongName(OkyImsi okyimsi) {
+		dao.insertNongName(okyimsi);
+		
 	}
 }

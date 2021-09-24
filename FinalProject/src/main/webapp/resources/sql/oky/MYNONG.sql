@@ -5,3 +5,5 @@ MYNONG_NAME     VARCHAR2(50) PRIMARY KEY
 );
 
 select * from mynong;
+
+delete from mynong;

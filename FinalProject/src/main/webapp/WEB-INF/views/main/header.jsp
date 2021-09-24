@@ -31,10 +31,11 @@
         내 농장 
       </a>
       <div class="dropdown-menu">
-        <a class="dropdown-item" href="createmy">농장생성</a>
-        <a class="dropdown-item" href="cal?name=">캘린더</a>
-        <a class="dropdown-item" href="acc?name=">가계부</a>
-        <a class="dropdown-item" href="nong?name=">멤버게시판</a>
+        <a class="dropdown-item" href="${pageContext.request.contextPath}/cal?name=">캘린더</a>
+        <a class="dropdown-item" href="${pageContext.request.contextPath}/acc?name=">가계부</a>
+        <a class="dropdown-item" href="${pageContext.request.contextPath}/bbs?name=">멤버게시판</a>
+        <a class="dropdown-item" href="${pageContext.request.contextPath}/createmynong">농장생성</a>
+        <a class="dropdown-item" href="${pageContext.request.contextPath}/mynong?name=">농장관리</a>
       </div>
     </li>
     
