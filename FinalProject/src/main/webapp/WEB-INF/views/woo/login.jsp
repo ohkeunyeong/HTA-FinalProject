@@ -41,7 +41,7 @@
       </div>
     </div>
   </div>
-  
+  <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
   <script type="text/javascript">
   function findid(){
 		var url="find_id_form";

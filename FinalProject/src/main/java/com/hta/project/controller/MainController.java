@@ -27,5 +27,7 @@ public class MainController {
 		
 		return "hyun/shop/shop_main";
 	}
+	
+	
 
 }
