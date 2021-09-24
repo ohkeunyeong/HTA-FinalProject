@@ -2,7 +2,6 @@ package com.hta.project.service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,38 +32,31 @@ public class JikServiceImpl implements JikService{
 
 	@Override
 	public Jik getDetail(int num) {
-		// TODO Auto-generated method stub
-		return null;
+		if(setReadCountUpdate(num)!=1)
+			return null;
+		return dao.getDetail(num);
 	}
 
-	@Override
-	public int jikReply(Jik jik) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	
 	@Override
 	public int jikModify(Jik modifyjik) {
-		// TODO Auto-generated method stub
-		return 0;
+		return dao.jikModify(modifyjik);
 	}
 
 	@Override
 	public int jikDelete(int num) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		Jik jik = dao.getDetail(num);
+		if(jik != null) {
+			result=dao.jikDelete(jik);
+			
+		}
+		return result;
 	}
 
 	@Override
 	public int setReadCountUpdate(int num) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean isJikWriter(int num, String pass) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.setReadCountUpdate(num);
 	}
 
 	@Override
@@ -72,12 +64,6 @@ public class JikServiceImpl implements JikService{
 		dao.insertJik(jik);
 	}
 
-	@Override
-	public int jikReplyUpdate(Jik jik) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
 
 
 }

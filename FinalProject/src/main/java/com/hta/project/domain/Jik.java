@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Jik {
 	private int jik_num;
+	private String jik_id;    
 	private String nick;    
 	private String jik_subject;  
 	private String jik_content; 
@@ -74,6 +75,12 @@ public class Jik {
 	}
 	public void setUploadfile(MultipartFile uploadfile) {
 		this.uploadfile = uploadfile;
+	}
+	public String getJik_id() {
+		return jik_id;
+	}
+	public void setJik_id(String jik_id) {
+		this.jik_id = jik_id;
 	}
 
 

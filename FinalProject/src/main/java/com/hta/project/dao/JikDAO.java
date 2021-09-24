@@ -59,6 +59,11 @@ public class JikDAO {
 		
 		return sqlSession.delete("Jiks.delete",jik);
 	}
+
+	public int insert_deleteFile(String before_file) {
+		return sqlSession.insert("Jiks.insert_deleteFile", before_file);
+		
+	}
 	
 	
 }
