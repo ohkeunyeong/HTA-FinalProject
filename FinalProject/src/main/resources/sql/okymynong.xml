@@ -16,5 +16,18 @@ select * from mynong where MYNONG_NAME = #{MYNONG_NAME}
 <select id="selectid" parameterType="String" resultType="String">
 select * from member where id = #{id}
 </select>
+
+<select id="list" parameterType="String" resultType="okyimsi">
+select ID, NICK from member where id = #{id}
+</select>
+
+<update id="addnong" parameterType="okyimsi">
+ update member
+ set
+   MYNONG_NAME = #{MYNONG_NAME},
+   MY_FARM = '1'
+  where id = #{ID}
+</update>
+
 </mapper>
 
