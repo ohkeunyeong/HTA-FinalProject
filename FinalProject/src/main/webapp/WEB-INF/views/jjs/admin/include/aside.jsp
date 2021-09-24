@@ -50,21 +50,21 @@
 	          </li>
 	          
 	          <li class="nav-item">
-	            <a href="#" class="nav-link">
+	            <a href="productList" class="nav-link">
 	              <i class="nav-icon fas fa-store"></i>
 	              <p>주말장터관리</p>
 	            </a>
 	          </li>
 	          
 	          <li class="nav-item">
-	            <a href="#" class="nav-link">
+	            <a href="farmList" class="nav-link">
 	              <i class="nav-icon fas fa-tractor"></i>
 	              <p>농장목록</p>
 	            </a>
 	          </li>
 	          
 	          <li class="nav-item">
-	            <a href="#" class="nav-link">
+	            <a href="orderList" class="nav-link">
 	              <i class="nav-icon far fa-credit-card"></i>
 	              <p>결제목록</p>
 	            </a>

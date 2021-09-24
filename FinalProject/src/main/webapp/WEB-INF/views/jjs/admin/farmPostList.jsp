@@ -26,12 +26,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="main">Home</a></li>
-              <li class="breadcrumb-item active">게시물 관리</li>
+              <li class="breadcrumb-item"><a href="postList">게시물 관리</a></li>
+              <li class="breadcrumb-item active">농장모듬</li>
             </ol>
           </div><!-- /.col -->
           <div class="h3" style="margin : 0 auto;">
-             <a class="nav-item" href="#">공지사항</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-             <a class="nav-item" href="#">농장모듬</a>
+             <a href="postList">공지사항</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             <a href="farmPostList">농장모듬</a>
           </div>
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -45,11 +46,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">공지사항</h3>
+                <h3 class="card-title">농장모듬</h3>
 
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control float-right" placeholder="제목 입력">
+                    <select class="form-control float-right" style="width : 150px;">
+						<option value="0">직거래 게시판</option>
+						<option value="1">자유게시판</option>
+						<option value="2">인력게시판</option>
+    				</select>
                   </div>
                 </div>
               </div>
@@ -62,66 +67,82 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <th>번호</th>
                       <th>제목</th>
                       <th>작성일</th>
-                      <th>조회수</th>
-                      <th>고정유무</th>
+                      <th>신고내용</th>
+                      <th>게시판종류</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td><input type="checkbox"></td>
                       <td>1</td>
-                      <td><a href="noticeDetail">공지사항</a></td>
-                      <td>2021-09-23</td>
-                      <td>10</td>
-                      <td><button class="btn btn-primary">고정</button></td>
+                      <td><a href="farmPostDetail">신고글</a></td>
+                      <td>2021-09-24</td>
+                      <td>신고내용</td>
+                      <td>직거래 게시판</td>
                     </tr>
                     <tr>
                       <td><input type="checkbox"></td>
                       <td>1</td>
-                      <td><a href="#">공지사항</a></td>
-                      <td>2021-09-23</td>
-                      <td>10</td>
-                      <td><button class="btn btn-primary">고정</button></td>
+                      <td><a href="farmPostDetail">신고글</a></td>
+                      <td>2021-09-24</td>
+                      <td>신고내용</td>
+                      <td>직거래 게시판</td>
                     </tr>
                     <tr>
                       <td><input type="checkbox"></td>
                       <td>1</td>
-                      <td><a href="#">공지사항</a></td>
-                      <td>2021-09-23</td>
-                      <td>10</td>
-                      <td><button class="btn btn-primary">고정</button></td>
+                      <td><a href="farmPostDetail">신고글</a></td>
+                      <td>2021-09-24</td>
+                      <td>신고내용</td>
+                      <td>직거래 게시판</td>
                     </tr>
                     <tr>
                       <td><input type="checkbox"></td>
                       <td>1</td>
-                      <td><a href="#">공지사항</a></td>
-                      <td>2021-09-23</td>
-                      <td>10</td>
-                      <td><button class="btn btn-primary">고정</button></td>
+                      <td><a href="farmPostDetail">신고글</a></td>
+                      <td>2021-09-24</td>
+                      <td>신고내용</td>
+                      <td>직거래 게시판</td>
                     </tr>
                     <tr>
                       <td><input type="checkbox"></td>
                       <td>1</td>
-                      <td><a href="#">공지사항</a></td>
-                      <td>2021-09-23</td>
-                      <td>10</td>
-                      <td><button class="btn btn-primary">고정</button></td>
+                      <td><a href="farmPostDetail">신고글</a></td>
+                      <td>2021-09-24</td>
+                      <td>신고내용</td>
+                      <td>직거래 게시판</td>
                     </tr>
                     <tr>
                       <td><input type="checkbox"></td>
                       <td>1</td>
-                      <td><a href="#">공지사항</a></td>
-                      <td>2021-09-23</td>
-                      <td>10</td>
-                      <td><button class="btn btn-primary">고정해제</button></td>
+                      <td><a href="farmPostDetail">신고글</a></td>
+                      <td>2021-09-24</td>
+                      <td>신고내용</td>
+                      <td>직거래 게시판</td>
                     </tr>
                     <tr>
                       <td><input type="checkbox"></td>
                       <td>1</td>
-                      <td><a href="#">공지사항</a></td>
-                      <td>2021-09-23</td>
-                      <td>10</td>
-                      <td><button class="btn btn-primary">고정</button></td>
+                      <td><a href="farmPostDetail">신고글</a></td>
+                      <td>2021-09-24</td>
+                      <td>신고내용</td>
+                      <td>직거래 게시판</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"></td>
+                      <td>1</td>
+                      <td><a href="farmPostDetail">신고글</a></td>
+                      <td>2021-09-24</td>
+                      <td>신고내용</td>
+                      <td>직거래 게시판</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox"></td>
+                      <td>1</td>
+                      <td><a href="farmPostDetail">신고글</a></td>
+                      <td>2021-09-24</td>
+                      <td>신고내용</td>
+                      <td>직거래 게시판</td>
                     </tr>
                   </tbody>
                 </table>
@@ -130,8 +151,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>
             <!-- /.card -->
             <div class="mb-3">
-            	<button class="btn btn-danger">선택삭제</button>
-            	<button class="btn btn-primary float-right" data-toggle="modal" data-target="#noticeAddModal">공지사항 쓰기</button>
+            	<button class="btn btn-danger">신고글 삭제</button>
             </div>
         </div>
         <!-- /.row -->

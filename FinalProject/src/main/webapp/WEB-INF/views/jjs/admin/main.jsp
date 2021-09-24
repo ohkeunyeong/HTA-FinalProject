@@ -111,7 +111,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="card card-primary">
               <div class="card-header">
                 <span>농장목록</span>
-                <a class="float-right" href="#">더보기></a>
+                <a class="float-right" href="farmList">더보기></a>
               </div>
               <div class="card-body">
                 <table class="table table-striped table-bordered">
@@ -139,7 +139,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="card card-primary">
               <div class="card-header">
                 <span>주말장터 관리</span>
-                <a class="float-right" href="#">더보기></a>
+                <a class="float-right" href="productList">더보기></a>
               </div>
               <div class="card-body">
                 <table class="table table-striped table-bordered">
@@ -169,7 +169,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="card card-primary">
               <div class="card-header">
                 <span>주문목록</span>
-                <a class="float-right" href="#">더보기></a>
+                <a class="float-right" href="orderList">더보기></a>
               </div>
               <div class="card-body">
                 <table class="table table-striped table-bordered">
