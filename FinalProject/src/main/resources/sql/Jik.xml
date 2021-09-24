@@ -10,16 +10,13 @@
   		select NVL(max(jik_num),0)+1 from jik
   	</selectKey>
  			INSERT INTO jik
- 			(jik_num,
- 			 nick, jik_subject,
+ 			(jik_num, nick, jik_subject,
  			 jik_content, jik_file, jik_original,
- 			 jik_readcount,jik_date,jik_like)
+ 			 jik_readcount, jik_date, jik_like)
  			VALUES
- 			 (#{jik_num},
- 			  #{nick, jdbcType=VARCHAR},#{jik_subject},
- 			  #{jik_content},#{jik_file, jdbcType=VARCHAR},
- 			  #{jik_original, jdbcType=VARCHAR},
- 			  #{jik_readcount},sysdate,#{jik_like})
+ 			 (#{jik_num}, #{nick}, #{jik_subject},
+ 			  #{jik_content}, #{jik_file}, #{jik_original},
+ 			  #{jik_readcount}, sysdate, #{jik_like})
  	</insert>
  
  	 <select id="count" resultType="int">
@@ -39,7 +36,31 @@
  			]]>
  	</select>
  	
-
-
+ 	<select id="detail" resultType="jik" parameterType="int">
+ 			select * 
+ 			from jik 
+ 			where jik_num = #{num}
+ 	</select>
+ 	
+ 	<update id="readCountUpdate" parameterType="int">
+ 			update jik 
+ 			set jik_readcount=jik_readcount+1
+ 			WHERE jik_num = #{num}
+ 	</update>
+ 	
+ 	 <update id= "modify" parameterType="jik">
+ 		update jik
+ 		set 
+ 			JIK_SUBJECT=#{JIK_SUBJECT},
+ 			JIK_CONTENT=#{JIK_CONTENT},
+ 			JIK_FILE=#{JIK_FILE},
+ 			JIK_ORIGINAL=#{JIK_ORIGINAL}
+ 		where JIK_NUM=#{JIK_NUM}
+ 	</update>
+ 	
+ 	<delete id= "delete" parameterType="jik">
+		delete from jik
+		where jik_num=#{jik_num}
+	</delete>
  	
  </mapper>

@@ -3,11 +3,17 @@
  "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+	
      <typeAliases>
         <typeAlias alias="mynong"    	type="com.hta.project.domain.OkyMynong" />
         <typeAlias alias="report" 	 	type="com.hta.project.domain.Report" />
         <typeAlias alias="jik" 		   	type="com.hta.project.domain.Jik" />
 		<typeAlias alias="jik_comm" 	type="com.hta.project.domain.Jik_Comm" />
+		<typeAlias alias="okyimsi"    	type="com.hta.project.domain.OkyImsi" /> <!-- 회원 아이디 닉네임 임시 검색용 -->
      </typeAliases>
          
      <mappers>

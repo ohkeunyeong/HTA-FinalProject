@@ -22,12 +22,39 @@ public class MainController {
 		  return mv;
 	}
 	
+	//굿즈 장터 메인 이동 
 	@RequestMapping("/shopmain")
-	public String shop_main() {
-		
+	public String shop_main() {		
 		return "hyun/shop/shop_main";
 	}
 	
-	
+	//굿즈 장터 퍼스나콘 페이지 이동 
+	@RequestMapping("/personacon")
+	public String shop_personacon() {		
+		return "hyun/shop/shop_personacon";
+	}
+		
+	//굿즈 장터 주말굿즈 이동 
+	@RequestMapping("/goods")
+	public String shop_goods() {		
+		return "hyun/shop/shop_goods";
+	}
 
+	//굿즈 장터 농기구 이동 
+	@RequestMapping("/tools")
+	public String shop_tools() {		
+		return "hyun/shop/shop_tools";
+	}
+	
+	//회원가입 바로가기 이동 
+	@RequestMapping("/join")
+	public String join() {		
+		return "woo/join";
+	}
+	
+	//로그인 바로가기 이동 
+	@RequestMapping("/login")
+	public String login() {		
+		return "woo/login";
+	}
 }

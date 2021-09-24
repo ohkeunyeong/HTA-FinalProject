@@ -68,55 +68,61 @@ public class JikController {
 		MultipartFile uploadfile = jik.getUploadfile();
 		
 		if (!uploadfile.isEmpty()) {
-			String fileName = uploadfile.getOriginalFilename();
-			jik.setJik_original(fileName);
-			String saveFolder =
-					request.getSession().getServletContext().getRealPath("resources")
-					+"/upload/";
+			String fileName = uploadfile.getOriginalFilename();//원래 파일명
+			jik.setJik_original(fileName);// 원래 파일명 저장
+			//String saveFolder =
+			//		request.getSession().getServletContext().getRealPath("resources")
+			//		+"/upload/";
+			
 			String fileDBName = fileDBName(fileName, saveFolder);
 			logger.info("fileDBName =" + fileDBName);
 			
-			
+			//transferTo(File path) : 업로드한 파일을 매개변수의 경로에 저장합니다.
 			uploadfile.transferTo(new File(saveFolder + fileDBName));
 			
-			
+			//바귄 파일명으로 저장
 			jik.setJik_file(fileDBName);
 		}
-		jikService.insertJik(jik); 
+		jikService.insertJik(jik);// 저장메서드 호출
 		
-		return "redirect:chang/jik/list";
+		return "redirect:list";
 	}
 	
 	private String fileDBName(String fileName, String saveFolder) {
-		
+		// 새로운 폴더 이름 : 오늘 년+월+일
 		Calendar c = Calendar.getInstance();
-		int year = c.get(Calendar.YEAR); 
-		int month =  c.get(Calendar.MONTH) + 1; 
-		int date =  c.get(Calendar.DATE); 
+		int year = c.get(Calendar.YEAR); // 오늘 년도 구합니다.
+		int month =  c.get(Calendar.MONTH) + 1; // 오늘 월 구합니다.
+		int date =  c.get(Calendar.DATE); // 오늘 일 구합니다.
 		
 		String homedir = saveFolder + year + "-" + month + "-" + date;
 		logger.info(homedir);
 		File path1 = new File(homedir);
 		if(!(path1.exists())) {
-			path1.mkdir();
+			path1.mkdir();//새로운 폴더를 생성
 		}
 		
-	
+		// 난수를 구합니다.
 		Random r = new Random();
 		int random = r.nextInt(100000000);
 		
-	
+		/**** 확장자 구하기 시작 ****/
 		int index = fileName.lastIndexOf(".");
-		
+		// 문자열에서 특정 문자열의 위치 값(index)를 반환한다.
+		// indexOf가 처음 발견되는 문자열에 대한 index를 반환하는 반면,
+		// lastIndexOf는 마지막으로 발견되는 문자열의 index를 반환합니다.
+		// (파일명에 점이 여러개 있을 경우 맨 마지막에 발견되는 문자열의 위치를 리턴합니다.)
 		logger.info("index = " + index);
 		
 		String fileExtension = fileName.substring(index + 1);
 		logger.info("fileExtension = " + fileExtension);
+		/**** 확장자 구하기 끝 ****/
 		
+		// 새로운 파일명
 		String refileName = "bbs" + year + month +date + random + "." + fileExtension;
 		logger.info("refileName = " + refileName);
 		
-	
+		//오라클 디비에 저장될 파일 명
 		String fileDBName = "/" + year + "-" +month+ "-" +date+"/"+refileName;
 		logger.info("fileDBName = " + fileDBName);
 		return fileDBName;
@@ -204,7 +210,7 @@ public class JikController {
 		}else {
 			logger.info("상세보기 성공");
 			int count = jik_commService.getListCount(num);
-			mv.setViewName("jik/jik_view");
+			mv.setViewName("chang/Jik/jik_view");
 			mv.addObject("count", count);
 			mv.addObject("jikdata", jik);
 		}
@@ -212,39 +218,6 @@ public class JikController {
 		
 	}
 	
-	@RequestMapping(value="/replyView", method = RequestMethod.GET)
-	//@GetMapping("/replyView")
-	public ModelAndView jikReplyView(int num, ModelAndView mv,
-								  HttpServletRequest request) {
-		Jik jik = jikService.getDetail(num);
-		if(jik == null) {
-			mv.setViewName("error/error");
-			mv.addObject("url",request.getRequestURL());
-			mv.addObject("message", "게시판 답변글 가져오기 실패");
-		}else {
-			mv.addObject("jikdata", jik);
-			mv.setViewName("jik/jik_reply");
-		}
-		return mv;
-	}
-	
-	@PostMapping("/replyAction")
-	public ModelAndView jikReplyAction(Jik jik, ModelAndView mv,
-								   HttpServletRequest request) {
-			
-			int result =jikService.jikReply(jik);
-			
-			if(result == 0) {
-				mv.setViewName("error/error");
-				mv.addObject("url", request.getRequestURL());
-				mv.addObject("message", "게시판 답변 처리 실패");
-			}else {
-				//mv.setViewName("redirect:list");
-				mv.setViewName("redirect:detail?num="+jik.getJik_num());
-			
-			}
-			return mv;
-		}
 	
 	@GetMapping("/modifyView")
 	public ModelAndView jikmodifyView(int num, ModelAndView mv,
@@ -263,11 +236,32 @@ public class JikController {
 			
 			mv.addObject("jikdata", jikdata);
 			
-			mv.setViewName("jik/jik_modify");
+			mv.setViewName("chang/Jik/jik_modify");
 			return mv;
 		}
 	
+	@PostMapping("/delete")	
+	public String JikDeleteAction(int num,
+			Model mv,RedirectAttributes rattr,
+			HttpServletRequest request
+			)throws Exception {
 
+
+		int result = jikService.jikDelete(num);
+		
+		//삭제 처리 실패한 경우
+		if(result == 0) {
+				logger.info("게시판 삭제 실패");
+				mv.addAttribute("url", request.getRequestURL());
+				mv.addAttribute("message", "삭제 실패");
+				return "error/error";
+		}
+		
+		//삭제 처리 성공한 경우 - 글 목록 보기 요청을 전송하는 부분입니다.
+		logger.info("게시판 삭제 성공");
+		rattr.addFlashAttribute("result", "deleteSuccess");
+		return "redirect:list";
+	}
 	
 	@PostMapping("/down")
 	public void jikFileDown(String filename,
@@ -302,7 +296,6 @@ public class JikController {
 							+ sEncoding);
 	
 		try (
-			
 				BufferedOutputStream out2 =
 						new BufferedOutputStream(response.getOutputStream());
 				
