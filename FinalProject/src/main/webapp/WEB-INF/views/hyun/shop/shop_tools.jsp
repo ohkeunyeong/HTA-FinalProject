@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>주말 장터 메인</title>
+<title>주말 장터 | 농기구 </title>
 <link href="${pageContext.request.contextPath}/resources/css/main.css" type="text/css" rel ="stylesheet">
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
 <style>
@@ -45,7 +45,7 @@ h4{padding-top:30px;}
 
 <div class="container">
 <br><br>
-  <h4>주말농장에서 추천하는 제품!</h4>
+  <h4>주말농장에서 추천하는 농기구!</h4>
 
 
 </div>

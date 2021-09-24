@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>주말 장터 퍼스나콘</title>
+<title>주말 장터 | 살충제 </title>
 <link href="${pageContext.request.contextPath}/resources/css/main.css" type="text/css" rel ="stylesheet">
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
 <style>
@@ -28,13 +28,13 @@ h4{padding-top:30px;}
       <a class="nav-link" href="#">비료/상토</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">살충제</a>
+      <a class="nav-link  active" href="#">살충제</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">농기구</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link active" href="#">퍼스나콘</a>
+      <a class="nav-link" href="#">퍼스나콘</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">굿즈</a>
@@ -46,7 +46,7 @@ h4{padding-top:30px;}
 
 <div class="container">
 <br><br>
-  <h4>이번주 가장 인기많은 퍼스나콘 Top20</h4>
+  <h4>살충제 Top20</h4>
 
 
 </div>
