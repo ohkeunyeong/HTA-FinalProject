@@ -4,7 +4,6 @@
 <head>
 <title>MVC 게시판 - view</title>
  <jsp:include page="../../main/header.jsp" />
-<script src="../resources/js/view3.js"></script>
 
 <style>
 body > div > table > tbody >tr:nth-child(1) {
@@ -63,42 +62,41 @@ form[action=down] > input[type=submit]{
  			<th colspan="2">직거래 게시판 - view페이지</th></tr>
  		<tr>
  			<td><div>글쓴이</div></td>
- 			<td><div id="BOARD_NAME">${boarddata.BOARD_NAME}</div></td>
+ 			<td><div id="nick">${jikdata.nick}</div></td>
  		</tr>
  		<tr>
  			<td><div>제목</div></td>
- 			<td><c:out value="${boarddata.BOARD_SUBJECT}" /></td>
+ 			<td><c:out value="${jikdata.jik_subject}" /></td>
  		</tr>
  		<tr>
  			<td><div>내용</div></td>
  			<td style="padding-right:0px"><textarea class="form-control" rows="5"
- 				readOnly >${boarddata.BOARD_CONTENT}</textarea></td>
+ 				readOnly >${jikdata.jik_content}</textarea></td>
  		</tr>
  		
- 	<c:if test="${boarddata.BOARD_RE_LEV==0}"><%--원문글인 경우에만 첨부파일을 추가 할 수 있습니다.  --%>
+ 	
  		<tr>
  			<td><div>첨부파일</div></td>
- 		<c:if test="${!empty boarddata.BOARD_FILE}"><%--파일 첨부한 경우 --%>
+ 		<c:if test="${!empty jikdata.jik_file}"><%--파일 첨부한 경우 --%>
  		<td><img src="../resources/image/down.png" width="10px">
  			<form method="post" action="down">
- 				<input type="hidden" value="${boarddata.BOARD_FILE}" name="filename">
- 				<input type="hidden" value="${boarddata.BOARD_ORIGINAL}" name="original">
- 				<input type="submit" value="${boarddata.BOARD_ORIGINAL}" >
+ 				<input type="hidden" value="${jikdata.jik_file}" name="filename">
+ 				<input type="hidden" value="${jikdata.jik_original}" name="original">
+ 				<input type="submit" value="${jikdata.jik_original}" >
  			</form>
  			</td>
  		</c:if>
- 		<c:if test="${empty boarddata.BOARD_FILE}"><%-- 파일첨부하지 않은 경우 --%>
+ 		<c:if test="${empty jikdata.jik_file}"><%-- 파일첨부하지 않은 경우 --%>
  			<td></td>
  		</c:if>
  		</tr>
- 	</c:if>
  		
  	<tr>
  		<td colspan="2" class="center">
  			<button class="btn btn-primary start">댓글</button>
  				<span id="count">${count}</span>
- 			<c:if test="${boarddata.BOARD_NAME == id || id =='admin' }">
- 			 <a href="modifyView?num=${boarddata.BOARD_NUM}">
+ 			<c:if test="${jikdata.jik_id == id || id =='admin' }">
+ 			 <a href="modifyView?num=${jikdata.jik_num}">
  			 	<button class="btn btn-warning">수정</button>
  			 </a>
  			 <a href="#">
@@ -107,7 +105,7 @@ form[action=down] > input[type=submit]{
  			 </a>
  			 </c:if>
  			 
- 			<a href="replyView?num=${boarddata.BOARD_NUM}">
+ 			<a href="replyView?num=${jikdata.jik_num}">
  				<button class="btn btn-info">답변</button>
  			</a>
  			
@@ -132,13 +130,8 @@ form[action=down] > input[type=submit]{
 		  	 		또는 ${boarddata.BOARD_NUM}
 		  	 	 --%>
 		  	 	 <input type="hidden" name="num" value="${param.num}"
-		  	 	 	  id="board_num">
-		  	 	 <div class="form-group">
-		  	 	 	<label for="pwd">비밀번호</label>
-		  	 	 	<input  type="password"
-		  	 	 			class="form-control" placeholder="Enter password"
-		  	 	 			name="BOARD_PASS" id="board_pass">
-		  	 	 	</div>
+		  	 	 	  id="jik_num">
+
 		  	 	 	<button type="submit" class="btn btn-primary">전송</button>
 		  	 	 	<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
 		  		 </form>

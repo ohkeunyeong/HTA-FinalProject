@@ -1,6 +1,7 @@
 
 create table jik(
 jik_num				NUMBER(10) primary key,
+jik_id				varchar2(20),
 nick				varchar2(20),
 jik_subject			varchar2(300),
 jik_content			varchar2(4000),
@@ -18,3 +19,4 @@ INSERT INTO jik
  			VALUES
  			(1,'asd','asd','asd','asd','asd',1,sysdate)
 select * from jik;
+drop table jik
