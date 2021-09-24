@@ -79,62 +79,45 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <div class="active tab-pane" id="activity">
                     <!-- Post -->
                     <div class="post">
-                      <div class="user-block">
-                        <img class="img-circle img-bordered-sm" src="${pageContext.request.contextPath}/dist/img/user1-128x128.jpg" alt="user image">
-                        <span class="username">
-                          <a href="userInfo">자바</a>
-                        </span>
-                        <span class="description">2021-09-23 19:08 PM 속해있는 게시판 종류</span>
-                      </div>
-                      <!-- /.user-block -->
-                      <p>게시글 내용</p>
                       <div class="row mb-3">
-                        <div class="col-sm-6">
-                          <img class="img-fluid" src="${pageContext.request.contextPath}/dist/img/photo1.png" alt="Photo">
+                        <div class="col-sm-5 mt-4">
+                          <img class="img-fluid" src="${pageContext.request.contextPath}/dist/img/photo1.png" alt="Photo" style="height : 300px">
                         </div>
                         
-                        <div class="col-sm-6">
+                        <div class="col-sm-7">
                           <div class="row">
-                            <div class="col-sm-6">
-                              <img class="img-fluid mb-3" src="${pageContext.request.contextPath}/dist/img/photo2.png" alt="Photo">
-                              <img class="img-fluid" src="${pageContext.request.contextPath}/dist/img/photo3.jpg" alt="Photo">
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-sm-6">
-                              <img class="img-fluid mb-3" src="${pageContext.request.contextPath}/dist/img/photo4.jpg" alt="Photo">
-                              <img class="img-fluid" src="${pageContext.request.contextPath}/dist/img/photo1.png" alt="Photo">
+                            <div class="col-sm-12" style="font-size : 25px;">
+                              <div class="col-12 mt-3">
+	            					<div class="input-group">
+	            						<p>상품코드 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;<span>A001</span></p>
+	            					</div>
+		            			</div>
+		            			<div class="col-12 mt-3">
+		            				<div class="input-group">
+		            					<p>상품명 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;<span>상품이름</span></p>
+		            				</div>
+		            			</div>
+		            			<div class="col-12 mt-3">
+		            				<div class="input-group">
+		            					<p>카테고리 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;<span>굿즈</span></p>
+		            				</div>
+		            			</div>
+		            			<div class="col-12 mt-3">
+		            				<div class="input-group">
+		            					<p>상품가격 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;<span>1,000원</span></p>
+		            				</div>
+		            			</div>
+		            			<div class="col-12 mt-3 mb-3">
+		            				<div class="input-group">
+		            					<p>상품등록일 : &nbsp;&nbsp;&nbsp;<span>21-09-24</span></p>
+		            				</div>
+		            			</div>
                             </div>
                             <!-- /.col -->
                           </div>
                           <!-- /.row -->
                         </div>
                     </div>
-                    </div>
-                    <!-- /.post -->
-                    <!-- Post -->
-                    <div class="post">
-                      <div class="user-block">
-                        <img class="img-circle img-bordered-sm" src="${pageContext.request.contextPath}/dist/img/user1-128x128.jpg" alt="user image">
-                        <span class="username">
-                          <a href="userInfo">자바</a>
-                        </span>
-                        <span class="description">2021-09-23 19:08 PM 속해있는 게시판 종류</span>
-                      </div>
-                      <!-- /.user-block -->
-                      <p>게시글 내용</p>
-                    </div>
-                    <!-- /.post -->
-                    <!-- Post -->
-                    <div class="post">
-                      <div class="user-block">
-                        <img class="img-circle img-bordered-sm" src="${pageContext.request.contextPath}/dist/img/user1-128x128.jpg" alt="user image">
-                        <span class="username">
-                          <a href="userInfo">자바</a>
-                        </span>
-                        <span class="description">2021-09-23 19:08 PM 속해있는 게시판 종류</span>
-                      </div>
-                      <!-- /.user-block -->
-                      <p>게시글 내용</p>
                     </div>
                     <!-- /.post -->
                 </div>
@@ -144,6 +127,62 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- /.nav-tabs-custom -->
           </div>
           <!-- /.col -->
+          
+          <!-- /.col -->
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="tab-content">
+                  <div class="active tab-pane" id="activity">
+                    <!-- Post -->
+                    <div class="post">
+                      <div class="row mb-3">
+                        <div class="col-sm-5 mt-4">
+                          <img class="img-fluid" src="${pageContext.request.contextPath}/dist/img/photo1.png" alt="Photo" style="height : 300px">
+                        </div>
+                        
+                        <div class="col-sm-7">
+                          <div class="row">
+                            <div class="col-sm-12" style="font-size : 25px;">
+                              <div class="col-12 mt-3">
+	            					<div class="input-group">
+	            						<p>상품코드 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;<span>A001</span></p>
+	            					</div>
+		            			</div>
+		            			<div class="col-12 mt-3">
+		            				<div class="input-group">
+		            					<p>상품명 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;<span>상품이름</span></p>
+		            				</div>
+		            			</div>
+		            			<div class="col-12 mt-3">
+		            				<div class="input-group">
+		            					<p>카테고리 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;<span>굿즈</span></p>
+		            				</div>
+		            			</div>
+		            			<div class="col-12 mt-3">
+		            				<div class="input-group">
+		            					<p>상품가격 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;<span>1,000원</span></p>
+		            				</div>
+		            			</div>
+		            			<div class="col-12 mt-3 mb-3">
+		            				<div class="input-group">
+		            					<p>상품등록일 : &nbsp;&nbsp;&nbsp;<span>21-09-24</span></p>
+		            				</div>
+		            			</div>
+                            </div>
+                            <!-- /.col -->
+                          </div>
+                          <!-- /.row -->
+                        </div>
+                    </div>
+                    </div>
+                    <!-- /.post -->
+                </div>
+                </div><!-- /.tab-content -->
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+          </div>
         </div>
         <!-- /.row -->
       </div><!-- /.container-fluid -->

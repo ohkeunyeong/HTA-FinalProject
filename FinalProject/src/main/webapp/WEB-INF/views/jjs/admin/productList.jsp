@@ -64,7 +64,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">주말장터 관리</h3>
+                <h3 class="card-title mt-2">주말장터 관리</h3>
                 <select class="form-control float-right" style="width : 150px;">
 					<option>카테고리명</option>
 					<option value="1">퍼스나콘</option>

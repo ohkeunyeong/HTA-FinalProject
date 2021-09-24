@@ -41,7 +41,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">농장목록</h3>
+                <h3 class="card-title mt-2">농장목록</h3>
                 <select class="form-control float-right" style="width : 150px;">
 					<option value="0">지역별</option>
 					<option value="1">최신순</option>
@@ -97,7 +97,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	            				<img src="${pageContext.request.contextPath}/resources/image/jjs/among us.png" style="width : 200px; height : 200px">
 	            			</div>
 	            		</div> 
-	            		<div class="col12 col-sm-6">
+	            		<div class="col-12 col-sm-6">
 	            			<div class="col-12 mt-3">
 	            				<div class="input-group">
 	            					<label for="farmname" class="mt-2">농장이름</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
