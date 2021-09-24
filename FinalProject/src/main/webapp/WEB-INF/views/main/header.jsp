@@ -5,7 +5,7 @@
    <html>
 <meta charset="UTF-8">
 <head>
-  <title>주말농장 임시메인 헤더</title>
+  <title>주말농장 메인 헤더</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"  integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
@@ -23,7 +23,7 @@
    </a>
 
   
-  <ul class="navbar-nav navbar-expand-sm justify-content-center" style="width:50%">
+  <ul class="navbar-nav navbar-expand-sm justify-content-center" style="width:40%">
     
     <!-- Dropdown -->
     <li class="nav-item dropdown active" style="padding-left:3%">
@@ -68,9 +68,9 @@
       </a>
       <div class="dropdown-menu">
       	<a class="dropdown-item" href="shopmain">굿즈 장터</a>
-        <a class="dropdown-item" href="#">퍼스나콘</a>
-        <a class="dropdown-item" href="#">주말 굿즈</a>
-        <a class="dropdown-item" href="#">농기구</a>
+        <a class="dropdown-item" href="personacon">퍼스나콘</a>
+        <a class="dropdown-item" href="goods">주말 굿즈</a>
+        <a class="dropdown-item" href="tools">농기구</a>
       </div>
     </li>
     
@@ -91,13 +91,13 @@
     <ul class="navbar-nav navbar-expand-sm" style="width:40%;">
     <!-- Links -->
     <li class="nav-item active" style="padding-left:30%"  ><!-- style="padding-left:5%" -->
-      <a class="nav-link" href="#">장바구니</a>
+      <a class="nav-link" href="cart">장바구니</a>
     </li>
     <li class="nav-item active" style="padding-left:4%">
-      <a class="nav-link" href="#">로그인</a>
+      <a class="nav-link" href="login">로그인</a>
     </li>
 	<li class="nav-item active" style="padding-left:4%">
-      <a class="nav-link" href="#">회원가입</a>
+      <a class="nav-link" href="join">회원가입</a>
     </li>
 
    
