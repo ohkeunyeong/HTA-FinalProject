@@ -10,5 +10,11 @@ jik_date			DATE default sysdate,
 jik_file			varchar2(100),
 jik_original		varchar2(100)
 )
-
+INSERT INTO jik
+ 			(jik_num,
+ 			 nick, jik_subject,
+ 			 jik_content, jik_file, jik_original,
+ 			 jik_readcount,jik_date)
+ 			VALUES
+ 			(1,'asd','asd','asd','asd','asd',1,sysdate)
 select * from jik;
