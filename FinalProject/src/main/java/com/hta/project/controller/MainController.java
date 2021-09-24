@@ -46,6 +46,24 @@ public class MainController {
 		return "hyun/shop/shop_tools";
 	}
 	
+	//굿즈 장터 씨앗/모종 이동 
+		@RequestMapping("/seed")
+		public String shop_seed() {		
+			return "hyun/shop/shop_seed";
+		}
+		
+	//굿즈 장터 비료/상토 이동 
+		@RequestMapping("/soil")
+		public String shop_soil() {		
+			return "hyun/shop/shop_soils";
+		}
+		
+	//굿즈 장터 살충제 이동 
+		@RequestMapping("/pesticide")
+		public String shop_pesticide() {		
+			return "hyun/shop/shop_pesticide";
+	}
+					
 	//회원가입 바로가기 이동 
 	@RequestMapping("/join")
 	public String join() {		

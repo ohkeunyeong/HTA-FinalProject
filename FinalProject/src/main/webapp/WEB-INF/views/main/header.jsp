@@ -72,6 +72,9 @@
         <a class="dropdown-item" href="personacon">퍼스나콘</a>
         <a class="dropdown-item" href="goods">주말 굿즈</a>
         <a class="dropdown-item" href="tools">농기구</a>
+        <a class="dropdown-item" href="seed">씨앗/모종</a>
+        <a class="dropdown-item" href="soil">비료/상토</a>
+        <a class="dropdown-item" href="pesticide">살충제</a>
       </div>
     </li>
     
