@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Notices">
+
+	<insert id="insert" parameterType="notice">
+		<selectKey keyProperty="NOTICE_NUM" resultType="int" order="BEFORE">
+			select NVL(max(NOTICE_NUM),0) + 1 from notice
+		</selectKey>
+		insert into notice
+		values(#{NOTICE_NUM}, #{NOTICE_SUBJECT}, #{NOTICE_CONTENT},
+			   0, SYSDATE, #{NOTICE_FIX})
+	</insert>	
+	
+	<update id="readCountUpdate" parameterType="int">
+		update notice
+		set NOTICE_READCOUNT = NOTICE_READCOUNT + 1
+		where NOTICE_NUM = #{num}
+	</update>
+	
+	<select id="detail" resultType="notice" parameterType="int">
+		select *
+		from notice
+		where NOTICE_NUM = #{num}
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(*)
+		from notice
+	</select>
+	
+	<select id="searchListCount" resultType="int" parameterType="String">
+		select count(*)
+		from notice
+		where NOTICE_SUBJECT like #{word}
+	</select>
+	
+	<select id="list" resultType="notice" parameterType="map">
+		select *
+		from (select rownum rnum, n.*
+			  from (select *
+			  		from notice
+			  		order by NOTICE_DATE desc) n
+			 )
+		where rnum &gt;= #{start} and rnum &lt;= #{end}
+	</select>
+	
+	<select id="searchList" resultType="notice" parameterType="map">
+		select *
+		from (select rownum rnum, n.*
+			  from (select *
+			  		from notice
+			  		where NOTICE_SUBJECT like #{word}
+			  		order by NOTICE_DATE desc) n
+			 )
+		where rnum &gt;= #{start} and rnum &lt;= #{end}
+	</select>
+	
+	<select id="select" resultType="notice" parameterType="int">
+		select *
+		from notice
+		where NOTICE_NUM = #{num}
+	</select>
+	
+	<update id="fixUpdate" parameterType="map">
+		update notice
+		set NOTICE_FIX = #{fix}
+		where NOTICE_NUM = #{num}
+	</update>
+	
+	<delete id="selectionDel" parameterType="map">
+		delete notice
+		where NOTICE_NUM in
+		<foreach item="item" collection="arr" 
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<delete id="delete" parameterType="int">
+		delete notice
+		where NOTICE_NUM = #{num}
+	</delete>
+	
+	<update id="noticeModify" parameterType="notice">
+		update notice
+		set NOTICE_SUBJECT = #{NOTICE_SUBJECT},
+			NOTICE_CONTENT = #{NOTICE_CONTENT},
+			NOTICE_FIX = #{NOTICE_FIX}
+		where NOTICE_NUM = #{NOTICE_NUM}
+	</update>
+	
+</mapper>
