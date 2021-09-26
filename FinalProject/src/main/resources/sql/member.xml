@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Members">
+
+	<select id="idcheck" resultType="member" parameterType="String">
+		select * from member where id = #{id}
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(*)
+		from member
+		where ID != 'admin'
+	</select>
+	
+	<select id="searchListCount" resultType="int" parameterType="String">
+		select count(*)
+		from member
+		where ID like #{word}
+		and ID != 'admin'
+	</select>
+	
+	<select id="list" resultType="member" parameterType="map">
+		select *
+		from (select rownum rnum, m.*
+			  from (select *
+			  		from member
+			  		where ID != 'admin'
+			  		order by name) m
+			 )
+		where rnum &gt;= #{start} and rnum &lt;= #{end}
+	</select>
+	
+	<select id="searchList" resultType="member" parameterType="map">
+		select *
+		from (select rownum rnum, m.*
+			  from (select *
+			  		from member
+			  		where ID like #{search_word}
+			  		and ID != 'admin'
+			  		order by NAME) m
+			 )
+		where rnum &gt;= #{start} and rnum &lt;= #{end}
+	</select>
+	
+	<delete id="delete" parameterType="String">
+		delete member
+		where ID = #{id}
+	</delete>
+	
+</mapper>

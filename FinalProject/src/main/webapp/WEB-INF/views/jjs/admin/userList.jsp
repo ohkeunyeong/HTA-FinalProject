@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -20,6 +21,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- Google Font: Source Sans Pro -->
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/plugins/jquery/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jjs/userList.js"></script>
+<style>
+.gray {
+	color: gray
+}
+
+a:not([href]) {
+	color: gray;
+	text-decoration: none;
+}
+
+#myNongList{
+	width: 150px; 
+	position: absolute; 
+	right: 10px; 
+	bottom: 12px;
+}
+</style>
 </head>
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
@@ -59,122 +78,99 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						<div class="col-12">
 							<div class="card">
 								<div class="card-header">
-									<h3 class="card-title">회원목록</h3>
+									<h3 class="card-title">회원수 : ${listcount}</h3>
 
 									<div class="card-tools">
 										<div class="input-group input-group-sm" style="width: 150px;">
-											<input type="text" name="table_search" class="form-control float-right" placeholder="아이디 입력">
+											<input type="text" name="search_word" id="search_word" class="form-control float-right" placeholder="아이디 입력">
 										</div>
 									</div>
 								</div>
 								<!-- /.card-header -->
-								<div class="card-body table-responsive p-0" style="height: 480px;">
-									<table class="table table-head-fixed text-nowrap">
-										<thead>
-											<tr>
-												<th>이름</th>
-												<th>아이디</th>
-												<th>닉네임</th>
-												<th>내농장</th>
-												<th>회원등급</th>
-												<th>이메일</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>자바</td>
-												<td>
-													<a href="userInfo">java</a>
-												</td>
-												<td>javas</td>
-												<td>JavaFarm</td>
-												<td>농장멤버</td>
-												<td>javas@naver.com</td>
-											</tr>
-											<tr>
-												<td>자바</td>
-												<td>
-													<a href="userInfo">java</a>
-												</td>
-												<td>javas</td>
-												<td>JavaFarm</td>
-												<td>농장멤버</td>
-												<td>javas@naver.com</td>
-											</tr>
-											<tr>
-												<td>자바</td>
-												<td>
-													<a href="userInfo">java</a>
-												</td>
-												<td>javas</td>
-												<td>JavaFarm</td>
-												<td>농장멤버</td>
-												<td>javas@naver.com</td>
-											</tr>
-											<tr>
-												<td>자바</td>
-												<td>
-													<a href="userInfo">java</a>
-												</td>
-												<td>javas</td>
-												<td>JavaFarm</td>
-												<td>농장멤버</td>
-												<td>javas@naver.com</td>
-											</tr>
-											<tr>
-												<td>자바</td>
-												<td>
-													<a href="userInfo">java</a>
-												</td>
-												<td>javas</td>
-												<td>JavaFarm</td>
-												<td>농장멤버</td>
-												<td>javas@naver.com</td>
-											</tr>
-											<tr>
-												<td>자바</td>
-												<td>
-													<a href="userInfo">java</a>
-												</td>
-												<td>javas</td>
-												<td>JavaFarm</td>
-												<td>농장멤버</td>
-												<td>javas@naver.com</td>
-											</tr>
-											<tr>
-												<td>자바</td>
-												<td>
-													<a href="userInfo">java</a>
-												</td>
-												<td>javas</td>
-												<td>JavaFarm</td>
-												<td>농장멤버</td>
-												<td>javas@naver.com</td>
-											</tr>
-											<tr>
-												<td>자바</td>
-												<td>
-													<a href="userInfo">java</a>
-												</td>
-												<td>javas</td>
-												<td>JavaFarm</td>
-												<td>농장멤버</td>
-												<td>javas@naver.com</td>
-											</tr>
-											<tr>
-												<td>자바</td>
-												<td>
-													<a href="userInfo">java</a>
-												</td>
-												<td>javas</td>
-												<td>JavaFarm</td>
-												<td>농장멤버</td>
-												<td>javas@naver.com</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<!-- /.card-body -->
+								<c:if test="${listcount > 0 }">
+									<div class="card-body table-responsive p-0" style="height: 395px;">
+										<table class="table table-head-fixed text-nowrap">
+											<thead>
+												<tr>
+													<th>이름</th>
+													<th>아이디</th>
+													<th>닉네임</th>
+													<th>내농장</th>
+													<th>회원등급</th>
+													<th>이메일</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="m" items="${userlist}">
+													<tr>
+														<td>
+															<div>${m.name}</div>
+														</td>
+														<td>
+															<div>
+																<a href="userInfo?id=${m.id}">${m.id}</a>
+															</div>
+														</td>
+														<td>
+															<div>${m.nick}</div>
+														</td>
+														<td>
+															<div>${m.mynong_name}</div>
+														</td>
+														<td>
+															<c:if test="${m.my_farm == '0' }">
+																<div>일반멤버</div>
+															</c:if>
+															<c:if test="${m.my_farm == '1' }">
+																<div>농장 관리자</div>
+															</c:if>
+															<c:if test="${m.my_farm == '2' }">
+																<div>농장멤버</div>
+															</c:if>
+														</td>
+														<td>
+															<div>${m.mail}</div>
+														</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+									<!-- /.card-body -->
+									<div class="card-footer clearfix">
+										<ul class="pagination m-0 justify-content-center">
+											<c:if test="${page <= 1 }">
+												<li class="page-item"><a class="page-link gray">«</a></li>
+											</c:if>
+											<c:if test="${page > 1 }">
+												<li class="page-item"><a href="userList?page=${page-1}" class="page-link">«</a></li>
+											</c:if>
+
+											<c:forEach var="a" begin="${startpage}" end="${endpage}">
+												<c:if test="${a == page }">
+													<li class="page-item "><a class="page-link gray">${a}</a></li>
+												</c:if>
+												<c:if test="${a != page }">
+													<li class="page-item"><a href="userList?page=${a}" class="page-link">${a}</a></li>
+												</c:if>
+											</c:forEach>
+
+											<c:if test="${page >= maxpage }">
+												<li class="page-item"><a class="page-link gray">»</a></li>
+											</c:if>
+											<c:if test="${page < maxpage }">
+												<li class="page-item"><a href="userList?page=${page+1}" class="page-link">»</a></li>
+											</c:if>
+										</ul>
+									</div>
+								</c:if>
+
+								<c:if test="${listcount == 0 }">
+									<p class="text-center h2 mt-3 mb-3">
+										<span>등록된 회원이 없습니다.</span>
+									</p>
+								</c:if>
+
 							</div>
 							<!-- /.card -->
 						</div>

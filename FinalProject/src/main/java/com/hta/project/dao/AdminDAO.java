@@ -7,7 +7,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.hta.project.domain.Member;
 import com.hta.project.domain.Notice;
+import com.hta.project.domain.OkyMynong;
 
 @Repository
 public class AdminDAO {

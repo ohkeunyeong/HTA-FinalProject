@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hta.project.dao.AdminDAO;
+import com.hta.project.domain.Member;
 import com.hta.project.domain.Notice;
 
 @Service

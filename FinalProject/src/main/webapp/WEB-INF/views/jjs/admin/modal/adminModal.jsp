@@ -12,12 +12,12 @@
 
 			<!-- Modal body -->
 			<div class="modal-body">
-				<h6>javas님을 삭제하시겠습니까??</h6>
+				<h6>${memberInfo.nick}님을 삭제하시겠습니까??</h6>
 			</div>
 
 			<!-- Modal footer -->
 			<div class="modal-footer">
-				<a type="button" class="btn btn-danger" href="#">삭제</a>
+				<a type="button" class="btn btn-danger" href="userDelete?id=${memberInfo.id}">삭제</a>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 			</div>
 

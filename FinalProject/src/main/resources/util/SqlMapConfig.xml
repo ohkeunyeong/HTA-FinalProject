@@ -15,6 +15,7 @@
 		<typeAlias alias="jik_comm" 	type="com.hta.project.domain.Jik_Comm" />
 		<typeAlias alias="okyimsi"    	type="com.hta.project.domain.OkyImsi" /> <!-- 회원 아이디 닉네임 임시 검색용 -->
 		<typeAlias alias="notice" 		type="com.hta.project.domain.Notice"/>
+		<typeAlias alias="member" 		type="com.hta.project.domain.Member"/>
      </typeAliases>
          
      <mappers>
@@ -22,5 +23,6 @@
       	<mapper resource="sql/report.xml" />
        	<mapper resource="sql/Jik.xml" />
        	<mapper resource="sql/notice.xml" />
+       	<mapper resource="sql/member.xml" />
      </mappers>
 </configuration>

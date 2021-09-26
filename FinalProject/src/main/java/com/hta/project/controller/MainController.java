@@ -1,13 +1,20 @@
 package com.hta.project.controller;
 
 
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.hta.project.service.MemberService;
 
 
 @Controller
@@ -15,6 +22,9 @@ public class MainController {
 
 	private static final Logger logger
     = LoggerFactory.getLogger(MainController.class);
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public ModelAndView main(ModelAndView mv) {
@@ -74,5 +84,37 @@ public class MainController {
 	@RequestMapping("/login")
 	public String login() {		
 		return "woo/login";
+	}
+	
+	//임시 로그인 바로가기(우영님이 로그인 다 만들면 삭제)
+	@RequestMapping("/loginimsi")
+	public String loginimsi() {		
+		return "jjs/login";
+	}
+	
+	// 임시 로그인 처리(우영님이 로그인 다 만들면 삭제)
+	@RequestMapping(value="/loginProcessimsi", method=RequestMethod.POST)
+	public String loginProcess(@RequestParam(value="id") String id, 
+							   @RequestParam(value="pass") String password,
+							   HttpSession session){
+		Map<String, Object> member = memberService.isIdimsi(id, password);
+		
+		int result = (int) member.get("result");
+		
+		if(result == 1) {
+			// 로그인 성공
+			session.setAttribute("id", member.get("id"));
+			session.setAttribute("nick", member.get("nick"));
+			return "redirect:main";
+		}else {
+			return "redirect:loginimsi";
+		}
+	}
+	
+	// 임시 로그아웃 처리(우영님이 로그인 다 만들면 삭제)
+	@RequestMapping(value = "/logoutimsi", method = RequestMethod.GET)
+	public String loginout(HttpSession session) {
+		session.invalidate();
+		return "redirect:loginimsi";
 	}
 }

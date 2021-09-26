@@ -15,5 +15,14 @@ CREATE TABLE MEMBER(
 );
 
 SELECT * FROM MEMBER;
+
 INSERT INTO MEMBER(ID, PASS, NAME, NICK, MAIL, TEL, MY_FARM, PERSNACON, POINT, MYNONG_NAME)
-VALUES('admin', '1111', '관리자', '관리자', 'admin@gmail.com', '01012345678', '1', 'null', '0', '')
+VALUES('admin', '1234', '관리자', '관리자', 'admin@gmail.com', '01012345678', '1', 'null', 0, '');
+
+INSERT INTO member
+VALUES('user', '1234', '유저', '유저1', 'user@gmail.com', '01012345678', '0', 'null', 0, '');
+
+
+
+
+

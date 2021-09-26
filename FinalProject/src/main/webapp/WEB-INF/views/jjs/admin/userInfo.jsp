@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -53,30 +55,46 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			<section class="content">
 				<div class="container-fluid">
 					<div class="row">
-						<div class="col-md-3">
+						<div class="col-md-4">
 
 							<!-- Profile Image -->
 							<div class="card card-primary card-outline">
 								<div class="card-body box-profile">
 									<div class="text-center">
-										<img class="profile-user-img img-fluid img-circle" src="${pageContext.request.contextPath}/dist/img/user4-128x128.jpg" alt="User profile picture">
+										<c:if test="${memberInfo.persnacon == 'null'}">
+											<img class="profile-user-img img-fluid img-circle" src="${pageContext.request.contextPath}/resources/image/jjs/BasicPersonacon.png" alt="User profile picture">
+										</c:if>
+										<c:if test="${memberInfo.persnacon != 'null'}">
+											<img class="profile-user-img img-fluid img-circle" src="${pageContext.request.contextPath}/upload/${memberInfo.persnacon}" alt="User profile picture">
+										</c:if>
 									</div>
 
-									<h3 class="profile-username text-center">자바</h3>
+									<h3 class="profile-username text-center">${memberInfo.name}</h3>
 
-									<p class="text-muted text-center">java</p>
+									<p class="text-muted text-center">${memberInfo.id}</p>
 
 									<ul class="list-group list-group-unbordered mb-3">
-										<li class="list-group-item"><b>내농장</b> <a class="float-right">JavaFarm</a></li>
-										<li class="list-group-item"><b>회원등급</b> <a class="float-right">농장멤버</a></li>
-										<li class="list-group-item"><b>닉네임</b> <a class="float-right">javas</a></li>
-										<li class="list-group-item"><b>이메일</b> <a class="float-right">javas@naver.com</a></li>
-										<li class="list-group-item"><b>전화번호</b> <a class="float-right">010-9999-9999</a></li>
+										<li class="list-group-item"><b>내농장</b> <a class="float-right">${memberInfo.mynong_name}</a></li>
+										<li class="list-group-item"><b>회원등급</b> 
+											<a class="float-right">
+												<c:if test="${memberInfo.my_farm == '0' }">
+													<div>일반멤버</div>
+												</c:if>
+												<c:if test="${memberInfo.my_farm == '1' }">
+													<div>농장 관리자</div>
+												</c:if>
+												<c:if test="${memberInfo.my_farm == '2' }">
+													<div>농장멤버</div>
+												</c:if>
+											</a>
+										</li>
+										<li class="list-group-item"><b>닉네임</b> <a class="float-right">${memberInfo.nick}</a></li>
+										<li class="list-group-item"><b>이메일</b> <a class="float-right">${memberInfo.mail}</a></li>
+										<c:set var="tel" value="${fn:substring(memberInfo.tel,0,3)}-${fn:substring(memberInfo.tel,3,7)}-${fn:substring(memberInfo.tel,7,13)}"></c:set>
+										<li class="list-group-item"><b>전화번호</b> <a class="float-right">${tel}</a></li>
 									</ul>
 
-									<button class="btn btn-danger btn-block" data-toggle="modal" 
-											data-backdrop="static" data-keyboard="false" 
-											data-target="#userDeleteModal">
+									<button class="btn btn-danger btn-block" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#userDeleteModal">
 										<b>회원삭제</b>
 									</button>
 								</div>
@@ -86,11 +104,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 						</div>
 						<!-- /.col -->
-						<div class="col-md-9">
+						<div class="col-md-8">
 							<div class="card">
 								<div class="card-header p-2">
 									<ul class="nav nav-pills">
-										<li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">최근에 올린 게시물</a></li>
+										<li class="nav-item"><a class="nav-link active">최근에 올린 게시물</a></li>
 									</ul>
 								</div>
 								<!-- /.card-header -->

@@ -2,6 +2,7 @@ package com.hta.project.service;
 
 import java.util.List;
 
+import com.hta.project.domain.Member;
 import com.hta.project.domain.Notice;
 
 public interface AdminService {

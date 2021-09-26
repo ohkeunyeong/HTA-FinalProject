@@ -20,6 +20,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- Google Font: Source Sans Pro -->
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/plugins/jquery/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jjs/main.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
@@ -61,7 +62,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 								<div class="card-header">
 									<span>회원목록</span> <a class="float-right" href="userList">더보기></a>
 								</div>
-								<div class="card-body">
+								<div class="card-body mainUserListBody">
 									<table class="table table-striped table-bordered">
 										<thead>
 											<tr>
@@ -73,24 +74,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>자바</td>
-												<td>
-													<a href="userInfo">javas</a>
-												</td>
-												<td>JavaSCR</td>
-												<td>JavaFarm</td>
-												<td>농장멤버</td>
-											</tr>
-											<tr>
-												<td>스프링</td>
-												<td>
-													<a href="userInfo">Spring</a>
-												</td>
-												<td>SpringS</td>
-												<td></td>
-												<td>일반멤버</td>
-											</tr>
 										</tbody>
 									</table>
 								</div>

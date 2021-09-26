@@ -25,6 +25,13 @@
 	
 	<context:component-scan base-package="com.hta.project" />
 	
+	<beans:bean id="AdminInterceptor" class="com.hta.project.interceptor.AdminInterceptor"></beans:bean>
 	
+	<interceptors>
+		<interceptor>
+			<mapping path="/admin/**"/>
+			<beans:ref bean = "AdminInterceptor" />
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>

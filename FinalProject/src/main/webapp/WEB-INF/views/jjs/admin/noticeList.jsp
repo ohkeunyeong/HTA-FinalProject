@@ -168,7 +168,7 @@ a:not([href]) {
 								</c:if>
 
 								<c:if test="${listcount == 0 }">
-									<font size=5>등록된 글이 없습니다.</font>
+									<p class="text-center h2 mt-3 mb-3"><span>등록된 글이 없습니다.</span></p>
 								</c:if>
 
 							</div>

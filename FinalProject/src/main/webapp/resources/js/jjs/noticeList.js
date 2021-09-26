@@ -102,7 +102,7 @@ function searchajax(sdata) {
 			}else if(data.listcount == 0){
 				$("tbody").remove();
 				$(".pagination").empty();
-				$('.selectionDeleteBtn').remove();
+				$('.selectionDelete').remove();
 			}
 		}
 	})
