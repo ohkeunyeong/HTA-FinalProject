@@ -1,6 +1,7 @@
 package com.hta.project.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ public class OkyMynongDAO {
 		return sqlSession.selectOne("Mynong.selectid", id);
 	}
 
-	public List<OkyImsi> getUserList(String id) {//멤버 아이디와 닉 검색
-		return sqlSession.selectList("Mynong.list", id);
+	public List<OkyImsi> getUserList(OkyImsi okyimsi) {//멤버 아이디와 닉 검색
+		return sqlSession.selectList("Mynong.list", okyimsi);
 	}
 
 
@@ -35,5 +36,29 @@ public class OkyMynongDAO {
 		sqlSession.update("Mynong.addnong", okyimsi);
 		
 	}
+
+	public int insertusertonong(OkyImsi okyimsi) {
+		return sqlSession.update("Mynong.insertusertonong", okyimsi);
+	}
+
+	public List<OkyImsi> checkid(OkyImsi okyimsi) {
+		return sqlSession.selectList("Mynong.checkid", okyimsi);
+	}
+
+	public List<OkyImsi> getUserList2(OkyImsi okyimsi) {
+		return sqlSession.selectList("Mynong.list2", okyimsi);
+	}
+
+	public List<OkyImsi> getUserList3(Map<String, Object> map) {
+		return sqlSession.selectList("Mynong.list3", map);
+	}
+
+	public int getSearchListCount(String name) {
+		return sqlSession.selectOne("Mynong.searchCount", name);
+	}
+
+
+
+
 
 }

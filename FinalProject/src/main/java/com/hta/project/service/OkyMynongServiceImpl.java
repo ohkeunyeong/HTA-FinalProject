@@ -2,6 +2,7 @@ package com.hta.project.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,8 +46,8 @@ public class OkyMynongServiceImpl implements OkyMynongService {
 
 
 	@Override
-	public List<OkyImsi> getUserList(String id) {
-		return dao.getUserList(id);
+	public List<OkyImsi> getUserList(OkyImsi okyimsi) {
+		return dao.getUserList(okyimsi);
 	}
 
 
@@ -55,4 +56,47 @@ public class OkyMynongServiceImpl implements OkyMynongService {
 		dao.insertNongName(okyimsi);
 		
 	}
+
+
+	@Override
+	public int insertusertonong(OkyImsi okyimsi) {
+		return dao.insertusertonong(okyimsi);
+	}
+
+
+	@Override
+	public List<OkyImsi> checkid(OkyImsi okyimsi) {
+		return dao.checkid(okyimsi);
+	}
+
+
+	@Override
+	public List<OkyImsi> getUserList2(OkyImsi okyimsi) {
+		return dao.getUserList2(okyimsi);
+	}
+
+
+	@Override
+	public List<OkyImsi> getUserList3(int page, int limit, String name) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		int startrow = (page -1) * limit +1;
+		int endrow = startrow + limit - 1;
+		map.put("start", startrow);
+		map.put("end", endrow);
+		map.put("MYNONG_NAME", name);
+		return dao.getUserList3(map);
+	}
+
+
+	@Override
+	public int getSearchListCount(String name) {
+		return dao.getSearchListCount(name);
+	}
+
+
+
+
+
+
+
 }
