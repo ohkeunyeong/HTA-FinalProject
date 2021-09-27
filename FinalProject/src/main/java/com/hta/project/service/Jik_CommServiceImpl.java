@@ -13,7 +13,7 @@ import com.hta.project.domain.Jik_Comm;
 
 
 @Service
-public class CommentServiceImpl implements Jik_CommService{
+public class Jik_CommServiceImpl implements Jik_CommService{
 
 	@Autowired
 	private Jik_CommDAO dao;

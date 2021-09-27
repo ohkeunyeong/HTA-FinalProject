@@ -21,6 +21,8 @@ public interface JikService {
 	
 	public void insertJik(Jik jik);
 
+	public int insert_deleteFile(String before_file);
+
 
 
 	

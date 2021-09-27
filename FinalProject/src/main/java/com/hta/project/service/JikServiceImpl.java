@@ -64,6 +64,12 @@ public class JikServiceImpl implements JikService{
 		dao.insertJik(jik);
 	}
 
+	@Override
+	public int insert_deleteFile(String before_file) {
+		return dao.insert_deleteFile(before_file);
+		
+	}
+
 
 
 }

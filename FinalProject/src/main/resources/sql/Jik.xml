@@ -51,11 +51,11 @@
  	 <update id= "modify" parameterType="jik">
  		update jik
  		set 
- 			JIK_SUBJECT=#{JIK_SUBJECT},
- 			JIK_CONTENT=#{JIK_CONTENT},
- 			JIK_FILE=#{JIK_FILE},
- 			JIK_ORIGINAL=#{JIK_ORIGINAL}
- 		where JIK_NUM=#{JIK_NUM}
+ 			jik_subject=#{jik_subject},
+ 			jik_content=#{jik_content},
+ 			jik_file=#{jik_file},
+ 			jik_original=#{jik_original}
+ 		where jik_num=#{jik_num}
  	</update>
  	
  	<delete id= "delete" parameterType="jik">
@@ -63,4 +63,13 @@
 		where jik_num=#{jik_num}
 	</delete>
  	
+ 	 <insert id="insert_deleteFile" parameterType="String">
+ 		insert into delete_file
+ 		values(#{file})
+ 	</insert>
+ 	
+ 	<!-- 삭제할 파일들의 목록을 구합니다. -->
+ 	<select id="deleteFileList" resultType="String">
+ 		select board_file from delete_file
+ 	</select>
  </mapper>

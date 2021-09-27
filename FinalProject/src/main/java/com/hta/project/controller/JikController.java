@@ -240,6 +240,73 @@ public class JikController {
 			return mv;
 		}
 	
+	@PostMapping("/modifyAction")
+	public String BoardModifyAction(Jik jikdata, String before_file,
+			String check, Model mv, HttpServletRequest request,
+			RedirectAttributes rattr
+			) throws Exception {
+
+		String url="";
+
+		MultipartFile uploadfile = jikdata.getUploadfile();
+		//String saveFolder =
+		//request.getSession().getServletContext().getRealPath("resources")+"/upload/";
+		
+		if(check != null && !check.equals("")) { // 기존파일 그대로 사용하는 경우입니다.
+			logger.info("기존파일 그대로 사용합니다.");
+			jikdata.setJik_original(check);
+			//<input type="hidden" name="BOARD_FILE" value="${jikdata.BOARD_FILE}>
+			//위 문장 때문에 BOARD.setBOARD_FILE()값은 자동 저장됩니다.
+		} else {
+			
+			if(uploadfile!=null && !uploadfile.isEmpty()) {
+				logger.info("파일 변경되었습니다.");
+				//답변글을 수정할 경우 <input type="file" id="upfile" name="uploadfile">
+				//엘리먼트가 존재하지 않아
+				//private MultipartFile uploadfile;에서 uploadfile는 null입니다.
+				
+				String fileName = uploadfile.getOriginalFilename(); //원래 파일명
+				jikdata.setJik_original(fileName);
+				
+				String fileDBName = fileDBName(fileName, saveFolder);
+				
+				// transferTo(File path) : 업로드한 파일을 매개변수의 경로에 저장합니다.
+				uploadfile.transferTo(new File(saveFolder + fileDBName));
+				
+				// 바뀐 파일명으로 저장
+				jikdata.setJik_file(fileDBName);
+			}else { // uploadfile.isEmpty() 인 경우 - 파일 선택하지 않은 경우
+				logger.info("선택 파일 없습니다.");
+				//<input type="hidden" name="BOARD_FILE" value="${jikdata.BOARD_FILE}>
+				//위 태그에 값이 있다면 ""로 값을 변경합니다.
+				jikdata.setJik_file("");//""로 초기화 합니다.
+				jikdata.setJik_original("");//""로 초기화 합니다.
+			}//else end
+		}//else end
+		
+		//DAO에서 수정 메서드 호출하여 수정합니다.
+		int result = jikService.jikModify(jikdata);
+		// 수정에 실패한 경우
+		if(result == 0) {
+			logger.info("게시판 수정 실패");
+			mv.addAttribute("url", request.getRequestURL());
+			mv.addAttribute("message", "게시판 수정 실패");
+		}else { // 수정 성공의 경우
+			logger.info("게시판 수정 완료");
+			// 수정한 글 내용을 보여주기 위해 글 내용 보기 보기 페이지로 이동하기 위해 경로를 설정합니다.
+			url = "redirect:detail";
+			rattr.addAttribute("num", jikdata.getJik_num());
+			
+			//수정 성공한 경우
+			//파일 삭제를 위해 추가한 부분
+			//수정 전에 파일이 있고 새로운 파일을 선택한 경우는 삭제할 목록을 테이블에 추가합니다.
+			if(!before_file.equals("") && !before_file.equals(jikdata.getJik_file())) {
+				jikService.insert_deleteFile(before_file);
+			}
+		}
+		return url;
+	}
+	
 	@PostMapping("/delete")	
 	public String JikDeleteAction(int num,
 			Model mv,RedirectAttributes rattr,
@@ -268,14 +335,12 @@ public class JikController {
 			HttpServletRequest request, String original,
 			HttpServletResponse response) throws Exception{
 		
-		String savePath = "resources/upload";
 		
 		ServletContext context = request.getSession().getServletContext();
-		String sDownloadPath = context.getRealPath(savePath);
 		
 		// String sFilePath = sDownloadPath + "\\" + fileName;
 		
-		String sFilePath = sDownloadPath + "/" + filename;
+		String sFilePath = saveFolder + "/" + filename;
 		logger.info(sFilePath);
 		
 		byte b[] = new byte[4096];
