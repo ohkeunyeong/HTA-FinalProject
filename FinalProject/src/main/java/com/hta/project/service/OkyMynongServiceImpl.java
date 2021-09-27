@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hta.project.dao.OkyMynongDAO;
-import com.hta.project.domain.OkyImsi;
+import com.hta.project.domain.Member;
 
 @Service
 public class OkyMynongServiceImpl implements OkyMynongService {
@@ -24,8 +24,8 @@ public class OkyMynongServiceImpl implements OkyMynongService {
 
 
 	@Override
-	public int isName(String MYNONG_NAME) {
-		String pan = dao.isName(MYNONG_NAME);
+	public int isName(String mynong_name) {
+		String pan = dao.isName(mynong_name);
 		int result = -1; //중복된 이름의 농장 없을경우
 		if(pan !=null) { //농장 이름 중복
 			result = 0;
@@ -46,44 +46,44 @@ public class OkyMynongServiceImpl implements OkyMynongService {
 
 
 	@Override
-	public List<OkyImsi> getUserList(OkyImsi okyimsi) {
-		return dao.getUserList(okyimsi);
+	public List<Member> getUserList(Member member) {
+		return dao.getUserList(member);
 	}
 
 
 	@Override
-	public void insertNongName(OkyImsi okyimsi) {
-		dao.insertNongName(okyimsi);
+	public void insertNongName(Member member) {
+		dao.insertNongName(member);
 		
 	}
 
 
 	@Override
-	public int insertusertonong(OkyImsi okyimsi) {
-		return dao.insertusertonong(okyimsi);
+	public int insertusertonong(Member member) {
+		return dao.insertusertonong(member);
 	}
 
 
 	@Override
-	public List<OkyImsi> checkid(OkyImsi okyimsi) {
-		return dao.checkid(okyimsi);
+	public List<Member> checkid(Member member) {
+		return dao.checkid(member);
 	}
 
 
 	@Override
-	public List<OkyImsi> getUserList2(OkyImsi okyimsi) {
-		return dao.getUserList2(okyimsi);
+	public List<Member> getUserList2(Member member) {
+		return dao.getUserList2(member);
 	}
 
 
 	@Override
-	public List<OkyImsi> getUserList3(int page, int limit, String name) {
+	public List<Member> getUserList3(int page, int limit, String name) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		int startrow = (page -1) * limit +1;
 		int endrow = startrow + limit - 1;
 		map.put("start", startrow);
 		map.put("end", endrow);
-		map.put("MYNONG_NAME", name);
+		map.put("mynong_name", name);
 		return dao.getUserList3(map);
 	}
 
@@ -91,6 +91,26 @@ public class OkyMynongServiceImpl implements OkyMynongService {
 	@Override
 	public int getSearchListCount(String name) {
 		return dao.getSearchListCount(name);
+	}
+
+
+	@Override
+	public int checkmyfarm(String id) {
+		String pan = dao.checkmyfarm(id);
+		System.out.println("check farm은 " + pan);
+		int ck = 0; //MY_FARM 값이 0인 경우
+		if (pan.equals("1")) {//관리자
+			ck = 1;
+		} else if (pan.equals("2")){//일반멤버
+			ck = 2;
+		}
+		return ck;
+	}
+
+
+	@Override
+	public String getMynong(String id) {
+		return dao.getMynong(id);
 	}
 
 

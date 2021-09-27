@@ -7,7 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.hta.project.domain.OkyImsi;
+import com.hta.project.domain.Member;
 
 @Repository
 public class OkyMynongDAO {
@@ -19,42 +19,50 @@ public class OkyMynongDAO {
 		return sqlSession.insert("Mynong.insert" , name);
 	}
 
-	public String isName(String MYNONG_NAME) {//내 농장 이름중복확인
-		return sqlSession.selectOne("Mynong.select", MYNONG_NAME);
+	public String isName(String mynong_name) {//내 농장 이름중복확인
+		return sqlSession.selectOne("Mynong.select", mynong_name);
 	}
 
 	public String isId(String id) {// 아이디 검색
 		return sqlSession.selectOne("Mynong.selectid", id);
 	}
 
-	public List<OkyImsi> getUserList(OkyImsi okyimsi) {//멤버 아이디와 닉 검색
-		return sqlSession.selectList("Mynong.list", okyimsi);
+	public List<Member> getUserList(Member member) {//멤버 아이디와 닉 검색
+		return sqlSession.selectList("Mynong.list", member);
 	}
 
 
-	public void insertNongName(OkyImsi okyimsi) { //농장 생성후 회원 정보에 농장 이름 넣기
-		sqlSession.update("Mynong.addnong", okyimsi);
+	public void insertNongName(Member member) { //농장 생성후 회원 정보에 농장 이름 넣기
+		sqlSession.update("Mynong.addnong", member);
 		
 	}
 
-	public int insertusertonong(OkyImsi okyimsi) {
-		return sqlSession.update("Mynong.insertusertonong", okyimsi);
+	public int insertusertonong(Member member) {
+		return sqlSession.update("Mynong.insertusertonong", member);
 	}
 
-	public List<OkyImsi> checkid(OkyImsi okyimsi) {
-		return sqlSession.selectList("Mynong.checkid", okyimsi);
+	public List<Member> checkid(Member member) {
+		return sqlSession.selectList("Mynong.checkid", member);
 	}
 
-	public List<OkyImsi> getUserList2(OkyImsi okyimsi) {
-		return sqlSession.selectList("Mynong.list2", okyimsi);
+	public List<Member> getUserList2(Member member) {
+		return sqlSession.selectList("Mynong.list2", member);
 	}
 
-	public List<OkyImsi> getUserList3(Map<String, Object> map) {
+	public List<Member> getUserList3(Map<String, Object> map) {
 		return sqlSession.selectList("Mynong.list3", map);
 	}
 
 	public int getSearchListCount(String name) {
 		return sqlSession.selectOne("Mynong.searchCount", name);
+	}
+
+	public String checkmyfarm(String id) {
+		return sqlSession.selectOne("Mynong.checkmyfarm", id);
+	}
+
+	public String getMynong(String id) {
+		return sqlSession.selectOne("Mynong.getmynong", id);
 	}
 
 

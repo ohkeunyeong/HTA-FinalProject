@@ -1,14 +1,16 @@
 package com.hta.project.domain;
 
 public class OkyMynong {
-	private String MYNONG_NAME; //농장명
+	private String mynong_name; //농장명
 
-	public String getMYNONG_NAME() {
-		return MYNONG_NAME;
+	public String getMynong_name() {
+		return mynong_name;
 	}
 
-	public void setMYNONG_NAME(String mYNONG_NAME) {
-		MYNONG_NAME = mYNONG_NAME;
+	public void setMynong_name(String mynong_name) {
+		this.mynong_name = mynong_name;
 	}
+
+	
 	
 }

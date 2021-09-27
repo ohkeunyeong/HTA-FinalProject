@@ -6,54 +6,54 @@
 <mapper namespace="Mynong">
 
 <insert id="insert" parameterType="String">
-insert into mynong values (#{MYNONG_NAME})
+insert into mynong values (#{mynong_name})
 </insert>
 
 <select id="select" parameterType="String" resultType="String">
-select * from mynong where MYNONG_NAME = #{MYNONG_NAME}
+select * from mynong where MYNONG_NAME = #{mynong_name}
 </select>
 
 <select id="selectid" parameterType="String" resultType="String">
 select * from member where id = #{id}
 </select>
 
-<select id="list" parameterType="okyimsi" resultType="okyimsi">
-select ID, NICK from member where id = #{ID}
+<select id="list" parameterType="member" resultType="member">
+select ID, NICK from member where id = #{id}
 </select>
 
-<update id="addnong" parameterType="okyimsi">
+<update id="addnong" parameterType="member">
  update member
  set
-   MYNONG_NAME = #{MYNONG_NAME},
+   MYNONG_NAME = #{mynong_name},
    MY_FARM = '1'
-  where id = #{ID}
+  where id = #{id}
 </update>
 
-<update id="insertusertonong" parameterType="okyimsi">
+<update id="insertusertonong" parameterType="member">
  update member
  set
-   MYNONG_NAME = #{MYNONG_NAME},
+   MYNONG_NAME = #{mynong_name},
    MY_FARM = '2'
-  where id = #{ID}
+  where id = #{id}
 </update>
 
-<select id="checkid"  parameterType="okyimsi" resultType="okyimsi">
+<select id="checkid"  parameterType="member" resultType="member">
  select ID from member 
- where id = #{ID} and MYNONG_NAME = #{MYNONG_NAME}
+ where id = #{id} and MYNONG_NAME = #{mynong_name}
 </select>
 
-<select id="list2" parameterType="okyimsi" resultType="okyimsi">
-select ID, NICK from member where MYNONG_NAME = #{MYNONG_NAME} and MY_FARM = '2'
+<select id="list2" parameterType="member" resultType="member">
+select ID, NICK from member where MYNONG_NAME = #{mynong_name} and MY_FARM = '2'
 </select>
 
 
-<select id="list3" parameterType="map" resultType="okyimsi">
+<select id="list3" parameterType="map" resultType="member">
 select ID, NICK
  from ( select rownum rnum, b.*
          from ( select *
                 from member
-                where MYNONG_NAME = #{MYNONG_NAME} and MY_FARM = '2'
-                order by ID
+                where MYNONG_NAME = #{mynong_name} and MY_FARM = '2'
+                order by id
                )b
            )
        where rnum &gt;= #{start} and rnum &lt;= #{end}
@@ -62,8 +62,19 @@ select ID, NICK
 <select id ="searchCount" parameterType="String" resultType="int">
  select count(*)
  from member
- where MYNONG_NAME = #{MYNONG_NAME} and MY_FARM = '2'
+ where MYNONG_NAME = #{mynong_name} and MY_FARM = '2'
 </select>
 
+<select id ="checkmyfarm" parameterType="String" resultType="String">
+ select MY_FARM
+ from member
+ where id = #{id}
+</select>
+
+<select id ="getmynong" parameterType="String" resultType="String">
+ select MYNONG_NAME
+ from member
+ where id = #{id}
+</select>
 </mapper>
 

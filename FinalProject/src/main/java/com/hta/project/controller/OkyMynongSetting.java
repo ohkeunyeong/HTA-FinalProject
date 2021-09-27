@@ -1,11 +1,16 @@
 //내농장 관리컨트롤러
 package com.hta.project.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.hta.project.domain.OkyImsi;
+import com.hta.project.domain.Member;
 import com.hta.project.service.OkyMynongService;
 
 @Controller
@@ -33,12 +38,36 @@ public class OkyMynongSetting {
     //내농장에 추가할 유저 아이디 확인
     @ResponseBody
     @RequestMapping(value = "/okyidcheck")
-    public Map<String, Object> idcheck(OkyImsi okyimsi) {
-    	logger.info("검색한 유저 아이디 :" +okyimsi.getID());
-    	List<OkyImsi> list = okymynongservice.getUserList(okyimsi);
+    public Map<String, Object> idcheck(Member member) {
+    	logger.info("검색한 유저 아이디 :" +member.getId());
+    	List<Member> list = okymynongservice.getUserList(member);
     	Map<String,Object> map = new HashMap<String, Object>();
     	map.put("list", list);    	
      	return map ;
+    }
+    
+    //농장관리 메인에서 버튼 클릭 시
+    @GetMapping("/mynongprocess")
+    public ModelAndView mynongprocess (String id, ModelAndView mv,HttpServletRequest request,
+    		HttpServletResponse response, HttpSession session)
+    		throws  ServletException, IOException{   	
+    	String mynongname = okymynongservice.getMynong(id); //아이디가 속해있는 농장이름 가져오기
+    	int checkmyfarm = okymynongservice.checkmyfarm(id); //MY_FARM 이 뭔값인지 확인
+    	logger.info("/mynongprocess checkmyfarm 값은: " +checkmyfarm);
+    	if(checkmyfarm != 1) { //myfarm값이 2일시
+    		response.setContentType("text/html;charset=utf-8");
+    		PrintWriter out =response.getWriter();
+			logger.info("/mynongprocess 농장관리 접근 권한이 없는 회원");
+			out.println("<script>");
+			out.println("alert('접근 권한이 없습니다.');");
+			out.println("history.back()");
+			out.println("</script>");
+			out.close();
+			return null;
+    	}
+    	logger.info("mynongprocess 에서 검색된 내 농장 이름: " +mynongname);
+    	mv.setViewName("redirect:mynong?name=" + mynongname + "&id=" + id); 
+    	return mv;   	
     }
     
     //농장관리 
@@ -47,8 +76,17 @@ public class OkyMynongSetting {
     		@RequestParam(value = "page", defaultValue = "1", required = false) int page,
 			@RequestParam(value = "limit", defaultValue = "3", required = false) int limit,
 			String name, String id, ModelAndView mv, 
-			HttpServletRequest request) {
-    	List<OkyImsi> list = null;
+			HttpServletRequest request,  HttpSession session, HttpServletResponse response) {
+    	try {
+    	String sessionid=(String)session.getAttribute("id");
+    	if (!(sessionid.equals(id)) || sessionid==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+			logger.info("농장관리보기 실패");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");    	
+			return mv;
+    	}
+    	List<Member> list = null;
     	int listcount = 0;
     	list = okymynongservice.getUserList3(page,limit, name); //농장에 있는 모든 멤버 보여줌
     	listcount = okymynongservice.getSearchListCount(name); //농장에 있는 모든 멤버 수 구하기
@@ -87,20 +125,31 @@ public class OkyMynongSetting {
 			mv.setViewName("oky/mynongsetting");
 		}
 		return mv;
+    	} catch (NullPointerException e) {
+    		logger.info("비회원 접근");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");    	
+			return mv;
+    	} 
 	}
     
     //내 농장에 구성원 추가
     @RequestMapping(value = "/okyaddid")
     public ModelAndView addid(@RequestParam(value = "page", defaultValue = "1", required = false) int page,
 			@RequestParam(value = "limit", defaultValue = "3", required = false) int limit,
-    		@RequestParam("ID") String id,@RequestParam("admin") String admin,
-    		                 @RequestParam("MYNONG_NAME") String MYNONG_NAME,
-    		                    OkyImsi okyimsi,
+    		@RequestParam("id") String id,@RequestParam("admin") String admin,
+    		                 @RequestParam("mynong_name") String mynong_name,
+    		                    Member member,
     		                    ModelAndView mv, 
     		                    HttpServletRequest request) {
     	logger.info("추가할 유저 아이디 :" +id);
-    	logger.info("농장 이름: " + okyimsi.getMYNONG_NAME());
-    	List<OkyImsi> list1 =okymynongservice.checkid(okyimsi); //농장 멤버 중복 확인
+    	logger.info("농장 이름: " + member.getMynong_name());
+    	String nongname = okymynongservice.getMynong(id); //검색한 아이디 농장 이름 확인
+    	
+    	
+    	
+    	List<Member> list1 =okymynongservice.checkid(member); //농장 멤버 중복 확인
     	int pan1 = 0; //check id 확인용 
    	    if(!(list1.size()==0)) {
    	    	pan1 = 1;
@@ -109,34 +158,13 @@ public class OkyMynongSetting {
    	    System.out.println("페이지" +page);
    	    logger.info("checkid =" +pan1);
     	logger.info("checkidlist =" +list1);
-    	int pan2 = okymynongservice.insertusertonong(okyimsi); //농장에 멤버 삽입
+    	int pan2 = okymynongservice.insertusertonong(member); //농장에 멤버 삽입
     	logger.info("insertusertonong =" +pan2);
-    	List<OkyImsi> list2 = okymynongservice.getUserList2(okyimsi); //농장에 있는 모든 멤버 보여줌
-    	int listcount = okymynongservice.getSearchListCount(okyimsi.getMYNONG_NAME()); //농장에 있는 모든 멤버 수 구하기
+    	List<Member> list2 = okymynongservice.getUserList2(member); //농장에 있는 모든 멤버 보여줌
+    	int listcount = okymynongservice.getSearchListCount(member.getMynong_name()); //농장에 있는 모든 멤버 수 구하기
     	logger.info("해당 농장 유저 리스트 =" +list2);
     	logger.info("해당 농장 맴버 수 =" +listcount);
-//        // 총 페이지 수
-//		int maxpage = (listcount + limit - 1) / limit;
-//		
-//		// 현재 페이지에 보여줄 시작 페이지 수 (1, 11, 21 등..)
-//		int startpage = ((page -1) / 10) * 10 + 1;
-//		
-//		// 현재 페이지에 보여줄 마지막 페이지 수 (10, 20, 30 등..)
-//		int endpage = startpage + 10 -1;
-//		
-//		if (endpage > maxpage)
-//			endpage =maxpage;
-//		
-
-//     	mv.addObject("mynong_name", MYNONG_NAME);
-//		mv.addObject("id", admin);
-//		mv.addObject("memberlist", list2);
-//		mv.addObject("page", page);
-//		mv.addObject("maxpage", maxpage);
-//		mv.addObject("startpage", startpage);
-//		mv.addObject("endpage", endpage);
-//		mv.addObject("listcount", listcount);
-		mv.setViewName("redirect:mynong?name=" + okyimsi.getMYNONG_NAME() + "&id=" + admin);
+		mv.setViewName("redirect:mynong?name=" + member.getMynong_name() + "&id=" + admin);
 	return mv;
     }    
 }
