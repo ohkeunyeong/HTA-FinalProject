@@ -41,7 +41,7 @@ $(function() {
 		  }		  
 		  $.ajax({
         	  url : "okynamecheck",
-        	  data : {"MYNONG_NAME" : name},
+        	  data : {"mynong_name" : name},
         	  success : function(resp) {
         		  if (resp == -1) {//db에 해당 id가 없는 경우
         			  $("#message").css('color', 'blue').html(
@@ -62,11 +62,11 @@ $(function() {
 <body>
 <jsp:include page="../main/header.jsp" /> 
  <form name="createform" action="createProcess" method="post">
-<input type="hidden" id="id" value="admin" name="ID">
+<input type="hidden" id="id" value="${id}" name="id">
 <h1>내 농장 만들기</h1>
 <div>농장명은 영문자 숫자로 최대 10글자까지 가능합니다</div>
 <div>농장명 :
-<input type="text" name="MYNONG_NAME" id="name" placeholder="입력해주세요" required maxLength="10">
+<input type="text" name="mynong_name" id="name" placeholder="입력해주세요" required maxLength="10">
 <span id="message"></span>
 </div>
 <button type="submit" class="submitbtn">농장생성</button>

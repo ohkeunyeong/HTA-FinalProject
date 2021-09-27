@@ -2,7 +2,7 @@ package com.hta.project.service;
 
 import java.util.List;
 
-import com.hta.project.domain.OkyImsi;
+import com.hta.project.domain.Member;
 
 public interface OkyMynongService {
 	
@@ -10,32 +10,39 @@ public interface OkyMynongService {
 	public int insertName(String name);
 
 	//농장 이름 중복확인
-	public int isName(String MYNONG_NAME);
+	public int isName(String mynong_name);
 	
 	//아이디 검색
 	public int isId(String id);
 	
 	//유저 아이디랑 닉네임 가져오기
-	public List<OkyImsi> getUserList(OkyImsi okyimsi);
+	public List<Member> getUserList(Member member);
 	
 	//생성된 농장이름 유저 정보에 넣기
-	public void insertNongName(OkyImsi okyimsi);
+	public void insertNongName(Member member);
 	
 	//농장에 유저 추가 
-	public int insertusertonong(OkyImsi okyimsi);
+	public int insertusertonong(Member member);
 
 	
 	//기존에 있는 유저인지 확인
-	public List<OkyImsi> checkid(OkyImsi okyimsi);
+	public List<Member> checkid(Member member);
 
 	//해당 농장 유저 아이디랑 닉네임 가져오기
-	public List<OkyImsi> getUserList2(OkyImsi okyimsi);
+	public List<Member> getUserList2(Member member);
 	
 	//해당 농장 유저 아이디랑 닉네임 가져오기
-	public List<OkyImsi> getUserList3(int page, int limit, String name);
+	public List<Member> getUserList3(int page, int limit, String name);
 
 	//해당 농장 모든 멤버 수 구해옴
 	public int getSearchListCount(String name);
+	
+	//MY_FARM 구하기
+	public int checkmyfarm(String id);
+	
+	//아이디 소속됭 농장 이름 가져오기
+	public String getMynong(String id);
+
 
 
 

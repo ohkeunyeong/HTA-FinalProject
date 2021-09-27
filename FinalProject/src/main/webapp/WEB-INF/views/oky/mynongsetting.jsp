@@ -13,30 +13,13 @@ $(function() {
 	$(document).keypress(function(e) { //엔터키 방지
 		if (e.keyCode == 13) e.preventDefault(); 
 		});
-	
-	   $('form').submit(function () {
-		  var name = $("#name").val();
-		  var pattern = /^\w{1,10}$/;
-		  if(!pattern.test(name)){
-			  console.log(name)
-			  alert('농장명은 영문자 숫자_로 최대 10글자까지 가능합니다');
-			  $("#name").val('').focus();
-			  return false;
-		  }		  
-		  if(!checkname) {
-			  alert('중복된 농장 이름입니다. 다시 확인하세요')
-			  $("#name").val('').focus();
-			  return false;
-		  }
-	  }); //submit end 	  
-
-		  
+			  
 	  $("#search").on('click', function(){
 		  var admin = $("#id").val();
 		  var id = $("#idck").val();
 		  $.ajax({
         	  url : "okyidcheck",
-        	  data : {"ID" : id},
+        	  data : {"id" : id},
         	  success : function(data) {
         		  console.log(data)
         		  if (data.list.length > 0) {//db에 해당 id가 있는경우
@@ -52,23 +35,7 @@ $(function() {
         					 "회원 아이디: " + item.id + "<br>"  + "회원 닉네임: "  + item.nick );
         			  $("#message3").html(
         					  '<button type="submit"  id="add" name="add">'+"추가하기"+ '</button>');
-        			  $("#okuse").show();
-        			  
-/*         			  $("#add").click(function(){
-        				  var id = $("#idck").val();     
-        		    	  location.href="okyaddid";
-         				  $.ajax({
-        		        	  url : "okyaddid",
-        		        	  data : {"ID" : id, "MYNONG_NAME" : ${mynong_name}},
-        		        	  success : function(data) {
-        		        	  
-        		              if( data.listcount>0) { //총 멤버가 한명 이상인 경우
-        		               #
-        		            	  
-        		              }
-        		        	  }
-        		          });//ajax end   
-        			  }); //$("#search").on('click') end    */ 					
+        			  $("#okuse").show();			
         				}	  
         			  )
         		  } else {//db에 해당 id가 없는경우
@@ -84,7 +51,7 @@ $(function() {
 </head>
 <body>
 <jsp:include page="../main/header.jsp" /> 
-<input type="hidden" id="id" value="admin" name="ID">
+<input type="hidden" id="id" value="${id}" name="id">
 <h1>내 농장 관리</h1>
 <div>농장명 : ${mynong_name}<br>
      관리자 아이디 : ${id}
@@ -111,10 +78,10 @@ $(function() {
        <c:forEach var="m" items="${memberlist}">
          <tr>
            <td>
-               <a href="info?id=${m.ID}">${m.ID}</a>
+               <a href="info?id=${m.id}">${m.id}</a>
            </td>
-          <td>${m.NICK}</td>
-          <td><a href="delete?id=${m.ID}">삭제</a></td>
+          <td>${m.nick}</td>
+          <td><a href="delete?id=${m.id}">삭제</a></td>
           </tr>
          </c:forEach>         
      </tbody>
@@ -188,9 +155,9 @@ $(function() {
 
         <div class="modal-body">
                    <form id="my-form" action="${pageContext.request.contextPath}/okyaddid" method="post">
-                   <input type="hidden" id="MYNONG_NAME" value="${mynong_name}" name="MYNONG_NAME">
+                   <input type="hidden" id="MYNONG_NAME" value="${mynong_name}" name="mynong_name">
                    <input type="hidden" id="admin" value="${id}" name="admin">
-                   <input type ="text" name="ID" id="idck" placeholder="아이디 입력">            
+                   <input type ="text" name="id" id="idck" placeholder="아이디 입력">            
                    <button type="button" id="search" class="searchid" >검색</button><br>
                    <span id="message2"></span><span id="message3"></span>
                    </form>

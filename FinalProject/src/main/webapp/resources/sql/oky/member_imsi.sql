@@ -29,3 +29,8 @@ insert into member values('test3', '1111', '테스트3', '테스트3', 'test2@gm
 insert into member values('test4', '1111', '테스트4', '테스트4', 'test2@gmail.com', '01012345678', '0', 'null', '0','')
 
 insert into member values('test5', '1111', '테스트5', '테스트5', 'test2@gmail.com', '01012345678', '0', 'null', '0','')
+
+insert into member values('test6', '1111', '테스트6', '테스트6', 'test2@gmail.com', '01012345678', '0', 'null', '0','')
+
+
+insert into member values('test7', '1111', '테스트7', '테스트7', 'test2@gmail.com', '01012345678', '0', 'null', '0','')
