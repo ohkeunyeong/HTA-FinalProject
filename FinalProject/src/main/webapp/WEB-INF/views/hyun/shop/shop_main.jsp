@@ -54,22 +54,152 @@ h5 {
 .recommendation .products>card-img-top {
 	height: 200px;
 }
+
+/* 슬라이드 배너 */
+* {margin:0;padding:0;box-sizing:border-box;}
+ul, li {list-style:none;} */
+
+[name="slide"] {display:none; }
+.slidebox {max-width:1000px;width:100%;margin:0 auto;text-align:center; }
+.slidebox img {max-width:100%; height:300px;}/*width:1000px에 height:300px;짜리 이미지를 넣어야 맞음 */
+.slidebox .slidelist {
+	white-space:nowrap;
+	font-size:0;
+	overflow:hidden;
+	height:300px;
+}
+.slidebox .slideitem {
+	position:relative;
+	display:inline-block;
+	vertical-align:middle;
+	width:100%;
+	transition:all .35s;
+}
+.slidebox .slideitem label {
+	position:absolute;
+	z-index:1;
+	top:50%;
+	transform:translateY(-50%);
+	padding:20px;
+	border-radius:50%;
+	cursor:pointer;
+}
+label.left {
+	left:20px;
+	/* background-color:#FFFFFF; */
+	background-image:url('${pageContext.request.contextPath}/resources/image/banner/left-arrow.png');
+	background-position:center center;
+	background-size:50%;
+	background-repeat:no-repeat;
+}
+label.right {
+	right:20px;
+	/* background-color:#FFFFFF; */
+	background-image:url('${pageContext.request.contextPath}/resources/image/banner/right-arrow.png');
+	background-position:center center;
+	background-size:50%;
+	background-repeat:no-repeat;
+}
+
+/* 페이징 스타일 */
+.paginglist {text-align:center;padding:30px 0;}
+.paginglist > li {display:inline-block;vertical-align:middle;margin:0 10px;}
+.paginglist > li > label {display:block;padding:10px 30px;border-radius:10px;background:#ccc;cursor:pointer;}
+.paginglist > li:hover > label {background:#333;}
+
+[id="slide01"]:checked ~ .slidelist .slideitem {transform:translateX(0);animation:slide01 20s infinite;}
+[id="slide02"]:checked ~ .slidelist .slideitem {transform:translateX(-100%);animation:slide02 20s infinite;}
+[id="slide03"]:checked ~ .slidelist .slideitem {transform:translateX(-200%);animation:slide03 20s infinite;}
+[id="slide04"]:checked ~ .slidelist .slideitem {transform:translateX(-300%);animation:slide04 20s infinite;}
+
+@keyframes slide01 {
+	0% {left:0%;}
+	23% {left:0%;}
+	25% {left:-100%;}
+	48% {left:-100%;}
+	50% {left:-200%;}
+	73% {left:-200%;}
+	75% {left:-300%;}
+	98% {left:-300%;}
+	100% {left:0%;}
+}
+@keyframes slide02 {
+	0% {left:0%;}
+	23% {left:0%;}
+	25% {left:-100%;}
+	48% {left:-100%;}
+	50% {left:-200%;}
+	73% {left:-200%;}
+	75% {left:100%;}
+	98% {left:100%;}
+	100% {left:0%;}
+}
+@keyframes slide03 {
+	0% {left:0%;}
+	23% {left:0%;}
+	25% {left:-100%;}
+	48% {left:-100%;}
+	50% {left:200%;}
+	73% {left:200%;}
+	75% {left:100%;}
+	98% {left:100%;}
+	100% {left:0%;}
+}
+@keyframes slide04 {
+	0% {left:0%;}
+	23% {left:0%;}
+	25% {left:300%;}
+	48% {left:300%;}
+	50% {left:200%;}
+	73% {left:200%;}
+	75% {left:100%;}
+	98% {left:100%;}
+	100% {left:0%;}
+}
+
 </style>
 </head>
 <body>
 	<jsp:include page="shop_header.jsp" />
 
-    <br><br><br>
-	<!-- 배너 -->
-	<div class="container-fluid p-3 my-1 bg-info text-white" style="height:330px;">
-	  <h1>3년간 베스트! 효과 직빵! ㅇㅇㅇ 살충제</h1>
-	  <p>This part is inside a .container-fluid class.</p>
-	  <p>The .container-fluid class provides a full width container, spanning the entire width of the viewport.</p>           
+    <br><br><br>    	
+    <div class="slidebox">
+	<input type="radio" name="slide" id="slide01" checked>
+	<input type="radio" name="slide" id="slide02">
+	<input type="radio" name="slide" id="slide03">
+	<input type="radio" name="slide" id="slide04">
+	<ul class="slidelist">
+		<li class="slideitem">
+			<div>
+				<label for="slide04" class="left"></label>
+				<label for="slide02" class="right"></label>
+				<a><img src="${pageContext.request.contextPath}/resources/image/banner/slideimg01.jpg"></a>
+			</div>
+		</li>
+		<li class="slideitem">
+			<div>
+				<label for="slide01" class="left"></label>
+				<label for="slide03" class="right"></label>
+				<a><img src="${pageContext.request.contextPath}/resources/image/banner/slideimg02.jpg"></a>
+			</div>
+		</li>
+		<li class="slideitem">
+			<div>
+				<label for="slide02" class="left"></label>
+				<label for="slide04" class="right"></label>
+				<a><img src="${pageContext.request.contextPath}/resources/image/banner/slideimg03.jpg"></a>
+			</div>
+		</li>
+		<li class="slideitem">
+			<div>
+				<label for="slide03" class="left"></label>
+				<label for="slide01" class="right"></label>
+				<a><img src="${pageContext.request.contextPath}/resources/image/banner/slideimg04.jpg"></a>
+			</div>
+		</li>
+	</ul>
 	</div>
 	
-	<center>
-	<img onmouseup="window.open('http://이벤트 페이지')" src="http://배너 이미지 경로 .jpg" style="cursor:pointer;">
-	</center>
 	
 	<!-- 굿즈 장터 내 네비게이션 바 -->
 	<div class="container">
@@ -105,7 +235,7 @@ h5 {
 					<h5 class="card-title">튼튼 호미(중)</h5>
 					<p class="card-text">얕은 땅을 팔 때 유용한 튼튼호미입니다. 가볍고 오래 사용해도 녹슬지
 						않습니다.</p>
-					<a href="#" class="btn btn-info">제품 보기</a>
+					<a href="shop_detail.jsp" class="btn btn-info">제품 보기</a>
 				</div>
 			</div>
 
