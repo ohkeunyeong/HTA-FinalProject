@@ -2,7 +2,7 @@
 <html>
 <head>
 	<jsp:include page="../../main/header.jsp" />
-	<script src="${pageContext.request.contextPath}/resources/chang_js/writeform.js"></script>
+	<script src="../resources/js/chang/writeform.js"></script>
 	<style>
 	h1{font-sie:1.5rem; text-align:center; color:#1a92b9}
 	.container{width:60%}
@@ -37,7 +37,7 @@
      <div class="form-group">
        <label for="jik_file">파일 첨부</label>
        <label for="upfile">
-       	  <img src="../resources/image/attach.png" alt="파일첨부">
+       	  <img src="../resources/image/chang/attach.png" alt="파일첨부">
        </label>
        <input type="file" id="upfile" name="uploadfile">
        <span id="filevalue"></span>

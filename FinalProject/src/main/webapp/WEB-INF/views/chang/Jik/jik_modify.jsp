@@ -4,7 +4,7 @@
 <head>
 	<title>MVC 게시판</title>
 	<jsp:include page="../../main/header.jsp" />
-	<script src="${pageContext.request.contextPath}/resources/chang_js/modifyform.js"></script>
+	<script src="../resources/js/chang/modifyform.js"></script>
 	<style>
 	.container{width:60%}
 	h1{font-sie:1.5rem; text-align:center; color:#1a92b9}
@@ -41,11 +41,11 @@
       <div class="form-group read">
          <label for="jik_file">파일 첨부</label>
          <label for="upfile">
-       	   <img src="../resources/image/attach.png" alt="파일첨부" width="20px">
+       	   <img src="../resources/image/chang/attach.png" alt="파일첨부" width="20px">
          </label>
          <input type="file" id="upfile" name="uploadfile">
          <span id="filevalue">${jikdata.jik_original}</span>
-        <img src="../resources/image/remove.png" alt="파일삭제" 
+        <img src="../resources/image/chang/remove.png" alt="파일삭제" 
         		  width="10px" class="remove">
      </div>
      

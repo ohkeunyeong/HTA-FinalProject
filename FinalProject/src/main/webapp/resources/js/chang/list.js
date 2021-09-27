@@ -31,25 +31,21 @@ function ajax(sdata){
 				var num=data.listcount - (data.page -1) * data.limit;
 				console.log(num)
 				var output = "<tbody>";
-				$(data.boardlist).each(
+				$(data.jiklist).each(
 						function(index,item){
-							output += '<tr><td>'+ item.board_NAME + '</td>'
-							blank_count = item.board_RE_LEV * 2 + 1;
-							blank = '&nbsp;';
-							for (var i = 0; i < blank_count; i++){
-								blank += '&nbsp;&nbsp;';
-							}
+							output += '<tr><td>'+ item.nick + '</td>'
+							
 							img="";
-							if (item.board_RE_LEV > 0){
-								img="<img src='../resources/image/line.gif'>";
+							if (item.jik_RE_LEV > 0){
+								img="<img src='../resources/image/chang/line.gif'>";
 							}
 							output += "<td><div>" + blank + img
 							output += ' <a href="detail?num=' + (num--) + '">'
-							output += item.board_SUBJECT.replace(/</g,'&lt;').replace(/>/g,'&gt;')
+							output += item.jik_SUBJECT.replace(/</g,'&lt;').replace(/>/g,'&gt;')
 									+'</a></div></td>'
-							output += '<td><div>' + item.board_NAME+'</div></td>'
-							output += '<td><div>' + item.board_DATE+'</div></td>'
-							output += '<td><div>' + item.board_READCOUNT
+							output += '<td><div>' + item.nick+'</div></td>'
+							output += '<td><div>' + item.jik_date+'</div></td>'
+							output += '<td><div>' + item.jik_readcount
 								    +'</div></td></tr>'
 						})//each end
 						output += "</tbody>"

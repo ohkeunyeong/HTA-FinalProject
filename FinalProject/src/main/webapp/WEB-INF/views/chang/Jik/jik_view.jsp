@@ -4,6 +4,7 @@
 <head>
 <title>MVC 게시판 - view</title>
  <jsp:include page="../../main/header.jsp" />
+<script src="../resources/chang_js/view3.js"></script>
 
 <style>
 body > div > table > tbody >tr:nth-child(1) {
@@ -78,7 +79,7 @@ form[action=down] > input[type=submit]{
  		<tr>
  			<td><div>첨부파일</div></td>
  		<c:if test="${!empty jikdata.jik_file}"><%--파일 첨부한 경우 --%>
- 		<td><img src="../resources/image/down.png" width="10px">
+ 		<td><img src="../resources/image/chang/down.png" width="10px">
  			<form method="post" action="down">
  				<input type="hidden" value="${jikdata.jik_file}" name="filename">
  				<input type="hidden" value="${jikdata.jik_original}" name="original">
@@ -104,10 +105,6 @@ form[action=down] > input[type=submit]{
  			 			data-target="#myModal">삭제</button>
  			 </a>
  			 </c:if>
- 			 
- 			<a href="replyView?num=${jikdata.jik_num}">
- 				<button class="btn btn-info">답변</button>
- 			</a>
  			
  			<a href="list">
  				<button class="btn btn-secondary">목록</button>
@@ -131,8 +128,8 @@ form[action=down] > input[type=submit]{
 		  	 	 --%>
 		  	 	 <input type="hidden" name="num" value="${param.num}"
 		  	 	 	  id="jik_num">
-
-		  	 	 	<button type="submit" class="btn btn-primary">전송</button>
+					정말로 삭제하시겠습니까?<br><br>
+		  	 	 	<button type="submit" class="btn btn-primary">삭제</button>
 		  	 	 	<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
 		  		 </form>
 		  		</div><!-- class="modal-body" -->

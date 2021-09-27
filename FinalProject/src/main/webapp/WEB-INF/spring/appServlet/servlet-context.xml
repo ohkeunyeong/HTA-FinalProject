@@ -27,6 +27,7 @@
 	
 	<beans:bean id="AdminInterceptor" class="com.hta.project.interceptor.AdminInterceptor"></beans:bean>
 	
+	
 	<interceptors>
 		<interceptor>
 			<mapping path="/admin/**"/>
@@ -34,4 +35,6 @@
 		</interceptor>
 	</interceptors>
 	
+	<context:property-placeholder
+				location="classpath:pro/savefolder.properties"/>
 </beans:beans>
