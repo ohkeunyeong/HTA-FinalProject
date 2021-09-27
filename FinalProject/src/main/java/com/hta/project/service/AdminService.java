@@ -37,10 +37,22 @@ public interface AdminService {
 
 	public void productAdd(Product product);
 
-	public int getProductListCount();
+	public int getProductListCount(int index, String search_word);
 
-	public List<Product> getProductList(int page, int limit);
+	public List<Product> getProductList(int index, String search_word, int page, int limit);
 
 	public Product getProductDetail(String code);
+
+	public int productModify(Product product);
+
+	public int insert_deleteFile(String before_file);
+
+	public int productDelete(String code);
+
+	public int productSelectionDel(String[] productArr);
+
+	public int getProductCategoryCount(String category_name);
+
+	public List<Product> getProductCategoryList(int page, int limit, String category_name);
 	
 }

@@ -75,16 +75,40 @@ public class AdminDAO {
 		sqlSession.insert("Products.insert", product);
 	}
 
-	public int getProductListCount() {
-		return sqlSession.selectOne("Products.count");
+	public int getProductListCount(Map<String, String> map) {
+		return sqlSession.selectOne("Products.count", map);
 	}
 
-	public List<Product> getProductList(Map<String, Integer> map) {
+	public List<Product> getProductList(Map<String, Object> map) {
 		return sqlSession.selectList("Products.list", map);
 	}
 
 	public Product getProductDetail(String code) {
 		return sqlSession.selectOne("Products.getProductDetail", code);
+	}
+
+	public int productModify(Product product) {
+		return sqlSession.update("Products.modify", product);
+	}
+
+	public int insert_deleteFile(String before_file) {
+		return sqlSession.insert("Products.insert_deleteFile", before_file);
+	}
+
+	public int productDelete(String code) {
+		return sqlSession.delete("Products.delete", code);
+	}
+
+	public int productSelectionDel(Map<String, Object> map) {
+		return sqlSession.delete("Products.selectionDel", map);
+	}
+
+	public int getProductCategoryCount(String word) {
+		return sqlSession.selectOne("Products.productCategoryListCount", word);
+	}
+
+	public List<Product> getProductCategoryList(Map<String, Object> map) {
+		return sqlSession.selectList("Products.productCategoryList", map);
 	}
 
 }

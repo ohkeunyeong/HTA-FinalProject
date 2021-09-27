@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -63,29 +64,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									<div class="row">
 										<div class="col-12 col-sm-6">
 											<div class="col-12">
-												<img src="${pageContext.request.contextPath}/resources/image/jjs/among us.png" style="width: 400px; height: 300px;">
+												<img src="${pageContext.request.contextPath}/resources/upload${product.product_img}" style="width: 400px; height: 300px;">
 											</div>
 										</div>
 										<div class="col-12 col-sm-6">
 											<div class="col-12">
 												<div class="form-group">
-													<label for="product_code">상품코드</label> <input class="form-control" id="product_code" name="product_code" value="A001" disabled>
+													<label for="product_code">상품코드</label> <input class="form-control" id="product_code" name="product_code" value="${product.product_code}" disabled>
 												</div>
 												<div class="form-group">
-													<label for="product_name">상품이름</label> <input class="form-control" id="product_name" name="product_name" value="상품이름" disabled>
+													<label for="product_name">상품이름</label> <input class="form-control" id="product_name" name="product_name" value="${product.product_name}" disabled>
 												</div>
 												<div class="form-group">
-													<label for="category_name">카테고리</label> <input class="form-control" id="category_name" name="category_name" value="굿즈" disabled>
+													<label for="category_name">카테고리</label> <input class="form-control" id="category_name" name="category_name" value="${product.category_name}" disabled>
 												</div>
 												<div class="form-group">
 													<label for="product_detail">상품상세정보</label>
-													<textarea class="form-control" id="product_detail" name="product_detail" disabled style="resize: none;">상품상세정보</textarea>
+													<textarea class="form-control" id="product_detail" name="product_detail" disabled style="resize: none;">${product.product_detail}</textarea>
 												</div>
 												<div class="form-group">
-													<label for="product_price">가격</label> <input class="form-control" id="product_price" name="product_price" value="1,000원" disabled>
+													<fmt:formatNumber var="price" value="${product.product_price}" pattern="###,###,###"/>
+													<label for="product_price">가격</label> <input class="form-control" id="product_price" name="product_price" value="${price}원" disabled>
 												</div>
 												<div class="form-group">
-													<label for="product_date">상품등록일</label> <input class="form-control" id="product_date" name="product_date" value="21-09-24" disabled>
+													<label for="product_date">상품등록일</label> <input class="form-control" id="product_date" name="product_date" value="${product.product_date}" disabled>
 												</div>
 												<div class="float-right">
 													<button class="btn btn-danger" data-toggle="modal" 

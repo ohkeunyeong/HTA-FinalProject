@@ -17,9 +17,11 @@
 			   #{product_original}, sysdate)
 	</insert>
 	
-	<select id="count" resultType="int">
+	<select id="count" resultType="int" parameterType="map">
 		select count(*)
-		from product
+		from product p, category c
+		where p.category_code = c.category_code
+		<include refid="search_" />
 	</select>
 	
 	<select id="list" resultType="product" parameterType="map">
@@ -29,10 +31,23 @@
 	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
 	  	   			from product p, CATEGORY c
 	  	   			where p.category_code = c.category_code
+	  	   			<include refid="search_" />
 	  	   			order by p.product_code) pr
 			 )
 		where rnum &gt;= #{start} and rnum &lt;= #{end}
 	</select>
+	
+	<sql id="search_">
+		<if test="search_field != null">
+			and
+			<choose>
+				<when test="search_field == 'product_name'">product_name</when>
+				<when test="search_field == 'product_code'">product_code</when>
+				<when test="search_field == 'category_name'">category_name</when>
+			</choose>
+			like #{search_word}
+		</if>
+	</sql>
 	
 	<select id="getProductDetail" resultType="product" parameterType="String">
 		select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
@@ -40,6 +55,52 @@
 	  	from product p, CATEGORY c
 	  	where p.category_code = c.category_code
 	  	and p.product_code = #{code}
+	</select>
+	
+	<update id="modify" parameterType="product">
+		update product
+		set product_name = #{product_name}, product_detail = #{product_detail},
+			product_price = #{product_price}, product_img = #{product_img}, 
+			product_original = #{product_original}
+		where product_code = #{product_code}
+	</update>
+	
+	<insert id="insert_deleteFile" parameterType="String">
+		insert into delete_file
+		values(#{file})
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		delete product
+		where product_code = #{code}
+	</delete>
+	
+	<delete id="selectionDel" parameterType="map">
+		delete product
+		where product_code in
+		<foreach item="item" collection="arr" 
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<select id="productCategoryList" resultType="product" parameterType="map">
+		select *
+		from (select rownum rnum, pr.*
+			  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
+	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
+	  	   			from product p, CATEGORY c
+	  	   			where p.category_code = c.category_code
+	  	   			and p.category_code like #{word}
+	  	   			order by p.product_code) pr
+			 )
+		where rnum &gt;= #{start} and rnum &lt;= #{end}
+	</select>
+	
+	<select id="productCategoryListCount" resultType="int" parameterType="String">
+		select count(*)
+		from product 
+		where category_code like #{word}
 	</select>
 	
 </mapper>

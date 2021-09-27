@@ -121,22 +121,30 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public int getProductListCount() {
-		return dao.getProductListCount();
+	public int getProductListCount(int index, String search_word) {
+		Map<String, String> map = new HashMap<String, String>();
+		if(index != -1) {
+			String[] search_field = new String[] {"product_name", "product_code", "category_name"};
+			map.put("search_field", search_field[index]);
+			map.put("search_word", "%" + search_word + "%");
+		}
+		return dao.getProductListCount(map);
 	}
 
 	@Override
-	public List<Product> getProductList(int page, int limit) {
-		List<Product> list = new ArrayList<Product>();
-		Map<String, Integer> map = new HashMap<String, Integer>();
+	public List<Product> getProductList(int index, String search_word, int page, int limit) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(index != -1) {
+			String[] search_field = new String[] {"product_name", "product_code", "category_name"};
+			map.put("search_field", search_field[index]);
+			map.put("search_word", "%" + search_word + "%");
+		}
 		int startrow = (page - 1) * limit + 1;
 		int endrow = startrow + limit - 1;
 		map.put("start", startrow);
 		map.put("end", endrow);
-		
-		list = dao.getProductList(map);
-		
-		return list;
+		return dao.getProductList(map);
 	}
 
 	@Override
@@ -144,5 +152,48 @@ public class AdminServiceImpl implements AdminService{
 		return dao.getProductDetail(code);
 	}
 
+	@Override
+	public int productModify(Product product) {
+		return dao.productModify(product);
+	}
+	
+	@Override
+	public int insert_deleteFile(String before_file) {
+		return dao.insert_deleteFile(before_file);
+	}
+
+	@Override
+	public int productDelete(String code) {
+		return dao.productDelete(code);
+	}
+
+	@Override
+	public int productSelectionDel(String[] productArr) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("arr", productArr);
+		return dao.productSelectionDel(map);
+	}
+
+	@Override
+	public int getProductCategoryCount(String category_name) {
+		String word = "%" + category_name + "%";
+		return dao.getProductCategoryCount(word);
+	}
+
+	@Override
+	public List<Product> getProductCategoryList(int page, int limit, String category_name) {
+		List<Product> list = new ArrayList<Product>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		int startrow = (page - 1) * limit + 1;
+		int endrow = startrow + limit - 1;
+		String word = "%" + category_name + "%";
+		map.put("start", startrow);
+		map.put("end", endrow);
+		map.put("word", word);
+		
+		list = dao.getProductCategoryList(map);
+		
+		return list;
+	}
 
 }
