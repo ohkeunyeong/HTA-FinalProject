@@ -1,94 +1,111 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<html>
 <head>
- <title>쇼핑 상세 페이지</title>
- </head>
-<jsp:include page="shop_header.jsp" />
+<meta charset="UTF-8">
+<title>주말 장터 메인</title>
+<script
+	src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
 
-<div class="wrapper">
+<style>
+h5 {
+	padding-top: 10px;
+	font-weight:bold;
+}
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">신고글 상세보기</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="main">Home</a></li>
-              <li class="breadcrumb-item"><a href="postList">게시물 관리</a></li>
-              <li class="breadcrumb-item active">신고글 상세보기</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+.container .nav {
+	margin-top: 80px;
+	font-size: 20px;
+}
 
-    <!-- Main content -->
-    <div class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-12">
-          <div class="card card-primary card-outline">
-            <div class="card-header">
-              <h3 class="card-title mt-2">신고글 제목</h3>
-              <div class="float-right">
-              	<span>작성자 : XXX</span>&nbsp;&nbsp;&nbsp;&nbsp;
-              	<span>2021-09-23 21:43PM</span>
-              </div>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body p-0">
-            	<div class="post">
-            		<p class="m-3">신고글 내용</p>
-            	</div>
-            	<div class="post">
-            		<p class="m-3">신고내용</p>
-            	</div>
-            </div>
-            <!-- /.card-body -->
-            <div class="card-footer bg-white">
-              
-            </div>
-            <!-- /.card-footer -->
-            <div class="card-footer">
-            	<span>게시판 종류</span>
-            	<div class="float-right">
-              		<button type="button" class="btn btn-default"><i class="far fa-trash-alt"></i> 신고글 삭제</button>
-              	</div>
-            </div>
-            <!-- /.card-footer -->
-          </div>
-          <!-- /.card -->
-        </div>
-          
-          
-        </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+.recommendation {
+	margin-top: 1%;
+	margin-left: 14%;
+}
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-    <div class="p-3">
-      <h5>Title</h5>
-      <p>Sidebar content</p>
-    </div>
-  </aside>
-  <!-- /.control-sidebar -->
+.section1 {
+	text-align: center;
+}
 
-  <jsp:include page="../../main/footer.jsp" />
-</div>
-<!-- ./wrapper -->
+.section1> span {
+	font-size: 30px;
+	font-weight: bold;
+	margin-right:48%;
+}
+
+.section1 .button {
+	font-size: 20px;
+	font-weight: medium;
+	color: gray;
+}
+
+.recommendation .products {
+	margin-top: 2%;
+	margin-bottom: 2%;
+	margin-right: 15%;
+}
+
+.recommendation .products card-deck .card {
+	width: 300px;
+	height: 250px;
+}
+
+.recommendation .products>card-img-top {
+	height: 200px;
+}
+
+
+</style>
+</head>
+<body>
+	<jsp:include page="shop_header.jsp" />
+
+    <br><br><br>    	
+    
+	<!-- 굿즈 장터 내 네비게이션 바 -->
+	<div class="container">
+		<ul class="nav nav-tabs nav-justified">
+			<li class="nav-item"><a class="nav-link active" href="home">장터홈</a>
+			</li>
+			<li class="nav-item"><a class="nav-link" href="seed">씨앗/모종</a></li>
+			<li class="nav-item"><a class="nav-link" href="soil">비료/상토</a></li>
+			<li class="nav-item"><a class="nav-link" href="pesticide">살충제</a>
+			</li>
+			<li class="nav-item"><a class="nav-link" href="tools">농기구</a></li>
+			<li class="nav-item"><a class="nav-link" href="personacon">퍼스나콘</a>
+			</li>
+			<li class="nav-item"><a class="nav-link" href="goods">굿즈</a></li>
+		</ul>
+	</div>
+
+	<!-- 제품 카드 목록 리스트 -->
+	<br>
+	<br>
+	
+		<div class="section1">
+			<span>주말농장에서 추천하는 제품!</span> <a href="#" class="button">더보기</a>
+		</div>
+		
+		<div class="recommendation">
+		<div class="products card-deck">
+			<div class="card">
+				<img class="card-img-top"
+					src="${pageContext.request.contextPath}/resources/image/homi.jpg"
+					alt="Card image" style="width: 100%">
+				<div class="card-body">
+					<h5 class="card-title">튼튼 호미(중)</h5>
+					<p class="card-text">얕은 땅을 팔 때 유용한 튼튼호미입니다. 가볍고 오래 사용해도 녹슬지
+						않습니다.</p>
+					<a href="#" class="btn btn-info">제품 보기</a>
+				</div>
+			</div>			
+		</div>
+		<br>
+
+	</div>
+
+
+	<jsp:include page="../../main/footer.jsp" />
 </body>
 </html>
-

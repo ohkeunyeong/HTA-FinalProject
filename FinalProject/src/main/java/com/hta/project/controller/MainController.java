@@ -32,11 +32,18 @@ public class MainController {
 		  return mv;
 	}
 	
-	//굿즈 장터 메인 이동 
+	//굿즈 장터 메인 이동 - 상품 목록 
 	@RequestMapping("/shopmain")
 	public String shop_main() {		
 		return "hyun/shop/shop_main";
 	}
+	
+	//상품 목록 
+	@RequestMapping(value = "products/list", method = RequestMethod.GET)
+	public void getProductsList() throws Exception {
+		logger.info("get products list");
+	}
+	
 	
 	//굿즈 장터 퍼스나콘 페이지 이동 
 	@RequestMapping("/personacon")

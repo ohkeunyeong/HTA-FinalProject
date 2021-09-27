@@ -1,0 +1,5 @@
+<!-- 상품 목록 -->
+<select id="goodslist" resultType="com.hta.project.domain.Product">
+	select 
+		
+</select>
