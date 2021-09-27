@@ -65,6 +65,14 @@ public class OkyMynongDAO {
 		return sqlSession.selectOne("Mynong.getmynong", id);
 	}
 
+	public Member memberinfo(String id) {
+		return sqlSession.selectOne("Mynong.memberinfo", id);
+	}
+
+	public void delete(String id) {
+		sqlSession.update("Mynong.deletenongmen", id);
+	}
+
 
 
 

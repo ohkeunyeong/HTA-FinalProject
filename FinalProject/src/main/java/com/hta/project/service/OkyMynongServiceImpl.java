@@ -114,6 +114,18 @@ public class OkyMynongServiceImpl implements OkyMynongService {
 	}
 
 
+	@Override
+	public Member memberinfo(String id) {
+		return dao.memberinfo(id);
+	}
+
+
+	@Override
+	public void delete(String id) {
+		dao.delete(id);
+	}
+
+
 
 
 

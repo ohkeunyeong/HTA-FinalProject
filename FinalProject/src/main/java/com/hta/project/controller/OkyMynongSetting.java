@@ -142,12 +142,24 @@ public class OkyMynongSetting {
     		                 @RequestParam("mynong_name") String mynong_name,
     		                    Member member,
     		                    ModelAndView mv, 
-    		                    HttpServletRequest request) {
+    		                    HttpServletResponse response)
+    		                    throws  ServletException, IOException {
     	logger.info("추가할 유저 아이디 :" +id);
     	logger.info("농장 이름: " + member.getMynong_name());
-    	String nongname = okymynongservice.getMynong(id); //검색한 아이디 농장 이름 확인
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out =response.getWriter();
     	
+    	Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
     	
+    	if((!list.getMynong_name().equals(mynong_name)) && (!(list.getMy_farm().equals("0")))) {//다른 곳에 소속된 회원일 경우
+			out.println("<script>");
+			out.println("alert('이미 다른  농장에 소속되어 있는 회원입니다.');");
+			out.println("history.back()");
+			out.println("</script>");
+			out.close();
+			return null;		
+    	}
+    
     	
     	List<Member> list1 =okymynongservice.checkid(member); //농장 멤버 중복 확인
     	int pan1 = 0; //check id 확인용 
@@ -167,4 +179,21 @@ public class OkyMynongSetting {
 		mv.setViewName("redirect:mynong?name=" + member.getMynong_name() + "&id=" + admin);
 	return mv;
     }    
+    
+    //농장에서 멤버 삭제
+    @RequestMapping(value = "/deletenongmem", method = RequestMethod.GET)
+    public String deletemember(String id, HttpSession session, HttpServletResponse response)
+            throws  ServletException, IOException {
+    	String admin=(String)session.getAttribute("id");
+    	String mynong=okymynongservice.getMynong(admin);
+    	response.setContentType("text/html;charset=utf-8");
+		PrintWriter out =response.getWriter();
+    	okymynongservice.delete(id);
+		out.println("<script>");
+		out.println("alert('멤버를 삭제하였습니다');");
+		out.println("location.href='mynong?name="+ mynong + "&id=" +admin + "'" );
+		out.println("</script>");
+		out.close();
+    	return null;
+    }
 }

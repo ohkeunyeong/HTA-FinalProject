@@ -81,7 +81,7 @@ $(function() {
                <a href="info?id=${m.id}">${m.id}</a>
            </td>
           <td>${m.nick}</td>
-          <td><a href="delete?id=${m.id}">삭제</a></td>
+          <td><a href="deletenongmem?id=${m.id}">삭제</a></td>
           </tr>
          </c:forEach>         
      </tbody>
@@ -95,7 +95,7 @@ $(function() {
         </c:if>
         <c:if test="${page > 1 }">
              <li class="page-item">
-        <a href="list?page=${page-1}"
+        <a href="mynong?page=${page-1}&name=${mynong_name}&id=${id}"
                class="page-link">이전</a>&nbsp;
           </li>
        </c:if>
@@ -108,7 +108,7 @@ $(function() {
            </c:if>
            <c:if test="${a != page }">
                <li class="page-item">
-        <a href="list?page=${a}"
+        <a href="mynong?page=${a}&name=${mynong_name}&id=${id}"
                class="page-link">${a}</a>       
               </li>
            </c:if>
@@ -121,7 +121,7 @@ $(function() {
       </c:if>
       <c:if test ="${page < maxpage}">
          <li class="page-item">    
-        <a href="list?page=${page+1}"
+        <a href="mynong?page=${page+1}&name=${mynong_name}&id=${id}"
                class="page-link">&nbsp;다음</a>    
         </li>
        </c:if>  
