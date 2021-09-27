@@ -22,9 +22,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="${pageContext.request.contextPath}/plugins/jquery/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/jjs/noticeDetail.js"></script>
 <style>
-	textarea{
-		resize : none;
-	}
+textarea{
+	resize : none;
+}
+	
+.modal {
+	overflow-y:auto;
+}
 </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -118,7 +122,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		</aside>
 		<!-- /.control-sidebar -->
 		
-		<jsp:include page="modal/adminModal.jsp" />
+		<jsp:include page="modal/noticeModal.jsp" />
 
 		<jsp:include page="include/footer.jsp" />
 	</div>

@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hta.project.dao.AdminDAO;
+import com.hta.project.domain.Category;
 import com.hta.project.domain.Member;
 import com.hta.project.domain.Notice;
+import com.hta.project.domain.Product;
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -106,6 +108,40 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int noticeModify(Notice notice) {
 		return dao.noticeModify(notice);
+	}
+
+	@Override
+	public List<Category> getCategoryList() {
+		return dao.getCategoryList();
+	}
+
+	@Override
+	public void productAdd(Product product) {
+		dao.productAdd(product);
+	}
+
+	@Override
+	public int getProductListCount() {
+		return dao.getProductListCount();
+	}
+
+	@Override
+	public List<Product> getProductList(int page, int limit) {
+		List<Product> list = new ArrayList<Product>();
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		int startrow = (page - 1) * limit + 1;
+		int endrow = startrow + limit - 1;
+		map.put("start", startrow);
+		map.put("end", endrow);
+		
+		list = dao.getProductList(map);
+		
+		return list;
+	}
+
+	@Override
+	public Product getProductDetail(String code) {
+		return dao.getProductDetail(code);
 	}
 
 

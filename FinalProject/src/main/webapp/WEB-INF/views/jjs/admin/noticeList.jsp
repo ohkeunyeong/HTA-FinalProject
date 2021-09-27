@@ -191,7 +191,7 @@ a:not([href]) {
 		</div>
 		<!-- /.content-wrapper -->
 
-		<jsp:include page="modal/adminModal.jsp" />
+		<jsp:include page="modal/noticeModal.jsp" />
 
 		<!-- Control Sidebar -->
 		<aside class="control-sidebar control-sidebar-dark">

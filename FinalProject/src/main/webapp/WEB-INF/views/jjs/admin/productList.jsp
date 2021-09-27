@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -20,6 +21,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- Google Font: Source Sans Pro -->
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/plugins/jquery/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jjs/productList.js"></script>
 <style>
 textarea {
 	resize: none;
@@ -27,6 +29,15 @@ textarea {
 
 input[type="file"] {
 	display: none;
+}
+
+a:not([href]) {
+    color: gray;
+    text-decoration: none;
+}
+
+.modal {
+	overflow-y:auto;
 }
 </style>
 </head>
@@ -69,31 +80,27 @@ input[type="file"] {
 							<div class="card">
 								<div class="card-header">
 									<h3 class="card-title mt-2">주말장터 관리</h3>
-									<select class="form-control float-right" style="width: 150px;">
-										<option>카테고리명</option>
-										<option value="1">퍼스나콘</option>
-										<option value="2">굿즈</option>
-										<option value="3">농기구</option>
+									<select class="form-control float-right" id="categorySelect" style="width: 150px;">
+										
 									</select>
 								</div>
 								<!-- /.card-header -->
+								<c:if test="${listcount > 0 }">
 								<div class="card-body">
 									<div class="input-group float-right" style="width: 400px;">
-										<select id="productinfo" name="search_field">
+										<select id="productSelect" name="search_field">
 											<option value="0" selected>상품이름</option>
 											<option value="1">상품코드</option>
 											<option value="2">카테고리명</option>
 										</select>
 										<input name="search_word" type="text" class="form-control" placeholder="상품이름 입력하세요" value="${search_word}" id="search_word">
-										<button id="search" class="btn btn-primary" type="submit">검색</button>
+										<button id="productSearch" class="btn btn-primary" type="submit">검색</button>
 									</div>
-									<button class="btn btn-primary mb-3" data-toggle="modal" 
-											data-backdrop="static" data-keyboard="false" 
-											data-target="#productAddModal">상품등록</button>
+									<button class="btn btn-primary mb-3" id="productAddBtn">상품등록</button>
 									<table class="table table-bordered text-center">
 										<thead>
 											<tr>
-												<th><input type="checkbox"></th>
+												<th><input type="checkbox" id="allCheck" name="allCheck"></th>
 												<th>상품 이미지</th>
 												<th>상품명</th>
 												<th>상품코드</th>
@@ -103,104 +110,69 @@ input[type="file"] {
 											</tr>
 										</thead>
 										<tbody>
+										<c:forEach items="${productlist}" var="p">
 											<tr>
 												<td class="align-middle">
-													<input type="checkbox">
+													<input name="RowCheck" type="checkbox" value="${p.product_code}">
 												</td>
 												<td class="align-middle">
-													<img src="${pageContext.request.contextPath}/resources/image/jjs/among us.png" style="width: 85px; height: 70px;">
+													<img src="${pageContext.request.contextPath}/resources/upload${p.product_img}" style="width: 85px; height: 70px;">
 												</td>
 												<td class="align-middle">
-													<a href="productDetail">상품이름</a>
+													<div>
+														<a href="productDetail?code=${p.product_code}">${p.product_name}</a>
+													</div>
 												</td>
-												<td class="align-middle">A001</td>
-												<td class="align-middle">굿즈</td>
-												<td class="align-middle">21-09-24</td>
 												<td class="align-middle">
-													<button class="btn btn-info" data-toggle="modal" 
-															data-backdrop="static" data-keyboard="false" 
-															data-target="#productModifyModal">수정</button>
+													<div>${p.product_code}</div>
 												</td>
-											</tr>
-											<tr>
-												<td>
-													<input type="checkbox">
+												<td class="align-middle">
+													<div>${p.category_name}</div>
 												</td>
-												<td>
-													<img src="${pageContext.request.contextPath}/resources/image/logo.png" style="width: 100px; height: 30px;">
+												<td class="align-middle">
+													<div>${p.product_date}</div>
 												</td>
-												<td>상품이름</td>
-												<td>A001</td>
-												<td>굿즈</td>
-												<td>21-09-24</td>
-												<td>수정</td>
-											</tr>
-											<tr>
-												<td>
-													<input type="checkbox">
+												<td class="align-middle">
+													<div><button class="btn btn-info productModifyBtn" data-code="${p.product_code}">수정</button></div>
 												</td>
-												<td>
-													<img src="${pageContext.request.contextPath}/resources/image/logo.png" style="width: 100px; height: 30px;">
-												</td>
-												<td>상품이름</td>
-												<td>A001</td>
-												<td>굿즈</td>
-												<td>21-09-24</td>
-												<td>수정</td>
-											</tr>
-											<tr>
-												<td>
-													<input type="checkbox">
-												</td>
-												<td>
-													<img src="${pageContext.request.contextPath}/resources/image/logo.png" style="width: 100px; height: 30px;">
-												</td>
-												<td>상품이름</td>
-												<td>A001</td>
-												<td>굿즈</td>
-												<td>21-09-24</td>
-												<td>수정</td>
-											</tr>
-											<tr>
-												<td>
-													<input type="checkbox">
-												</td>
-												<td>
-													<img src="${pageContext.request.contextPath}/resources/image/logo.png" style="width: 100px; height: 30px;">
-												</td>
-												<td>상품이름</td>
-												<td>A001</td>
-												<td>굿즈</td>
-												<td>21-09-24</td>
-												<td>수정</td>
-											</tr>
-											<tr>
-												<td>
-													<input type="checkbox">
-												</td>
-												<td>
-													<img src="${pageContext.request.contextPath}/resources/image/jjs/among us.png" style="width: 100px; height: 30px;">
-												</td>
-												<td>상품이름</td>
-												<td>A001</td>
-												<td>굿즈</td>
-												<td>21-09-24</td>
-												<td>수정</td>
-											</tr>
+											</tr>	
+										</c:forEach>
 										</tbody>
 									</table>
 								</div>
 								<!-- /.card-body -->
 								<div class="card-footer clearfix">
 									<button class="btn btn-danger">선택삭제</button>
-									<ul class="pagination pagination-sm m-0 float-right">
-										<li class="page-item"><a class="page-link" href="#">«</a></li>
-										<li class="page-item"><a class="page-link" href="#">1</a></li>
-										<li class="page-item"><a class="page-link" href="#">2</a></li>
-										<li class="page-item"><a class="page-link" href="#">3</a></li>
-										<li class="page-item"><a class="page-link" href="#">»</a></li>
-									</ul>
+									<ul class="pagination m-0 justify-content-center">
+											<c:if test="${page <= 1 }">
+												<li class="page-item"><a class="page-link gray">«</a></li>
+											</c:if>
+											<c:if test="${page > 1 }">
+												<li class="page-item"><a href="productList?page=${page-1}" class="page-link">«</a></li>
+											</c:if>
+
+											<c:forEach var="a" begin="${startpage}" end="${endpage}">
+												<c:if test="${a == page }">
+													<li class="page-item "><a class="page-link gray">${a}</a></li>
+												</c:if>
+												<c:if test="${a != page }">
+													<li class="page-item"><a href="productList?page=${a}" class="page-link">${a}</a></li>
+												</c:if>
+											</c:forEach>
+
+											<c:if test="${page >= maxpage }">
+												<li class="page-item"><a class="page-link gray">»</a></li>
+											</c:if>
+											<c:if test="${page < maxpage }">
+												<li class="page-item"><a href="productList?page=${page+1}" class="page-link">»</a></li>
+											</c:if>
+										</ul>
 								</div>
+								</c:if>
+								
+								<c:if test="${listcount == 0 }">
+									<p class="text-center h2 mt-3 mb-3"><span>등록된 상품이 없습니다.</span></p>
+								</c:if>
 							</div>
 							<!-- /.card -->
 						</div>
@@ -213,7 +185,7 @@ input[type="file"] {
 		</div>
 		<!-- /.content-wrapper -->
 
-		<jsp:include page="modal/adminModal.jsp" />
+		<jsp:include page="modal/productModal.jsp" />
 
 		<!-- Control Sidebar -->
 		<aside class="control-sidebar control-sidebar-dark">

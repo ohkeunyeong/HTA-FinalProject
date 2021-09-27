@@ -7,6 +7,7 @@ $(function(){
 			data : {"num" : num},
 			dataType : 'json',
 			success : function(data) {
+				$("input[name='NOTICE_NUM']").remove();
 				$("#noticeModify_subject").val(data.notice.notice_SUBJECT);
 				$("#noticeModify_content").val(data.notice.notice_CONTENT);
 				if(data.notice.notice_FIX == 'FIX'){
@@ -29,4 +30,18 @@ $(function(){
 			$("#noticeModify_fix").val("");
 		}
 	}); // $("#noticeModify_fix").click() end
+	
+	$("#noticeModifyForm").submit(function(){
+		if($.trim($("#noticeModify_subject").val()) == ''){
+			$("#NoticeValidationModal").modal({backdrop: 'static', keyboard: false});
+			$("#NoticeValidationModal-body").html("<h3>제목을 입력해주세요</h3>");
+			return false;
+		}
+		
+		if($.trim($("#noticeModify_content").val()) == ''){
+			$("#NoticeValidationModal").modal({backdrop: 'static', keyboard: false});
+			$("#NoticeValidationModal-body").html("<h3>내용을 입력해주세요</h3>");
+			return false;
+		}
+	}); // $("#noticeModifyForm").submit()
 });

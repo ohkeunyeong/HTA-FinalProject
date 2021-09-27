@@ -198,4 +198,18 @@ $(function() {
 	$(".btn_group").on("click", ".selectionDelete", function(){
 		selectionDelete();
 	}); // $(".btn_group").on()
+	
+	$("#noticeAddForm").submit(function(){
+		if($.trim($('#notice_subject').val()) == ''){
+			$("#NoticeValidationModal").modal({backdrop: 'static', keyboard: false});
+			$("#NoticeValidationModal-body").html("<h3>제목을 입력해주세요</h3>");
+			return false;
+		}
+		
+		if($.trim($("#noticeModify_content").val()) == ''){
+			$("#NoticeValidationModal").modal({backdrop: 'static', keyboard: false});
+			$("#NoticeValidationModal-body").html("<h3>내용을 입력해주세요</h3>");
+			return false;
+		}
+	}); // $("#noticeAddModal").submit()
 });

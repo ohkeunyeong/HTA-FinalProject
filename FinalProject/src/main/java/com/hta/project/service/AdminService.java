@@ -2,33 +2,45 @@ package com.hta.project.service;
 
 import java.util.List;
 
+import com.hta.project.domain.Category;
 import com.hta.project.domain.Member;
 import com.hta.project.domain.Notice;
+import com.hta.project.domain.Product;
 
 public interface AdminService {
 
-	void insert(Notice notice);
+	public void insert(Notice notice);
 
-	Notice getDetail(int num);
+	public Notice getDetail(int num);
 	
 	public int setReadCountUpdate(int num);
 
-	int getListCount();
+	public int getListCount();
 
-	List<Notice> getNoticeList(int page, int limit);
+	public List<Notice> getNoticeList(int page, int limit);
 
-	int noticeFixUpdate(int num, String fix);
+	public int noticeFixUpdate(int num, String fix);
 	
-	Notice noticeSelect(int num);
+	public Notice noticeSelect(int num);
 
-	int getSearchListCount(String search_word);
+	public int getSearchListCount(String search_word);
 
-	List<Notice> getSearchNoticeList(int page, int limit, String search_word);
+	public List<Notice> getSearchNoticeList(int page, int limit, String search_word);
 
-	int noticeSelectionDel(int[] noticeArr);
+	public int noticeSelectionDel(int[] noticeArr);
 
-	int noticeDelete(int num);
+	public int noticeDelete(int num);
 
-	int noticeModify(Notice notice);
+	public int noticeModify(Notice notice);
+
+	public List<Category> getCategoryList();
+
+	public void productAdd(Product product);
+
+	public int getProductListCount();
+
+	public List<Product> getProductList(int page, int limit);
+
+	public Product getProductDetail(String code);
 	
 }

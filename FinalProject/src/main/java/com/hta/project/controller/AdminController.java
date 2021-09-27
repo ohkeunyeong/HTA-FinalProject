@@ -1,9 +1,12 @@
 package com.hta.project.controller;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,10 +21,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hta.project.domain.Category;
 import com.hta.project.domain.Member;
 import com.hta.project.domain.Notice;
+import com.hta.project.domain.Product;
 import com.hta.project.service.AdminService;
 import com.hta.project.service.MemberService;
 
@@ -357,16 +363,130 @@ public class AdminController {
 		return "jjs/admin/farmList";
 	}
 	
-	@GetMapping("/productList")
-	public String productList() {
-		logger.info("Admin productList()");
-		return "jjs/admin/productList";
+	@PostMapping("/categoryList")
+	@ResponseBody
+	public Map<String, Object> categoryList() {
+		logger.info("Admin categoryList()");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		List<Category> categoryList = adminService.getCategoryList();
+		
+		map.put("categoryList", categoryList);
+		
+		return map;
 	}
 	
-	@GetMapping("/productDetail")
-	public String productDetail() {
+	@PostMapping("/productAdd")
+	public String productAdd(Product product, HttpServletRequest request) throws Exception{
+		logger.info("Admin productAdd()");
+		
+		MultipartFile uploadfile = product.getUploadfile();
+		
+		if(!uploadfile.isEmpty()) {
+			String fileName = uploadfile.getOriginalFilename(); // 원래 파일명
+			product.setProduct_original(fileName); // 원래 파일명 저장
+			String saveFolder = request.getSession().getServletContext().getRealPath("resources") + "/upload/";
+			String fileDBName = fileDBName(fileName, saveFolder);
+			logger.info("fileDBName = " + fileDBName);
+			
+			// transferTo(File path) : 업로드한 파일을 매개변수의 경로에 저장합니다.
+			uploadfile.transferTo(new File(saveFolder + fileDBName));
+			
+			// 바뀐 파일명으로 저장
+			product.setProduct_img(fileDBName);
+		}
+		
+		adminService.productAdd(product);
+		
+		return "redirect:productList";
+	}
+	
+	private String fileDBName(String fileName, String saveFolder) {
+		// 새로운 폴더 이름 : 오늘 년+월+일
+		Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR); // 오늘 년도 구합니다.
+		int month = c.get(Calendar.MONTH) + 1; // 오늘 월 구합니다.
+		int date = c.get(Calendar.DATE); // 오늘 일 구합니다.
+		
+		String homedir = saveFolder + year + "-" + month + "-" + date;
+		logger.info(homedir);
+		File path1 = new File(homedir);
+		if((!path1.exists())) {
+			path1.mkdir(); // 새로운 폴더를 생성
+		}
+		
+		// 난수를 구합니다.
+		Random r = new Random();
+		int random = r.nextInt(100000000);
+		
+		/**** 확장자 구하기 시작 ****/
+		int index = fileName.lastIndexOf(".");
+		// 문자열에서 특정 문자열의 위치 값(index)를 반환합니다.
+		// indexOf가 처음 발견되는 문자열에 대한 index를 반환하는 반면,
+		// lastIndexOf는 마지막으로 발견되는 문자열의 index를 반환합니다.
+		// (파일명에 점에 여러개 있을 경우 맨 마지막에 발견되는 문자열의 위치를 리턴합니다.)
+		logger.info("index = " + index);
+		
+		String fileExtension = fileName.substring(index + 1);
+		logger.info("fileExtension = " + fileExtension);
+		/**** 확장자 구하기 끝 ****/
+		
+		// 새로운 파일명
+		String refileName = "product" + year + month + date + random + "." + fileExtension;
+		logger.info("refileName = " + refileName);
+		
+		// 오라클 디비에 저장될 파일 명
+		String fileDBName = "/" + year + "-" + month + "-" + date + "/" + refileName;
+		logger.info("fileDBName = " + fileDBName);
+		return fileDBName;
+	}
+	
+	@GetMapping("/productList")
+	public ModelAndView productList(@RequestParam(value="page", defaultValue="1", required = false) int page,
+			ModelAndView mv) {
+		logger.info("Admin productList()");
+		
+		int limit = 5;
+		
+		int listcount = adminService.getProductListCount();
+		
+		int maxpage = (listcount + limit - 1) / limit;
+		
+		int startpage = ((page - 1) / 10) * 10 + 1;
+		
+		int endpage = startpage + 10 - 1;
+		
+		if(endpage > maxpage) {
+			endpage = maxpage;
+		}
+		
+		List<Product> productlist = adminService.getProductList(page, limit);
+		
+		mv.addObject("page", page);
+		mv.addObject("maxpage", maxpage);
+		mv.addObject("startpage", startpage);
+		mv.addObject("endpage", endpage);
+		mv.addObject("listcount", listcount);
+		mv.addObject("productlist", productlist);
+		mv.addObject("limit", limit);
+		
+		mv.setViewName("jjs/admin/productList");
+		return mv;
+	}
+	
+	@PostMapping("/productDetail")
+	@ResponseBody
+	public Map<String, Object> productDetail(String code) {
 		logger.info("Admin productDetail()");
-		return "jjs/admin/productDetail";
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		Product product = adminService.getProductDetail(code);
+		
+		map.put("product", product);
+		
+		return map;
 	}
 	
 	@GetMapping("/orderList")
