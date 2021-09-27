@@ -42,6 +42,12 @@ public interface OkyMynongService {
 	
 	//아이디 소속됭 농장 이름 가져오기
 	public String getMynong(String id);
+	
+	//멤버 모든 정보 가져오기
+	public Member memberinfo(String id);
+	
+	//농장 멤버 삭제
+	public void delete(String id);
 
 
 
