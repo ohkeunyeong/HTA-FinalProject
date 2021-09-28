@@ -4,7 +4,6 @@
 <head>
 <title>MVC 게시판 - view</title>
  <jsp:include page="../../main/header.jsp" />
-<script src="../resources/chang_js/view3.js"></script>
 
 <style>
 body > div > table > tbody >tr:nth-child(1) {
