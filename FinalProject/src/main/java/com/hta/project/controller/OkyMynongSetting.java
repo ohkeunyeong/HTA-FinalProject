@@ -46,11 +46,11 @@ public class OkyMynongSetting {
      	return map ;
     }
     
-    //농장관리 메인에서 버튼 클릭 시
+    //메인에서 농장관리 버튼 클릭 시
     @GetMapping("/mynongprocess")
     public ModelAndView mynongprocess (String id, ModelAndView mv,HttpServletRequest request,
-    		HttpServletResponse response, HttpSession session)
-    		throws  ServletException, IOException{   	
+    		HttpServletResponse response)
+    		throws ServletException, IOException{   	
     	String mynongname = okymynongservice.getMynong(id); //아이디가 속해있는 농장이름 가져오기
     	int checkmyfarm = okymynongservice.checkmyfarm(id); //MY_FARM 이 뭔값인지 확인
     	logger.info("/mynongprocess checkmyfarm 값은: " +checkmyfarm);
@@ -144,23 +144,25 @@ public class OkyMynongSetting {
     		                    ModelAndView mv, 
     		                    HttpServletResponse response)
     		                    throws  ServletException, IOException {
+
+    	
     	logger.info("추가할 유저 아이디 :" +id);
     	logger.info("농장 이름: " + member.getMynong_name());
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out =response.getWriter();
     	
     	Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+    	String name = list.getMynong_name();
     	
-    	if((!list.getMynong_name().equals(mynong_name)) && (!(list.getMy_farm().equals("0")))) {//다른 곳에 소속된 회원일 경우
+    	if(name != null && (!name.equals(mynong_name)) && (!(list.getMy_farm().equals("0")))) {//다른 곳에 소속된 회원일 경우
 			out.println("<script>");
 			out.println("alert('이미 다른  농장에 소속되어 있는 회원입니다.');");
 			out.println("history.back()");
 			out.println("</script>");
 			out.close();
 			return null;		
-    	}
-    
-    	
+    	} 
+    	   	
     	List<Member> list1 =okymynongservice.checkid(member); //농장 멤버 중복 확인
     	int pan1 = 0; //check id 확인용 
    	    if(!(list1.size()==0)) {
