@@ -9,6 +9,10 @@
 insert into mynong values (#{mynong_name})
 </insert>
 
+<select id="memberinfo" parameterType="member" resultType="member">
+select * from member where id = #{id}
+</select>
+
 <select id="select" parameterType="String" resultType="String">
 select * from mynong where MYNONG_NAME = #{mynong_name}
 </select>
@@ -76,5 +80,10 @@ select ID, NICK
  from member
  where id = #{id}
 </select>
+
+<update id ="deletenongmen" parameterType="String">
+update  member set 
+MYNONG_NAME='없음', MY_FARM='0' where id= #{id}
+</update>
 </mapper>
 
