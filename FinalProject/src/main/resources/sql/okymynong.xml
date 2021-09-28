@@ -83,7 +83,7 @@ select ID, NICK
 
 <update id ="deletenongmen" parameterType="String">
 update  member set 
-MYNONG_NAME='없음', MY_FARM='0' where id= #{id}
+MYNONG_NAME='', MY_FARM='0' where id= #{id}
 </update>
 </mapper>
 
