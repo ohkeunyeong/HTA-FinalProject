@@ -13,9 +13,9 @@ $(function(){
 	function getList(currentPage){
 		$.ajax({
 					type: "post",
-					url: "../comment/list",
+					url: "../jik_comm/list",
 					data : {
-						"board_num" : $("#board_num").val(),
+						"jik_board_num" : $("#jik_num").val(),
 						"page" : currentPage
 					},
 					dataType : "json",
@@ -28,18 +28,18 @@ $(function(){
 								output = '';
 								img = '';
 								if($("#Loginid").val() == this.id){
-									img = "<img src='../resources/image/pencil2.png' width='15px' class='update'>"
-										+ "<img src='../resources/image/delete.png' width='15px' class='remove'>"	
+									img = "<img src='../resources/image/chang/pencil2.png' width='15px' class='update'>"
+										+ "<img src='../resources/image/chang/delete.png' width='15px' class='remove'>"	
 										+ "<input type='hidden' value='" + this.num+"'>";
 								}
 								output += "<tr><td>" + this.id + "</td>";
 								output += "<td></td>";
 								//악의적인 쿼리공격을 방어하기 위해 .text로 변환하여 넣어줌.
 								//output += "<td>" + this.content + "</td>";
-								output += "<td>"+ this.reg_date + img + "</td></tr>";
+								output += "<td>"+ this.jik_comm_date + img + "</td></tr>";
 								$("#comment tbody").append(output);
 								//append한 마지막 tr의 2번째 자식 td를 찾아 text()메서드로 content를 넣습니다.
-								$("#comment tbody tr:last").find("td:nth-child(2)").text(this.content);
+								$("#comment tbody tr:last").find("td:nth-child(2)").text(this.jik_comm_content);
 								
 							});//each end
 							
@@ -87,17 +87,17 @@ $(function(){
 		$(".float-left").text("총 50자까지 가능합니다.");
 		
 		if(buttonText == "등록"){ // 댓글을 추가하는 경우
-			url = "../comment/add";
+			url = "../../jik_comm/add";
 			data = {
 					"content" : content,//content = $("#content").val();
 					"id" : $("#Loginid").val(),
-					"board_num" : $("#board_num").val()
+					"jik_board_num" : $("#jik_num").val()
 			};
 		}else { //댓글을 수정하는 경우
-			url = "../comment/update";
+			url = "../jik_comm/update";
 			data = {
 					"num" : num,
-					"content" : content
+					"content" : jik_content
 			};
 			$("#write").text("등록"); // 다시 등록으로 변경
 		}
@@ -145,9 +145,9 @@ $(function(){
 		
 		$.ajax({
 			type : "post",
-			url : "../comment/delete",
+			url : "../jik_comm/delete",
 			data : {
-				"num" : num
+				"num" : jik_num
 				},
 			success : function(result){
 				if (result == 1){

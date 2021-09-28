@@ -24,6 +24,7 @@
         <mapper resource="sql/okymynong.xml" />
       	<mapper resource="sql/report.xml" />
        	<mapper resource="sql/Jik.xml" />
+       	<mapper resource="sql/Jik_Comm.xml" />
        	<mapper resource="sql/notice.xml" />
        	<mapper resource="sql/member.xml" />
        	<mapper resource="sql/product.xml" />
