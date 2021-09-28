@@ -3,6 +3,7 @@ package com.hta.project.service;
 import java.util.List;
 
 import com.hta.project.domain.Category;
+import com.hta.project.domain.Farm;
 import com.hta.project.domain.Member;
 import com.hta.project.domain.Notice;
 import com.hta.project.domain.Product;
@@ -54,5 +55,11 @@ public interface AdminService {
 	public int getProductCategoryCount(String category_name);
 
 	public List<Product> getProductCategoryList(int page, int limit, String category_name);
+
+	public List<Farm> farmList(int page, int limit);
+
+	public int getfarmListCount();
+
+	public List<Farm> getFarmSelectList(int page, int limit, int farmSelect);
 	
 }
