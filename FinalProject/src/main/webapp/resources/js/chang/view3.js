@@ -89,7 +89,7 @@ $(function(){
 		if(buttonText == "등록"){ // 댓글을 추가하는 경우
 			url = "../../jik_comm/add";
 			data = {
-					"content" : content,//content = $("#content").val();
+					"jik_comm_content" : content,//content = $("#content").val();
 					"id" : $("#Loginid").val(),
 					"jik_board_num" : $("#jik_num").val()
 			};
