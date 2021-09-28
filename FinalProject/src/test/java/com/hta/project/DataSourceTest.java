@@ -23,7 +23,7 @@ public class DataSourceTest {
 	@Autowired
 	private DataSource dataSource;
 	
-//	@Test
+	//@Test
 	public void testConnection() {
 		try(Connection conn = dataSource.getConnection()){
 			logger.info("conn : " + conn);
