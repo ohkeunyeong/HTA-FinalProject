@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hta.project.dao.MemberDAO;
@@ -17,13 +18,16 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MemberDAO dao;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@Override
 	public Map<String, Object> isIdimsi(String id, String password) { 
 		Map<String, Object> member = new HashMap<String, Object>();
 		Member rmember = dao.isIdimsi(id);
 		int result = -1;
 		if(rmember != null) {
-			if(rmember.getPass().equals(password)) {
+			if(passwordEncoder.matches(password, rmember.getPass())){
 				result = 1;
 			}else {
 				result = 0;
