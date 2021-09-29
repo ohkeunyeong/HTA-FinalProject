@@ -22,4 +22,11 @@ public interface MemberService {
 
 	public void delete(String id);
 
+	//---------------------------------------chang 회원가입 작업영역--------------------
+	public int isId(String id);
+
+	public int insert(Member member);
+	//---------------------------------------/chang 회원가입 작업영역--------------------
+	
+
 }

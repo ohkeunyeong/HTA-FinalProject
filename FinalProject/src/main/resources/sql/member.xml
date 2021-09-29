@@ -8,6 +8,13 @@
 		select * from member where id = #{id}
 	</select>
 	
+	<select id="insert" parameterType="member">
+ 			INSERT INTO member
+ 			(id,pass,name,nick,mail,tel)
+ 			VALUES
+ 			 (#{id},#{pass},#{name},#{nick},#{mail},#{tel})
+ 	</select>
+ 	
 	<select id="count" resultType="int">
 		select count(*)
 		from member
