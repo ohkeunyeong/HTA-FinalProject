@@ -14,7 +14,7 @@
    body > div > table > thead > tr:nth-child(2) > th:nth-child(4){width:17%}
    body > div > table > thead > tr:nth-child(2) > th:nth-child(5){width:11%}
  </style>
-  <script src="../resources/chang_js/list.js"></script>
+  <script src="../resources/js/chang/list.js"></script>
   	<script>
 	if('${result}'=='deleteSuccess'){
 		alert("글 삭제 성공")
