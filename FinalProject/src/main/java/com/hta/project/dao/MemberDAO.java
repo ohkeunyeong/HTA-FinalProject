@@ -43,4 +43,12 @@ public class MemberDAO {
 		sqlSession.delete("Members.delete", id);
 	}
 
+	public Member isId(String id) {
+		return sqlSession.selectOne("Members.idcheck",id);
+	}
+
+	public int insert(Member member) {
+		return sqlSession.insert("Members.insert",member);
+	}
+
 }

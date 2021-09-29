@@ -91,4 +91,6 @@ public class Member {
 	public void setMynong_name(String mynong_name) {
 		this.mynong_name = mynong_name;
 	}
+
+
 }

@@ -85,5 +85,18 @@ public class MemberServiceImpl implements MemberService{
 	public void delete(String id) {
 		dao.userDelete(id);
 	}
+//-----------------chang 회원가입 작업 영역---------------------------
+	@Override
+	public int isId(String id) {
+		Member rmember = dao.isId(id);
+		return (rmember==null) ? -1 : 1; // -1은 아이디가 존재하지 않는 경우
+										  // 1은 아이디가 존재하는 경우
+	}
+
+	@Override
+	public int insert(Member member) {
+		return dao.insert(member);
+	}
+//-----------------/chang 회원가입 작업 영역 ---------------------------
 	
 }

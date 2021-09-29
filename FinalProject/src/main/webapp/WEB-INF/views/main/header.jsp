@@ -65,7 +65,7 @@
 				</li>
 				<li class="nav-item active" style="padding-left: 4%"><a class="nav-link" href="login">로그인</a></li>
 				<li class="nav-item active" style="padding-left: 4%"><a class="nav-link" href="loginimsi">임시로그인</a></li> <!-- 임시 로그인(우영님이 로그인 다 만들면 삭제) -->
-				<li class="nav-item active" style="padding-left: 4%"><a class="nav-link" href="join">회원가입</a></li>
+				<li class="nav-item active" style="padding-left: 4%"><a class="nav-link" href="${pageContext.request.contextPath}/member/join">회원가입</a></li>
 			</c:if>
 			<c:if test="${!empty id}">
 				<li class="nav-item active" style="padding-left: 30%"><a class="nav-link" href="logoutimsi"> ${nick} 님(로그아웃)</a></li>
