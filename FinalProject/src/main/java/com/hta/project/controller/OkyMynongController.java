@@ -40,7 +40,6 @@ public class OkyMynongController {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out =response.getWriter();
 		String id=(String)session.getAttribute("id");
-		
 		if(id == null) {
 			logger.info("/createmynong 로그인 안되어있음");
 			out.println("<script>");
