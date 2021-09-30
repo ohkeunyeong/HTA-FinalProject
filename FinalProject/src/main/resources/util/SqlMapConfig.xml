@@ -22,6 +22,7 @@
 		<typeAlias alias="order" 		type="com.hta.project.domain.Order_Market"/>
 		<typeAlias alias="orderList" 	type="com.hta.project.domain.OrderDetailList"/>
 		<typeAlias alias="orderDetail" 	type="com.hta.project.domain.OrderDetail"/>
+		<typeAlias alias="calendar"    	type="com.hta.project.domain.MyCalendar" />
      </typeAliases>
          
      <mappers>
@@ -35,5 +36,6 @@
        	<mapper resource="sql/shopMapper.xml" /> <!-- 추가 -->
        	<mapper resource="sql/farm.xml" />
        	<mapper resource="sql/order.xml" />
+       	<mapper resource="sql/calendar.xml" />
      </mappers>
 </configuration>

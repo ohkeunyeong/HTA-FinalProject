@@ -3,6 +3,11 @@ package com.hta.project.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,15 +19,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hta.project.domain.Member;
+import com.hta.project.domain.MyCalendar;
+import com.hta.project.service.OkyCalService;
 import com.hta.project.service.OkyMynongService;
 
 @Controller
 public class OkyCalendarController {
 
 	@Autowired
-	private OkyMynongService okymynongservice;
+	private OkyMynongService okymynongservice;	
+	@Autowired
+	private OkyCalService okycalservice;
 	
 	private static final Logger logger
 	= LoggerFactory.getLogger(OkyCalendarController.class);
@@ -62,19 +75,56 @@ public class OkyCalendarController {
     //스케줄 
     @GetMapping("/calendar")
     public ModelAndView calendar (String name, ModelAndView mv, 
-    	   HttpServletRequest request,  HttpSession session, HttpServletResponse response) {
+    	   HttpServletRequest request,  HttpSession session, HttpServletResponse response, String year, String month) {
     	
     	try {
+    		int level =0;
     		String id=(String)session.getAttribute("id");
     		String getmynong = okymynongservice.getMynong(id);
+    		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+    		String myfarm=list.getMy_farm();
+    		if(myfarm.equals("1")) {//농장 주인인지 판단
+    			level =1;
+    		}
         	if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
     			logger.info("스케줄 보기 실패");
     			mv.setViewName("oky/error/error");
     			mv.addObject("url", request.getRequestURL());
-    			mv.addObject("message", "해당 농장 스케줄을 볼  권한이 없습니다.");    	   		
+    			mv.addObject("message", "해당 농장 캘린더를 볼  권한이 없습니다.");    	   		
         	} else {
+        		//calendar를 요청할때 년,월의 값을 전달하지 않으면 현재 달을 보여준다.
+        		if(year==null || month ==null) {
+        			Calendar cal = Calendar.getInstance();
+        			year=cal.get(Calendar.YEAR)+ ""; 
+        			month=cal.get(Calendar.MONTH)+1 + ""; 			
+        		}else {
+        			//크기를 비교하기 위해 정수형으로 변환: month>12, month<1
+        			int yearInt = Integer.parseInt(year);
+        			int monthInt = Integer.parseInt(month);
+        			
+        			//월이 증가하다 12보다 커지면(13,14...)넘어가는 현상을 처리
+        		    if(monthInt>12) {
+        		    	monthInt=1;//1월로 변경
+        		    	yearInt++;//년도는 다음해로 넘어가니깐 년도+1증가시키기
+        		    }
+        		    
+        		    //감소의 경우 처리
+        		    if(monthInt<1) {
+        		    	monthInt=12;
+        		    	yearInt--;
+        		    }   
+        		    
+        		    year=yearInt+""; // 3+2+"", ""+3+2
+        		    month=String.valueOf(monthInt);
+        		}
+        		
+        		//월별 일정에 대해 하루마다 일정 3개씩 표시하기 기능 구현
+        		String yyyyMM=year+isTwo(month);
+        		List<MyCalendar> clist = okycalservice.calViewList(name, yyyyMM);
+        		mv.addObject("clist", clist);
         		mv.addObject("id",id);
         		mv.addObject("name", getmynong);
+        		mv.addObject("level", level);
         		mv.setViewName("oky/calendar");
         	}
           return mv;
@@ -86,4 +136,137 @@ public class OkyCalendarController {
 			return mv;
     	}    	
     }
+    
+    //일정목록 보기
+	@RequestMapping(value = "/calboardlist", method = RequestMethod.GET)
+	public ModelAndView calBoardList(String name, HttpServletRequest request, HttpSession session, ModelAndView mv, 
+			@RequestParam Map<String, String > ymd) {
+		logger.info("/calboardlist 일정목록보기");
+		try {
+		String id=(String)session.getAttribute("id");
+		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = okymynongservice.getMynong(id);
+		
+		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
+		int level =0;
+		if(myfarm.equals("1")) {//농장 주인인지 판단
+			level =1;
+		}
+    	if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+			logger.info("스케줄 보기 실패");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당 농장 캘린더를 볼  권한이 없습니다.");    	   		
+    	} else {    		
+		if(ymd==null ||ymd.get("year")==null) {//일정목록페이지로 들어온상태이기때문에 ymd 필요없음.
+			ymd=(Map<String, String>)session.getAttribute("ymd");
+		}else {
+			session.setAttribute("ymd", ymd);
+		}
+		//년월일을 8자리로 만들기 위해 1자리값은 2 자리로 만들어서 8자리로 만든다.
+//		String yyyyMMdd = year + (month.length() < 2 ? "0" + month : month)
+//				               + (date.length() < 2 ? "0" + date : date);
+
+		String yyyyMMdd = ymd.get("year")
+				+ isTwo(ymd.get("month"))
+	            + isTwo(ymd.get("date"));
+
+		logger.info("/calboardlist 년월일" +yyyyMMdd);
+		List<MyCalendar> list2= okycalservice.calboardList(getmynong, yyyyMMdd);
+		mv.addObject("list", list2);
+		mv.addObject("name", name);
+		mv.addObject("level", level);
+		mv.setViewName("oky/calboardlist");
+    	}
+		return mv;
+		} catch (NullPointerException e) {
+    		logger.info("비회원 접근");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");    	
+			return mv;
+    	}    	
+	}    
+    
+    
+    
+    
+    private String toDates;
+    
+	public String getToDates() {
+		return toDates;
+	}
+
+	public void setToDates(String mdate){
+		
+		//문자열--->date타입으로 변환--> 문자열을 데이트패턴으로 수정 --> 데이트다입으로 변환
+		
+		//날짜형식: yyyy-MM-dd hh:mm:ss
+		String m=mdate.substring(0, 4)  + "-"
+		  		+mdate.substring(4, 6)  + "-"
+		  		+mdate.substring(6, 8)  + " "		  		
+		  		+mdate.substring(8, 10)  + ":"	
+		  		+mdate.substring(10)  + ":00";	
+		
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy년MM월dd일 HH시mm분");
+		Timestamp tm=Timestamp.valueOf(m);//문자열을 Date타입으로 변환
+		
+	  	this.toDates= sdf.format(tm);
 }
+	
+	
+	
+  //토요일과 일요일을 확인해서 "blue"또는 "red" 문자열을 반환하는 메서드
+  public static String fontColor(int dayOfWeek, int i) {
+    String color="";
+	if((dayOfWeek-1 + i)%7==0){//토요일인 경우
+		color="blue";
+	}else if((dayOfWeek-1 + i)%7==1){//일요일인 경우
+		color="red";
+	}else {
+		color="gray";
+	}				
+	return color;
+  }
+  
+  //1자리 문자열을 2자리 문자열로 변환하는 메서드 <---삼항연산자의 이해
+  public static String isTwo(String msg) {		  
+	  return msg.length() < 2 ? "0" + msg : msg;
+  }   
+}
+
+
+
+//try { //유효성 검사를 위한 초기 세팅
+//String id=(String)session.getAttribute("id");
+//Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+//String getmynong = okymynongservice.getMynong(id);
+//
+//String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
+//int level =0;
+//if(myfarm.equals("1")) {//농장 주인인지 판단
+//	level =1;
+//}
+//if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+//	logger.info("스케줄 보기 실패");
+//	mv.setViewName("oky/error/error");
+//	mv.addObject("url", request.getRequestURL());
+//	mv.addObject("message", "해당 농장 캘린더를 볼  권한이 없습니다.");    	   		
+//} else {   //해당 농장 멤버 접근시 		
+//
+//	
+//	
+//	
+//mv.addObject("list", list2);
+//mv.addObject("name", name);
+//mv.addObject("level", level);
+//mv.setViewName("oky/calboardlist");
+//}
+//return mv;
+//} catch (NullPointerException e) {
+//	logger.info("비회원 접근");
+//	mv.setViewName("oky/error/error");
+//	mv.addObject("url", request.getRequestURL());
+//	mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");    	
+//	return mv;
+//}    	    
