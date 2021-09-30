@@ -8,16 +8,21 @@
  	<select id="count" resultType="int" parameterType="int">
  		select count(*)
  		from jik_comm
- 		where jik_comm_num = #{jik_comm_num}
+ 		where jik_board_num = #{jik_num}
  	</select>
  
  	<select id="getList" resultType="jik_comm" parameterType="map">
-			select jik_comm_num, id, nick, jik_comm_content, jik_comm_date, jik_comm_re_ref, jik_comm_re_lev, jik_comm_re_seq, jik_comm_secret
-				from jik_comm 
-				where jik_board_num = #{jik_board_num}
-				order by jik_comm_re_ref sort,
-				jik_comm_re_seq asc
- 	</select>
+ 		select *
+ 		from (select rownum rnum, jik_comm_num, id, nick, jik_comm_content, jik_comm_date,jik_comm_re_ref,jik_comm_re_lev,jik_comm_re_seq,jik_comm_secret
+ 			  from(
+ 			  		select jik_comm_num, id, nick, jik_comm_content, jik_comm_date,jik_comm_re_ref,jik_comm_re_lev,jik_comm_re_seq,jik_comm_secret
+ 			  		from jik_comm
+ 			  		where jik_board_num = #{jik_num}
+ 			  		order by jik_comm_date desc
+ 			  		)
+ 			  )
+ 		where rnum between #{start} and #{end}
+	</select>
 
  	<insert id="insert" parameterType="jik_comm">
  			INSERT INTO jik_comm
@@ -28,13 +33,13 @@
  	
  	<delete id="delete" parameterType="int">
  			delete from jik_comm
- 			where jik_board_num=#{jik_board_num}
+ 			where jik_comm_num=#{jik_comm_num}
  	</delete>
  	
  	 <update id="update" parameterType="jik_comm">
  			update jik_comm
  			set jik_comm_content = #{jik_comm_content}
- 			where jik_board_num= #{jik_board_num}
+ 			where jik_comm_num= #{jik_comm_num}
  	</update>
  	
 

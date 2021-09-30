@@ -34,14 +34,9 @@ function ajax(sdata){
 				$(data.jiklist).each(
 						function(index,item){
 							output += '<tr><td>'+ item.nick + '</td>'
-							
-							img="";
-							if (item.jik_RE_LEV > 0){
-								img="<img src='../resources/image/chang/line.gif'>";
-							}
-							output += "<td><div>" + blank + img
+							output += "<td><div>"
 							output += ' <a href="detail?num=' + (num--) + '">'
-							output += item.jik_SUBJECT.replace(/</g,'&lt;').replace(/>/g,'&gt;')
+							output += item.jik_subject.replace(/</g,'&lt;').replace(/>/g,'&gt;')
 									+'</a></div></td>'
 							output += '<td><div>' + item.nick+'</div></td>'
 							output += '<td><div>' + item.jik_date+'</div></td>'

@@ -15,7 +15,7 @@ $(function(){
 					type: "post",
 					url: "../jik_comm/list",
 					data : {
-						"jik_board_num" : $("#jik_num").val(),
+						"jik_num" : $("#jik_num").val(),
 						"page" : currentPage
 					},
 					dataType : "json",
@@ -27,12 +27,12 @@ $(function(){
 							$(rdata.list).each(function(){
 								output = '';
 								img = '';
-								if($("#Loginid").val() == this.id){
+								if($("#Loginid").val() == this.id || this.id == null){
 									img = "<img src='../resources/image/chang/pencil2.png' width='15px' class='update'>"
 										+ "<img src='../resources/image/chang/delete.png' width='15px' class='remove'>"	
-										+ "<input type='hidden' value='" + this.num+"'>";
+										+ "<input type='hidden' value='" + this.jik_comm_num+"'>";
 								}
-								output += "<tr><td>" + this.id + "</td>";
+								output += "<tr><td>" + this.nick + "</td>";
 								output += "<td></td>";
 								//악의적인 쿼리공격을 방어하기 위해 .text로 변환하여 넣어줌.
 								//output += "<td>" + this.content + "</td>";
@@ -60,11 +60,11 @@ $(function(){
 	
 	// 글자수 50개 제한하는 이벤트
 	$("#content").on('keyup',function(){
-		content = $(this).val();
+		jik_comm_content = $(this).val();
 		length = $(this).val().length;
 		if(length > 50){
 			length = 50;
-			content = content.substring(0, length);
+			jik_comm_content = jik_comm_content.substring(0, length);
 		}
 		$(".float-left").text(length + "/50")
 	})
@@ -87,17 +87,18 @@ $(function(){
 		$(".float-left").text("총 50자까지 가능합니다.");
 		
 		if(buttonText == "등록"){ // 댓글을 추가하는 경우
-			url = "../../jik_comm/add";
+			url = "../jik_comm/add";
 			data = {
-					"jik_comm_content" : content,//content = $("#content").val();
+					"jik_comm_content" : jik_comm_content,//content = $("#content").val();
 					"id" : $("#Loginid").val(),
+					"nick" : $("#Loginnick").val(),
 					"jik_board_num" : $("#jik_num").val()
 			};
 		}else { //댓글을 수정하는 경우
 			url = "../jik_comm/update";
 			data = {
-					"num" : num,
-					"content" : jik_content
+					"jik_comm_num" : jik_comm_num,
+					"jik_comm_content" : jik_comm_content
 			};
 			$("#write").text("등록"); // 다시 등록으로 변경
 		}
@@ -121,7 +122,7 @@ $(function(){
 	$("#comment").on('click','.update', function(){
 		before = $(this).parent().prev().text(); // 선택한 내용을 가져옵니다.
 		$("#content").focus().val(before); // textarea에 수정전 내용을 보여줍니다.
-		num = $(this).next().next().val(); // 수정할 댓글번호를 저장합니다.
+		jik_comm_num = $(this).next().next().val(); // 수정할 댓글번호를 저장합니다.
 		$("#write").text("수정완료"); // 등록버튼의 라벨을 '수정완료'로 변경합니다.
 		
 		//$("#comment .update").parent().parent()
@@ -141,13 +142,13 @@ $(function(){
 		if(!confirm('정말 삭제하시겠습니까?')){
 			return;
 		}
-		num = $(this).next().val(); // 댓글번호
+		jik_comm_num = $(this).next().val(); // 댓글번호
 		
 		$.ajax({
 			type : "post",
 			url : "../jik_comm/delete",
 			data : {
-				"num" : jik_num
+				"jik_comm_num" : jik_comm_num
 				},
 			success : function(result){
 				if (result == 1){

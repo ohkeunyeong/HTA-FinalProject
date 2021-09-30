@@ -16,8 +16,8 @@ public class Jik_CommDAO {
 	private SqlSessionTemplate sqlSession;
 	
 	
-	public int getListCount(int board_num) {
-		return sqlSession.selectOne("Jik_Comms.count",board_num);
+	public int getListCount(int jik_num) {
+		return sqlSession.selectOne("Jik_Comms.count",jik_num);
 	}
 
 	public List<Jik_Comm> getCommnetList(Map<String, Integer> map) {
