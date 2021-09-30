@@ -1,6 +1,8 @@
 package com.hta.project.controller;
 
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -9,12 +11,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hta.project.domain.Category;
+import com.hta.project.domain.Product;
 import com.hta.project.service.MemberService;
+import com.hta.project.service.ShopService;
 
 
 @Controller
@@ -22,6 +28,9 @@ public class MainController {
 
 	private static final Logger logger
     = LoggerFactory.getLogger(MainController.class);
+	
+	@Autowired
+	private ShopService shopService;
 	
 	@Autowired
 	private MemberService memberService;
@@ -34,7 +43,21 @@ public class MainController {
 	
 	//굿즈 장터 메인 이동 - 상품 목록 
 	@RequestMapping("/shopmain")
-	public String shop_main() {		
+	public String shopmain(Model model,
+			@RequestParam(value="page", defaultValue="1", required = false) int page,
+			@RequestParam(value="limit", defaultValue="12", required=false) int limit,
+			ModelAndView mv,
+			@RequestParam(value="search_field", defaultValue="-1", required=false) int index,
+			@RequestParam(value="search_word", defaultValue="", required=false) String search_word) {
+		logger.info("Shop productList()");
+		
+		List<Product> productlist = null;
+		//보여줄 값 구한다.
+		//1. 모든 것
+		//2. 살충제 
+		//3. 비료/상토 
+		productlist = shopService.getProductList(index, search_word, page, limit);
+		model.addAttribute("productList", productlist);
 		return "hyun/shop/shop_main";
 	}
 	

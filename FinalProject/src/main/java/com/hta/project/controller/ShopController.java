@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,12 +54,17 @@ public class ShopController {
     	
     	@GetMapping("/productList")
     	public ModelAndView productList(@RequestParam(value="page", defaultValue="1", required = false) int page,
-    			ModelAndView mv) {
+    			@RequestParam(value="limit", defaultValue="12", required=false) int limit,
+    			ModelAndView mv,
+    			@RequestParam(value="search_field", defaultValue="-1", required=false) int index,
+    			@RequestParam(value="search_word", defaultValue="", required=false) String search_word) {
     		logger.info("Shop productList()");
     		
-    		int limit = 5;
+    		List<Product> productlist = null;
+    		int listcount = 0;
     		
-    		int listcount = shopService.getProductListCount();
+    		productlist = shopService.getProductList(index, search_word, page, limit);
+    		listcount = shopService.getProductListCount(index, search_word);
     		
     		int maxpage = (listcount + limit - 1) / limit;
     		
@@ -69,8 +76,6 @@ public class ShopController {
     			endpage = maxpage;
     		}
     		
-    		List<Product> productlist = shopService.getProductList(page, limit);
-    		
     		mv.addObject("page", page);
     		mv.addObject("maxpage", maxpage);
     		mv.addObject("startpage", startpage);
@@ -78,8 +83,11 @@ public class ShopController {
     		mv.addObject("listcount", listcount);
     		mv.addObject("productlist", productlist);
     		mv.addObject("limit", limit);
+    		mv.addObject("search_field", index);
+    		mv.addObject("search_word", search_word);
     		
-    		mv.setViewName("hyun/shop/shopmain");
+    		
+    		mv.setViewName("hyun/shop/shop_main");
     		return mv;
     	}
     	
@@ -96,6 +104,28 @@ public class ShopController {
     		
     		return map;
     	}
+    	
+    	@GetMapping("/productDetail")
+    	public ModelAndView productDetail(String code, ModelAndView mv, 
+    			   HttpServletRequest request) {
+    		logger.info("Admin productDetail()");
+    		
+    		Product product = shopService.getProductDetail(code);
+    		
+    		if(product==null) {
+    			logger.info("상세보기 실패");
+    			mv.setViewName("jjs/error/error");
+    			mv.addObject("url", request.getRequestURL());
+    			mv.addObject("message", "상세보기 실패입니다.");
+    		}else {
+    			logger.info("상세보기 성공");
+    			mv.setViewName("jjs/admin/productDetail");
+    			mv.addObject("product", product);
+    		}
+    		return mv;
+    	}
+    	
+    	
     	
     	@GetMapping("/orderList")
     	public String orderList() {
