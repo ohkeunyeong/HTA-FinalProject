@@ -10,11 +10,11 @@
   		select NVL(max(jik_num),0)+1 from jik
   	</selectKey>
  			INSERT INTO jik
- 			(jik_num, nick, jik_subject,
+ 			(jik_num, jik_id, nick, jik_subject,
  			 jik_content, jik_file, jik_original,
  			 jik_readcount, jik_date, jik_like)
  			VALUES
- 			 (#{jik_num}, #{nick}, #{jik_subject},
+ 			 (#{jik_num},#{jik_id}, #{nick}, #{jik_subject},
  			  #{jik_content}, #{jik_file}, #{jik_original},
  			  #{jik_readcount}, sysdate, #{jik_like})
  	</insert>

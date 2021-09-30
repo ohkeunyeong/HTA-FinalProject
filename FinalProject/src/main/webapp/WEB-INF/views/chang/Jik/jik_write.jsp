@@ -46,6 +46,7 @@
      	<button type=submit class="btn btn-primary">등록</button>
      	<button type=reset  class="btn btn-danger">취소</button>
      </div>
+     <input type="hidden" name="jik_id" id="jik_id" value="${id}">
    </form>
   </div>
 </body>

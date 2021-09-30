@@ -4,6 +4,7 @@
 <head>
 <title>MVC 게시판 - view</title>
  <jsp:include page="../../main/header.jsp" />
+ <script src="../resources/js/chang/view3.js"></script>
 
 <style>
 body > div > table > tbody >tr:nth-child(1) {
@@ -56,6 +57,7 @@ form[action=down] > input[type=submit]{
 </head>
 <body>
   <input type="hidden" id="Loginid" value="${id}" name="loginid">
+  <input type="hidden" id="Loginnick" value="${nick}" name="Loginnick">
   <div class="container">
  	<table class="table table-striped">
  		<tr>
@@ -125,7 +127,7 @@ form[action=down] > input[type=submit]{
 		  	 		이 값을 가져와서 ${param.num}를 사용
 		  	 		또는 ${boarddata.BOARD_NUM}
 		  	 	 --%>
-		  	 	 <input type="hidden" name="num" value="${param.num}"
+		  	 	 <input type="hidden" name="jik_num" value="${param.num}"
 		  	 	 	  id="jik_num">
 					정말로 삭제하시겠습니까?<br><br>
 		  	 	 	<button type="submit" class="btn btn-primary">삭제</button>

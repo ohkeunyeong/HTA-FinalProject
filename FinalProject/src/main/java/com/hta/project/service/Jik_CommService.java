@@ -7,7 +7,7 @@ import com.hta.project.domain.Jik_Comm;
 public interface Jik_CommService {
 
 
-	public int getListCount(int board_num);
+	public int getListCount(int jik_num);
 	
 
 	public List<Jik_Comm> getJik_CommList(int board_num, int page);

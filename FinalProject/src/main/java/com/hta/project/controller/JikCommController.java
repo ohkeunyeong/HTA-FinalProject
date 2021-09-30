@@ -26,10 +26,10 @@ public class JikCommController {
 		
 		@ResponseBody
 		@PostMapping(value = "/list")
-		public Map<String,Object> Jik_CommList(int jik_board_num, int page,String jik_comm_secret){
+		public Map<String,Object> Jik_CommList(int jik_num, int page,String jik_comm_secret){
 			
-			List<Jik_Comm> list = jik_commService.getJik_CommList(jik_board_num, page);
-			int listcount = jik_commService.getListCount(jik_board_num);
+			List<Jik_Comm> list = jik_commService.getJik_CommList(jik_num, page);
+			int listcount = jik_commService.getListCount(jik_num);
 			Map<String,Object> map=new HashMap<String,Object>();
 			map.put("list", list);
 			map.put("listcount", listcount);
@@ -44,9 +44,9 @@ public class JikCommController {
 		}
 		
 		@PostMapping(value = "/delete")
-		public void Jik_CommDelete(int num, HttpServletResponse response)
+		public void Jik_CommDelete(int jik_comm_num, HttpServletResponse response)
 				throws Exception{ // int num => Integer.parseInt(request.getParameter)
-			int result = jik_commService.Jik_CommsDelete(num);
+			int result = jik_commService.Jik_CommsDelete(jik_comm_num);
 			response.getWriter().print(result);
 		}
 		

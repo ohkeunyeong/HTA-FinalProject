@@ -24,12 +24,12 @@ public class Jik_CommServiceImpl implements Jik_CommService{
 	}
 
 	@Override
-	public List<Jik_Comm> getJik_CommList(int jik_board_num, int page) {
+	public List<Jik_Comm> getJik_CommList(int jik_num, int page) {
 		int startrow=1;
 		int endrow=page*3;
 		
 		Map<String,Integer> map =new HashMap<String,Integer>();
-		map.put("jik_board_num",jik_board_num);
+		map.put("jik_num",jik_num);
 		map.put("start",startrow);
 		map.put("end",endrow);
 		return dao.getCommnetList(map);
@@ -42,8 +42,8 @@ public class Jik_CommServiceImpl implements Jik_CommService{
 	}
 
 	@Override
-	public int Jik_CommsDelete(int num) {
-		return dao.Jik_CommsDelete(num);
+	public int Jik_CommsDelete(int jik_comm_num) {
+		return dao.Jik_CommsDelete(jik_comm_num);
 	}
 
 	@Override
