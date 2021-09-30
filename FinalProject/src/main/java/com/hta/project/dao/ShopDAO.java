@@ -20,17 +20,25 @@ public class ShopDAO {
 		return sqlSession.selectList("Products.categoryList");
 	}
 	
-	public int getProductListCount() {
-		return sqlSession.selectOne("Products.count");
-	}
-
-	public List<Product> getProductList(Map<String, Integer> map) {
-		return sqlSession.selectList("Products.list", map);
+	public int getProductListCount(Map<String, String> map) {
+		return sqlSession.selectOne("Products.count", map);
 	}
 
 	public Product getProductDetail(String code) {
 		return sqlSession.selectOne("Products.getProductDetail", code);
 	}
 	
+	public int getProductCategoryCount(String word) {
+		return sqlSession.selectOne("Products.productCategoryListCount", word);
+	}
+
+	public List<Product> getProductCategoryList(Map<String, Object> map) {
+		return sqlSession.selectList("Products.productCategoryList", map);
+	}
+
+	public List<Product> getProductList(Map<String, Object> map) {
+		return sqlSession.selectList("Products.list", map);
+	}
+
 	
 }

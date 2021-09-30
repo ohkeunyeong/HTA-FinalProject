@@ -2,20 +2,61 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- <mapper namespace="Products">
+<mapper namespace="Products1">
 
-카테고리별 상품 리스트	
-	<select id="list" resultType="product" parameterType="map">
+<!-- 카테고리별 상품 리스트 -->	
+	<select id="list" resultType="product1" parameterType="map">
 		select *
 		from (select rownum rnum, pr.*
 			  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
 	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
 	  	   			from product p, CATEGORY c
 	  	   			where p.category_code = c.category_code
+	  	   			<include refid="search_" />
 	  	   			order by p.product_code) pr
 			 )
 		where rnum &gt;= #{start} and rnum &lt;= #{end}
 	</select>
 
 
-</mapper> -->
+	<sql id="search_">
+			<if test="search_field != null">
+				and
+				<choose>
+					<when test="search_field == 'product_name'">product_name</when>
+					<when test="search_field == 'product_code'">product_code</when>
+					<when test="search_field == 'category_name'">category_name</when>
+				</choose>
+				like #{search_word}
+			</if>
+		</sql>
+		
+	<select id="getProductDetail" resultType="product1" parameterType="String">
+		select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
+	  	   	   p.product_detail, p.product_img, p.product_original, p.product_date
+	  	from product p, CATEGORY c
+	  	where p.category_code = c.category_code
+	  	and p.product_code = #{code}
+	</select>
+	
+	
+	<select id="productCategoryList" resultType="product1" parameterType="map">
+		select *
+		from (select rownum rnum, pr.*
+			  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
+	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
+	  	   			from product p, CATEGORY c
+	  	   			where p.category_code = c.category_code
+	  	   			and p.category_code like #{word}
+	  	   			order by p.product_code) pr
+			 )
+		where rnum &gt;= #{start} and rnum &lt;= #{end}
+	</select>
+	
+	
+	<select id="productCategoryListCount" resultType="int" parameterType="String">
+		select count(*)
+		from product 
+		where category_code like #{word}
+	</select>
+</mapper>

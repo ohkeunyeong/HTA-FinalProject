@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -218,6 +221,21 @@ label.right {
 		</ul>
 	</div>
 
+	<!-- 추천 제품 출력 코드  --> <!-- 여기부터 진행 !  -->
+		<ul>
+	 <c:forEach items="${productList}" var="product">
+	 <li>
+	  <div class="productsThumb">
+	   <img src="${product.product_img}"> <!-- ${productlist}로 가져온 목록을 var product에 하나씩 담아서 product.~~의 ~~에 맞는 값을 가져다 쓰는 것 . -->
+	  </div> 
+	  <div class="goodsName">
+	   <a href="/shop/view?n=${product.product_code}">${product.product_name}</a>
+	  </div>
+	 </li>
+	 </c:forEach>
+	</ul>
+	
+	
 	<!-- 제품 카드 목록 리스트 -->
 	<br>
 	<br>
@@ -227,107 +245,29 @@ label.right {
 		</div>
 		
 		<div class="recommendation">
-		<div class="products card-deck">
-			<div class="card">
+		 <c:forEach items="${productList}" var="product" varStatus="status">
+		
+		 <c:if test="${status.index % 4 == 0}">
+		  <div class="products card-deck">
+		 </c:if>
+		 
+			<div class="card" style="width:400px">
 				<img class="card-img-top"
-					src="${pageContext.request.contextPath}/resources/image/homi.jpg"
+					src="${pageContext.request.contextPath}/resources/image/hyun/${product.product_img}"
 					alt="Card image" style="width: 100%">
 				<div class="card-body">
-					<h5 class="card-title">튼튼 호미(중)</h5>
-					<p class="card-text">얕은 땅을 팔 때 유용한 튼튼호미입니다. 가볍고 오래 사용해도 녹슬지
-						않습니다.</p>
+					<h5 class="card-title">${product.product_name}</h5>
+					<p class="card-text">${product.product_detail}</p>
 					<a href="shop_detail.jsp" class="btn btn-info">제품 보기</a>
 				</div>
 			</div>
-
-			<div class="card">
-				<img class="card-img-top"
-					src="${pageContext.request.contextPath}/resources/image/homi.jpg"
-					alt="Card image" style="width: 100%">
-				<div class="card-body">
-					<h5 class="card-title">엉덩이 방석 1개</h5>
-					<p class="card-text">내 엉덩이를 보호해주는 작은 동그라미 친구! 타사보다 더 크고 탄탄한 주말
-						장터의 엉덩이 방석에 앉아보세요.</p>
-					<a href="#" class="btn btn-info">제품 보기</a>
-				</div>
-			</div>
-
-			<div class="card">
-				<img class="card-img-top"
-					src="${pageContext.request.contextPath}/resources/image/homi.jpg"
-					alt="Card image" style="width: 100%">
-				<div class="card-body">
-					<h5 class="card-title">주말 장터 장바구니(대)</h5>
-					<p class="card-text">수확한 농작물을 담아보세요. 리뉴얼로 사이즈는 더 커지고 소재는 더
-						강해졌어요.</p>
-					<a href="#" class="btn btn-info">제품 보기</a>
-				</div>
-			</div>
-
-			<div class="card">
-				<img class="card-img-top"
-					src="${pageContext.request.contextPath}/resources/image/homi.jpg"
-					alt="Card image" style="width: 100%">
-				<div class="card-body">
-					<h5 class="card-title">팍팍 곡괭이(소)</h5>
-					<p class="card-text">자갈 제거에 제격인 곡괭이입니다. 가볍고 오래 사용해도 녹슬지 않습니다.</p>
-					<a href="#" class="btn btn-info">제품 보기</a>
-				</div>
-			</div>
+			
+		  <c:if test="${status.index % 4 == 3}">
+		   </div>
+		  </c:if>
+		  </c:forEach>
 		</div>
-
-
-		<div class="products card-deck">
-			<div class="card">
-				<img class="card-img-top"
-					src="${pageContext.request.contextPath}/resources/image/homi.jpg"
-					alt="Card image" style="width: 100%">
-				<div class="card-body">
-					<h5 class="card-title">튼튼 호미(중)</h5>
-					<p class="card-text">얕은 땅을 팔 때 유용한 튼튼호미입니다. 가볍고 오래 사용해도 녹슬지
-						않습니다.</p>
-					<a href="#" class="btn btn-info">제품 보기</a>
-				</div>
-			</div>
-
-			<div class="card">
-				<img class="card-img-top"
-					src="${pageContext.request.contextPath}/resources/image/homi.jpg"
-					alt="Card image" style="width: 100%">
-				<div class="card-body">
-					<h5 class="card-title">엉덩이 방석 1개</h5>
-					<p class="card-text">내 엉덩이를 보호해주는 작은 동그라미 친구! 타사보다 더 크고 탄탄한 주말
-						장터의 엉덩이 방석에 앉아보세요.</p>
-					<a href="#" class="btn btn-info">제품 보기</a>
-				</div>
-			</div>
-
-			<div class="card">
-				<img class="card-img-top"
-					src="${pageContext.request.contextPath}/resources/image/homi.jpg"
-					alt="Card image" style="width: 100%">
-				<div class="card-body">
-					<h5 class="card-title">주말 장터 장바구니(대)</h5>
-					<p class="card-text">수확한 농작물을 담아보세요. 리뉴얼로 사이즈는 더 커지고 소재는 더
-						강해졌어요.</p>
-					<a href="#" class="btn btn-info">제품 보기</a>
-				</div>
-			</div>
-
-			<div class="card" style="width: 300px;">
-				<img class="card-img-top"
-					src="${pageContext.request.contextPath}/resources/image/homi.jpg"
-					alt="Card image" style="width: 100%">
-				<div class="card-body">
-					<h5 class="card-title">팍팍 곡괭이(소)</h5>
-					<p class="card-text">자갈 제거에 제격인 곡괭이입니다. 가볍고 오래 사용해도 녹슬지 않습니다.</p>
-					<a href="#" class="btn btn-info">제품 보기</a>
-				</div>
-			</div>
-		</div>
-		<br>
-
-	</div>
+			
 
 	<!--  페이지네이션 -->
 	<ul class="pagination justify-content-center" style="margin:20px 0">

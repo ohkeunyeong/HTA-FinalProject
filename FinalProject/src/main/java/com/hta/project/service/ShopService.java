@@ -7,12 +7,16 @@ import com.hta.project.domain.Product;
 
 public interface ShopService {
 
-	List<Category> getCategoryList();
+	public List<Category> getCategoryList();
 
-	Product getProductDetail(String code);
+	public int getProductListCount(int index, String search_word);
 
-	List<Product> getProductList(int page, int limit);
+	public List<Product> getProductList(int index, String search_word, int page, int limit);
 
-	int getProductListCount();
+	public Product getProductDetail(String code);
+	
+	public int getProductCategoryCount(String category_name);
+
+	public List<Product> getProductCategoryList(int page, int limit, String category_name);
 
 }

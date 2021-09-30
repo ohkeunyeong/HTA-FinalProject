@@ -16,6 +16,7 @@
 		<typeAlias alias="notice" 		type="com.hta.project.domain.Notice"/>
 		<typeAlias alias="member" 		type="com.hta.project.domain.Member"/>
 		<typeAlias alias="product" 		type="com.hta.project.domain.Product"/>
+		<typeAlias alias="product1" 	type="com.hta.project.domain.Product"/> <!-- 추 -->
 		<typeAlias alias="category" 	type="com.hta.project.domain.Category"/>
 		<typeAlias alias="farm" 		type="com.hta.project.domain.Farm"/>
 		<typeAlias alias="order" 		type="com.hta.project.domain.Order_Market"/>
@@ -31,6 +32,7 @@
        	<mapper resource="sql/notice.xml" />
        	<mapper resource="sql/member.xml" />
        	<mapper resource="sql/product.xml" />
+       	<mapper resource="sql/shopMapper.xml" /> <!-- 추가 -->
        	<mapper resource="sql/farm.xml" />
        	<mapper resource="sql/order.xml" />
      </mappers>

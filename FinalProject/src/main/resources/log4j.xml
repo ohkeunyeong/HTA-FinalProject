@@ -38,7 +38,11 @@
 	<logger name="Farms">
 		<level value="trace" />
 	</logger>
-	
+
+	<logger name="Products1">
+    <level value="trace" />
+	</logger>
+
 	<logger name="Orders">
 		<level value="trace" />
 	</logger>
