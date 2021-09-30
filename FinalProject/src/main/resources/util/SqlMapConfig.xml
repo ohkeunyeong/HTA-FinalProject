@@ -18,6 +18,9 @@
 		<typeAlias alias="product" 		type="com.hta.project.domain.Product"/>
 		<typeAlias alias="category" 	type="com.hta.project.domain.Category"/>
 		<typeAlias alias="farm" 		type="com.hta.project.domain.Farm"/>
+		<typeAlias alias="order" 		type="com.hta.project.domain.Order_Market"/>
+		<typeAlias alias="orderList" 	type="com.hta.project.domain.OrderDetailList"/>
+		<typeAlias alias="orderDetail" 	type="com.hta.project.domain.OrderDetail"/>
      </typeAliases>
          
      <mappers>
@@ -29,5 +32,6 @@
        	<mapper resource="sql/member.xml" />
        	<mapper resource="sql/product.xml" />
        	<mapper resource="sql/farm.xml" />
+       	<mapper resource="sql/order.xml" />
      </mappers>
 </configuration>

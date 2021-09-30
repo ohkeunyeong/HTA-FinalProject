@@ -39,6 +39,10 @@
 		<level value="trace" />
 	</logger>
 	
+	<logger name="Orders">
+		<level value="trace" />
+	</logger>
+	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />

@@ -12,6 +12,9 @@ import com.hta.project.domain.Farm;
 import com.hta.project.domain.Member;
 import com.hta.project.domain.Notice;
 import com.hta.project.domain.OkyMynong;
+import com.hta.project.domain.OrderDetail;
+import com.hta.project.domain.OrderDetailList;
+import com.hta.project.domain.Order_Market;
 import com.hta.project.domain.Product;
 
 @Repository
@@ -122,6 +125,34 @@ public class AdminDAO {
 
 	public List<Farm> getFarmSelectList(Map<String, Object> map) {
 		return sqlSession.selectList("Farms.selectList", map);
+	}
+
+	public int getOrderListCount() {
+		return sqlSession.selectOne("Orders.count");
+	}
+
+	public List<Order_Market> getOrderList(Map<String, Integer> map) {
+		return sqlSession.selectList("Orders.list", map);
+	}
+
+	public int getSearchOrderListCount(String word) {
+		return sqlSession.selectOne("Orders.searchListCount", word);
+	}
+
+	public List<Order_Market> getSearchOrderList(Map<String, Object> map) {
+		return sqlSession.selectList("Orders.searchList", map);
+	}
+
+	public OrderDetail getOrderDetail(String order_num) {
+		return sqlSession.selectOne("Orders.detail", order_num);
+	}
+
+	public List<OrderDetailList> getOrderDetailList(String order_num) {
+		return sqlSession.selectList("Orders.detailList", order_num);
+	}
+
+	public int orderDeliveryUpdate(Map<String, String> map) {
+		return sqlSession.update("Orders.deliveryUpdate", map);
 	}
 
 }

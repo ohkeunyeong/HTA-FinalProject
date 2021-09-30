@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -20,6 +23,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- Google Font: Source Sans Pro -->
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/plugins/jquery/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jjs/orderDetail.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
@@ -58,15 +62,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<!-- Profile Image -->
 							<div class="card card-primary card-outline">
 								<div class="card-body box-profile">
-
 									<ul class="list-group list-group-unbordered mb-3 h5">
-										<li class="list-group-item"><b>주문번호</b> <a class="float-right">210924_332142</a></li>
-										<li class="list-group-item"><b>수령인</b> <a class="float-right">홍길동</a></li>
-										<li class="list-group-item"><b>전화번호</b> <a class="float-right">010-1111-1111</a></li>
-										<li class="list-group-item"><b>주소</b> <a class="float-right">331-213 서울특별시 종로구 종로3가</a></li>
-										<li class="list-group-item"><b>주문가격</b> <a class="float-right">1,000원</a></li>
-										<li class="list-group-item"><b>결제일</b> <a class="float-right">21-09-24</a></li>
+										<li class="list-group-item"><b>주문번호</b> <a class="float-right">${orderdetail.order_num}</a></li>
+										<li class="list-group-item"><b>수령인</b> <a class="float-right">${orderdetail.order_name}</a></li>
+										<li class="list-group-item"><b>전화번호</b> <a class="float-right">${orderdetail.order_phone}</a></li>
+										<c:set var="user_address1" value="${fn:substring(orderdetail.user_address1,0,3)}-${fn:substring(orderdetail.user_address1,3,6)}" />
+										<li class="list-group-item"><b>주소</b> <a class="float-right">${user_address1} ${orderdetail.user_address2}</a></li>
+										<fmt:formatNumber var="totalPrice" value="${orderdetail.order_totalprice}" pattern="###,###,###" />
+										<li class="list-group-item"><b>주문가격</b> <a class="float-right">${totalPrice}원</a></li>
+										<li class="list-group-item"><b>결제방식</b> <a class="float-right">${orderdetail.order_payment}</a></li>
+										<li class="list-group-item"><b>결제일</b> <a class="float-right">${orderdetail.order_date}</a></li>
+										<li class="list-group-item"><b>배송상태</b> <a class="float-right">${orderdetail.order_delivery}</a></li>
 									</ul>
+									<input type="hidden" value="${param.order_num}" id="order_num">
+									<input type="hidden" value="${orderdetail.order_delivery}" id="order_delivery">
+									<c:if test="${orderdetail.order_delivery == '배송준비'}">
+										<div class="float-right"><span class="h4 align-middle">배송상태 변경 : </span><button class="btn btn-primary" id="deliveryBtn">배송중</button></div>
+									</c:if>
+									<c:if test="${orderdetail.order_delivery == '배송중'}">
+										<div class="float-right"><span class="h4 align-middle">배송상태 변경 : </span><button class="btn btn-primary" id="deliveryBtn">배송완료</button></div>
+									</c:if>
+									<c:if test="${orderdetail.order_delivery == '배송완료'}">
+										<span class="float-right h4">배송완료</span>
+									</c:if>
 
 								</div>
 								<!-- /.card-body -->
@@ -75,27 +93,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 						</div>
 						<!-- /.col -->
-						<div class="col-lg-6">
-							<div class="card card-primary">
-								<div class="card-header">
-									<span><a href="#">상품이름</a></span> <span class="float-right">1,000원</span>
-								</div>
-								<div class="card-body">
-									<a href="#"><img class="img-fluid" src="${pageContext.request.contextPath}/dist/img/photo1.png" alt="Photo"></a>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-lg-6">
-							<div class="card card-primary">
-								<div class="card-header">
-									<span><a href="#">상품이름</a></span> <span class="float-right">1,000원</span>
-								</div>
-								<div class="card-body">
-									<a href="#"><img class="img-fluid" src="${pageContext.request.contextPath}/dist/img/photo1.png" alt="Photo"></a>
+						<c:forEach var="d" items="${orderlist}">
+							<div class="col-lg-6">
+								<div class="card card-primary">
+									<div class="card-header">
+										<fmt:formatNumber var="price" value="${d.product_price}" pattern="###,###,###" />
+										<span><a href="#">${d.product_name}</a></span> <span class="float-right">${price}원</span>
+									</div>
+									<div class="card-body">
+										<img class="img-fluid" src="${pageContext.request.contextPath}/resources/upload${d.product_img}" alt="productImg" width="200px" height="200px" style="margin-left: 85px;">
+									</div>
 								</div>
 							</div>
-						</div>
+						</c:forEach>
 						<!-- /.col -->
 					</div>
 					<!-- /.row -->

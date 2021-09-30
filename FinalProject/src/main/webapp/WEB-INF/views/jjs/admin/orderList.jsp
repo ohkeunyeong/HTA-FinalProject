@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -20,6 +23,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- Google Font: Source Sans Pro -->
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/plugins/jquery/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jjs/orderList.js"></script>
+<style>
+.gray {
+	color: gray
+}
+
+a:not([href]) {
+	color: gray;
+	text-decoration: none;
+}
+</style>
 </head>
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
@@ -59,112 +73,92 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						<div class="col-12">
 							<div class="card">
 								<div class="card-header">
-									<h3 class="card-title">주문목록</h3>
+									<h3 class="card-title">주문건수 : ${listcount}</h3>
 
 									<div class="card-tools">
 										<div class="input-group input-group-sm" style="width: 150px;">
-											<input type="text" name="table_search" class="form-control float-right" placeholder="주문번호 입력">
+											<input type="text" name="search_word" id="search_word" class="form-control float-right" placeholder="주문번호 입력">
 										</div>
 									</div>
 								</div>
 								<!-- /.card-header -->
-								<div class="card-body table-responsive p-0" style="height: 480px;">
-									<table class="table table-head-fixed text-nowrap">
-										<thead>
-											<tr>
-												<th>주문번호</th>
-												<th>수령인</th>
-												<th>주소</th>
-												<th>주문가격</th>
-												<th>결제일</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>
-													<a href="orderDetail">210924_332142</a>
-												</td>
-												<td>홍길동</td>
-												<td>331-213 서울특별시 종로구 종로3가</td>
-												<td>1,000원</td>
-												<td>21-09-24</td>
-											</tr>
-											<tr>
-												<td>
-													<a href="orderDetail">210924_332142</a>
-												</td>
-												<td>홍길동</td>
-												<td>331-213 서울특별시 종로구 종로3가</td>
-												<td>1,000원</td>
-												<td>21-09-24</td>
-											</tr>
-											<tr>
-												<td>
-													<a href="orderDetail">210924_332142</a>
-												</td>
-												<td>홍길동</td>
-												<td>331-213 서울특별시 종로구 종로3가</td>
-												<td>1,000원</td>
-												<td>21-09-24</td>
-											</tr>
-											<tr>
-												<td>
-													<a href="orderDetail">210924_332142</a>
-												</td>
-												<td>홍길동</td>
-												<td>331-213 서울특별시 종로구 종로3가</td>
-												<td>1,000원</td>
-												<td>21-09-24</td>
-											</tr>
-											<tr>
-												<td>
-													<a href="orderDetail">210924_332142</a>
-												</td>
-												<td>홍길동</td>
-												<td>331-213 서울특별시 종로구 종로3가</td>
-												<td>1,000원</td>
-												<td>21-09-24</td>
-											</tr>
-											<tr>
-												<td>
-													<a href="orderDetail">210924_332142</a>
-												</td>
-												<td>홍길동</td>
-												<td>331-213 서울특별시 종로구 종로3가</td>
-												<td>1,000원</td>
-												<td>21-09-24</td>
-											</tr>
-											<tr>
-												<td>
-													<a href="orderDetail">210924_332142</a>
-												</td>
-												<td>홍길동</td>
-												<td>331-213 서울특별시 종로구 종로3가</td>
-												<td>1,000원</td>
-												<td>21-09-24</td>
-											</tr>
-											<tr>
-												<td>
-													<a href="orderDetail">210924_332142</a>
-												</td>
-												<td>홍길동</td>
-												<td>331-213 서울특별시 종로구 종로3가</td>
-												<td>1,000원</td>
-												<td>21-09-24</td>
-											</tr>
-											<tr>
-												<td>
-													<a href="orderDetail">210924_332142</a>
-												</td>
-												<td>홍길동</td>
-												<td>331-213 서울특별시 종로구 종로3가</td>
-												<td>1,000원</td>
-												<td>21-09-24</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<!-- /.card-body -->
+								<c:if test="${listcount > 0 }">
+									<div class="card-body table-responsive p-0" style="height: 395px;">
+										<table class="table table-head-fixed text-nowrap">
+											<thead>
+												<tr>
+													<th>주문번호</th>
+													<th>수령인</th>
+													<th>주소</th>
+													<th>주문가격</th>
+													<th>결제일</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="o" items="${orderlist}">
+													<tr>
+														<td>
+															<div>
+																<a href="orderDetail?order_num=${o.order_num}">${o.order_num}</a>
+															</div>
+														</td>
+														<td>
+															<div>
+																<span>${o.order_name}</span>
+															</div>
+														<td>
+															<div>
+																<c:set var="user_address1" value="${fn:substring(o.user_address1,0,3)}-${fn:substring(o.user_address1,3,6)}"></c:set>
+																<span>${user_address1} ${o.user_address2}</span>
+															</div>
+														<td>
+															<div>
+																<fmt:formatNumber var="totalPrice" value="${o.order_totalprice}" pattern="###,###,###"/>
+																<span>${totalPrice}원</span>
+															</div>
+														<td>
+															<div>
+																<span>${o.order_date}</span>
+															</div>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+									<!-- /.card-body -->
+									<div class="card-footer clearfix">
+										<ul class="pagination m-0 justify-content-center">
+											<c:if test="${page <= 1 }">
+												<li class="page-item"><a class="page-link gray">«</a></li>
+											</c:if>
+											<c:if test="${page > 1 }">
+												<li class="page-item"><a href="orderList?page=${page-1}" class="page-link">«</a></li>
+											</c:if>
+
+											<c:forEach var="a" begin="${startpage}" end="${endpage}">
+												<c:if test="${a == page }">
+													<li class="page-item "><a class="page-link gray">${a}</a></li>
+												</c:if>
+												<c:if test="${a != page }">
+													<li class="page-item"><a href="orderList?page=${a}" class="page-link">${a}</a></li>
+												</c:if>
+											</c:forEach>
+
+											<c:if test="${page >= maxpage }">
+												<li class="page-item"><a class="page-link gray">»</a></li>
+											</c:if>
+											<c:if test="${page < maxpage }">
+												<li class="page-item"><a href="orderList?page=${page+1}" class="page-link">»</a></li>
+											</c:if>
+										</ul>
+									</div>
+								</c:if>
+								
+								<c:if test="${listcount == 0 }">
+									<p class="text-center h2 mt-3 mb-3">
+										<span>주문 건수가 없습니다.</span>
+									</p>
+								</c:if>
 							</div>
 							<!-- /.card -->
 						</div>
