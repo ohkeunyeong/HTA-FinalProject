@@ -4,8 +4,10 @@ import java.util.List;
 
 import com.hta.project.domain.Category;
 import com.hta.project.domain.Farm;
-import com.hta.project.domain.Member;
 import com.hta.project.domain.Notice;
+import com.hta.project.domain.OrderDetail;
+import com.hta.project.domain.OrderDetailList;
+import com.hta.project.domain.Order_Market;
 import com.hta.project.domain.Product;
 
 public interface AdminService {
@@ -61,5 +63,20 @@ public interface AdminService {
 	public int getfarmListCount();
 
 	public List<Farm> getFarmSelectList(int page, int limit, int farmSelect);
+
+	public int getOrderListCount();
+
+	public List<Order_Market> getOrderList(int page, int limit);
+
+	public int getSearchOrderListCount(String search_word);
+
+	public List<Order_Market> getSearchOrderList(String search_word, int page, int limit);
+
+	public OrderDetail getOrderDetail(String order_num);
+
+	public List<OrderDetailList> getOrderDetailList(String order_num);
+
+	public int orderDeliveryUpdate(String order_num, String deliveryStatus);
+
 	
 }

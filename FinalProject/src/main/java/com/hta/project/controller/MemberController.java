@@ -78,7 +78,7 @@ public class MemberController {
 		
 		if (result == 1) {
 			rattr.addFlashAttribute("result", "joinSuccess");
-			return "main/main";
+			return "redirect:/main";
 		}else {
 			model.addAttribute("url", request.getRequestURL());
 			model.addAttribute("message", "회원가입을 실패하였습니다.");

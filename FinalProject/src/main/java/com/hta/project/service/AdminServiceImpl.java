@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import com.hta.project.dao.AdminDAO;
 import com.hta.project.domain.Category;
 import com.hta.project.domain.Farm;
-import com.hta.project.domain.Member;
 import com.hta.project.domain.Notice;
+import com.hta.project.domain.OrderDetail;
+import com.hta.project.domain.OrderDetailList;
+import com.hta.project.domain.Order_Market;
 import com.hta.project.domain.Product;
 
 @Service
@@ -231,6 +233,65 @@ public class AdminServiceImpl implements AdminService{
 		list = dao.getFarmSelectList(map);
 		
 		return list;
+	}
+
+	@Override
+	public int getOrderListCount() {
+		return dao.getOrderListCount();
+	}
+
+	@Override
+	public List<Order_Market> getOrderList(int page, int limit) {
+		List<Order_Market> list = new ArrayList<Order_Market>();
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		int startrow = (page - 1) * limit + 1;
+		int endrow = startrow + limit - 1;
+		map.put("start", startrow);
+		map.put("end", endrow);
+		
+		list = dao.getOrderList(map);
+		
+		return list;
+	}
+
+	@Override
+	public int getSearchOrderListCount(String search_word) {
+		String word = "%" + search_word + "%";
+		return dao.getSearchOrderListCount(word);
+	}
+
+	@Override
+	public List<Order_Market> getSearchOrderList(String search_word, int page, int limit) {
+		List<Order_Market> list = new ArrayList<Order_Market>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		int startrow = (page - 1) * limit + 1;
+		int endrow = startrow + limit - 1;
+		String word = "%" + search_word + "%";
+		map.put("start", startrow);
+		map.put("end", endrow);
+		map.put("word", word);
+		
+		list = dao.getSearchOrderList(map);
+		
+		return list;
+	}
+
+	@Override
+	public OrderDetail getOrderDetail(String order_num) {
+		return dao.getOrderDetail(order_num);
+	}
+
+	@Override
+	public List<OrderDetailList> getOrderDetailList(String order_num) {
+		return dao.getOrderDetailList(order_num);
+	}
+
+	@Override
+	public int orderDeliveryUpdate(String order_num, String deliveryStatus) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("order_num", order_num);
+		map.put("deliveryStatus", deliveryStatus);
+		return dao.orderDeliveryUpdate(map);
 	}
 
 }

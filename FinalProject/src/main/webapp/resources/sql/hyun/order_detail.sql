@@ -13,4 +13,8 @@ CREATE TABLE ORDER_DETAIL(
 
 select * from order_detail;
 
+create sequence order_detail_seq;
+
+drop sequence order_detail_seq;
+
 -- 실행함 9.19

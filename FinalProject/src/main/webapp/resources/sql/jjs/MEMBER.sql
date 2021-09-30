@@ -2,7 +2,7 @@ DROP TABLE MEMBER;
 
 CREATE TABLE MEMBER(
 	ID				VARCHAR2(50)	NOT NULL	PRIMARY KEY,
-	PASS			VARCHAR2(50)	NOT NULL,
+	PASS			VARCHAR2(60)	NOT NULL,
 	NAME			VARCHAR2(50),
 	NICK			VARCHAR2(50)	NOT NULL,
 	MAIL			VARCHAR2(50),
@@ -10,7 +10,8 @@ CREATE TABLE MEMBER(
 	MY_FARM			VARCHAR2(1),
 	PERSNACON		VARCHAR2(50),
 	POINT			NUMBER(7),
-	MYNONG_NAME		VARCHAR2(50)	REFERENCES mynong(MYNONG_NAME),
+	MYNONG_NAME		VARCHAR2(50),
+	foreign key (MYNONG_NAME) REFERENCES mynong(MYNONG_NAME),
 	CONSTRAINT MEMBER_uq UNIQUE (NICK)
 );
 
@@ -133,6 +134,8 @@ select mynong_name, name, cnt membercnt, mynong_date
 	 		 )
 		where rnum >= 1and rnum <= 10
 
+update member
+set my_farm = '0', point = 0
 
 
 
