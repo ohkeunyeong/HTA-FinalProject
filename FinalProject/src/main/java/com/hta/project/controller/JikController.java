@@ -308,13 +308,13 @@ public class JikController {
 	}
 	
 	@PostMapping("/delete")	
-	public String JikDeleteAction(int num,
+	public String JikDeleteAction(int jik_num,
 			Model mv,RedirectAttributes rattr,
 			HttpServletRequest request
 			)throws Exception {
 
 
-		int result = jikService.jikDelete(num);
+		int result = jikService.jikDelete(jik_num);
 		
 		//삭제 처리 실패한 경우
 		if(result == 0) {

@@ -27,11 +27,12 @@ $(function(){
 							$(rdata.list).each(function(){
 								output = '';
 								img = '';
-								if($("#Loginid").val() == this.id || this.id == null){
+								if($("#Loginid").val() == this.id){
 									img = "<img src='../resources/image/chang/pencil2.png' width='15px' class='update'>"
 										+ "<img src='../resources/image/chang/delete.png' width='15px' class='remove'>"	
 										+ "<input type='hidden' value='" + this.jik_comm_num+"'>";
 								}
+								
 								output += "<tr><td>" + this.nick + "</td>";
 								output += "<td></td>";
 								//악의적인 쿼리공격을 방어하기 위해 .text로 변환하여 넣어줌.

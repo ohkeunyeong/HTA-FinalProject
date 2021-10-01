@@ -44,9 +44,9 @@ public class JikServiceImpl implements JikService{
 	}
 
 	@Override
-	public int jikDelete(int num) {
+	public int jikDelete(int jik_num) {
 		int result = 0;
-		Jik jik = dao.getDetail(num);
+		Jik jik = dao.getDetail(jik_num);
 		if(jik != null) {
 			result=dao.jikDelete(jik);
 			

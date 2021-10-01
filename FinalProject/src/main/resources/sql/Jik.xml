@@ -45,13 +45,13 @@
  	<select id="detail" resultType="jik" parameterType="int">
  			select * 
  			from jik 
- 			where jik_num = #{num}
+ 			where jik_num = #{jik_num}
  	</select>
  	
  	<update id="readCountUpdate" parameterType="int">
  			update jik 
  			set jik_readcount=jik_readcount+1
- 			WHERE jik_num = #{num}
+ 			WHERE jik_num = #{jik_num}
  	</update>
  	
  	 <update id= "modify" parameterType="jik">
