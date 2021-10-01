@@ -45,7 +45,7 @@ public class MainController {
 	@RequestMapping("/shopmain")
 	public String shopmain(Model model,
 			@RequestParam(value="page", defaultValue="1", required = false) int page,
-			@RequestParam(value="limit", defaultValue="12", required=false) int limit,
+			@RequestParam(value="limit", defaultValue="8", required=false) int limit,
 			ModelAndView mv,
 			@RequestParam(value="search_field", defaultValue="-1", required=false) int index,
 			@RequestParam(value="search_word", defaultValue="", required=false) String search_word) {

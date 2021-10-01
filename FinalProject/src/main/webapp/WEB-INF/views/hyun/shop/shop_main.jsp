@@ -222,7 +222,7 @@ label.right {
 	</div>
 
 	<!-- 추천 제품 출력 코드  --> <!-- 여기부터 진행 !  -->
-		<ul>
+	<%-- 	<ul>
 	 <c:forEach items="${productList}" var="product">
 	 <li>
 	  <div class="productsThumb">
@@ -233,7 +233,7 @@ label.right {
 	  </div>
 	 </li>
 	 </c:forEach>
-	</ul>
+	</ul> --%>
 	
 	
 	<!-- 제품 카드 목록 리스트 -->
@@ -251,10 +251,10 @@ label.right {
 		  <div class="products card-deck">
 		 </c:if>
 		 
-			<div class="card" style="width:400px">
-				<img class="card-img-top"
+			<div class="card" >
+				<img class="card-img-top" style="height:300px"
 					src="${pageContext.request.contextPath}/resources/image/hyun/${product.product_img}"
-					alt="Card image" style="width: 100%">
+					alt="Card image" style="width:100%; height:300px">
 				<div class="card-body">
 					<h5 class="card-title">${product.product_name}</h5>
 					<p class="card-text">${product.product_detail}</p>
@@ -270,7 +270,7 @@ label.right {
 			
 
 	<!--  페이지네이션 -->
-	<ul class="pagination justify-content-center" style="margin:20px 0">
+	<!-- <ul class="pagination justify-content-center" style="margin:20px 0">
 	  <li class="page-item"><a class="page-link" href="#">이전</a></li>
 	  <li class="page-item"><a class="page-link" href="#">1</a></li>
 	  <li class="page-item"><a class="page-link" href="#">2</a></li>
@@ -278,7 +278,7 @@ label.right {
 	  <li class="page-item"><a class="page-link" href="#">4</a></li>
 	  <li class="page-item"><a class="page-link" href="#">5</a></li>
 	  <li class="page-item"><a class="page-link" href="#">다음</a></li>
-	</ul>
+	</ul> -->
 
 	<jsp:include page="../../main/footer.jsp" />
 </body>
