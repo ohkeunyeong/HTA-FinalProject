@@ -19,19 +19,19 @@ public class MyCalendar {
 	private String min;
 	
 	
-	public MyCalendar() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public MyCalendar(int seq, String name, String title, String content, String mdate, Date regdate) {
-		super();
-		this.seq= seq;
-		this.setName(name);
-		this.title= title;
-		this.content= content;
-		this.mdate= mdate;
-		this.regdate= regdate;		
-	}
+//	public MyCalendar() {
+//		super();
+//		// TODO Auto-generated constructor stub
+//	}
+//	public MyCalendar(int seq, String name, String title, String content, String mdate, Date regdate) {
+//		super();
+//		this.seq= seq;
+//		this.setName(name);
+//		this.title= title;
+//		this.content= content;
+//		this.mdate= mdate;
+//		this.regdate= regdate;		
+//	}
 	
 	public String getYear() {
 		return year;

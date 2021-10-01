@@ -17,10 +17,11 @@ public class OkyMycalDAO {
 	private SqlSessionTemplate sqlSession;
 	
 	//일정추가하기 : insert문 ,파라미터 id, title, content, mdate 4개의 값을 받는다
-	public boolean insertCal(OkyMycalDAO dao) {
-	int count= sqlSession.insert("Calendar.insertCal", dao);	
-	return count>0?true:false;	
+	public boolean insertCal(MyCalendar calendar) {
+	int count= sqlSession.insert("Calendar.insertCal", calendar);	
+		return count>0?true:false;	
 	}
+	
 	
 	//일정목록조회하기: select문, 결과:List, 파라미터 id, yyyyMMdd
 	public List<MyCalendar> calboardList(String name, String yyyyMMdd){
@@ -68,4 +69,8 @@ public class OkyMycalDAO {
 	map.put("yyyyMM", yyyyMM);
 	return sqlSession.selectList("Calendar.calViewList", map);	
 	}
+
+
+
+
 }

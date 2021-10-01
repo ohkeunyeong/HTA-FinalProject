@@ -59,7 +59,7 @@ public class OkyMynongController {
 				out.close();
 				return null;			  
 		  }
-		  mv.setViewName("oky/createmynong");
+		  mv.setViewName("oky/mynong/createmynong");
 		  return mv;
 		}
 	}	

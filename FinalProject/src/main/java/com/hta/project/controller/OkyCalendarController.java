@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -18,11 +19,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import com.hta.project.domain.Member;
 import com.hta.project.domain.MyCalendar;
@@ -125,7 +129,7 @@ public class OkyCalendarController {
         		mv.addObject("id",id);
         		mv.addObject("name", getmynong);
         		mv.addObject("level", level);
-        		mv.setViewName("oky/calendar");
+        		mv.setViewName("oky/calendar/calendar");
         	}
           return mv;
     	} catch (NullPointerException e) {
@@ -149,6 +153,8 @@ public class OkyCalendarController {
 		
 		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 		int level =0;
+		logger.info("/calboardlist 농장 이름은" +name);
+		logger.info("/calboardlist 농장 접속자 아이디는" +id);
 		if(myfarm.equals("1")) {//농장 주인인지 판단
 			level =1;
 		}
@@ -176,7 +182,7 @@ public class OkyCalendarController {
 		mv.addObject("list", list2);
 		mv.addObject("name", name);
 		mv.addObject("level", level);
-		mv.setViewName("oky/calboardlist");
+		mv.setViewName("oky/calendar/calboardlist");
     	}
 		return mv;
 		} catch (NullPointerException e) {
@@ -190,7 +196,265 @@ public class OkyCalendarController {
     
     
     
-    
+	//일정추가폼이동
+	@RequestMapping(value = "/insertcalform", method = RequestMethod.GET)
+	public ModelAndView insertCalForm(HttpSession session, ModelAndView mv,String name, HttpServletRequest request) {
+		logger.info("/insertcalform 일정추가폼으로 이동");
+		try { //유효성 검사를 위한 초기 세팅
+		String id=(String)session.getAttribute("id");
+		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = okymynongservice.getMynong(id);
+		
+		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
+		int level =0;
+		if(myfarm.equals("1")) {//농장 주인인지 판단
+			level =1;
+		}
+		if (level==1 &&(!(getmynong.equals(name)) || id==null)) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+			logger.info("일정추가 보기실패");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당 농장 캘린더를 볼  권한이 없습니다.");    	   		
+		} else {   //해당 농장 관리자 접근시 												
+		mv.addObject("id", id);
+		mv.addObject("name", name);
+		mv.addObject("level", level);
+		mv.setViewName("oky/calendar/insertcalform");
+		}
+		return mv;
+		} catch (NullPointerException e) {
+			logger.info("비회원 접근");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");    	
+			return mv;
+		} 
+	}
+	
+	//일정추가하기
+	@RequestMapping(value = "/insertcalboard", method = RequestMethod.POST)
+	public ModelAndView insertCalBoard(MyCalendar calendar,HttpSession session, ModelAndView mv,String name, HttpServletRequest request) {
+		logger.info("/insertcalboard 일정추가하기");
+		try { //유효성 검사를 위한 초기 세팅
+		String id=(String)session.getAttribute("id");
+		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = okymynongservice.getMynong(id);
+		
+		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
+		int level =0;
+		if(myfarm.equals("1")) {//농장 주인인지 판단
+			level =1;
+		}
+		if (level==1 &&(!(getmynong.equals(name)) || id==null)) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+			logger.info("일정추가 보기실패");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당 농장 캘린더를 볼  권한이 없습니다."); 
+		} else {   //해당 농장 관리자 접근시 				
+		//mdate는 12자리로 만들어서 DB에 저장해야 함
+		String mdate=calendar.getYear()
+				 +isTwo(calendar.getMonth())
+				 +isTwo(calendar.getDate())
+				 +isTwo(calendar.getHour())
+				 +isTwo(calendar.getMin());
+		calendar.setMdate(mdate);
+		boolean isS= okycalservice.insertCal(calendar);
+
+		if(isS) {
+			mv.setViewName("redirect:calendar?name=" + name + "&year="+calendar.getYear()+"&month="+calendar.getMonth());
+		} else {
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "내농장 생성 실패");			
+		}
+		}
+		return mv;
+		} catch (NullPointerException e) {
+			logger.info("비회원 접근");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");    	
+			return mv;
+		} 
+	}
+	
+	//일정삭제하기
+	@RequestMapping(value = "/calmuldel", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView calMuldel(MyCalendar calendar,HttpSession session, ModelAndView mv,String name,
+			              HttpServletRequest request, String[] seq) {
+		logger.info("/calmuldel 일정삭제하기 ");
+		try { //유효성 검사를 위한 초기 세팅
+		String id=(String)session.getAttribute("id");
+		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = okymynongservice.getMynong(id);
+		
+		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
+		int level =0;
+		if(myfarm.equals("1")) {//농장 주인인지 판단
+			level =1;
+		}
+		if (level==1 &&(!(getmynong.equals(name)) || id==null)) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+			logger.info("일정 삭제 실패");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당 농장 캘린더를 볼  권한이 없습니다."); 
+		} else {   //해당 농장 관리자 접근시 		
+		boolean isS=okycalservice.calMuldel(seq);
+		if(isS) {
+			mv.addObject("name", name);
+			mv.setViewName ("redirect:calboardlist");
+		}else {
+				mv.setViewName("oky/error/error");
+				mv.addObject("url", request.getRequestURL());
+				mv.addObject("message", "내농장 삭제 실패");			
+			}
+		}
+			return mv;
+		} catch (NullPointerException e) {
+			logger.info("비회원 접근");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");    	
+			return mv;
+		} 
+	}
+	
+	//일정상세내용보기
+	@RequestMapping(value = "/caldetail", method = RequestMethod.GET)
+	public ModelAndView calDetail(int seq, MyCalendar calendar,HttpSession session, 
+			ModelAndView mv,String name,
+            HttpServletRequest request) {
+		logger.info("/caldetail");
+		try { //유효성 검사를 위한 초기 세팅
+		String id=(String)session.getAttribute("id");
+		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = okymynongservice.getMynong(id);
+		
+		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
+		int level =0;
+		if(myfarm.equals("1")) {//농장 주인인지 판단
+			level =1;
+		}
+		if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+			logger.info("일정상세보기 실패");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당 농장 캘린더를 볼  권한이 없습니다.");    	   		
+		} else {   //해당 농장 멤버 접근시 		
+		calendar =okycalservice.calDetail(seq);								
+		mv.addObject("calendar", calendar);	
+		mv.addObject("name", name);
+		mv.addObject("level", level);
+		mv.setViewName("oky/calendar/caldetail");
+		}
+		return mv;
+		} catch (NullPointerException e) {
+			logger.info("비회원 접근");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");    	
+			return mv;
+		}    	    		
+	}
+	
+	//일정수정폼이동
+	@RequestMapping(value = "/updateform", method = RequestMethod.GET)
+	public ModelAndView updateForm(int seq, ModelAndView mv,String name,
+			HttpSession session, 
+            HttpServletRequest request, MyCalendar calendar) {
+		logger.info("/updateform");
+		try { //유효성 검사를 위한 초기 세팅
+		String id=(String)session.getAttribute("id");
+		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = okymynongservice.getMynong(id);
+		
+		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
+		int level =0;
+		if(myfarm.equals("1")) {//농장 주인인지 판단
+			level =1;
+		}
+		if (level==1 &&(!(getmynong.equals(name)) || id==null)) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+			logger.info("수정페이지 접근 실패");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당 농장 캘린더를 볼  권한이 없습니다."); 
+		} else {   //해당 농장 관리자 접근시 				
+		calendar =okycalservice.calDetail(seq);
+		mv.addObject("calendar", calendar);
+		mv.addObject("name", name);
+		mv.setViewName("oky/calendar/calupdateform");
+		}
+		return mv;
+		} catch (NullPointerException e) {
+			logger.info("비회원 접근");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");    	
+			return mv;
+		}    	    		
+	}
+	
+	//일정수정하기
+	@RequestMapping(value = "/calupdate", method = RequestMethod.POST)
+	public ModelAndView calUpdate(int seq, ModelAndView mv,String name,
+			HttpSession session, 
+            HttpServletRequest request, MyCalendar calendar) {
+		logger.info("/calupdate");
+		try { //유효성 검사를 위한 초기 세팅
+			String id=(String)session.getAttribute("id");
+			Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+			String getmynong = okymynongservice.getMynong(id);
+			
+			String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
+			int level =0;
+			if(myfarm.equals("1")) {//농장 주인인지 판단
+				level =1;
+			}
+			if (level==1 &&(!(getmynong.equals(name)) || id==null)) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+				logger.info("관리자 인증 실패");
+				mv.setViewName("oky/error/error");
+				mv.addObject("url", request.getRequestURL());
+				mv.addObject("message", "해당 농장 캘린더를 볼  권한이 없습니다."); 
+			} else {   //해당 농장 관리자 접근시 				
+		//mdate는 12자리로 만들어서 DB에 저장해야 함
+		String mdate=calendar.getYear()
+				 +isTwo(calendar.getMonth())
+				 +isTwo(calendar.getDate())
+				 +isTwo(calendar.getHour())
+				 +isTwo(calendar.getMin());
+		calendar.setMdate(mdate);
+		boolean isS=okycalservice.calUpdate(calendar);
+		if(isS) {
+			mv.setViewName("redirect:caldetail?name=" + name + "&seq=" + seq);
+		} else {
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "캘린더 수정 실패");			
+		}
+		}
+		return mv;
+		} catch (NullPointerException e) {
+			logger.info("비회원 접근");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");    	
+			return mv;
+		} 
+	}
+	
+    //일정개수보여주기
+	@ResponseBody
+	@RequestMapping(value = "/calcountajax", method = RequestMethod.POST)
+	public String calCountAjax(@RequestParam("yyyyMMdd") String ymd, HttpSession session) {
+		logger.info("/calcountajax");
+		String id=(String)session.getAttribute("id");
+		String name = okymynongservice.getMynong(id);
+		int count= okycalservice.calCount(name, ymd);
+		
+		return count+"";
+}	
+	
+////utils	
     private String toDates;
     
 	public String getToDates() {
@@ -212,10 +476,7 @@ public class OkyCalendarController {
 		Timestamp tm=Timestamp.valueOf(m);//문자열을 Date타입으로 변환
 		
 	  	this.toDates= sdf.format(tm);
-}
-	
-	
-	
+   }
   //토요일과 일요일을 확인해서 "blue"또는 "red" 문자열을 반환하는 메서드
   public static String fontColor(int dayOfWeek, int i) {
     String color="";
@@ -234,7 +495,7 @@ public class OkyCalendarController {
 	  return msg.length() < 2 ? "0" + msg : msg;
   }   
 }
-
+////utils end
 
 
 //try { //유효성 검사를 위한 초기 세팅

@@ -11,7 +11,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/oky/mynongsetting.js"></script>
 </head>
 <body>
-<jsp:include page="../main/header.jsp" /> 
+<jsp:include page="../../main/header.jsp" /> 
 <input type="hidden" id="id" value="${id}" name="id">
 <h1>내 농장 관리</h1>
 <div>농장명 : ${mynong_name}<br>

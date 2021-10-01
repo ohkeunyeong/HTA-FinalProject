@@ -10,7 +10,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/oky/createmynong.js"></script>
 </head>
 <body>
-<jsp:include page="../main/header.jsp" /> 
+<jsp:include page="../../main/header.jsp" /> 
  <form name="createform" action="createProcess" method="post">
 <input type="hidden" id="id" value="${id}" name="id">
 <h1>내 농장 만들기</h1>
