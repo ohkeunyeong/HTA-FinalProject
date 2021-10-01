@@ -8,7 +8,7 @@
 	.container{width:60%}
 	label{font-wight:bold}
 	#upfile{display:none}
-	img{width:20px}
+	#f{width:20px}
 	</style>
 </head>
 <body>
@@ -37,7 +37,7 @@
      <div class="form-group">
        <label for="jik_file">파일 첨부</label>
        <label for="upfile">
-       	  <img src="../resources/image/chang/attach.png" alt="파일첨부">
+       	  <img src="../resources/image/chang/attach.png" id="f" alt="파일첨부">
        </label>
        <input type="file" id="upfile" name="uploadfile">
        <span id="filevalue"></span>
