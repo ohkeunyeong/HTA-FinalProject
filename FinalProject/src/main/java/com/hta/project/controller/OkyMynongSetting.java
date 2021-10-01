@@ -132,7 +132,7 @@ public class OkyMynongSetting {
 			mv.addObject("startpage", startpage);
 			mv.addObject("endpage", endpage);
 			mv.addObject("listcount", listcount);
-			mv.setViewName("oky/mynongsetting");
+			mv.setViewName("oky/mynong/mynongsetting");
 		}
 		return mv;
     	} catch (NullPointerException e) {

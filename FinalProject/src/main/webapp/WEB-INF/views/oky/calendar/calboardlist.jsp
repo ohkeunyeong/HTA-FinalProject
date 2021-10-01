@@ -56,10 +56,11 @@
     List<MyCalendar> list = (List<MyCalendar>)request.getAttribute("list");
 %>
 <body>
-<jsp:include page="../main/header.jsp" /> 
+<jsp:include page="../../main/header.jsp" /> 
 <input type="hidden" id="id" value="${id}" name="id">
 <h1>일정목록보기</h1>
-<form action="calMuldel.do" method="post">
+<form action="calmuldel" method="post">
+<input type="hidden" name="name" value="${name}"/>
 <input type="hidden" name="year" value="${param.year}">
 <input type="hidden" name="month" value="${param.month}">
 <input type="hidden" name="date" value="${param.date}">
@@ -86,7 +87,7 @@
         		    <c:if test="${level ==1}">
         		    <td><input type="checkbox" name="seq" value="<%=dao.getSeq()%>"/></td>
         		    </c:if>
-        		    <td><a href="calDetail.do?seq=<%=dao.getSeq()%>"><%=dao.getTitle()%></a></td>
+        		    <td><a href="caldetail?name=${name}&seq=<%=dao.getSeq()%>"><%=dao.getTitle()%></a></td>
         		    <td><%=toDates(dao.getMdate())%></td>
         		    <td><fmt:formatDate pattern="yyyy-MM-dd" value="<%=dao.getRegdate()%>"/> </td>
         		</tr>
@@ -99,7 +100,7 @@
          <c:if test="${level ==1}">
          	 <input type="submit" value="삭제" />
          </c:if>
-             <a href="calendar.do?year=${sessionScope.ymd.year}&month=${sessionScope.ymd.month}">달력보기</a>
+             <a href="calendar?name=${name}&year=${sessionScope.ymd.year}&month=${sessionScope.ymd.month}">달력보기</a>
          </td>
 </table>
 </form>

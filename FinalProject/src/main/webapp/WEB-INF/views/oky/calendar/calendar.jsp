@@ -28,7 +28,7 @@
 //			alert(yyyyMMdd);
 			$.ajax({
 				method: "post", //전송방식
-				url:"calCountAjax.do", //요청URL
+				url:"calcountajax", //요청URL
 				data:{"yyyyMMdd": yyyyMMdd}, //전송 파라미터 //"yyyyMMdd="+yyyyMMdd
 				dataType:"text", //서버로 부터 받는 값의 타입
 				dataType:"json", //서버로 부터 받는 값의 타입
@@ -88,7 +88,7 @@
     List<MyCalendar> clist=(List<MyCalendar>)request.getAttribute("clist");
 %>
 <body>
-<jsp:include page="../main/header.jsp" /> 
+<jsp:include page="../../main/header.jsp" /> 
 <input type="hidden" id="id" value="${id}" name="id">
 <style>
     #calendar{
@@ -101,9 +101,6 @@
         test-align: left;
         vertical-align: top;
     }
-    a{
-         text-decoration: none; /* 앵커태그 밑줄 지워짐*/
-    }
     #pen{
     width: 15px; height: 15px;
     } /* 연필그림 사이즈*/
@@ -113,13 +110,18 @@
         margin: 0 auto;
     }
     
-     #container td > p{
+      #container td > a{
+      text-decoration: none; /* 앵커태그 밑줄 지워짐*/  
+      }
+      
+     #container td > a> p{
          margin-botton:1px;
          font-size: 7px;
          background-color: orange;
-         color: white;
+         color: white;        
      }
      
+      
      td:hover {
          background-color: yellow;  
      }
@@ -144,9 +146,10 @@
     display: table-caption;
     text-align: -webkit-center;
     caption-side: top;
+    text-decoration: none; /* 앵커태그 밑줄 지워짐*/  
 }
 </style>
-<div>농장명 : ${name}<br>
+<div>농장명 : ${name} <br>
       아이디 : ${id}</div>
     <div id="container">
     <h1>일정달력보기</h1>
@@ -183,12 +186,12 @@
             	%>
             	<td>
             	     <a class="countView" style="color:<%=OkyCalendarController.fontColor(dayOfWeek, i)%>;" href="calboardlist?name=${name}&year=<%=year%>&month=<%=month%>&date=<%=i%>"><%=i%></a>
-            	     <a href="insertCalForm.do?year=<%=year%>&month=<%=month%>&date=<%=i%>">
+            	     <a href="insertcalform?name=${name}&year=<%=year%>&month=<%=month%>&date=<%=i%>">
             	     <c:if test="${level ==1}">
             	     		<img id="pen" src="${pageContext.request.contextPath}/resources/image/oky/pen.png" alt="일정추가"/>
             	     </c:if>
             	     </a>
-  <%--           	     <%=getCalViewList(i, clist) %> --%>
+             	     <%=getCalViewList(i, clist) %> 
             	</td>
             	<%
             	//행을 바꿔주기---> 현재일(i)이 토요일인지 확인: (공백수+현재날짜)한 값이 7로 나눠 떨어지면 7배수
@@ -206,19 +209,19 @@
 </table>
 </div>
 
-<%-- <%!
+ <%!
     public String getCalViewList(int i, List<MyCalendar> clist){
 	   String d=OkyCalendarController.isTwo(i+""); // mdate--> "05"
 	   String cList="";//달력에 출력해줄 일정제목을 저장할 변수
-	   for(MyCalendar calDto: clist){
-		   if(calDto.getMdate().substring(6, 8).equals(d)){
-			   cList+="<p>"
-		+(calDto.getTitle().length() > 10 ? calDto.getTitle().substring(0, 10) + "..." : calDto.getTitle())
-					+"</p>";
+	   for(MyCalendar cal: clist){
+		   if(cal.getMdate().substring(6, 8).equals(d)){
+			   cList+="<a href='caldetail?name=" + cal.getName()+ "&seq=" + cal.getSeq() +"'><p>"
+		+(cal.getTitle().length() > 7 ? cal.getTitle().substring(0, 7) + "..." : cal.getTitle())
+					+"</p></a>";
 		   }
 	   }
 	   return cList; //결과: "<p>title</p><p>title</p>"
 }
-%> --%>
+%> 
 </body>
 </html>

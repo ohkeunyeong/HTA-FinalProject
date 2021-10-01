@@ -16,7 +16,7 @@ public class OkyCalServiceImpl implements OkyCalService{
 	
 	@Override
 	public boolean insertCal(MyCalendar calendar) {
-		return dao.insertCal(dao);
+		return dao.insertCal(calendar);
 	}
 
 	@Override
@@ -26,27 +26,27 @@ public class OkyCalServiceImpl implements OkyCalService{
 
 	@Override
 	public MyCalendar calDetail(int seq) {
-		return null;
+		return dao.calDetail(seq);
 	}
 
 	@Override
 	public boolean calUpdate(MyCalendar dto) {
-		return false;
+		return dao.calUpdate(dto);
 	}
 
 	@Override
 	public boolean calMuldel(String[] seq) {
-		return false;
+		return dao.calMuldel(seq);
 	}
 
 	@Override
 	public int calCount(String name, String yyyyMMdd) {
-		return 0;
+		return dao.calCount(name, yyyyMMdd);
 	}
 
 	@Override
 	public List<MyCalendar> calViewList(String name, String yyyyMM) {
-		return null;
+		return dao.calViewList(name, yyyyMM);
 	}
 	
 
