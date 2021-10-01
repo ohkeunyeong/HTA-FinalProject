@@ -4,6 +4,79 @@
 
 <mapper namespace="Reports">
 
+	<select id="list" resultType="report" parameterType="map">
+		select report_num, board_num, board_subject, report_content, board_table, report_date
+		from (select rownum rnum, r.*
+			  from (select *
+			  		from report
+			  		order by report_date desc) r
+			 )
+		where rnum &gt;= #{start} and rnum &lt;= #{end}
+	</select>
 	
+	<select id="count" resultType="int">
+		select count(*)
+		from report
+	</select>
+	
+	<select id="detail" resultType="reportdetail" parameterType="map">
+		select report_num, board_num, <include refid="subject" /> board_subject, 
+	   		   nick board_nickname, report_date, <include refid="content" /> board_content, 
+	   		   report_content, board_table
+		from report, <include refid="table" />
+		where report.report_num = #{num}
+	</select>
+	
+	<delete id="reportDelete" parameterType="int">
+		delete report
+		where report_num = #{report_num}
+	</delete>
+	
+	<delete id="reportBoardDelete" parameterType="map">
+		delete <include refid="table" />
+		where <include refid="table_num" /> = #{board_num}
+	</delete>
+	
+	<delete id="numReportDelete" parameterType="map">
+		delete report
+		where board_num = #{board_num}
+		and board_table = #{board_table}
+	</delete>
+	
+	<sql id="table">
+		<choose>
+			<when test="table == 'jik'">jik</when>
+			<when test="table == 'free'">free</when>
+			<when test="table == 'work'">work</when>
+			<when test="table == 'qb'">qb</when>
+		</choose>
+	</sql>
+	
+	<sql id="table_num">
+		<choose>
+			<when test="table == 'jik'">jik_num</when>
+			<when test="table == 'free'">free_num</when>
+			<when test="table == 'work'">work_num</when>
+			<when test="table == 'qb'">qb_num</when>
+		</choose>
+	</sql>
+	
+	<sql id="subject">
+		<choose>
+			<when test="table == 'jik'">jik_subject</when>
+			<when test="table == 'free'">free_subject</when>
+			<when test="table == 'work'">work_subject</when>
+			<when test="table == 'qb'">qb_subject</when>
+		</choose>
+	</sql>
+	
+	<sql id="content">
+		<choose>
+			<when test="table == 'jik'">jik_content</when>
+			<when test="table == 'free'">free_content</when>
+			<when test="table == 'work'">work_content</when>
+			<when test="table == 'qb'">qb_content</when>
+		</choose>
+	</sql>
 	
 </mapper>

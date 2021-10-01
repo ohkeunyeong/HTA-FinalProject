@@ -9,6 +9,8 @@ import com.hta.project.domain.OrderDetail;
 import com.hta.project.domain.OrderDetailList;
 import com.hta.project.domain.Order_Market;
 import com.hta.project.domain.Product;
+import com.hta.project.domain.Report;
+import com.hta.project.domain.ReportDetail;
 
 public interface AdminService {
 
@@ -77,6 +79,16 @@ public interface AdminService {
 	public List<OrderDetailList> getOrderDetailList(String order_num);
 
 	public int orderDeliveryUpdate(String order_num, String deliveryStatus);
+
+	public List<Report> getReportList(int page, int limit);
+
+	public int getReportListCount();
+
+	public ReportDetail getReportDetail(int num, String table);
+
+	public int reportDelete(int num, String table, int board_num);
+
+	public void numReportDelete(int board_num, String board_table);
 
 	
 }

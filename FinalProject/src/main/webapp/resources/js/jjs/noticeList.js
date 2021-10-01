@@ -135,7 +135,7 @@ function selectionDelete(){
 				data : {valueArr : valueArr},
 				success : function(data){
 					if(data == valueArr.length){
-						location.href="postList";
+						location.href="noticeList";
 					}
 				}
 			 });

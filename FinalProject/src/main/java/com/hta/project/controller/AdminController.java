@@ -27,13 +27,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hta.project.domain.Category;
 import com.hta.project.domain.Farm;
+import com.hta.project.domain.Jik;
 import com.hta.project.domain.Member;
 import com.hta.project.domain.Notice;
 import com.hta.project.domain.OrderDetail;
 import com.hta.project.domain.OrderDetailList;
 import com.hta.project.domain.Order_Market;
 import com.hta.project.domain.Product;
+import com.hta.project.domain.Report;
+import com.hta.project.domain.ReportDetail;
 import com.hta.project.service.AdminService;
+import com.hta.project.service.JikService;
 import com.hta.project.service.MemberService;
 
 @Controller
@@ -47,6 +51,9 @@ public class AdminController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private JikService jikService;
 	
 	@GetMapping(value="/main")
 	public String main() {
@@ -169,10 +176,10 @@ public class AdminController {
 		return "redirect:userList";
 	}
 	
-	@GetMapping("/postList")
-	public ModelAndView postList(@RequestParam(value="page", defaultValue="1", required=false) int page, 
+	@GetMapping("/noticeList")
+	public ModelAndView noticeList(@RequestParam(value="page", defaultValue="1", required=false) int page, 
 			   ModelAndView mv) {
-		logger.info("Admin postList()");
+		logger.info("Admin noticeList()");
 		
 		int limit = 7;
 		
@@ -251,7 +258,7 @@ public class AdminController {
 		
 		adminService.insert(notice);
 		
-		return "redirect:postList";
+		return "redirect:noticeList";
 	}
 	
 	@PostMapping("/noticeModify")
@@ -347,19 +354,88 @@ public class AdminController {
 		}
 		
 		logger.info("공지사항 글 삭제 성공");
-		return "redirect:postList";
+		return "redirect:noticeList";
 	}
 	
-	@GetMapping("/farmPostList")
-	public String farmPostList() {
-		logger.info("Admin farmPostList()");
-		return "jjs/admin/farmPostList";
+	@GetMapping("/reportList")
+	public ModelAndView reportList(@RequestParam(value="page", defaultValue="1", required=false) int page, 
+			   ModelAndView mv) {
+		logger.info("Admin reportList()");
+		
+		int limit = 7;
+		
+		int listcount = adminService.getReportListCount();
+		
+		int maxpage = (listcount + limit - 1) / limit;
+		
+		int startpage = ((page - 1) / 10) * 10 + 1;
+		
+		int endpage = startpage + 10 - 1;
+		
+		if(endpage > maxpage) {
+			endpage = maxpage;
+		}
+		
+		List<Report> reportlist = adminService.getReportList(page, limit);
+		
+		mv.addObject("page", page);
+		mv.addObject("maxpage", maxpage);
+		mv.addObject("startpage", startpage);
+		mv.addObject("endpage", endpage);
+		mv.addObject("listcount", listcount);
+		mv.addObject("reportlist", reportlist);
+		mv.addObject("limit", limit);
+		
+		mv.setViewName("jjs/admin/reportList");
+		return mv;
 	}
 	
-	@GetMapping("/farmPostDetail")
-	public String farmPostDetail() {
-		logger.info("Admin farmPostDetail()");
-		return "jjs/admin/farmPostDetail";
+	@GetMapping("/reportDetail")
+	public ModelAndView reportDetail(int num, String table, ModelAndView mv,
+			HttpServletRequest request) {
+		logger.info("Admin reportDetail()");
+		
+		ReportDetail reportdetail = adminService.getReportDetail(num, table);
+		
+		if(reportdetail == null) {
+			logger.info("신고글 상세보기 실패");
+			mv.setViewName("jjs/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "신고글 상세보기 실패입니다.");
+		}else {
+			logger.info("신고글 상세보기 성공");
+			mv.setViewName("jjs/admin/reportDetail");
+			mv.addObject("reportdetail", reportdetail);
+		}
+		
+		return mv;
+	}
+	
+	@PostMapping("/reportDelete")
+	public String reportDelete(int report_num, String board_table, int board_num, 
+			HttpServletRequest request, Model mv) throws Exception {
+		int result = adminService.reportDelete(report_num, board_table, board_num);
+		
+		if(result == 0) {
+			logger.info("신고글 삭제 실패");
+			mv.addAttribute("url", request.getRequestURL());
+			mv.addAttribute("message", "삭제 실패");
+			return "error/error";
+		}
+		
+		logger.info("신고글 삭제 성공");
+		if(board_table.equals("jik")) {
+			Jik jik = new Jik();
+			jik = jikService.getDetail(board_num);
+			if(jik == null) {
+				adminService.numReportDelete(board_num, board_table);
+			}
+		}else if(board_table.equals("free")) {
+			
+		}else if(board_table.equals("work")) {
+			
+		}
+		return "redirect:reportList";
 	}
 	
 	@GetMapping("/farmList")

@@ -47,6 +47,10 @@
 		<level value="trace" />
 	</logger>
 	
+	<logger name="Reports">
+		<level value="trace" />
+	</logger>
+	
 	<logger name="Calendar">
 		<level value="trace" />
 	</logger>

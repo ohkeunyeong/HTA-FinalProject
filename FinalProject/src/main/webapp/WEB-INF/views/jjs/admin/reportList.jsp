@@ -20,25 +20,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jjs/adminMain.css">
 <!-- Google Font: Source Sans Pro -->
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-<!-- jQuery -->
 <script src="${pageContext.request.contextPath}/plugins/jquery/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/jjs/noticeList.js"></script>
-<style>
-textarea {
-	resize: none;
-}
-
-.gray{color:gray}
-
-a:not([href]) {
-    color: gray;
-    text-decoration: none;
-}
-</style>
 </head>
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
-		
+
 		<jsp:include page="include/header.jsp" />
 
 		<jsp:include page="include/aside.jsp" />
@@ -56,8 +42,8 @@ a:not([href]) {
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
 								<li class="breadcrumb-item"><a href="main">Home</a></li>
-								<li class="breadcrumb-item"><a href="noticeList">게시물 관리</a></li>
-								<li class="breadcrumb-item active">공지사항</li>
+								<li class="breadcrumb-item"><a href="reportList">게시물 관리</a></li>
+								<li class="breadcrumb-item active">농장모듬</li>
 							</ol>
 						</div>
 						<!-- /.col -->
@@ -78,60 +64,55 @@ a:not([href]) {
 						<div class="col-12">
 							<div class="card">
 								<div class="card-header">
-									<h3 class="card-title">공지사항 글 개수 : ${listcount}</h3>
-
-									<div class="card-tools">
-										<div class="input-group input-group-sm" style="width: 150px;">
-											<input type="text" id="search_word" name="search_word" class="form-control float-right" placeholder="제목 입력">
-										</div>
-									</div>
+									<h3 class="card-title">농장모듬</h3>
 								</div>
 								<!-- /.card-header -->
 								<c:if test="${listcount > 0}">
-									<div class="card-body table-responsive p-0" style="height: 490px;">
+									<div class="card-body table-responsive p-0" style="height: 395px;">
 										<table class="table table-head-fixed text-nowrap">
 											<thead>
 												<tr>
-													<th><input type="checkbox" id="allCheck" name="allCheck"></th>
 													<th>번호</th>
 													<th>제목</th>
-													<th>작성일</th>
-													<th>조회수</th>
-													<th>고정유무</th>
+													<th>신고내용</th>
+													<th>게시판종류</th>
+													<th>신고한 날짜</th>
 												</tr>
 											</thead>
 											<tbody>
 												<c:set var="num" value="${listcount-(page-1)*limit}" />
-												<c:forEach items="${noticelist}" var="n">
+												<c:forEach items="${reportlist}" var="r">
 													<tr>
-														<td>
-															<input name="RowCheck" type="checkbox" value="${n.NOTICE_NUM}">
-														</td>
 														<td>
 															<c:out value="${num}" />
 															<c:set var="num" value="${num - 1}" />
 														</td>
 														<td>
 															<div>
-																<a href="noticeDetail?num=${n.NOTICE_NUM}"> <c:out value="${n.NOTICE_SUBJECT}" escapeXml="true" />
-																</a>
+																<a href="reportDetail?num=${r.report_num}&table=${r.board_table}"> ${r.board_subject} </a>
 															</div>
 														</td>
 														<td>
-															<div>${n.NOTICE_DATE}</div>
-														</td>
-														<td>
-															<div>${n.NOTICE_READCOUNT}</div>
+															<div>${r.report_content}</div>
 														</td>
 														<td>
 															<div>
-																<c:if test="${n.NOTICE_FIX eq 'FIX'}">
-																	<button class="btn btn-primary fixbtn" value="" name="NOTICE_FIX" data-num="${n.NOTICE_NUM}">고정해제</button>
+																<c:if test="${r.board_table == 'jik'}">
+																	<span>직거래게시판</span>
 																</c:if>
-																<c:if test="${empty n.NOTICE_FIX}">
-																	<button class="btn btn-primary fixbtn" value="FIX" name="NOTICE_FIX" data-num="${n.NOTICE_NUM}">고정</button>
+																<c:if test="${r.board_table == 'free'}">
+																	<span>자유게시판</span>
+																</c:if>
+																<c:if test="${r.board_table == 'work'}">
+																	<span>인력게시판</span>
+																</c:if>
+																<c:if test="${r.board_table == 'qb'}">
+																	<span>궁금해요게시판</span>
 																</c:if>
 															</div>
+														</td>
+														<td>
+															<div>${r.report_date}</div>
 														</td>
 													</tr>
 												</c:forEach>
@@ -145,7 +126,7 @@ a:not([href]) {
 												<li class="page-item"><a class="page-link gray">«</a></li>
 											</c:if>
 											<c:if test="${page > 1 }">
-												<li class="page-item"><a href="noticeList?page=${page-1}" class="page-link">«</a></li>
+												<li class="page-item"><a href="reportList?page=${page-1}" class="page-link">«</a></li>
 											</c:if>
 
 											<c:forEach var="a" begin="${startpage}" end="${endpage}">
@@ -153,7 +134,7 @@ a:not([href]) {
 													<li class="page-item "><a class="page-link gray">${a}</a></li>
 												</c:if>
 												<c:if test="${a != page }">
-													<li class="page-item"><a href="noticeList?page=${a}" class="page-link">${a}</a></li>
+													<li class="page-item"><a href="reportList?page=${a}" class="page-link">${a}</a></li>
 												</c:if>
 											</c:forEach>
 
@@ -161,26 +142,19 @@ a:not([href]) {
 												<li class="page-item"><a class="page-link gray">»</a></li>
 											</c:if>
 											<c:if test="${page < maxpage }">
-												<li class="page-item"><a href="noticeList?page=${page+1}" class="page-link">»</a></li>
+												<li class="page-item"><a href="reportList?page=${page+1}" class="page-link">»</a></li>
 											</c:if>
 										</ul>
 									</div>
 								</c:if>
 
 								<c:if test="${listcount == 0 }">
-									<p class="text-center h2 mt-3 mb-3"><span>등록된 글이 없습니다.</span></p>
+									<p class="text-center h2 mt-3 mb-3">
+										<span>등록된 신고글이 없습니다.</span>
+									</p>
 								</c:if>
-
 							</div>
 							<!-- /.card -->
-							<div class="btn_group">
-								<c:if test="${listcount > 0}">
-									<button class="btn btn-danger selectionDelete">선택삭제</button>
-								</c:if>
-								<button class="btn btn-primary float-right mb-3" data-toggle="modal" 
-										data-backdrop="static" data-keyboard="false" 
-										data-target="#noticeAddModal">공지사항 쓰기</button>
-							</div>
 						</div>
 						<!-- /.row -->
 					</div>
@@ -191,7 +165,6 @@ a:not([href]) {
 		</div>
 		<!-- /.content-wrapper -->
 
-		<jsp:include page="modal/noticeModal.jsp" />
 
 		<!-- Control Sidebar -->
 		<aside class="control-sidebar control-sidebar-dark">

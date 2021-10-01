@@ -16,6 +16,8 @@ import com.hta.project.domain.OrderDetail;
 import com.hta.project.domain.OrderDetailList;
 import com.hta.project.domain.Order_Market;
 import com.hta.project.domain.Product;
+import com.hta.project.domain.Report;
+import com.hta.project.domain.ReportDetail;
 
 @Repository
 public class AdminDAO {
@@ -153,6 +155,30 @@ public class AdminDAO {
 
 	public int orderDeliveryUpdate(Map<String, String> map) {
 		return sqlSession.update("Orders.deliveryUpdate", map);
+	}
+
+	public List<Report> getReportList(Map<String, Integer> map) {
+		return sqlSession.selectList("Reports.list", map);
+	}
+
+	public int getReportListCount() {
+		return sqlSession.selectOne("Reports.count");
+	}
+
+	public ReportDetail getReportDetail(Map<String, Object> map) {
+		return sqlSession.selectOne("Reports.detail", map);
+	}
+
+	public int reportDelete(int report_num) {
+		return sqlSession.delete("Reports.reportDelete", report_num);
+	}
+
+	public int reportBoardDelete(Map<String, Object> map) {
+		return sqlSession.delete("Reports.reportBoardDelete", map);
+	}
+
+	public void numReportDelete(Map<String, Object> map) {
+		sqlSession.delete("Reports.numReportDelete", map);
 	}
 
 }

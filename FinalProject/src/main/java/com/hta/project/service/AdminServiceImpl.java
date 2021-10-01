@@ -16,6 +16,8 @@ import com.hta.project.domain.OrderDetail;
 import com.hta.project.domain.OrderDetailList;
 import com.hta.project.domain.Order_Market;
 import com.hta.project.domain.Product;
+import com.hta.project.domain.Report;
+import com.hta.project.domain.ReportDetail;
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -292,6 +294,53 @@ public class AdminServiceImpl implements AdminService{
 		map.put("order_num", order_num);
 		map.put("deliveryStatus", deliveryStatus);
 		return dao.orderDeliveryUpdate(map);
+	}
+
+	@Override
+	public List<Report> getReportList(int page, int limit) {
+		List<Report> list = new ArrayList<Report>();
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		int startrow = (page - 1) * limit + 1;
+		int endrow = startrow + limit - 1;
+		map.put("start", startrow);
+		map.put("end", endrow);
+		
+		list = dao.getReportList(map);
+		
+		return list;
+	}
+
+	@Override
+	public int getReportListCount() {
+		return dao.getReportListCount();
+	}
+
+	@Override
+	public ReportDetail getReportDetail(int num, String table) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", num);
+		map.put("table", table);
+		return dao.getReportDetail(map);
+	}
+
+	@Override
+	public int reportDelete(int report_num, String table, int board_num) {
+		if(dao.reportDelete(report_num) != 1) {
+			return 0;
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("table", table);
+		map.put("board_num", board_num);
+		return dao.reportBoardDelete(map); 
+	}
+
+	@Override
+	public void numReportDelete(int board_num, String board_table) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("board_num", board_num);
+		map.put("board_table", board_table);
+		dao.numReportDelete(map);
 	}
 
 }
