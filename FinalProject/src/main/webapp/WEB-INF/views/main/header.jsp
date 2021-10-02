@@ -13,6 +13,25 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="resources/js/jjs/header.js"></script>
+<script>
+	$(function(){
+		if('${result}' == '-1'){
+			$('#loginFailModal').modal({backdrop: 'static', keyboard: false});
+			$('#loginFailModal-body').html("<h4>아이디가 존재하지 않습니다.</h4>");
+		}
+		
+		if('${result}' == '0'){
+			$('#loginFailModal').modal({backdrop: 'static', keyboard: false});
+			$('#loginFailModal-body').html("<h4>비밀번호를 틀렸습니다.</h4>");
+		}
+	});
+</script>
+<style>
+	#login{
+		cursor : pointer;
+	}
+</style>
 </head>
 <body>
 
@@ -63,12 +82,13 @@
 				<li class="nav-item active" style="padding-left: 30%">
 					<!-- style="padding-left:5%" --> <a class="nav-link" href="cart">장바구니</a>
 				</li>
-				<li class="nav-item active" style="padding-left: 4%"><a class="nav-link" href="login">로그인</a></li>
-				<li class="nav-item active" style="padding-left: 4%"><a class="nav-link" href="loginimsi">임시로그인</a></li> <!-- 임시 로그인(우영님이 로그인 다 만들면 삭제) -->
+				<li class="nav-item active" style="padding-left: 4%">
+					<a class="nav-link" id="login">로그인</a>
+				</li>
 				<li class="nav-item active" style="padding-left: 4%"><a class="nav-link" href="${pageContext.request.contextPath}/member/join">회원가입</a></li>
 			</c:if>
 			<c:if test="${!empty id}">
-				<li class="nav-item active" style="padding-left: 30%"><a class="nav-link" href="logoutimsi"> ${nick} 님(로그아웃)</a></li>
+				<li class="nav-item active" style="padding-left: 30%"><a class="nav-link" href="member/logout"> ${nick} 님(로그아웃)</a></li>
 				<c:if test="${id == 'admin' }">
 					<li class="nav-item active" style="padding-left: 4%"><a class="nav-link" href="admin/main"> 관리자페이지</a></li>
 				</c:if>
@@ -85,6 +105,8 @@
 		<img src="${pageContext.request.contextPath}/resources/image/farm4.jpeg" alt="Logo" style="height: 400px; margin-bottom: 30px;">
 	</div>
 	<!--  <a href='https://www.freepik.com/vectors/water'>Water vector created by upklyak - www.freepik.com</a> -->
+	
+	<jsp:include page="modal/login.jsp"/>
 
 </body>
 </html>

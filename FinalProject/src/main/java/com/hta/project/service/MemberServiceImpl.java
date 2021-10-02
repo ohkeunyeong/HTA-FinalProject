@@ -22,9 +22,9 @@ public class MemberServiceImpl implements MemberService{
 	private PasswordEncoder passwordEncoder;
 	
 	@Override
-	public Map<String, Object> isIdimsi(String id, String password) { 
+	public Map<String, Object> isId(String id, String password) { 
 		Map<String, Object> member = new HashMap<String, Object>();
-		Member rmember = dao.isIdimsi(id);
+		Member rmember = dao.isId(id);
 		int result = -1;
 		if(rmember != null) {
 			if(passwordEncoder.matches(password, rmember.getPass())){
@@ -35,11 +35,10 @@ public class MemberServiceImpl implements MemberService{
 		}
 		
 		member.put("result", result);
-		member.put("nick", rmember.getNick());
-		member.put("id", rmember.getId());
+		member.put("member", rmember);
 		
 		return member;
-	} // 우영님이 로그인 다 만들면 삭제
+	}
 
 	@Override
 	public List<Member> getSearchList(String search_word, int page, int limit) {

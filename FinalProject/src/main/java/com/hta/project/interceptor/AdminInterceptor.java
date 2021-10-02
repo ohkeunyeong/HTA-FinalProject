@@ -17,13 +17,8 @@ public class AdminInterceptor extends HandlerInterceptorAdapter{
 		HttpSession session = request.getSession();
 		String id = (String) session.getAttribute("id");
 		
-		if(id == null) {
-			response.sendRedirect("/project/login");
-			return false;
-		}
-		
-		if(!id.equals("admin")) {
-			response.sendRedirect("/project");
+		if(id == null || !id.equals("admin")) {
+			response.sendRedirect("/project/main");
 			return false;
 		}
 		

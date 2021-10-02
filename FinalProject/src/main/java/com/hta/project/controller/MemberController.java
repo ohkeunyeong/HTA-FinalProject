@@ -3,7 +3,8 @@ package com.hta.project.controller;
 
 
 import java.io.PrintWriter;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -17,12 +18,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hta.project.domain.Member;
@@ -86,10 +85,53 @@ public class MemberController {
 		}
 	}
 	
-
-
-
-
-
+	@RequestMapping(value="/loginProcess", method=RequestMethod.POST)
+	public String loginProcess(@RequestParam(value="id") String id, 
+							   @RequestParam(value="pass") String password,
+							   @RequestParam(value="remember", defaultValue="", required=false) String remember,
+							   HttpSession session, HttpServletResponse response,
+							   RedirectAttributes rattr){
+		Map<String, Object> member = memberService.isId(id, password);
+		Member m = (Member) member.get("member");
+		
+		int result = (int) member.get("result");
+		
+		if(result == 1) {
+			// 로그인 성공
+			Cookie savecookie = new Cookie("saveid", id);
+			if(!remember.equals("")) {
+				savecookie.setMaxAge(60*60);
+				logger.info("쿠키저장 : 60 * 60");
+			}else {
+				logger.info("쿠키저장 : 0");
+				savecookie.setMaxAge(0);
+			}
+			response.addCookie(savecookie);
+			session.setAttribute("id", m.getId());
+			session.setAttribute("nick", m.getNick());
+			return "redirect:/main";
+		}else {
+			rattr.addFlashAttribute("result", result);
+			return "redirect:/main";
+		}
+	}
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String loginout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/main";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	public Map<String, Object> login(@CookieValue(value="saveid", required=false) Cookie readCookie
+			) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(readCookie != null) {
+			map.put("saveid", readCookie.getValue());
+			logger.info("cookie time = " + readCookie.getMaxAge());
+		}
+		return map;
+	}
 
 }

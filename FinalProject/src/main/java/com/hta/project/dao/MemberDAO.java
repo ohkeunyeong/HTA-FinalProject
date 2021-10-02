@@ -15,10 +15,6 @@ public class MemberDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-	public Member isIdimsi(String id) {
-		return sqlSession.selectOne("Members.idcheck", id);
-	} // 우영님이 로그인 다 만들면 삭제
-
 	public int getSearchListCount(String word) {
 		return sqlSession.selectOne("Members.searchListCount", word);
 	}
