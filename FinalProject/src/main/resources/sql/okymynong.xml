@@ -6,7 +6,7 @@
 <mapper namespace="Mynong">
 
 <insert id="insert" parameterType="String">
-insert into mynong values (#{mynong_name})
+insert into mynong values (#{mynong_name}, sysdate)
 </insert>
 
 <select id="memberinfo" parameterType="member" resultType="member">

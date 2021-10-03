@@ -463,7 +463,7 @@ public class OkyCalendarController {
 
 	public void setToDates(String mdate){
 		
-		//문자열--->date타입으로 변환--> 문자열을 데이트패턴으로 수정 --> 데이트다입으로 변환
+		//문자열--->date타입으로 변환--> 문자열을 데이트패턴으로 수정 --> 데이트타입으로 변환
 		
 		//날짜형식: yyyy-MM-dd hh:mm:ss
 		String m=mdate.substring(0, 4)  + "-"
