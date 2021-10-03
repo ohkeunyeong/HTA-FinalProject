@@ -1,18 +1,18 @@
-DROP TABLE CALBOARD cascade constraints;
+DROP TABLE ACCOUNT cascade constraints;
 
-CREATE TABLE CALBOARD (
-SEQ         NUMBER              NOT NULL PRIMARY KEY,  -- 캘린더 번호--
+CREATE TABLE ACCOUNT (
+SEQ         NUMBER              NOT NULL PRIMARY KEY,  -- 가계부 번호--
 NAME        VARCHAR2(50)        NOT NULL, -- 농장 이름--
-TITLE       VARCHAR2(1000)      NOT NULL, -- 일정 제목--
-CONTENT     VARCHAR2(4000)      NOT NULL, -- 일정 내용--
-MDATE       VARCHAR2(12)        NOT NULL, -- 일정 시작시간--
-REGDATE     DATE                NOT NULL, -- 생성 시간--
+TITLE       VARCHAR2(1000)      NOT NULL, -- 지출 명--
+CONTENT     VARCHAR2(4000)              , -- 지출 내역 세부정보--
+AMOUNT      VARCHAR2(30)           NOT NULL, -- 지출 금액--
+MDATE       VARCHAR2(12)        NOT NULL, -- 지출 시간--
 foreign key (NAME) REFERENCES mynong(MYNONG_NAME)
 );
 
 drop sequence CALBOARD_SEQ;
 
-create sequence CALBOARD_SEQ;
+create sequence ACCOUNT_SEQ;
 
 SELECT * FROM CALBOARD;
 
