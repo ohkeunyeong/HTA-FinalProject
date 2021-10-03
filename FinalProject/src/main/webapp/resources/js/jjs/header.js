@@ -1,4 +1,43 @@
+function onGeoOk(position) {
+	const API_KEY = "c186cdd987b3f5173ff228b14a533ff1";
+
+	let weatherIcon = {
+	  "01": "fas fa-sun",
+	  "02": "fas fa-cloud-sun",
+	  "03": "fas fa-cloud",
+	  "04": "fas fa-cloud-meatball",
+	  "09": "fas fa-cloud-sun-rain",
+	  10: "fas fa-cloud-showers-heavy",
+	  11: "fas fa-poo-storm",
+	  13: "fas fa-snowflake",
+	  50: "fas fa-smog",
+	};
+	
+  const lat = position.coords.latitude;
+  const lon = position.coords.longitude;
+  $.ajax({
+	     url: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`,
+	     dataType: "json",
+	     type: "GET",
+	     success: function (data) {
+	    	 console.log(data);
+	         const icon = data.weather[0].icon.substr(0, 2);
+	         const name = data.name;
+	         const temp = Math.floor(data.main.temp) + "º";
+	         $(".CurrIcon").append('<i class="' + weatherIcon[icon] + '"></i>');
+	         $(".CurrTemp").prepend(temp);
+	         $(".City").append(name);
+	     },
+	   });
+}
+
+function onGeoError() {
+  console.log("날씨정보 불러오기 실패");
+}
+
 $(function(){
+	navigator.geolocation.getCurrentPosition(onGeoOk, onGeoError);
+	
 	$("#login").click(function(){
 		$.ajax({
 			url : "member/login",

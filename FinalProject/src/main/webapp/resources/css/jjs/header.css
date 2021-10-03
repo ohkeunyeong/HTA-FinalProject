@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+.weather {
+	color: white;
+	text-align: center;
+}
+
+.CurrIcon, .CurrTemp {
+	display: inline-block;
+	font-size: 1.375rem;
+	text-align: center;
+}
+
+.CurrIcon {
+	margin-right: 2px;
+}
+
+.City {
+	font-size: 0.938rem;
+	text-align: center;
+}
+
+#login{
+	cursor : pointer;
+}
+
+.main-header{
+	display: flex;
+    justify-content: space-between;
+}
+
+.main-header > ul:nth-child(1), .main-header > ul:nth-child(3){
+	display:flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.main-header > ul:nth-child(3){
+	width : 25%;
+}

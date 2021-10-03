@@ -9,7 +9,7 @@
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<br>
 				<div class="container">
-					<h2 class="text-center">Login</h2>
+					<h2 class="text-center">주말장터 로그인</h2>
 					<form action="member/loginProcess" method="post" id="loginForm" name="loginForm">
 						<div class="form-group mb-2">
 							<label for="id">ID:</label> <input type="text" class="form-control" id="id" placeholder="Enter ID" name="id"> <span id="id-message"></span>
