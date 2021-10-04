@@ -37,7 +37,7 @@
 	
 	
 	<context:property-placeholder
-				location="classpath:pro/savefolder.properties"/>
+				location="classpath:pro/savefolder.properties, classpath:pro/api.properties"/>
 				
 	<!-- BCryptPasswordEncoder란
 		  스프링 시큐리티(Spring Security) 프레임워크에서 제공하는 클래스 중 하나로

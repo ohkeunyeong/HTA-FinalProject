@@ -1,6 +1,4 @@
 function onGeoOk(position) {
-	const API_KEY = "c186cdd987b3f5173ff228b14a533ff1";
-
 	let weatherIcon = {
 	  "01": "fas fa-sun",
 	  "02": "fas fa-cloud-sun",
@@ -16,9 +14,10 @@ function onGeoOk(position) {
   const lat = position.coords.latitude;
   const lon = position.coords.longitude;
   $.ajax({
-	     url: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`,
+	     url: "api/weather",
+	     data: {"lat":lat, "lon":lon},
 	     dataType: "json",
-	     type: "GET",
+	     type: "POST",
 	     success: function (data) {
 	    	 console.log(data);
 	         const icon = data.weather[0].icon.substr(0, 2);
