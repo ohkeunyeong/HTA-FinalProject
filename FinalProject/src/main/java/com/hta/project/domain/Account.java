@@ -5,8 +5,47 @@ public class Account {
 	private String name;//농장이름
 	private String title;//지출명
 	private String content;//지출내역 세부정보
-	private String ammount;//지출금액
+	private String amount;//지출금액
 	private String mdate;//지출시간
+	
+	//날짜 정보 파라미터를 받을 용도
+	private String year;
+	private String month;
+	private String date;
+	private String hour;
+	private String min;
+	
+	
+	public String getYear() {
+		return year;
+	}
+	public void setYear(String year) {
+		this.year = year;
+	}
+	public String getMonth() {
+		return month;
+	}
+	public void setMonth(String month) {
+		this.month = month;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getHour() {
+		return hour;
+	}
+	public void setHour(String hour) {
+		this.hour = hour;
+	}
+	public String getMin() {
+		return min;
+	}
+	public void setMin(String min) {
+		this.min = min;
+	}
 	public int getSeq() {
 		return seq;
 	}
@@ -31,11 +70,11 @@ public class Account {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getAmmount() {
-		return ammount;
+	public String getAmount() {
+		return amount;
 	}
-	public void setAmmount(String ammount) {
-		this.ammount = ammount;
+	public void setAmount(String amount) {
+		this.amount = amount;
 	}
 	public String getMdate() {
 		return mdate;

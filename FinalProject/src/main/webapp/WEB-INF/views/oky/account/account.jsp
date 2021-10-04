@@ -9,6 +9,25 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
 </head>
 <script>
+$(document).ready(function () {  
+	
+$("#insertacc").click(function(){
+ num = /^[0-9]*$/;
+ 
+ if(!num.test($("#amount").val())){
+	 alert("금액은 숫자만 입력 가능합니다.")
+	 $("#amount").val('').focus();		
+	 return false;
+ }
+	
+})
+	
+});
+function checkTarget(num) {
+	var element = document.getElementById('thisdate');
+	  element.innerHTML = num;
+	$("#inputdate").val(num);
+ }
 
 </script>
 <style>
@@ -99,84 +118,100 @@ width: 15px; height: 15px;
         <a href="account?name=${name}&year=${year}&month=${month+1}">▶</a>
         <a href="account?name=${name}&year=${year+1}&month=${month}">▷</a>   
 		<h3>${year}년 ${month} 월</h3>
-		<c:set var="num" value="${1}"/>
 		<c:set var="yoil" value="${dayofweek}"/>
 		<c:forEach var="a" begin="1" end="${lastday}">
 			<div>
-				<input type="checkbox" id="${num}" />
-				<label for="${num}" id="date">${month} 월  <c:out value="${num}"/> 일
-				<c:if test="${yoil ==1 }">
-	                        일요일
-		        </c:if>
-	            <c:if test="${yoil ==2 }">
-	                        월요일
-		        </c:if>
-	            <c:if test="${yoil ==3 }">
-	                        화요일
-		        </c:if>	
-	            <c:if test="${yoil ==4 }">
-	                        수요일
-		        </c:if>
-	            <c:if test="${yoil ==5 }">
-	                        목요일
-		        </c:if>
-		        <c:if test="${yoil ==6 }">
-	                        금요일
-		        </c:if>
-		        <c:if test="${yoil ==0 ||yoil ==7 }">
-	                        토요일
-		        </c:if>   
-		        <c:if test="${level ==1}">
-		        <a href="#" data-toggle="modal"  data-target="#addacc" id="addacc">
-     	     	<img id="pen" src="${pageContext.request.contextPath}/resources/image/oky/pen.png" alt="가계부추가"/>
-            	</a>
-            	</c:if>          				
-				</label>
+				 <input type="checkbox" id="${a}" />
+				<label for="${a}" id="date"> 
+				${month} 월 ${a}일
+				<c:if test="${yoil ==1 }">일요일</c:if>
+	            <c:if test="${yoil ==2 }">월요일</c:if>
+	            <c:if test="${yoil ==3 }">화요일</c:if>	
+	            <c:if test="${yoil ==4 }">수요일</c:if>
+	            <c:if test="${yoil ==5 }">목요일</c:if>
+		        <c:if test="${yoil ==6 }">금요일</c:if>
+		        <c:if test="${yoil ==0 ||yoil ==7 }">토요일</c:if>   
+		        
+		        <c:if test="${level ==1}"> 
+			        <a href="#" onClick="checkTarget(${a})" data-toggle="modal" data-target="#largeModal" id="addacc" >
+		     	     	<img id="pen" src="${pageContext.request.contextPath}/resources/image/oky/pen.png" alt="가계부추가"/>
+            		</a>
+                </c:if>
+		        </label>                               
 				<article>
-		                   <p>${num}</p>
+		        	<p>${a}</p>
 				</article>
-		        <c:set var="num" value="${num+1}"/>	<%-- num=num+1; 의미--%>	
 		        <c:set var="yoil" value="${(yoil + 1)%7}"/>
 			</div>
 			</c:forEach>
 		</section>
-  </div>
-
-  <div class="modal fade" id="addacc" role="dialog"> <!-- 사용자 지정 부분① : date명 -->
-
-    <div class="modal-dialog">
-   
-      <!-- Modal content-->
-
-      <div class="modal-content">
-
-        <div class="modal-header">
-
-          <button type="button" class="close" data-dismiss="modal" >×</button>
-
-          <h4 class="modal-title" align="center">아이디 중복 확인</h4> <!-- 사용자 지정 부분② : 타이틀 -->
-
-        </div>
-
-        <div class="modal-body">
-                   <form id="my-form">
-                   <input type ="text" name="idck" id="idck" placeholder="아이디 입력">            
-                   <button type="button" id="search" class="searchid" >검색</button><br>
-                   <span id="message"></span>
-                   </form>
-        </div>
-      <!-- 사용자 지정 부분③ : 텍스트 메시지 -->
-
-        </div>
-
-        <div class="modal-footer">
-        <button type="button"  id="okuse"  data-dismiss="modal">사용하기</button><br>
-
-        </div>
-
+  </div>  
+  <!-- modal -->
+<div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true" style="disply:none;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form name="insertacc" action="insertacc" method="post">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">지출내역</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-
+      <div class="modal-body">
+		   <table border="1">
+		       <tr>
+		            <th>일정</th>
+		            <td>
+		            <input type="hidden"  value="${year}" name="year">
+		            <input type="hidden"  value="${month}" name="month">
+		            <input type="hidden"  id="inputdate" name="date">
+		               <span>${year}년  </span> 
+		               <span>${month}월</span> 
+		               <span><span id="thisdate"></span>일</span>
+		                 <select name="hour">  
+		                   <c:forEach var="thishour" begin="0" end="24">
+		                   <c:if test="${thishour == hour}">
+		                   <option value="${hour}" selected>${hour}</option>
+		                   </c:if>
+		                   <c:if test="${thishour != hour}">
+		                   <option value="${thishour}" > ${thishour}</option>
+		                   </c:if>                        
+		                   </c:forEach>                                  
+		                 </select>시
+		                 <select name="min">
+		                   <c:forEach var="thismin" begin="0" end="60">
+		                   <c:if test="${thismin == min}">
+		                   <option value="${min}" selected>${min}</option>
+		                   </c:if>
+		                   <c:if test="${thismin != min}">
+		                   <option value="${thismin}" >${thismin}</option>
+		                   </c:if>                        
+		                   </c:forEach>                     
+		                 </select>분
+		            </td>
+		       </tr>
+		       <tr>
+		            <th>금액</th>
+		            <td><input type="text" id="amount" name="amount" placeholder="예) 5만원 => 50000" required/></td>
+		       </tr>        
+		       <tr>
+		            <th>지출내역</th>
+		            <td><input type="text" name="title" required/></td>
+		       </tr>
+		       
+		       <tr>
+		            <th>내용</th>
+		            <td><textarea rows="10" cols="50" name="content" style="resize: none;"></textarea></td>
+		       </tr>
+		   </table>     
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+        <button type="submit" class="btn btn-primary" id="insertacc">등록</button>
+      </div>
+     </form>            
     </div>
-
+  </div>
+</div>
 </body>
 </html>

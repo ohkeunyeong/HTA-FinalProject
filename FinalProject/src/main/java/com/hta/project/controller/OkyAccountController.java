@@ -121,6 +121,9 @@ public class OkyAccountController {
         	    //현재 월의 마지막 날 구하기
         	    int lastDay=cal.getActualMaximum(Calendar.DAY_OF_MONTH);
         	    int dayofweek = cal.get(Calendar.DAY_OF_WEEK); //요일 구하기
+        	 	int hour = cal.get(Calendar.HOUR_OF_DAY);
+        	 	int min = cal.get(Calendar.MINUTE);
+        	 	System.out.println("min?" + min);
         	    //해당 달의 일정 받기
 //        	    List<MyCalendar> clist=(List<MyCalendar>)request.getAttribute("clist");
         	    
@@ -132,6 +135,8 @@ public class OkyAccountController {
         		mv.addObject("month", month);
         		mv.addObject("lastday", lastDay);
         		mv.addObject("dayofweek", dayofweek);
+        		mv.addObject("hour", hour);
+        		mv.addObject("min", min);
         		mv.setViewName("oky/account/account");
         	}
         	  return mv;
@@ -143,6 +148,22 @@ public class OkyAccountController {
     			return mv;
         	}    	
 	}
+
+	
+	//가계부추가
+	@RequestMapping(value = "/insertacc", method = RequestMethod.POST)
+	public ModelAndView inseracc(Account account) {
+		logger.info("/insertacc" + account.getYear()+ " 년" +account.getMonth()+ " 월" +
+		 account.getDate()+ " 일" + account.getHour() + "시 "+ 
+		 account.getMin() + "분 " +account.getAmount()  + "원 "
+		+ "지출명 " +account.getTitle() + "지출내용"+ account.getContent()
+		+ "합친명" +account.getMdate() + "농장명"+account.getName()
+				 );
+		return null;
+		
+	}
+	
+	
 	
 //	//가계부추가폼이동
 //	@RequestMapping(value = "/insertaccform", method = RequestMethod.GET)
