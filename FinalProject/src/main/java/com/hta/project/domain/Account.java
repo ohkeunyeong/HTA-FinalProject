@@ -4,7 +4,6 @@ public class Account {
 	private int seq;//가계부 번호(pk)
 	private String name;//농장이름
 	private String title;//지출명
-	private String content;//지출내역 세부정보
 	private String amount;//지출금액
 	private String mdate;//지출시간
 	
@@ -63,12 +62,6 @@ public class Account {
 	}
 	public void setTitle(String title) {
 		this.title = title;
-	}
-	public String getContent() {
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
 	}
 	public String getAmount() {
 		return amount;

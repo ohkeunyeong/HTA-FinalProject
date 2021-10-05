@@ -12,6 +12,12 @@ public interface OkyAccService {
 	
 	//가계부 목록 조회하기
 	List<Account> accViewList(String name, String yyyyMM);
+	
+	//선택된 가계부 정보 보기
+	Account accDetail(int seq);
+	
+	//가계부 삭제
+	boolean accdelete(int seq);
 
 
 

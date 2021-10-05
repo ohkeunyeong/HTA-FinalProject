@@ -23,6 +23,18 @@ public class OkyAccServiceImpl implements OkyAccService{
 	public List<Account> accViewList(String name, String yyyyMM) {
 		return dao.accViewList(name, yyyyMM);
 	}
+
+	@Override
+	public Account accDetail(int seq) {
+		return dao.accDetail(seq);
+	}
+
+	@Override
+	public boolean accdelete(int seq) {
+		return dao.accdelete(seq);
+	}
+
+
 	
 	
 	
