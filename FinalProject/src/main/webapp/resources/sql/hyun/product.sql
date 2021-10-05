@@ -105,8 +105,6 @@ INSERT INTO PRODUCT(PRODUCT_CODE, CATEGORY_CODE, PRODUCT_NAME, PRODUCT_PRICE ,
 PRODUCT_DETAIL, PRODUCT_IMG, PRODUCT_ORIGINAL, PRODUCT_DATE)
 VALUES('000019', '100', '청진플러스', '4000', '농가왕무 백청무 추성무 가을무 김장무씨앗 청진플러스', '청진플러스.png', '청진플러스.png', sysdate);
 
-/////-------------------------여기부터 수정해서 다시 삽입 --------------------------------------------------------------------------------------
-
 INSERT INTO PRODUCT(PRODUCT_CODE, CATEGORY_CODE, PRODUCT_NAME, PRODUCT_PRICE ,
 PRODUCT_DETAIL, PRODUCT_IMG, PRODUCT_ORIGINAL, PRODUCT_DATE)
 VALUES('000020', '100', '알타리무 천사무 홍반장무', '4500', '홍반장무 알타리무 총각무 달랑무 가을무 종자 농우바이오', '홍반장무.png', '홍반장무.png', sysdate);
@@ -122,7 +120,6 @@ VALUES('000022', '100', '부추모종', '1090', '부추모종 숱이많은 부�
 INSERT INTO PRODUCT(PRODUCT_CODE, CATEGORY_CODE, PRODUCT_NAME, PRODUCT_PRICE ,
 PRODUCT_DETAIL, PRODUCT_IMG, PRODUCT_ORIGINAL, PRODUCT_DATE)
 VALUES('000023', '100', '고수모종', '990', '고수모종 소화도움 한방 약재 잎줄기 채소 야채', '고수모종.png', '고수모종.png', sysdate);
-----------------------------------------------------------------------------------------------------------------------
 
 INSERT INTO PRODUCT(PRODUCT_CODE, CATEGORY_CODE, PRODUCT_NAME, PRODUCT_PRICE ,
 PRODUCT_DETAIL, PRODUCT_IMG, PRODUCT_ORIGINAL, PRODUCT_DATE)
@@ -136,3 +133,8 @@ INSERT INTO PRODUCT(PRODUCT_CODE, CATEGORY_CODE, PRODUCT_NAME, PRODUCT_PRICE ,
 PRODUCT_DETAIL, PRODUCT_IMG, PRODUCT_ORIGINAL, PRODUCT_DATE)
 VALUES('000026', '100', '아삭이상추모종(2포트)', '790', '아삭이상추모종 일반 상추보다 두껍고 단맛 색 선명 잎줄기 채소 야채', '아삭이상추모종.png', '아삭이상추모종.png', sysdate);
 
+----200번(비료/상토) 카테고리부터 400,500,600 -------
+
+INSERT INTO PRODUCT(PRODUCT_CODE, CATEGORY_CODE, PRODUCT_NAME, PRODUCT_PRICE ,
+PRODUCT_DETAIL, PRODUCT_IMG, PRODUCT_ORIGINAL, PRODUCT_DATE)
+VALUES('000027', '200', '아삭이상추모종(2포트)', '790', '아삭이상추모종 일반 상추보다 두껍고 단맛 색 선명 잎줄기 채소 야채', '아삭이상추모종.png', '아삭이상추모종.png', sysdate);

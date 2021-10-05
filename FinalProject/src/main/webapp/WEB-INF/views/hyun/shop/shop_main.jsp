@@ -9,159 +9,8 @@
 <head>
 <meta charset="UTF-8">
 <title>주말 장터 메인</title>
-<script
-	src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
-
-<style>
-h5 {
-	padding-top: 10px;
-	font-weight:bold;
-}
-
-.container .nav {
-	margin-top: 80px;
-	font-size: 20px;
-}
-
-.recommendation {
-	margin-top: 1%;
-	margin-left: 14%;
-}
-
-.section1 {
-	text-align: center;
-}
-
-.section1> span {
-	font-size: 30px;
-	font-weight: bold;
-	margin-right:48%;
-}
-
-.section1 .button {
-	font-size: 20px;
-	font-weight: medium;
-	color: gray;
-}
-
-.recommendation .products {
-	margin-top: 2%;
-	margin-bottom: 2%;
-	margin-right: 15%;
-}
-
-.recommendation .products card-deck .card {
-	width: 300px;
-	height: 250px;
-}
-
-.recommendation .products>card-img-top {
-	height: 200px;
-}
-
-/* 슬라이드 배너 */
-* {margin:0;padding:0;box-sizing:border-box;}
-ul, li {list-style:none;} */
-
-[name="slide"] {display:none; }
-.slidebox {max-width:1000px;width:100%;margin:0 auto;text-align:center; }
-.slidebox img {max-width:100%; height:300px;}/*width:1000px에 height:300px;짜리 이미지를 넣어야 맞음 */
-.slidebox .slidelist {
-	white-space:nowrap;
-	font-size:0;
-	overflow:hidden;
-	height:300px;
-}
-.slidebox .slideitem {
-	position:relative;
-	display:inline-block;
-	vertical-align:middle;
-	width:100%;
-	transition:all .35s;
-}
-.slidebox .slideitem label {
-	position:absolute;
-	z-index:1;
-	top:50%;
-	transform:translateY(-50%);
-	padding:20px;
-	border-radius:50%;
-	cursor:pointer;
-}
-label.left {
-	left:20px;
-	/* background-color:#FFFFFF; */
-	background-image:url('${pageContext.request.contextPath}/resources/image/banner/left-arrow.png');
-	background-position:center center;
-	background-size:50%;
-	background-repeat:no-repeat;
-}
-label.right {
-	right:20px;
-	/* background-color:#FFFFFF; */
-	background-image:url('${pageContext.request.contextPath}/resources/image/banner/right-arrow.png');
-	background-position:center center;
-	background-size:50%;
-	background-repeat:no-repeat;
-}
-
-/* 페이징 스타일 */
-.paginglist {text-align:center;padding:30px 0;}
-.paginglist > li {display:inline-block;vertical-align:middle;margin:0 10px;}
-.paginglist > li > label {display:block;padding:10px 30px;border-radius:10px;background:#ccc;cursor:pointer;}
-.paginglist > li:hover > label {background:#333;}
-
-[id="slide01"]:checked ~ .slidelist .slideitem {transform:translateX(0);animation:slide01 20s infinite;}
-[id="slide02"]:checked ~ .slidelist .slideitem {transform:translateX(-100%);animation:slide02 20s infinite;}
-[id="slide03"]:checked ~ .slidelist .slideitem {transform:translateX(-200%);animation:slide03 20s infinite;}
-[id="slide04"]:checked ~ .slidelist .slideitem {transform:translateX(-300%);animation:slide04 20s infinite;}
-
-@keyframes slide01 {
-	0% {left:0%;}
-	23% {left:0%;}
-	25% {left:-100%;}
-	48% {left:-100%;}
-	50% {left:-200%;}
-	73% {left:-200%;}
-	75% {left:-300%;}
-	98% {left:-300%;}
-	100% {left:0%;}
-}
-@keyframes slide02 {
-	0% {left:0%;}
-	23% {left:0%;}
-	25% {left:-100%;}
-	48% {left:-100%;}
-	50% {left:-200%;}
-	73% {left:-200%;}
-	75% {left:100%;}
-	98% {left:100%;}
-	100% {left:0%;}
-}
-@keyframes slide03 {
-	0% {left:0%;}
-	23% {left:0%;}
-	25% {left:-100%;}
-	48% {left:-100%;}
-	50% {left:200%;}
-	73% {left:200%;}
-	75% {left:100%;}
-	98% {left:100%;}
-	100% {left:0%;}
-}
-@keyframes slide04 {
-	0% {left:0%;}
-	23% {left:0%;}
-	25% {left:300%;}
-	48% {left:300%;}
-	50% {left:200%;}
-	73% {left:200%;}
-	75% {left:100%;}
-	98% {left:100%;}
-	100% {left:0%;}
-}
-
-</style>
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
+<link rel="stylesheet" href="resources/css/hyun/shop.css"></link>
 </head>
 <body>
 	<jsp:include page="shop_header.jsp" />
@@ -267,18 +116,43 @@ label.right {
 		  </c:if>
 		  </c:forEach>
 		</div>
-			
+	
+	<!-- 이모티콘 카드 목록 리스트 -->		
 
-	<!--  페이지네이션 -->
-	<!-- <ul class="pagination justify-content-center" style="margin:20px 0">
-	  <li class="page-item"><a class="page-link" href="#">이전</a></li>
-	  <li class="page-item"><a class="page-link" href="#">1</a></li>
-	  <li class="page-item"><a class="page-link" href="#">2</a></li>
-	  <li class="page-item"><a class="page-link" href="#">3</a></li>
-	  <li class="page-item"><a class="page-link" href="#">4</a></li>
-	  <li class="page-item"><a class="page-link" href="#">5</a></li>
-	  <li class="page-item"><a class="page-link" href="#">다음</a></li>
-	</ul> -->
+	<br>
+	<br>
+	<div container="personacon" style="background:lightgray; padding-top:60px; padding-bottom:60px">
+		<div class="section2">
+			<p id="p1" style="margin-bottom: -8px;">따끈따끈한 </p><p id="p2"> 퍼스나콘</p>
+			<p>더욱 즐거운 대화를 위해<br>지금 사용해 보세요</p> 
+			<a href="#" class="button">더보기</a>
+		</div>
+		
+		<div class="personacon">
+		 <c:forEach items="${productList}" var="product" varStatus="status">
+		
+		 <c:if test="${status.index % 4 == 0}">
+		  <div class="products card-deck">
+		 </c:if>
+		 
+			<div class="card" >
+				<img class="card-img-top" style="height:300px"
+					src="${pageContext.request.contextPath}/resources/image/hyun/${product.product_img}"
+					alt="Card image" style="width:100%; height:300px">
+				<div class="card-body">
+					<h5 class="card-title">${product.product_name}</h5>
+					<p class="card-text">${product.product_detail}</p>
+					<a href="shop_detail.jsp" class="btn btn-info">제품 보기</a>
+				</div>
+			</div>
+			
+		  <c:if test="${status.index % 4 == 3}">
+		   </div>
+		  </c:if>
+		  </c:forEach>
+		</div>
+	</div>
+	
 
 	<jsp:include page="../../main/footer.jsp" />
 </body>
