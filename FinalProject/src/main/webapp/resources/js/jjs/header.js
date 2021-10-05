@@ -5,10 +5,10 @@ function onGeoOk(position) {
 	  "03": "fas fa-cloud",
 	  "04": "fas fa-cloud-meatball",
 	  "09": "fas fa-cloud-sun-rain",
-	  10: "fas fa-cloud-showers-heavy",
-	  11: "fas fa-poo-storm",
-	  13: "fas fa-snowflake",
-	  50: "fas fa-smog",
+	  "10": "fas fa-cloud-showers-heavy",
+	  "11": "fas fa-poo-storm",
+	  "13": "fas fa-snowflake",
+	  "50": "fas fa-smog",
 	};
 	
   const lat = position.coords.latitude;

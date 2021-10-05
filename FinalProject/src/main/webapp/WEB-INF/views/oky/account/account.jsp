@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -95,6 +97,7 @@ width: 15px; height: 15px;
 } /* 연필그림 사이즈*/
 </style>
 <body>
+<jsp:useBean id="util" class="com.hta.project.controller.OkyAccountController" />
 <jsp:include page="../../main/header.jsp" /> 
 <input type="hidden" id="id" value="${id}" name="id">
 
@@ -104,6 +107,7 @@ width: 15px; height: 15px;
           연도 : ${year}   <br>
           월    : ${month}   <br>      
      요일 :    ${dayofweek}  <br>  
+   리스트: ${alist}
 </div>
 	<div id="container">
 		<section id="accordion">
@@ -117,7 +121,15 @@ width: 15px; height: 15px;
         </span>월 
         <a href="account?name=${name}&year=${year}&month=${month+1}">▶</a>
         <a href="account?name=${name}&year=${year+1}&month=${month}">▷</a>   
-		<h3>${year}년 ${month} 월</h3>
+		<h3>${year}년 ${month} 월 합계:
+		<span>
+		<c:set var = "total" value = "0" />
+			<c:forEach var="result" items="${alist}" varStatus="status">     
+			<c:set var= "total" value="${total + result.amount}"/>
+			</c:forEach>
+        <fmt:formatNumber value="${total}" pattern="#,###"/>
+		</span>원
+		</h3>
 		<c:set var="yoil" value="${dayofweek}"/>
 		<c:forEach var="a" begin="1" end="${lastday}">
 			<div>
@@ -131,7 +143,17 @@ width: 15px; height: 15px;
 	            <c:if test="${yoil ==5 }">목요일</c:if>
 		        <c:if test="${yoil ==6 }">금요일</c:if>
 		        <c:if test="${yoil ==0 ||yoil ==7 }">토요일</c:if>   
-		        
+		         		합계:
+		        <span>		          
+		             <c:set var = "total" value = "0" />  
+                   <c:forEach var="b" items="${alist}">
+				   <c:set var="date" value="${fn:substring(b.mdate, 6, 8)}"/>
+				   <c:if test="${date== a}">
+			         <c:set var= "total" value="${total + b.amount}"/>
+			       </c:if>
+			       </c:forEach>		        		        
+                       <fmt:formatNumber value="${total}" pattern="#,###"/>				   		        
+		        </span>원
 		        <c:if test="${level ==1}"> 
 			        <a href="#" onClick="checkTarget(${a})" data-toggle="modal" data-target="#largeModal" id="addacc" >
 		     	     	<img id="pen" src="${pageContext.request.contextPath}/resources/image/oky/pen.png" alt="가계부추가"/>
@@ -139,7 +161,30 @@ width: 15px; height: 15px;
                 </c:if>
 		        </label>                               
 				<article>
-		        	<p>${a}</p>
+		        <table class="table table-striped">
+		         <thead>
+					<tr>
+						<th>지출시간</th>
+						<th>지출금액</th>
+						<th>지출내역</th>
+					</tr>	
+				  </thead>
+				   <tbody>
+				   <c:forEach var="b" items="${alist}">
+				   <c:set var="date" value="${fn:substring(b.mdate, 6, 8)}"/>
+				   <c:if test="${date== a}">
+					    <tr>
+					    	<td>   
+					    		<jsp:setProperty value="${b.mdate}" property="toDates2" name="util"/>
+	             				<jsp:getProperty property="toDates2" name="util"/>
+	             			</td>
+							<td><fmt:formatNumber value="${b.amount}" pattern="#,###"/>원</td>	
+							<td>${b.title}</td>
+					   </tr>	
+			       </c:if>
+			       </c:forEach>
+			       </tbody>
+		        </table>	
 				</article>
 		        <c:set var="yoil" value="${(yoil + 1)%7}"/>
 			</div>
@@ -162,6 +207,7 @@ width: 15px; height: 15px;
 		       <tr>
 		            <th>일정</th>
 		            <td>
+		            <input type="hidden"  value="${name}" name="name">
 		            <input type="hidden"  value="${year}" name="year">
 		            <input type="hidden"  value="${month}" name="month">
 		            <input type="hidden"  id="inputdate" name="date">
@@ -206,8 +252,8 @@ width: 15px; height: 15px;
 		   </table>     
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
         <button type="submit" class="btn btn-primary" id="insertacc">등록</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
       </div>
      </form>            
     </div>

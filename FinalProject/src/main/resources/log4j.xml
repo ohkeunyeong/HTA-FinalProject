@@ -51,10 +51,14 @@
 		<level value="trace" />
 	</logger>
 	
-	<logger name="Calendar">
+	<logger name="Calendars">
 		<level value="trace" />
 	</logger>
-	
+
+	<logger name="Accounts">
+		<level value="trace" />
+	</logger>
+		
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />

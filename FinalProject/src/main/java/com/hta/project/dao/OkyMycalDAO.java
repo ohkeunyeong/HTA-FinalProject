@@ -18,7 +18,7 @@ public class OkyMycalDAO {
 	
 	//일정추가하기 : insert문 ,파라미터 id, title, content, mdate 4개의 값을 받는다
 	public boolean insertCal(MyCalendar calendar) {
-	int count= sqlSession.insert("Calendar.insertCal", calendar);	
+	int count= sqlSession.insert("Calendars.insertCal", calendar);	
 		return count>0?true:false;	
 	}
 	
@@ -29,19 +29,19 @@ public class OkyMycalDAO {
 	Map<String, String> map = new HashMap<>();
 	map.put("name", name);
 	map.put("yyyyMMdd", yyyyMMdd);
-	List<MyCalendar>list = sqlSession.selectList("Calendar.calBoardList", map);
+	List<MyCalendar>list = sqlSession.selectList("Calendars.calBoardList", map);
 	return list;
 	}	
 		
 	//일정상세보기: select문, 결과:CalDto, 파라미터 :seq
 	public MyCalendar calDetail(int seq) {
-	MyCalendar dao= sqlSession.selectOne("Calendar.calDetail", seq);		
+	MyCalendar dao= sqlSession.selectOne("Calendars.calDetail", seq);		
 	return dao;	
 	}	
 	
 	//일정수정하기
 	public boolean calUpdate(MyCalendar dao) {
-	int count = sqlSession.update("Calendar.calUpdate", dao);
+	int count = sqlSession.update("Calendars.calUpdate", dao);
 	return count>0?true:false;	
 	}	
 	
@@ -49,7 +49,7 @@ public class OkyMycalDAO {
 	public boolean calMuldel(String[] seq) {
 		Map<String, String[]>map = new HashMap<>();
 		map.put("seqs", seq);
-		int count= sqlSession.delete("Calendar.calMuldel", map);
+		int count= sqlSession.delete("Calendars.calMuldel", map);
 		return count>0?true:false;
 	}		
 	
@@ -58,7 +58,7 @@ public class OkyMycalDAO {
 		Map<String, String> map = new HashMap<>();
 		map.put("name", name);
 		map.put("yyyyMMdd", yyyyMMdd);
-		int count=sqlSession.selectOne("Calendar.calCount", map);
+		int count=sqlSession.selectOne("Calendars.calCount", map);
 		return count;
 	}		
 	
@@ -67,7 +67,7 @@ public class OkyMycalDAO {
 	Map<String, String>map = new HashMap<>();
 	map.put("name", name);
 	map.put("yyyyMM", yyyyMM);
-	return sqlSession.selectList("Calendar.calViewList", map);	
+	return sqlSession.selectList("Calendars.calViewList", map);	
 	}
 
 

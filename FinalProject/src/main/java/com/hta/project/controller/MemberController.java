@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hta.project.domain.Member;
@@ -134,4 +135,36 @@ public class MemberController {
 		return map;
 	}
 
+	//수정폼
+	  @RequestMapping(value = "/update", method = RequestMethod.GET)
+	  public ModelAndView member_update(HttpSession session,
+			  							ModelAndView mv)     {
+		  String id = (String) session.getAttribute("id");
+		  if(id==null)  {
+			  mv.setViewName("redirect:login");
+		  } else {
+			  Member m = memberService.member_info(id);
+			  mv.setViewName("member/member_updateForm");
+			  mv.addObject("member_info", m); //member_info가 키값 
+		  }
+		  return mv;
+	  }
+	  
+	  //수정처리 
+	  @RequestMapping(value = "/updateProcess", method = RequestMethod.POST)
+	  public String updateProcess(Member member, Model model,
+			  					  HttpServletRequest request,
+			  					  RedirectAttributes rattr)   {
+		  
+		  int result = memberService.update(member);
+		  if (result == 1) {
+			  rattr.addFlashAttribute("result", "updateSuccess");
+			  return "redirect:/member/member_list";
+		  } else {
+			  model.addAttribute("url", request.getRequestURL());
+			  model.addAttribute("message", "정보 수정 실패");
+			  return "error/error";
+		  }
+	  }
+	  
 }

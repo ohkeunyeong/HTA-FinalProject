@@ -7,7 +7,9 @@ public class Report {
 	
 	private int report_num;
 	private int board_num;
+	private String board_nick;
 	private String board_subject;
+	private String board_content;
 	private String report_content;
 	private String board_table;
 	private String report_date;
@@ -42,6 +44,22 @@ public class Report {
 
 	public void setBoard_subject(String board_subject) {
 		this.board_subject = board_subject;
+	}
+
+	public String getBoard_nick() {
+		return board_nick;
+	}
+
+	public void setBoard_nick(String board_nick) {
+		this.board_nick = board_nick;
+	}
+
+	public String getBoard_content() {
+		return board_content;
+	}
+
+	public void setBoard_content(String board_content) {
+		this.board_content = board_content;
 	}
 	
 	public String getBoard_table() {

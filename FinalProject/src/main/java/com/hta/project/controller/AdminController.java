@@ -35,7 +35,6 @@ import com.hta.project.domain.OrderDetailList;
 import com.hta.project.domain.Order_Market;
 import com.hta.project.domain.Product;
 import com.hta.project.domain.Report;
-import com.hta.project.domain.ReportDetail;
 import com.hta.project.service.AdminService;
 import com.hta.project.service.JikService;
 import com.hta.project.service.MemberService;
@@ -391,11 +390,11 @@ public class AdminController {
 	}
 	
 	@GetMapping("/reportDetail")
-	public ModelAndView reportDetail(int num, String table, ModelAndView mv,
+	public ModelAndView reportDetail(int num, ModelAndView mv,
 			HttpServletRequest request) {
 		logger.info("Admin reportDetail()");
 		
-		ReportDetail reportdetail = adminService.getReportDetail(num, table);
+		Report reportdetail = adminService.getReportDetail(num);
 		
 		if(reportdetail == null) {
 			logger.info("신고글 상세보기 실패");
@@ -420,7 +419,7 @@ public class AdminController {
 			logger.info("신고글 삭제 실패");
 			mv.addAttribute("url", request.getRequestURL());
 			mv.addAttribute("message", "삭제 실패");
-			return "error/error";
+			return "jjs/error/error";
 		}
 		
 		logger.info("신고글 삭제 성공");

@@ -42,7 +42,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
 								<li class="breadcrumb-item"><a href="main">Home</a></li>
-								<li class="breadcrumb-item"><a href="farmPostList">게시물 관리</a></li>
+								<li class="breadcrumb-item"><a href="reportList">게시물 관리</a></li>
 								<li class="breadcrumb-item active">신고글 상세보기</li>
 							</ol>
 						</div>
@@ -63,7 +63,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 								<div class="card-header">
 									<h3 class="card-title mt-2">제목 : ${reportdetail.board_subject}</h3>
 									<div class="float-right">
-										<span>작성자 : ${reportdetail.board_nickname}</span>&nbsp;&nbsp;&nbsp;&nbsp; 신고날짜 : <span>${reportdetail.report_date}</span>
+										<span>작성자 : ${reportdetail.board_nick}</span>&nbsp;&nbsp;&nbsp;&nbsp; 신고날짜 : <span>${reportdetail.report_date}</span>
 									</div>
 								</div>
 								<!-- /.card-header -->
@@ -127,7 +127,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						<h5>신고글 삭제하시겠습니까??</h5>
 						<form action="reportDelete" method="post" name="delform">
 							<input type="hidden" name="report_num" value="${param.num }">
-							<input type="hidden" name="board_table" value="${param.table}">
+							<input type="hidden" name="board_table" value="${reportdetail.board_table}">
 							<input type="hidden" name="board_num" value="${reportdetail.board_num}">
 							<div class="modal-footer">
 								<div class="text-right">
