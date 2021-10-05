@@ -89,7 +89,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 														</td>
 														<td>
 															<div>
-																<a href="reportDetail?num=${r.report_num}&table=${r.board_table}"> ${r.board_subject} </a>
+																<a href="reportDetail?num=${r.report_num}"> ${r.board_subject} </a>
 															</div>
 														</td>
 														<td>

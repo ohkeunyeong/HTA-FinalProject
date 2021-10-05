@@ -16,6 +16,10 @@
 	</properties>
 
 	<dependencies>
+	<!-- 채팅 관련 라이브러리 -->
+		
+    <!-- 채팅 관련 라이브러리 -->
+	
 	<!-- 스프링 시큐리티 web 라이브러리 -->
 	    <dependency>
 	      <groupId>org.springframework.security</groupId>
