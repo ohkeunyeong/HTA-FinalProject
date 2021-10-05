@@ -4,56 +4,9 @@
 <head>
 <title>MVC 게시판 - view</title>
  <jsp:include page="../../main/header.jsp" />
+  <script src="../resources/js/jquery-3.6.0.min.js"></script>
  <script src="../resources/js/chang/view3.js"></script>
-
-<style>
-body > div > table > tbody >tr:nth-child(1) {
-	text-align: center
-}
-
-td:nth-child(1) {
-	width: 20%
-}
-
-a {
-	color: white
-}
-
-body > div > table > tbody tr:last-child {
-	text-align: center;
-}
-
-.btn-primary {
-	background-color: #4f97e5
-}
-
-#myModal {
-	display: none
-}
-
-#comment > table > tbody > tr > td:nth-child(2){
- width:60%
-}
-#count{
-    position: relative;
-    top: -10px;
-    left: -10px;
-    background: orange;
-    color: white;
-    border-radius: 30%;
-}
-
-textarea{resize:none}
-
-form[action=down] > input[type=submit]{
-    position: relative;
-    top: -20;
-    left: 10px;
-    border: none;
-    cursor : pointer;
-}
-
-</style>
+ <link rel="stylesheet" href="../resources/css/chang/view.css">
 </head>
 <body>
   <input type="hidden" id="Loginid" value="${id}" name="loginid">
@@ -95,8 +48,7 @@ form[action=down] > input[type=submit]{
  		
  	<tr>
  		<td colspan="2" class="center">
- 			<button class="btn btn-primary start">댓글</button>
- 				<span id="count">${count}</span>
+ 			
  			<c:if test="${jikdata.jik_id == id || id =='admin' }">
  			 <a href="modifyView?num=${jikdata.jik_num}">
  			 	<button class="btn btn-warning">수정</button>
@@ -138,22 +90,33 @@ form[action=down] > input[type=submit]{
 		</div><!-- class="modal-dialog" -->
 	</div><!-- class="modal" id="myModal"-->
 	
-		<div id="comment">
-		<button class="btn btn-info float-left">총 50자까지 가능합니다.</button>
-		<button id="write" class="btn btn-info float-right">등록</button>
-		<textarea rows=3 class="form-control"
-				  id="content" maxLength="50" ></textarea>
-		<table class="table talbe_striped">
-			<thead>
-				<tr><td>아이디</td><td>내용</td><td>날짜</td></tr>
-			</thead>
-			<tbody>
-			
-			</tbody>
-		</table>
-		 <div id="message"></div>
-	</div>
 	
+	<div class="CommentBox">
+		<div class="comment_option">
+			<h3 class="comment_title">
+				댓글	<span id="count">${count}</span>
+			</h3>
+			<div class="comment_tab">
+				<ul class="comment_tab_list">
+				</ul>
+			</div>
+		</div><!--  comment option end -->
+		<ul class="comment_list">
+		</ul>
+		<div class="CommentWriter">
+			<div class="comment_inbox">
+				<b class="comment_inbox_name">${boarddata.nick}</b><span
+				   class="comment_inbox_count">0/200</span>
+				  <textarea placeholder="댓글을 남겨보세요" rows="1"
+				  class="comment_inbox_text" maxLength="200"></textarea> 
+				  
+			</div>
+			<div class="register_box">
+				<div class="button btn_cancel">취소</div>
+				<div class="button btn_register">등록</div>
+			</div>
+		</div><!-- CommentWriter end -->
+	</div><!-- CommentBox end -->
   </div><!-- class="container" -->
 
 </body>

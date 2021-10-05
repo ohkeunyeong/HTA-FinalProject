@@ -116,7 +116,7 @@
 	</div>
 	<!--  <a href='https://www.freepik.com/vectors/water'>Water vector created by upklyak - www.freepik.com</a> -->
 	
-	<jsp:include page="modal/login.jsp"/>
+	<jsp:include page="../main/modal/login.jsp"/>
 
 </body>
 </html>
