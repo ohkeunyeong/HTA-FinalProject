@@ -38,38 +38,39 @@
 	<nav class="navbar navbar-expand-sm bg-success navbar-dark fixed-top main-header">
 		<!-- fixed-top -->
 		<!-- Brand -->
-		<a class="navbar-brand" href="#" style="height: 120%; padding-left: 2%; padding-right: 5%"> <img src="${pageContext.request.contextPath}/resources/image/logo2.png" alt="Logo">
+		<a class="navbar-brand" href="${pageContext.request.contextPath}/project/main" style="height:120%; padding-left:2%;"> <img src="${pageContext.request.contextPath}/resources/image/logo2.png" alt="Logo">
 		</a>
 
 
-		<ul class="navbar-nav navbar-expand-sm">
+		<ul class="navbar-nav navbar-expand-sm" style="padding-right"16%">
 
 			<!-- Dropdown -->
-			<li class="nav-item dropdown active" style="padding-left: 3%"><a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 내 농장 </a>
+			<li class="nav-item dropdown active" style="padding-left: 4%">
+			<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 내 농장 </a>
 				<div class="dropdown-menu">
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/calprocess?id=${id}">캘린더</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/accprocess?id=${id}">가계부</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/bbs?id=${id}">멤버게시판</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/createmynong">농장생성</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/mynongprocess?id=${id}">농장관리</a>
 				</div></li>
 
 			<!-- Dropdown -->
-			<li class="nav-item dropdown active" style="padding-left: 3%;"><a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 농장 모듬 </a>
+			<li class="nav-item dropdown active" style="padding-left: 4%;"><a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 농장 모듬 </a>
 				<div class="dropdown-menu">
 					<a class="dropdown-item" href="#">수다 농장</a> <a class="dropdown-item" href="#">궁금해요</a> <a class="dropdown-item" href="#">도움 구해요</a> <a class="dropdown-item" href="#">출석 도장</a>
 				</div></li>
 
 			<!-- Dropdown -->
-			<li class="nav-item dropdown active" style="padding-left: 3%"><a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 주말 장터 </a>
+			<li class="nav-item dropdown active" style="padding-left: 4%"><a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 주말 장터 </a>
 				<div class="dropdown-menu">
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/jik/list">직거래 장터</a>
 				</div></li>
 
 			<!-- Dropdown -->
-			<li class="nav-item dropdown active" style="padding-left: 3%"><a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 굿즈 장터 </a>
+			<li class="nav-item dropdown active" style="padding-left: 4%"><a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 굿즈 장터 </a>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" href="shopmain">굿즈 장터</a> <a class="dropdown-item" href="personacon">퍼스나콘</a> <a class="dropdown-item" href="goods">주말 굿즈</a> <a class="dropdown-item" href="tools">농기구</a> <a class="dropdown-item" href="seed">씨앗/모종</a> <a class="dropdown-item" href="soil">비료/상토</a> <a class="dropdown-item" href="pesticide">살충제</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/shopmain">굿즈 장터</a> <a class="dropdown-item" href="personacon">퍼스나콘</a> <a class="dropdown-item" href="goods">주말 굿즈</a> <a class="dropdown-item" href="tools">농기구</a> <a class="dropdown-item" href="seed">씨앗/모종</a> <a class="dropdown-item" href="soil">비료/상토</a> <a class="dropdown-item" href="pesticide">살충제</a>
 				</div></li>
 
 			<!-- Dropdown -->
-			<li class="nav-item dropdown active" style="padding-left: 3%"><a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 고객 센터 </a>
+			<li class="nav-item dropdown active" style="padding-left: 4%"><a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 고객 센터 </a>
 				<div class="dropdown-menu">
 					<a class="dropdown-item" href="#">고객 센터</a> <a class="dropdown-item" href="#">FAQ</a> <a class="dropdown-item" href="#">공지사항</a>
 				</div></li>
@@ -77,9 +78,9 @@
 		</ul>
 
 		<ul class="navbar-nav navbar-expand-sm" style="width:30%;">
-			<c:if test="${empty id}">
-				<li style="padding-left:20%">
-					<div class="weather" >
+			<c:if test="${empty id}" >
+				<li>
+					<div class="weather">
 						<div class="CurrIcon"></div>
       					<div class="CurrTemp"></div>
       					<div class="City"></div>
@@ -87,28 +88,28 @@
     			</li>
     			
 				<!-- Links -->
-				<li class="nav-item active" style="padding-left:4%">
-					<!-- style="padding-left:5%" --> <a class="nav-link" href="cart">장바구니</a>
+				<li class="nav-item active">
+					<a class="nav-link" href="cart">장바구니</a>
 				</li>
-				<li class="nav-item active" style="padding-left:4%">
+				<li class="nav-item active">
 					<a class="nav-link" id="login">로그인</a>
 				</li>
-				<li class="nav-item active" style="padding-left:4%"><a class="nav-link" href="${pageContext.request.contextPath}/member/join">회원가입</a></li>
+				<li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/member/join">회원가입</a></li>
 			</c:if>
 			<c:if test="${!empty id}">
-				<li style="padding-left:20%">
+				<li>
 					<div class="weather" >
 						<div class="CurrIcon"></div>
 	      				<div class="CurrTemp"></div>
 	      				<div class="City"></div>
 	    			</div>
     			</li>
-				<li class="nav-item active" style="padding-left:4%"><a class="nav-link" href="${pageContext.request.contextPath}/member/logout"> ${nick} 님(로그아웃)</a></li>
+				<li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/member/logout"> ${nick} 님(로그아웃)</a></li>
 				<c:if test="${id == 'admin' }">
-					<li class="nav-item active" style="padding-left:4%"><a class="nav-link" href="${pageContext.request.contextPath}/admin/main"> 관리자페이지</a></li>
+					<li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/admin/main"> 관리자페이지</a></li>
 				</c:if>
 				<c:if test="${id != 'admin' }">
-					<li class="nav-item active" style="padding-left:4%"><a class="nav-link" href="${pageContext.request.contextPath}/member/update"> 정보수정</a></li>
+					<li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/member/update"> 정보수정</a></li>
 				</c:if>
 			</c:if>
 
