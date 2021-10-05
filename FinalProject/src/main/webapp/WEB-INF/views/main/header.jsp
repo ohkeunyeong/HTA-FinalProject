@@ -43,7 +43,7 @@
 			<!-- Dropdown -->
 			<li class="nav-item dropdown active" style="padding-left: 3%"><a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 내 농장 </a>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/calprocess?id=${id}">캘린더</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/acc?id=${id}">가계부</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/bbs?id=${id}">멤버게시판</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/createmynong">농장생성</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/mynongprocess?id=${id}">농장관리</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/calprocess?id=${id}">캘린더</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/accprocess?id=${id}">가계부</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/bbs?id=${id}">멤버게시판</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/createmynong">농장생성</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/mynongprocess?id=${id}">농장관리</a>
 				</div></li>
 
 			<!-- Dropdown -->

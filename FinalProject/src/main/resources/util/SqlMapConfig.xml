@@ -23,6 +23,8 @@
 		<typeAlias alias="orderList" 	type="com.hta.project.domain.OrderDetailList"/>
 		<typeAlias alias="orderDetail" 	type="com.hta.project.domain.OrderDetail"/>
 		<typeAlias alias="calendar"    	type="com.hta.project.domain.MyCalendar" />
+		<typeAlias alias="reportdetail" type="com.hta.project.domain.ReportDetail" />
+		<typeAlias alias="account"      type="com.hta.project.domain.Account" />
      </typeAliases>
          
      <mappers>
@@ -37,5 +39,6 @@
        	<mapper resource="sql/farm.xml" />
        	<mapper resource="sql/order.xml" />
        	<mapper resource="sql/calendar.xml" />
+       	<mapper resource="sql/account.xml" />
      </mappers>
 </configuration>
