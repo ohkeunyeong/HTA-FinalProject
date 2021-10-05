@@ -105,12 +105,6 @@ public class MainController {
 			return "hyun/shop/shop_pesticide";
 	}
 					
-	//회원가입 바로가기 이동 
-	@RequestMapping("/join")
-	public String join() {		
-		return "woo/join";
-	}
-	
 	//회원수정 바로가기 이동 
 		@RequestMapping("/update")
 		public String update() {		
