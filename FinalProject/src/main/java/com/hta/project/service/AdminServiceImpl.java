@@ -17,7 +17,6 @@ import com.hta.project.domain.OrderDetailList;
 import com.hta.project.domain.Order_Market;
 import com.hta.project.domain.Product;
 import com.hta.project.domain.Report;
-import com.hta.project.domain.ReportDetail;
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -316,11 +315,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public ReportDetail getReportDetail(int num, String table) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("num", num);
-		map.put("table", table);
-		return dao.getReportDetail(map);
+	public Report getReportDetail(int num) {
+		return dao.getReportDetail(num);
 	}
 
 	@Override

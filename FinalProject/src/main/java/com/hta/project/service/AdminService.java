@@ -10,7 +10,6 @@ import com.hta.project.domain.OrderDetailList;
 import com.hta.project.domain.Order_Market;
 import com.hta.project.domain.Product;
 import com.hta.project.domain.Report;
-import com.hta.project.domain.ReportDetail;
 
 public interface AdminService {
 
@@ -84,7 +83,7 @@ public interface AdminService {
 
 	public int getReportListCount();
 
-	public ReportDetail getReportDetail(int num, String table);
+	public Report getReportDetail(int num);
 
 	public int reportDelete(int num, String table, int board_num);
 

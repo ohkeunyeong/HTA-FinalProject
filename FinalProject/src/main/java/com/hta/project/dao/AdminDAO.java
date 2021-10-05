@@ -17,7 +17,6 @@ import com.hta.project.domain.OrderDetailList;
 import com.hta.project.domain.Order_Market;
 import com.hta.project.domain.Product;
 import com.hta.project.domain.Report;
-import com.hta.project.domain.ReportDetail;
 
 @Repository
 public class AdminDAO {
@@ -165,8 +164,8 @@ public class AdminDAO {
 		return sqlSession.selectOne("Reports.count");
 	}
 
-	public ReportDetail getReportDetail(Map<String, Object> map) {
-		return sqlSession.selectOne("Reports.detail", map);
+	public Report getReportDetail(int num) {
+		return sqlSession.selectOne("Reports.detail", num);
 	}
 
 	public int reportDelete(int report_num) {

@@ -132,10 +132,15 @@ select mynong_name, name, cnt membercnt, mynong_date
 					where member.my_farm = '1'
 					order by mynong_date desc) om
 	 		 )
-		where rnum >= 1and rnum <= 10
+		where rnum >= 1 and rnum <= 10
 
 update member
-set my_farm = '0', point = 0
+set my_farm = '0'
+where id = 'ajaxk';
+
+update MEMBER
+set mynong_name = ''
+where id = 'ajaxk';
 
 
 

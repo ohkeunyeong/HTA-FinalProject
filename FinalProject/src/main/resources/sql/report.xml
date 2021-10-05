@@ -19,12 +19,10 @@
 		from report
 	</select>
 	
-	<select id="detail" resultType="reportdetail" parameterType="map">
-		select report_num, board_num, <include refid="subject" /> board_subject, 
-	   		   nick board_nickname, report_date, <include refid="content" /> board_content, 
-	   		   report_content, board_table
-		from report, <include refid="table" />
-		where report.report_num = #{num}
+	<select id="detail" resultType="report" parameterType="int">
+		select *
+		from report
+		where report_num = #{num}
 	</select>
 	
 	<delete id="reportDelete" parameterType="int">
@@ -58,24 +56,6 @@
 			<when test="table == 'free'">free_num</when>
 			<when test="table == 'work'">work_num</when>
 			<when test="table == 'qb'">qb_num</when>
-		</choose>
-	</sql>
-	
-	<sql id="subject">
-		<choose>
-			<when test="table == 'jik'">jik_subject</when>
-			<when test="table == 'free'">free_subject</when>
-			<when test="table == 'work'">work_subject</when>
-			<when test="table == 'qb'">qb_subject</when>
-		</choose>
-	</sql>
-	
-	<sql id="content">
-		<choose>
-			<when test="table == 'jik'">jik_content</when>
-			<when test="table == 'free'">free_content</when>
-			<when test="table == 'work'">work_content</when>
-			<when test="table == 'qb'">qb_content</when>
 		</choose>
 	</sql>
 	

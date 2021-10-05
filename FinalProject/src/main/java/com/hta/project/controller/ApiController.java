@@ -35,7 +35,7 @@ public class ApiController {
 			urlBuilder.append("?" + URLEncoder.encode("lat", "UTF-8") + "=" + lat); // 현재 사용자의 위도
 			urlBuilder.append("&" + URLEncoder.encode("lon", "UTF-8") + "=" + lon); // 현재 사용자의 경도
 			urlBuilder.append("&" + URLEncoder.encode("appid", "UTF-8") + "=" + weatherApiKey); // OpenWeatherMap API Key
-			urlBuilder.append("&" + URLEncoder.encode("units", "UTF-8") + "=metric"); // 현재 사용자의 경도
+			urlBuilder.append("&" + URLEncoder.encode("units", "UTF-8") + "=metric");
 			logger.info("Weather URL = " + urlBuilder);
 			
 			URL url = new URL(urlBuilder.toString());
