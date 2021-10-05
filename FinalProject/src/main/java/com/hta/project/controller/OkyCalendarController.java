@@ -265,7 +265,7 @@ public class OkyCalendarController {
 		} else {
 			mv.setViewName("oky/error/error");
 			mv.addObject("url", request.getRequestURL());
-			mv.addObject("message", "내농장 생성 실패");			
+			mv.addObject("message", "일정추가 실패");			
 		}
 		}
 		return mv;
