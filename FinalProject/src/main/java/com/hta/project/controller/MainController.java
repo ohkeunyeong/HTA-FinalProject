@@ -110,4 +110,10 @@ public class MainController {
 	public String join() {		
 		return "woo/join";
 	}
+	
+	//회원수정 바로가기 이동 
+		@RequestMapping("/update")
+		public String update() {		
+			return "member/member_update";
+		}
 }

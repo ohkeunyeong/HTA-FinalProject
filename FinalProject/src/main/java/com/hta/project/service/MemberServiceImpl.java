@@ -102,4 +102,11 @@ public class MemberServiceImpl implements MemberService{
 	}
 //-----------------/chang 회원가입 작업 영역 ---------------------------
 	
+//-----------------/hyun 회원수정 작업 영역 ---------------------------
+	
+	@Override
+	public int update(Member m) {
+		return dao.update(m);
+	}
+
 }
