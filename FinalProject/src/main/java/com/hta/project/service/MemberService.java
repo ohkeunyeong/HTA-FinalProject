@@ -28,5 +28,9 @@ public interface MemberService {
 	public int insert(Member member);
 	//---------------------------------------/chang 회원가입 작업영역--------------------
 	
+	//---------------------------------------/hyun 회원수정 작업영역--------------------
+
+	public int update(Member member);
+	
 
 }

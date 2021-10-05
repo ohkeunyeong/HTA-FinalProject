@@ -26,7 +26,7 @@
 		<ul class="navbar-nav navbar-expand-sm justify-content-center" style="width: 40%">
 
 			<!-- Dropdown -->
-			<li class="nav-item dropdown active" style="padding-left: 3%"><a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 내 농장 </a>
+			<li class="nav-item dropdown active" style="padding-left:40%"><a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 내 농장 </a>
 				<div class="dropdown-menu">
 					<a class="dropdown-item" href="${pageContext.request.contextPath}/cal?id=${id}">캘린더</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/acc?id=${id}">가계부</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/bbs?id=${id}">멤버게시판</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/createmynong">농장생성</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/mynongprocess?id=${id}">농장관리</a>
 				</div></li>
@@ -57,23 +57,25 @@
 
 		</ul>
 
-		<ul class="navbar-nav navbar-expand-sm" style="width: 40%;">
+		<ul class="navbar-nav navbar-expand-sm" style="width:40%;">
 			<c:if test="${empty id}">
 				<!-- Links -->
-				<li class="nav-item active" style="padding-left: 30%">
-					<!-- style="padding-left:5%" --> <a class="nav-link" href="cart">장바구니</a>
+				<li class="nav-item active" style="padding-left:50%">
+					<a class="nav-link" href="cart">장바구니</a>
 				</li>
-				<li class="nav-item active" style="padding-left: 4%"><a class="nav-link" href="login">로그인</a></li>
-				<li class="nav-item active" style="padding-left: 4%"><a class="nav-link" href="loginimsi">임시로그인</a></li> <!-- 임시 로그인(우영님이 로그인 다 만들면 삭제) -->
-				<li class="nav-item active" style="padding-left: 4%"><a class="nav-link" href="join">회원가입</a></li>
+				<li class="nav-item active" style="padding-left:4%"><a class="nav-link" href="login">로그인</a></li>
+				<li class="nav-item active" style="padding-left:4%"><a class="nav-link" href="join">회원가입</a></li>
 			</c:if>
 			<c:if test="${!empty id}">
-				<li class="nav-item active" style="padding-left: 30%"><a class="nav-link" href="logoutimsi"> ${nick} 님(로그아웃)</a></li>
+			<li class="nav-item active" style="padding-left:50%">
+					<a class="nav-link" href="cart">장바구니</a>
+				</li>
+				<li class="nav-item active" style="padding-left:4%"><a class="nav-link" href="logoutimsi"> ${nick} 님(로그아웃)</a></li>
 				<c:if test="${id == 'admin' }">
-					<li class="nav-item active" style="padding-left: 4%"><a class="nav-link" href="admin/main"> 관리자페이지</a></li>
+					<li class="nav-item active" style="padding-left:4%"><a class="nav-link" href="admin/main"> 관리자페이지</a></li>
 				</c:if>
 				<c:if test="${id != 'admin' }">
-					<li class="nav-item active" style="padding-left: 4%"><a class="nav-link" href="#"> 정보수정</a></li>
+					<li class="nav-item active" style="padding-left:4%"><a class="nav-link" href="#"> 정보수정</a></li>
 				</c:if>
 			</c:if>
 

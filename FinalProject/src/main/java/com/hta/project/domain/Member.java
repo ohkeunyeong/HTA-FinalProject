@@ -3,6 +3,8 @@ package com.hta.project.domain;
 public class Member {
 	private String id;
 	private String pass;
+	private String age;
+	private String email;
 	private String name;
 	private String nick;
 	private String mail;
@@ -92,5 +94,20 @@ public class Member {
 		this.mynong_name = mynong_name;
 	}
 
+	public String getAge() {
+		return age;
+	}
+
+	public void setAge(String age) {
+		this.age = age;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 }
