@@ -20,43 +20,95 @@ $(function(){
 					},
 					dataType : "json",
 					success : function(rdata){
+						$('#count').text(rdata.listcount).css('font-family','arial,sans-serif')
+						/*var red1='red';		var red2='red';
+						if(option==1){  //등록순인 경우 등록순이 'red', 최신순이 'gray'로 글자색을 나타냅니다.
+							red2='gray';
+						}else if(option==2){ //최신순인 경우 등록순이 'gray', 최신순이 'red'로 글자색을 나타냅니다.
+							red1='gray';
+						}
+						*/						
+						var output="";
 						$("#count").text(rdata.listcount);
 						if(rdata.listcount > 0){
-							$("#comment table").show(); //문서가 로딩 될 때 hide() 했던 부분을 보이게 합니다.(1)
-							$("#comment tbody").empty();
-							$(rdata.list).each(function(){
-								output = '';
-								img = '';
-								if($("#Loginid").val() == this.id){
-									img = "<img src='../resources/image/chang/pencil2.png' width='15px' class='update'>"
-										+ "<img src='../resources/image/chang/delete.png' width='15px' class='remove'>"	
-										+ "<input type='hidden' value='" + this.jik_comm_num+"'>";
-								}
-								
-								output += "<tr><td>" + this.nick + "</td>";
-								output += "<td></td>";
-								//악의적인 쿼리공격을 방어하기 위해 .text로 변환하여 넣어줌.
-								//output += "<td>" + this.content + "</td>";
-								output += "<td>"+ this.jik_comm_date + img + "</td></tr>";
-								$("#comment tbody").append(output);
-								//append한 마지막 tr의 2번째 자식 td를 찾아 text()메서드로 content를 넣습니다.
-								$("#comment tbody tr:last").find("td:nth-child(2)").text(this.jik_comm_content);
-								
-							});//each end
-							
-							if(rdata.listcount > rdata.list.length){
-								$("#message").text("더보기");
-							}else{
-								$("#message").text("");
+							/*
+							  output += '<li class="comment_tab_item ' +  red1 + '" >'
+	                          + '   <a href="javascript:getList(1)" class="comment_tab_button">등록순 </a>'
+	                          + '</li>'
+	                          + '<li class="comment_tab_item ' +  red2 + '" >'
+	                          + '   <a href="javascript:getList(2)" class="comment_tab_button">최신순</a>'
+	                          + '</li>';
+	                     $('.comment_tab_list').html(output);//댓글 수 등록순 최신순 출력
+	                     */
+					    output='';
+						$(rdata.boardlist).each(function(){
+							var lev = this.reply_re_lev;
+							var comment_reply='';
+							//레벨에 따라 왼쪽 여백줍니다.
+							if(lev==1){
+								comment_reply = ' CommentItem--reply lev1';//margin-left: 46px;
+							}else if(lev==2){
+								comment_reply = ' CommentItem--reply lev2';//margin-left: 92px;
 							}
-						} else{
-							$("#message").text("등록된 댓글이 없습니다.")
-							$("#comment tbody").empty();
-							$("#comment table").hide()//1
-						}
-					}
-		});// ajax end	
-	}// function getList end
+							
+						
+							
+							output += '<li id="' + this.jik_comm_num + '" class="CommentItem' + comment_reply + '">'
+								   + '   <div class="comment_area">'
+								   + '    <div class="comment_box">'
+								   + '      <div class="comment_nick_box">'
+								   + '            <div class="comment_nick_info">'
+								   + '               <div class="comment_nickname">' + this.nick + '</div>'
+								   + '            </div>' //comment_nick_info                  
+								   + '       </div>'  // comment_nick_box
+								   + '     </div>'   //comment_box
+								   + '    <div class="comment_text_box">'
+								   + '       <p class="comment_text_view">'
+								   + '         <span class="text_comment">' + this.jik_comm_content + '</span>'
+								   + '       </p>'
+								   + '    </div>' //comment_text_box
+								   + '    <div class="comment_info_box">'
+								   + '      <span class="comment_info_date">' + this.jik_comm_date + '</span>';
+							if(lev<2){ //답글쓰기는 답글의 답글까지만 사용하도록 합니다.
+							   	  output += '  <a href="javascript:replyform(' + this.jik_comm_num +',' 
+							   	         + lev + ',' + this.jik_comm_re_seq +',' 
+							   	         + this.jik_comm_re_ref +')"  class="comment_info_button">답글쓰기</a>'
+							      }
+							output += '   </div>' //comment_info_box;
+								   
+							//글쓴이가 로그인한 경우 나타나는 더보기입니다.
+	                        //수정과 삭제 기능이 있습니다.							
+							if($("#Loginid").val()==this.id){  
+							 output +=  '<div class="comment_tool">'
+								   + '    <div title="더보기" class="comment_tool_button">'
+								   + '       <div>&#46;&#46;&#46;</div>' 
+								   + '    </div>'
+								   + '    <div id="commentItem' +  this.jik_comm_num + '"  class="LayerMore">' //스타일에서 display:none; 설정함
+								   + '     <ul class="layer_list">'							   
+								   + '      <li class="layer_item">'
+								   + '       <a href="javascript:updateForm(' + this.jik_comm_num + ')"'
+								   + '          class="layer_button">수정</a>&nbsp;&nbsp;'
+								   + '       <a href="javascript:del(' + this.jik_comm_num + ')"'
+								   + '          class="layer_button">삭제</a></li></ul>'
+								   + '     </div>'//LayerMore
+								   + '   </div>'//comment_tool
+							}
+								   
+							output += '</div>'// comment_area
+								   + '</li>'//li
+						})//each
+						 $('.comment_list').html(output);
+				 }//if(rdata.boardlist.length>0)
+				 else{ //댓글 1개가 있었는데 삭제하는 경우 갯수는 0이라  if문을 수행하지 않고 이곳으로 옵니다.
+					   //이곳에서 아래의 두 영역을 없앱니다.
+					 $('.comment_list').empty();  
+					 $('.comment_tab_list').empty(); 
+				 }
+				}//success end
+			});//ajax end
+			
+			 
+		}//function(getList) end
 	
 	
 	// 글자수 50개 제한하는 이벤트
@@ -93,7 +145,9 @@ $(function(){
 					"jik_comm_content" : jik_comm_content,//content = $("#content").val();
 					"id" : $("#Loginid").val(),
 					"nick" : $("#Loginnick").val(),
-					"jik_board_num" : $("#jik_num").val()
+					"jik_board_num" : $("#jik_num").val(),
+					"jik_re_lev" : 0,
+					"jik_re_seq" : 0
 			};
 		}else { //댓글을 수정하는 경우
 			url = "../jik_comm/update";

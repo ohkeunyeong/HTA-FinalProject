@@ -14,7 +14,7 @@ function onGeoOk(position) {
   const lat = position.coords.latitude;
   const lon = position.coords.longitude;
   $.ajax({
-	     url: "api/weather",
+	     url: "/project/api/weather",
 	     data: {"lat":lat, "lon":lon},
 	     dataType: "json",
 	     type: "POST",
