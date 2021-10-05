@@ -38,7 +38,9 @@
 	<nav class="navbar navbar-expand-sm bg-success navbar-dark fixed-top main-header">
 		<!-- fixed-top -->
 		<!-- Brand -->
+
 		<a class="navbar-brand" href="${pageContext.request.contextPath}/project/main" style="height:120%; padding-left:2%;"> <img src="${pageContext.request.contextPath}/resources/image/logo2.png" alt="Logo">
+
 		</a>
 
 
@@ -48,7 +50,7 @@
 			<li class="nav-item dropdown active" style="padding-left: 4%">
 			<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 내 농장 </a>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/calprocess?id=${id}">캘린더</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/accprocess?id=${id}">가계부</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/bbs?id=${id}">멤버게시판</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/createmynong">농장생성</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/mynongprocess?id=${id}">농장관리</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/calprocess?id=${id}">캘린더</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/accprocess?id=${id}">가계부</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/bbs?id=${id}">멤버게시판</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/mynongprocess?id=${id}">농장관리</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/createmynong">농장생성</a>
 				</div></li>
 
 			<!-- Dropdown -->

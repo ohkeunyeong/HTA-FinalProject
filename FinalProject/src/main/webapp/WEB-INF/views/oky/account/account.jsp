@@ -31,6 +31,31 @@ function checkTarget(num) {
 	$("#inputdate").val(num);
  }
 
+
+function accdelete(num) {
+	if(confirm("삭제하시겠습니까?")){
+		location.href='accdelete?name=${name}&year=${year}&month=${month}&seq='+num; 
+	}else {
+		alert('취소')
+	}
+}
+
+/* function caldetail(num) {
+	alert('num은' + num);
+	$.ajax({
+		type : "POST",
+		data : {"seq" :num},
+		url  : "accdetail" ,
+		dataType : "json",
+		cache : false,
+		success: function(data){
+			console.log(data.seq)
+			console.log(data.title)
+			console.log(data.mdate)
+
+		}
+	})
+} */
 </script>
 <style>
 * {
@@ -107,7 +132,6 @@ width: 15px; height: 15px;
           연도 : ${year}   <br>
           월    : ${month}   <br>      
      요일 :    ${dayofweek}  <br>  
-   리스트: ${alist}
 </div>
 	<div id="container">
 		<section id="accordion">
@@ -164,9 +188,9 @@ width: 15px; height: 15px;
 		        <table class="table table-striped">
 		         <thead>
 					<tr>
-						<th>지출시간</th>
-						<th>지출금액</th>
-						<th>지출내역</th>
+						<th width="33%">지출시간</th>
+						<th width="33%">지출금액</th>
+						<th width="33%">지출내역</th>
 					</tr>	
 				  </thead>
 				   <tbody>
@@ -179,7 +203,13 @@ width: 15px; height: 15px;
 	             				<jsp:getProperty property="toDates2" name="util"/>
 	             			</td>
 							<td><fmt:formatNumber value="${b.amount}" pattern="#,###"/>원</td>	
-							<td>${b.title}</td>
+							<td>
+							${b.title}
+				                <c:if test="${level ==1}"> 
+							    <button onClick="accupdate(${b.seq})" type="button" class="btn btn-primary" id="insertacc">수정</button>
+        						<button onClick="accdelete(${b.seq})"type="button" class="btn btn-danger" data-dismiss="modal">삭제</button>
+        						</c:if>
+							</td>
 					   </tr>	
 			       </c:if>
 			       </c:forEach>
@@ -243,11 +273,6 @@ width: 15px; height: 15px;
 		       <tr>
 		            <th>지출내역</th>
 		            <td><input type="text" name="title" required/></td>
-		       </tr>
-		       
-		       <tr>
-		            <th>내용</th>
-		            <td><textarea rows="10" cols="50" name="content" style="resize: none;"></textarea></td>
 		       </tr>
 		   </table>     
       </div>

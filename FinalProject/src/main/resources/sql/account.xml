@@ -6,17 +6,26 @@
 <mapper namespace="Accounts">
    <insert id="insertAcc" parameterType="account">
       INSERT INTO ACCOUNT 
-      VALUES (ACCOUNT_SEQ.NEXTVAL, #{name}, #{title}, #{content},
-       #{amount}, #{mdate})   
+      VALUES (ACCOUNT_SEQ.NEXTVAL, #{name}, #{title}, #{amount}, #{mdate})   
    </insert>
    
       <select id="accViewList" parameterType="Map" resultType="account">
-      SELECT RN, SEQ, NAME, TITLE, CONTENT, AMOUNT, MDATE
+      SELECT RN, SEQ, NAME, TITLE,  AMOUNT, MDATE
 	  FROM (	SELECT ROW_NUMBER() OVER(PARTITION BY SUBSTR(MDATE,1,8) ORDER BY MDATE) AS RN , 
-				SEQ, NAME,TITLE,CONTENT,AMOUNT, MDATE
+				SEQ, NAME,TITLE,AMOUNT, MDATE
 				FROM ACCOUNT
 				WHERE NAME = #{name} AND SUBSTR(MDATE,1,6) = #{yyyyMM}
 			)     
    </select>
+   
+   <select id="accDetail" parameterType="int" resultType="account">
+      SELECT SEQ, NAME, TITLE, AMOUNT, MDATE
+      FROM ACCOUNT
+      WHERE SEQ = #{seq}
+   </select>
+
+   <delete id="accdelete" parameterType="int">
+      DELETE FROM ACCOUNT WHERE SEQ = #{seq}
+   </delete>   
 </mapper>
 
