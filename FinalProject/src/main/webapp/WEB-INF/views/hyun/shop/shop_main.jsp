@@ -55,7 +55,7 @@
 	
 	
 	<!-- 굿즈 장터 내 네비게이션 바 -->
-	<div class="container">
+	<div class="container nav">
 		<ul class="nav nav-tabs nav-justified">
 			<li class="nav-item"><a class="nav-link active" href="home">장터홈</a>
 			</li>
@@ -70,7 +70,7 @@
 		</ul>
 	</div>
 
-	<!-- 추천 제품 출력 코드  --> <!-- 여기부터 진행 !  -->
+	<!-- 추천 제품 출력 코드  --> 
 	<%-- 	<ul>
 	 <c:forEach items="${productList}" var="product">
 	 <li>
@@ -93,7 +93,7 @@
 			<span>주말농장에서 추천하는 제품!</span> <a href="#" class="button">더보기</a>
 		</div>
 		
-		<div class="recommendation">
+		<div class="container recommendation">
 		 <c:forEach items="${productList}" var="product" varStatus="status">
 		
 		 <c:if test="${status.index % 4 == 0}">
@@ -114,24 +114,25 @@
 		  <c:if test="${status.index % 4 == 3}">
 		   </div>
 		  </c:if>
+		  
 		  </c:forEach>
 		</div>
 	
 	<!-- 퍼스나콘 카드 목록 리스트 -->		
-
-	<br>
-	<br>
+	<br><br>
+	
 	<div class="container personacon" style="background:lightgray; padding-top:60px; padding-bottom:60px">
+		
 		<div class="section2">
 			<p id="p1" style="margin-bottom: -8px;">따끈따끈한 </p><p id="p2"> 퍼스나콘</p>
 			<p>더욱 즐거운 대화를 위해<br>지금 사용해 보세요</p> 
 			<a href="#" class="button">더보기</a>
 		</div>
 		
-		<div class="personacon">
+		<div class="container personaconlist">
 		 <c:forEach items="${personaconList}" var="personacon" varStatus="status">
 		
-		 <c:if test="${status.index % 4 == 0}">
+		 <c:if test="${status.index % 2 == 0}">
 		  <div class="products card-deck">
 		 </c:if>
 		 
@@ -146,7 +147,7 @@
 				</div>
 			</div>
 			
-		  <c:if test="${status.index % 4 == 3}">
+		  <c:if test="${status.index % 2 == 1}">
 		   </div>
 		  </c:if>
 		  </c:forEach>
@@ -159,12 +160,11 @@
 	<br>
 	<div class="container tools" style="padding-top:60px; padding-bottom:60px">
 		<div class="section3">
-			<p id="p1" style="margin-bottom: -8px;">따끈따끈한 </p><p id="p2"> 퍼스나콘</p>
-			<p>더욱 즐거운 대화를 위해<br>지금 사용해 보세요</p> 
+			<p id="p1" style="margin-bottom: -8px;">가을철 </p><p id="p2"> 필요한 도구 조합</p>
 			<a href="#" class="button">더보기</a>
 		</div>
 		
-		<div class="tools">
+		<div class="container toolslist">
 		 <c:forEach items="${toolsList}" var="tools" varStatus="status">
 		
 		 <c:if test="${status.index % 4 == 0}">
@@ -181,7 +181,7 @@
 					<a href="shop_detail.jsp" class="btn btn-info">제품 보기</a>
 				</div>
 			
-		  <c:if test="${status.index % 4 == 3}">
+		  <c:if test="${status.index % 4 == 2}">
 		   </div>
 		  </c:if>
 		  </c:forEach>
@@ -193,8 +193,8 @@
 	<br>
 	<div class="container goods" style="background:lightgray; padding-top:60px; padding-bottom:60px">
 		<div class="section4">
-			<p id="p1" style="margin-bottom: -8px;">따끈따끈한 </p><p id="p2"> 퍼스나콘</p>
-			<p>더욱 즐거운 대화를 위해<br>지금 사용해 보세요</p> 
+			<p id="p1" style="margin-bottom: -8px;">인기좋은 </p><p id="p2"> 주말굿즈</p>
+			<p>주말농부라면 하나쯤<br>다 갖고있다는 그 제품들!</p> 
 			<a href="#" class="button">더보기</a>
 		</div>
 		
@@ -215,7 +215,7 @@
 					<a href="shop_detail.jsp" class="btn btn-info">제품 보기</a>
 				</div>
 				
-				<c:if test="${status.index % 4 == 3}">
+				<c:if test="${status.index % 4 == 2}">
 		   </div>
 		  </c:if>
 		  </c:forEach>
@@ -229,8 +229,7 @@
 	<br>
 	<div class="container review" style="padding-top:60px; padding-bottom:60px">
 		<div class="section5">
-			<p id="p1" style="margin-bottom: -8px;">따끈따끈한 </p><p id="p2"> 퍼스나콘</p>
-			<p>더욱 즐거운 대화를 위해<br>지금 사용해 보세요</p> 
+			<p id="p1" style="margin-bottom: -8px;">후기가 가장 많은 </p><p id="p2"> 제품들</p>
 			<a href="#" class="button">더보기</a>
 		</div>
 		

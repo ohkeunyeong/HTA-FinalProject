@@ -26,7 +26,7 @@
 
 
 <!-- 카테고리별 상품 리스트 -->	
-	<select id="list" resultType="product" parameterType="map">
+	<select id="list" resultType="product" parameterType="map">  	   			
 		select *
 		from (select rownum rnum, pr.*
 			  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
@@ -34,9 +34,9 @@
 	  	   			from product p, CATEGORY c ,order_detail o
 	  	   			where p.category_code = c.category_code
 	  	   		    and   p.PRODUCT_CODE = o.PRODUCT_CODE
-	  	   			<include refid="search_" />
-	  	   			order by order_detail.ORDER_DE_COUNT <!-- 주문수량순 -->
-	  	   			order by p.product_code) pr
+	  	   			<!-- <include refid="search_" /> -->
+	  	   			order by o.ORDER_DE_COUNT <!-- 주문수량순 -->
+	  	   			,p.product_code) pr
 			 )
 		where rnum &gt;= #{start} and rnum &lt;= #{end}
 	</select>
@@ -115,7 +115,7 @@
 	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
 	  	   			from product p, CATEGORY c
 	  	   			where p.category_code = c.category_code
-	  	   			where p.category_code = 500 
+	  	   			and p.category_code = 500 
 	  	   			<include refid="search_" />
 	  	   			order by p.product_code) pr
 			 )
@@ -131,7 +131,7 @@
 	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
 	  	   			from product p, CATEGORY c
 	  	   			where p.category_code = c.category_code
-	  	   			where p.category_code = 400
+	  	   			and p.category_code = 400
 	  	   			<include refid="search_" />
 	  	   			order by p.product_code) pr
 			 )
@@ -146,7 +146,7 @@
 	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
 	  	   			from product p, CATEGORY c
 	  	   			where p.category_code = c.category_code
-	  	   			where p.category_code = 600 
+	  	   			and p.category_code = 600 
 	  	   			<include refid="search_" />
 	  	   			order by p.product_code) pr
 			 )
@@ -164,7 +164,7 @@
 	  	   			and p.category_code = r.category_code
 	  	   			<include refid="search_" />
 	  	   			<!-- order by r.review_count --><!-- order by review 수  -->
-	  	   			,p.product_code) pr
+	  	   			order by p.product_code) pr
 			 )
 		where rnum &gt;= #{start} and rnum &lt;= #{end}
 	</select>
