@@ -103,9 +103,10 @@
 		</div><!--  comment option end -->
 		<ul class="comment_list">
 		</ul>
+		<div id="message"></div>
 		<div class="CommentWriter">
 			<div class="comment_inbox">
-				<b class="comment_inbox_name">${jikdata.nick}</b><span
+				<b class="comment_inbox_name">${nick}</b><span
 				   class="comment_inbox_count">0/200</span>
 				  <textarea placeholder="댓글을 남겨보세요" rows="1"
 				  class="comment_inbox_text" maxLength="200"></textarea> 
