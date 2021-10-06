@@ -20,9 +20,9 @@ function connectWS(){
 
 	ws.onclose = function(event){
 		console.log('Info : connection closed.');
-		/*setTimeOut(function(){
-			connect();
-		}, 1000);*/
+		//setTimeOut(function(){
+		//	connect();
+		//}, 1000);
 	};
 
 	ws.onerror = function(error){

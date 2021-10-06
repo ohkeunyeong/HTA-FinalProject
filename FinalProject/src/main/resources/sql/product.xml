@@ -35,8 +35,8 @@
 	  	   			where p.category_code = c.category_code
 	  	   		    and   p.PRODUCT_CODE = o.PRODUCT_CODE
 	  	   			<include refid="search_" />
-	  	   			order by order_detail.ORDER_DE_COUNT <!-- 주문수량순 -->
-	  	   			order by p.product_code) pr
+	  	   			order by o.ORDER_DE_COUNT, <!-- 주문수량순 -->
+	  	   			p.product_code) pr
 			 )
 		where rnum &gt;= #{start} and rnum &lt;= #{end}
 	</select>

@@ -3,7 +3,9 @@ package com.hta.project.controller;
 
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -18,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,6 +40,9 @@ public class MemberController {
 	//import org.slf4j.LoggerFactory;
 	private static final Logger logger
 							= LoggerFactory.getLogger(MemberController.class);
+	
+	private static int memberCount = 0;
+	private static List<String> memberChatList = new ArrayList<String>();
 	
 	@Autowired
 	private MemberService memberService;
@@ -107,6 +113,11 @@ public class MemberController {
 				logger.info("쿠키저장 : 0");
 				savecookie.setMaxAge(0);
 			}
+			memberCount++;
+			memberChatList.add(m.getNick());
+			logger.info("memberCount = " + memberCount);
+			logger.info("memberChatList = " + memberChatList);
+			
 			response.addCookie(savecookie);
 			session.setAttribute("id", m.getId());
 			session.setAttribute("nick", m.getNick());
@@ -119,6 +130,11 @@ public class MemberController {
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String loginout(HttpSession session) {
+		memberCount--;
+		memberChatList.remove(session.getAttribute("nick"));
+		logger.info("memberCount = " + memberCount);
+		logger.info("memberChatList = " + memberChatList);
+		
 		session.invalidate();
 		return "redirect:/main";
 	}
@@ -165,6 +181,15 @@ public class MemberController {
 			  model.addAttribute("message", "정보 수정 실패");
 			  return "error/error";
 		  }
+	  }
+	  
+	  @PostMapping("/memberChatList")
+	  @ResponseBody
+	  public Map<String, Object> getMemberChatList() {
+		  Map<String, Object> map = new HashMap<String, Object>();
+		  map.put("memberChatList", memberChatList);
+		  map.put("memberCount", memberCount);
+		  return map;
 	  }
 	  
 }
