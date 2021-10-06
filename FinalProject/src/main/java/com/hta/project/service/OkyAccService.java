@@ -17,7 +17,10 @@ public interface OkyAccService {
 	Account accDetail(int seq);
 	
 	//가계부 삭제
-	boolean accdelete(int seq);
+	boolean accDelete(int seq);
+	
+	//가게부 수정하기
+	boolean accUpdate(Account account);
 
 
 

@@ -238,7 +238,7 @@ public class OkyAccountController {
 			mv.addObject("url", request.getRequestURL());
 			mv.addObject("message", "해당 가계부를 삭제할  권한이 없습니다."); 
 		} else {   //해당 농장 관리자 접근시 		
-		boolean isS=okyaccservice.accdelete(seq);
+		boolean isS=okyaccservice.accDelete(seq);
 		if(isS) {
 			mv.setViewName ("redirect:account?name=" + name + "&year="+year+"&month="+month);
 		}else {
@@ -256,6 +256,54 @@ public class OkyAccountController {
 			return mv;
 		} 
 	}		
+	
+	
+	//가계부수정하기
+	@RequestMapping(value = "/accupdate", method = RequestMethod.POST)
+	public ModelAndView accupdate(int seq, Account account, HttpSession session, 
+			HttpServletRequest request, ModelAndView mv, String name) {
+		logger.info("/accupdate 가계부 수정하기");
+		try { //유효성 검사를 위한 초기 세팅
+			String id=(String)session.getAttribute("id");
+			Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+			String getmynong = okymynongservice.getMynong(id);
+			
+			String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
+			int level =0;
+			if(myfarm.equals("1")) {//농장 주인인지 판단
+				level =1;
+			}
+			if (level==1 &&(!(getmynong.equals(name)) || id==null)) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+				logger.info("가계부수정 실패");
+				mv.setViewName("oky/error/error");
+				mv.addObject("url", request.getRequestURL());
+				mv.addObject("message", "해당 농장 가계부를 수정할  권한이 없습니다."); 
+			} else {   //해당 농장 관리자 접근시 
+				//mdate는 12자리로 만들어서 DB에 저장해야 함
+				String mdate=account.getYear()
+						 +isTwo(account.getMonth())
+						 +isTwo(account.getDate())
+						 +isTwo(account.getHour())
+						 +isTwo(account.getMin());
+				account.setMdate(mdate);	
+				boolean isS=okyaccservice.accUpdate(account);
+				if(isS) {
+					mv.setViewName("redirect:account?name=" + name + "&year="+account.getYear()+"&month="+account.getMonth());
+				} else {
+					mv.setViewName("oky/error/error");
+					mv.addObject("url", request.getRequestURL());
+					mv.addObject("message", "가계부 수정 실패");			
+				}
+				}
+				return mv;
+				} catch (NullPointerException e) {
+					logger.info("비회원 접근");
+					mv.setViewName("oky/error/error");
+					mv.addObject("url", request.getRequestURL());
+					mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");    	
+					return mv;
+				} 
+		} 
 	
 	
 	

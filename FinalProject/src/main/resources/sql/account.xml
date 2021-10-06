@@ -24,8 +24,14 @@
       WHERE SEQ = #{seq}
    </select>
 
-   <delete id="accdelete" parameterType="int">
+   <delete id="accDelete" parameterType="int">
       DELETE FROM ACCOUNT WHERE SEQ = #{seq}
    </delete>   
+   
+   <update id="accUpdate" parameterType="account">
+      UPDATE ACCOUNT SET 
+      TITLE = #{title}, AMOUNT = #{amount}, MDATE= #{mdate}
+      WHERE SEQ=#{seq}
+   </update>   
 </mapper>
 

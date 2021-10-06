@@ -30,8 +30,13 @@ public class OkyAccServiceImpl implements OkyAccService{
 	}
 
 	@Override
-	public boolean accdelete(int seq) {
-		return dao.accdelete(seq);
+	public boolean accDelete(int seq) {
+		return dao.accDelete(seq);
+	}
+
+	@Override
+	public boolean accUpdate(Account account) {
+		return dao.accUpdate(account);
 	}
 
 

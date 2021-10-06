@@ -126,6 +126,8 @@ public class OkyCalendarController {
         		String yyyyMM=year+isTwo(month);
         		List<MyCalendar> clist = okycalservice.calViewList(name, yyyyMM);
         		mv.addObject("clist", clist);
+        		mv.addObject("year", year);
+        		mv.addObject("month", month);  //year, month 20211006추가
         		mv.addObject("id",id);
         		mv.addObject("name", getmynong);
         		mv.addObject("level", level);
@@ -155,6 +157,7 @@ public class OkyCalendarController {
 		int level =0;
 		logger.info("/calboardlist 농장 이름은" +name);
 		logger.info("/calboardlist 농장 접속자 아이디는" +id);
+		logger.info("/calboardlist ymd는" + ymd);
 		if(myfarm.equals("1")) {//농장 주인인지 판단
 			level =1;
 		}
