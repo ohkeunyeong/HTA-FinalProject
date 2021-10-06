@@ -215,7 +215,7 @@
 	   String cList="";//달력에 출력해줄 일정제목을 저장할 변수
 	   for(MyCalendar cal: clist){
 		   if(cal.getMdate().substring(6, 8).equals(d)){
-			   cList+="<a href='caldetail?name=" + cal.getName()+ "&seq=" + cal.getSeq() +"'><p>"
+			   cList+="<a href='caldetail?name=" + cal.getName()+ "&seq=" + cal.getSeq() +  "&year="+ "2021"  +"&month=" + "10" +"'><p>"
 		+(cal.getTitle().length() > 7 ? cal.getTitle().substring(0, 7) + "..." : cal.getTitle())
 					+"</p></a>";
 		   }

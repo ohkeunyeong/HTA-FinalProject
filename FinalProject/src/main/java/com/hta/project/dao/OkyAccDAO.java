@@ -33,9 +33,14 @@ public class OkyAccDAO {
 		return dao;
 	}
 
-	public boolean accdelete(int seq) {
-		int count= sqlSession.delete("Accounts.accdelete", seq);
+	public boolean accDelete(int seq) {
+		int count= sqlSession.delete("Accounts.accDelete", seq);
 		return count>0?true:false;
+	}
+
+	public boolean accUpdate(Account account) {
+		int count = sqlSession.update("Accounts.accUpdate", account);
+		return count>0?true:false;	
 	}
 	
 	
