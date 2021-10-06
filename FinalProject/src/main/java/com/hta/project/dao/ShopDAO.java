@@ -40,5 +40,25 @@ public class ShopDAO {
 		return sqlSession.selectList("Products.list", map);
 	}
 
+	public List<Product> getPersonaconList(Map<String, Object> map) {
+		return sqlSession.selectList("Products.personacon", map);
+	}
+
+	public List<Product> getToolsList(Map<String, Object> map) {
+		return sqlSession.selectList("Products.tools", map);
+	}
+
+	public List<Product> getGoodsList(Map<String, Object> map) {
+		return sqlSession.selectList("Products.goods", map);
+	}
+
+	public List<Product> getReviewList(Map<String, Object> map) {
+		return sqlSession.selectList("Products.review", map);
+	}
+
+	public List<Product> getReviewProductList(Map<String, Object> map) {
+		return sqlSession.selectList("Products.reviewProduct", map);
+	}
+
 	
 }

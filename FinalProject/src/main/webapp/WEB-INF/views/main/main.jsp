@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>주말농장 메인</title>
+<title>주말 농장 메인</title>
 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
-
+<jsp:include page="header.jsp" />  
 <style>
 /* 고객센터 / 공지사항 버튼 */
 
@@ -52,10 +52,7 @@ width:100%
 </style>
 </head>
 <body>
-<br><br><br><br><br>
-
-<jsp:include page="header.jsp" />  
-
+<br>
 <div class="container">
 
   <h4>내 농장 일정</h4>

@@ -50,3 +50,10 @@ values(order_detail_seq.nextval, '210924_332149', 'A00008', 3);
 insert into order_detail
 values(order_detail_seq.nextval, '210924_332150', 'A00001', 3);
 
+select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
+	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
+	  	   			from product p, CATEGORY c ,order_detail o
+	  	   			where p.category_code = c.category_code
+	  	   		    and   p.PRODUCT_CODE = o.PRODUCT_CODE
+	  	   			order by o.ORDER_DE_COUNT
+	  	   			,p.product_code

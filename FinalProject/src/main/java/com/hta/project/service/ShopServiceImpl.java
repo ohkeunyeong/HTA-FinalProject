@@ -36,22 +36,6 @@ public class ShopServiceImpl implements ShopService{
 	}
 
 	@Override
-	public List<Product> getProductList(int index, String search_word, int page, int limit) {
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		if(index != -1) {
-			String[] search_field = new String[] {"product_name", "product_code", "category_name"};
-			map.put("search_field", search_field[index]);
-			map.put("search_word", "%" + search_word + "%");
-		}
-		int startrow = (page - 1) * limit + 1;
-		int endrow = startrow + limit - 1;
-		map.put("start", startrow);
-		map.put("end", endrow);
-		return dao.getProductList(map);
-	}
-
-	@Override
 	public Product getProductDetail(String code) {
 		return dao.getProductDetail(code);
 	}
@@ -76,6 +60,101 @@ public class ShopServiceImpl implements ShopService{
 		list = dao.getProductCategoryList(map);
 		
 		return list;
+	}
+
+	@Override
+	public List<Product> getProductList(int index, String search_word, int page, int limit) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(index != -1) {
+			String[] search_field = new String[] {"product_name", "product_code", "category_name"};
+			map.put("search_field", search_field[index]);
+			map.put("search_word", "%" + search_word + "%");
+		}
+		int startrow = (page - 1) * limit + 1;
+		int endrow = startrow + limit - 1;
+		map.put("start", startrow);
+		map.put("end", endrow);
+		return dao.getProductList(map);
+	}
+
+
+	@Override
+	public List<Product> getPersonaconList(int index, String search_word, int page, int limit) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(index != -1) {
+			String[] search_field = new String[] {"product_name", "product_code", "category_name"};
+			map.put("search_field", search_field[index]);
+			map.put("search_word", "%" + search_word + "%");
+		}
+		int startrow = (page - 1) * limit + 1;
+		int endrow = startrow + limit - 1;
+		map.put("start", startrow);
+		map.put("end", endrow);
+		return dao.getPersonaconList(map);
+	}
+
+
+	@Override
+	public List<Product> getToolsList(int index, String search_word, int page, int limit) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(index != -1) {
+			String[] search_field = new String[] {"product_name", "product_code", "category_name"};
+			map.put("search_field", search_field[index]);
+			map.put("search_word", "%" + search_word + "%");
+		}
+		int startrow = (page - 1) * limit + 1;
+		int endrow = startrow + limit - 1;
+		map.put("start", startrow);
+		map.put("end", endrow);
+		return dao.getToolsList(map);
+	}
+
+
+	@Override
+	public List<Product> getGoodsList(int index, String search_word, int page, int limit) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(index != -1) {
+			String[] search_field = new String[] {"product_name", "product_code", "category_name"};
+			map.put("search_field", search_field[index]);
+			map.put("search_word", "%" + search_word + "%");
+		}
+		int startrow = (page - 1) * limit + 1;
+		int endrow = startrow + limit - 1;
+		map.put("start", startrow);
+		map.put("end", endrow);
+		return dao.getGoodsList(map);
+	}
+
+
+	@Override
+	public List<Product> getReviewProductList(int index, String search_word, int page, int limit) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(index != -1) {
+			String[] search_field = new String[] {"product_name", "product_code", "category_name"};
+			map.put("search_field", search_field[index]);
+			map.put("search_word", "%" + search_word + "%");
+		}
+		int startrow = (page - 1) * limit + 1;
+		int endrow = startrow + limit - 1;
+		map.put("start", startrow);
+		map.put("end", endrow);
+		return dao.getReviewProductList(map);
+	}
+	
+	@Override
+	public List<Product> getReviewList(int index, String search_word, int page, int limit) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(index != -1) {
+			String[] search_field = new String[] {"product_name", "product_code", "category_name"};
+			map.put("search_field", search_field[index]);
+			map.put("search_word", "%" + search_word + "%");
+		}
+		int startrow = (page - 1) * limit + 1;
+		int endrow = startrow + limit - 1;
+		map.put("start", startrow);
+		map.put("end", endrow);
+		return dao.getReviewList(map);
 	}
 
 	

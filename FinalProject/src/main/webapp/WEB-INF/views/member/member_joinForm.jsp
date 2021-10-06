@@ -4,6 +4,7 @@
 <title>회원관리 시스템 회원가입 페이지</title>
 <link href="${pageContext.request.contextPath}/resources/css/chang/join.css" type="text/css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
+<jsp:include page="header.jsp" />  
 <script>
 	$(function() {
 		var checkid=false;
@@ -82,6 +83,7 @@
 </script>
 </head>
 <body>
+
 	<form name="joinform" action="joinProcess" method="post">
 		<h1>회원가입 페이지</h1>
 		<hr>
@@ -111,5 +113,7 @@
 		
 	
 	</form>
+	
+	<jsp:include page="footer.jsp" />
 </body>
 </html>
