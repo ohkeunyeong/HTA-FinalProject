@@ -105,7 +105,7 @@
 		</ul>
 		<div class="CommentWriter">
 			<div class="comment_inbox">
-				<b class="comment_inbox_name">${boarddata.nick}</b><span
+				<b class="comment_inbox_name">${jikdata.nick}</b><span
 				   class="comment_inbox_count">0/200</span>
 				  <textarea placeholder="댓글을 남겨보세요" rows="1"
 				  class="comment_inbox_text" maxLength="200"></textarea> 
@@ -113,7 +113,7 @@
 			</div>
 			<div class="register_box">
 				<div class="button btn_cancel">취소</div>
-				<div class="button btn_register">등록</div>
+				<div class="button btn_register" id="write">등록</div>
 			</div>
 		</div><!-- CommentWriter end -->
 	</div><!-- CommentBox end -->

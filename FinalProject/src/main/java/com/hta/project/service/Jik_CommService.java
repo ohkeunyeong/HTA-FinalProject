@@ -10,7 +10,7 @@ public interface Jik_CommService {
 	public int getListCount(int jik_num);
 	
 
-	public List<Jik_Comm> getJik_CommList(int board_num, int page);
+	public List<Jik_Comm> getJik_CommList(int board_num, int page, int state);
 	
 	public int Jik_CommsInsert(Jik_Comm co);
 

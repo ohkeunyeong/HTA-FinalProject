@@ -1,37 +1,37 @@
 $(function(){
-	$("#comment table").hide(); //1
 	var page=1; //더 보기에서 보여줄 페이지를 기억할 변수
 	count = parseInt($("#count").text());
+	option=1;
 	if(count !=0){ //댓글 갯수가 0이 아니면
-		getList(1) // 첫 페이지의 댓글을 구해 옵니다. ( 한 페이지에 3개씩 가져옵니다.)
+		getList(1,option) // 첫 페이지의 댓글을 구해 옵니다. ( 한 페이지에 3개씩 가져옵니다.)
 	}else { //댓글이 없는 경우 
 		$("#message").text("등록된 댓글이 없습니다.")
 	}
 	
 	
-	
-	function getList(currentPage){
+	function getList(currentPage,state){
+		option=state;
 		$.ajax({
 					type: "post",
 					url: "../jik_comm/list",
 					data : {
 						"jik_num" : $("#jik_num").val(),
-						"page" : currentPage
+						"page" : currentPage,
+						"state" : state
 					},
 					dataType : "json",
 					success : function(rdata){
 						$('#count').text(rdata.listcount).css('font-family','arial,sans-serif')
-						/*var red1='red';		var red2='red';
+						var red1='red';		var red2='red';
 						if(option==1){  //등록순인 경우 등록순이 'red', 최신순이 'gray'로 글자색을 나타냅니다.
 							red2='gray';
 						}else if(option==2){ //최신순인 경우 등록순이 'gray', 최신순이 'red'로 글자색을 나타냅니다.
 							red1='gray';
-						}
-						*/						
+						}					
 						var output="";
 						$("#count").text(rdata.listcount);
 						if(rdata.listcount > 0){
-							/*
+							
 							  output += '<li class="comment_tab_item ' +  red1 + '" >'
 	                          + '   <a href="javascript:getList(1)" class="comment_tab_button">등록순 </a>'
 	                          + '</li>'
@@ -39,9 +39,9 @@ $(function(){
 	                          + '   <a href="javascript:getList(2)" class="comment_tab_button">최신순</a>'
 	                          + '</li>';
 	                     $('.comment_tab_list').html(output);//댓글 수 등록순 최신순 출력
-	                     */
+	                     
 					    output='';
-						$(rdata.boardlist).each(function(){
+						$(rdata.list).each(function(){
 							var lev = this.reply_re_lev;
 							var comment_reply='';
 							//레벨에 따라 왼쪽 여백줍니다.
@@ -110,16 +110,15 @@ $(function(){
 			 
 		}//function(getList) end
 	
-	
 	// 글자수 50개 제한하는 이벤트
-	$("#content").on('keyup',function(){
+	$(".comment_inbox_text").on('keyup',function(){
 		jik_comm_content = $(this).val();
 		length = $(this).val().length;
-		if(length > 50){
-			length = 50;
+		if(length > 200){
+			length = 200;
 			jik_comm_content = jik_comm_content.substring(0, length);
 		}
-		$(".float-left").text(length + "/50")
+		$(".comment_inbox_count").text(length + "/200")
 	})
 	
 	
@@ -137,17 +136,15 @@ $(function(){
 	$("#write").click(function(){
 		buttonText = $("#write").text(); // 버튼의 라벨로 add할지 update할지 결정
 		
-		$(".float-left").text("총 50자까지 가능합니다.");
-		
 		if(buttonText == "등록"){ // 댓글을 추가하는 경우
 			url = "../jik_comm/add";
 			data = {
-					"jik_comm_content" : jik_comm_content,//content = $("#content").val();
+					"jik_comm_content" : $(".comment_inbox_text").val(),
 					"id" : $("#Loginid").val(),
 					"nick" : $("#Loginnick").val(),
 					"jik_board_num" : $("#jik_num").val(),
-					"jik_re_lev" : 0,
-					"jik_re_seq" : 0
+					"jik_comm_re_lev" : 0,
+					"jik_comm_re_seq" : 0
 			};
 		}else { //댓글을 수정하는 경우
 			url = "../jik_comm/update";
