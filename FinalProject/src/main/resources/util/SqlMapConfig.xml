@@ -40,5 +40,6 @@
        	<mapper resource="sql/order.xml" />
        	<mapper resource="sql/calendar.xml" />
        	<mapper resource="sql/account.xml" />
+       	
      </mappers>
 </configuration>

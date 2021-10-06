@@ -31,9 +31,11 @@
 		from (select rownum rnum, pr.*
 			  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
 	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
-	  	   			from product p, CATEGORY c
+	  	   			from product p, CATEGORY c ,order_detail o
 	  	   			where p.category_code = c.category_code
+	  	   		    and   p.PRODUCT_CODE = o.PRODUCT_CODE
 	  	   			<include refid="search_" />
+	  	   			order by order_detail.ORDER_DE_COUNT <!-- 주문수량순 -->
 	  	   			order by p.product_code) pr
 			 )
 		where rnum &gt;= #{start} and rnum &lt;= #{end}
@@ -103,6 +105,84 @@
 		select count(*)
 		from product 
 		where category_code like #{word}
+	</select>
+	
+	<!-- 카테고리별 상품 리스트 : 퍼스나콘 리스트 -->	
+	<select id="personacon" resultType="product" parameterType="map">
+		select *
+		from (select rownum rnum, pr.*
+			  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
+	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
+	  	   			from product p, CATEGORY c
+	  	   			where p.category_code = c.category_code
+	  	   			where p.category_code = 500 
+	  	   			<include refid="search_" />
+	  	   			order by p.product_code) pr
+			 )
+		where rnum &gt;= #{start} and rnum &lt;= #{end}
+	</select>
+	
+	
+	<!-- 카테고리별 상품 리스트 : 도구 리스트 -->	
+	<select id="tools" resultType="product" parameterType="map">
+		select *
+		from (select rownum rnum, pr.*
+			  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
+	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
+	  	   			from product p, CATEGORY c
+	  	   			where p.category_code = c.category_code
+	  	   			where p.category_code = 400
+	  	   			<include refid="search_" />
+	  	   			order by p.product_code) pr
+			 )
+		where rnum &gt;= #{start} and rnum &lt;= #{end}
+	</select>
+	
+	<!-- 카테고리별 상품 리스트 : 굿즈 리스트 -->	
+	<select id="goods" resultType="product" parameterType="map">
+		select *
+		from (select rownum rnum, pr.*
+			  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
+	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
+	  	   			from product p, CATEGORY c
+	  	   			where p.category_code = c.category_code
+	  	   			where p.category_code = 600 
+	  	   			<include refid="search_" />
+	  	   			order by p.product_code) pr
+			 )
+		where rnum &gt;= #{start} and rnum &lt;= #{end}
+	</select>
+	
+	<!-- 카테고리별 상품 리스트 : 리뷰많은 제품 리스트 -->	
+	<select id="reviewProduct" resultType="product" parameterType="map">
+		select *
+		from (select rownum rnum, pr.*
+			  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
+	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
+	  	   			from product p, CATEGORY c, review r
+	  	   			where p.category_code = c.category_code
+	  	   			and p.category_code = r.category_code
+	  	   			<include refid="search_" />
+	  	   			<!-- order by r.review_count --><!-- order by review 수  -->
+	  	   			,p.product_code) pr
+			 )
+		where rnum &gt;= #{start} and rnum &lt;= #{end}
+	</select>
+	
+	<!-- 카테고리별 상품 리스트 : 리뷰 리스트 -->	
+	<select id="review" resultType="product" parameterType="map">
+		select *
+		from (select rownum rnum, pr.*
+			  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
+	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
+	  	   			from product p, CATEGORY c ,review r
+	  	   			where p.category_code = c.category_code 
+	  	   			and p.CATEGORY_CODE = r.CATEGORY_CODE
+	  	   			<include refid="search_" />
+	  	   			order by r.REVIEW_DATE  <!-- order by review 작성 날짜 (최신)  -->
+	  	   			,p.product_code) pr
+			 )
+		where rnum &gt;= #{start} and rnum &lt;= #{end}
 	</select>
 	
 </mapper>

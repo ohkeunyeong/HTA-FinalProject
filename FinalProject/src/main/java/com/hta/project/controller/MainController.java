@@ -51,13 +51,36 @@ public class MainController {
 			@RequestParam(value="search_word", defaultValue="", required=false) String search_word) {
 		logger.info("Shop productList()");
 		
-		List<Product> productlist = null;
+		
 		//보여줄 값 구한다.
 		//1. 모든 것
 		//2. 살충제 
 		//3. 비료/상토 
-		productlist = shopService.getProductList(index, search_word, page, limit);
+		
+		//추천(판매량 많은) 제품 리스트 
+		List<Product> productlist  = shopService.getProductList(index, search_word, page, limit);		
 		model.addAttribute("productList", productlist);
+		
+		//퍼스나콘 제품 리스트
+		List<Product> personaconlist  = shopService.getPersonaconList(index, search_word, page, limit);		
+		model.addAttribute("personaconList", personaconlist);
+		
+		//도구 제품 리스트
+		List<Product> toolslist  = shopService.getToolsList(index, search_word, page, limit);		
+		model.addAttribute("toolsList", toolslist);
+		
+		//굿즈 제품 리스트
+		List<Product> goodslist  = shopService.getGoodsList(index, search_word, page, limit);		
+		model.addAttribute("goodsList", goodslist);
+		
+		//후기많은 제품 리스트
+		List<Product> reviewProductlist  = shopService.getReviewProductList(index, search_word, page, limit);		
+		model.addAttribute("reviewProductList", reviewProductlist);
+		
+		//후기 리스트
+		List<Product> reviewlist  = shopService.getReviewList(index, search_word, page, limit);		
+		model.addAttribute("reviewList", reviewlist);
+		
 		return "hyun/shop/shop_main";
 	}
 	

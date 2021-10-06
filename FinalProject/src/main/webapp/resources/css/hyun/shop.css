@@ -24,13 +24,13 @@ h5 {
 	margin-right:48%;
 }
 
-.section1  .button {
+.section1 .button {
 	font-size: 20px;
 	font-weight: medium;
 	color: gray;
 }
 
-.section2 {
+.section2 .section3 .section4 .section5 .section6 {
 	margin-left:14%;
 }
 
@@ -43,7 +43,13 @@ h5 {
 	font-weight: bold;
 }
 
-.section2  .button {
+.section2 .button {
+	font-size: 20px;
+	font-weight: medium;
+	color: gray;
+}
+
+.section3 .section4 .section5 .section6 > .button {
 	font-size: 20px;
 	font-weight: medium;
 	color: gray;
