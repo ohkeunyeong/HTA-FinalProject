@@ -219,7 +219,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<jsp:include page="include/footer.jsp" />
 	</div>
 	<!-- ./wrapper -->
-
+	
 	<!-- REQUIRED SCRIPTS -->
 	<jsp:include page="include/plugin_js.jsp" />
 

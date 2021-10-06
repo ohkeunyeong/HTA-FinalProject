@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hta.project.domain.Account;
@@ -126,7 +128,6 @@ public class OkyAccountController {
         	    int dayofweek = cal.get(Calendar.DAY_OF_WEEK); //요일 구하기
         	 	int hour = cal.get(Calendar.HOUR_OF_DAY);
         	 	int min = cal.get(Calendar.MINUTE);
-        	 	System.out.println("min?" + min);
         	    //해당 달의 일정 받기
 //        	    List<MyCalendar> clist=(List<MyCalendar>)request.getAttribute("clist");
         	    
@@ -160,8 +161,7 @@ public class OkyAccountController {
 		logger.info("/insertacc" + account.getYear()+ " 년" +account.getMonth()+ " 월" +
 		 account.getDate()+ " 일" + account.getHour() + "시 "+ 
 		 account.getMin() + "분 " +account.getAmount()  + "원 "
-		+ "지출명 " +account.getTitle() + "지출내용"+ account.getContent()
-		+ "합친명" +account.getMdate() + "농장명"+account.getName()
+		+ "지출명 " +account.getTitle() + "합친명" +account.getMdate() + "농장명"+account.getName()
 				 );
 		try { //유효성 검사를 위한 초기 세팅
 			String id=(String)session.getAttribute("id");
@@ -174,10 +174,10 @@ public class OkyAccountController {
 				level =1;
 			}
 			if (level==1 &&(!(getmynong.equals(name)) || id==null)) { //다른 아이디 접속해서 해당 주소로 들어올 경우
-				logger.info("일정추가 보기실패");
+				logger.info("가계부추가 보기실패");
 				mv.setViewName("oky/error/error");
 				mv.addObject("url", request.getRequestURL());
-				mv.addObject("message", "해당 농장 캘린더를 볼  권한이 없습니다."); 
+				mv.addObject("message", "해당 농장 가계부를 추가할  권한이 없습니다."); 
 			} else {   //해당 농장 관리자 접근시 
 				//mdate는 12자리로 만들어서 DB에 저장해야 함
 				String mdate=account.getYear()
@@ -206,45 +206,104 @@ public class OkyAccountController {
 			} 
 		}
 	
-	
-	
-//	//가계부추가폼이동
-//	@RequestMapping(value = "/insertaccform", method = RequestMethod.GET)
-//	public ModelAndView insertCalForm(HttpSession session, ModelAndView mv,String name, HttpServletRequest request) {
-//		logger.info("/insertcalform 일정추가폼으로 이동");
-//		try { //유효성 검사를 위한 초기 세팅
-//		String id=(String)session.getAttribute("id");
-//		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-//		String getmynong = okymynongservice.getMynong(id);
+//	//가계부 상세보기
+//	@ResponseBody
+//	@RequestMapping(value= "/accdetail")
+//	public Account caldetail(int seq){
+//		logger.info("/caldetail 가계부 상세보기");
+//		logger.info("/caldetail 넘어온 seq 값은" + seq);
 //		
-//		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
-//		int level =0;
-//		if(myfarm.equals("1")) {//농장 주인인지 판단
-//			level =1;
-//		}
-//		if (level==1 &&(!(getmynong.equals(name)) || id==null)) { //다른 아이디 접속해서 해당 주소로 들어올 경우
-//			logger.info("가계부추가 보기실패");
-//			mv.setViewName("oky/error/error");
-//			mv.addObject("url", request.getRequestURL());
-//			mv.addObject("message", "해당 농장 캘린더를 볼  권한이 없습니다.");    	   		
-//		} else {   //해당 농장 관리자 접근시 												
-//		mv.addObject("id", id);
-//		mv.addObject("name", name);
-//		mv.addObject("level", level);
-//		mv.setViewName("oky/calendar/insertaccform");
-//		}
-//		return mv;
-//		} catch (NullPointerException e) {
-//			logger.info("비회원 접근");
-//			mv.setViewName("oky/error/error");
-//			mv.addObject("url", request.getRequestURL());
-//			mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");    	
-//			return mv;
-//		} 
-//	}	
+//		Account acclist = okyaccservice.accDetail(seq);	
+//		return acclist;
+//	}
+	
+	//가계부삭제하기
+	@RequestMapping(value = "/accdelete", method =  RequestMethod.GET)
+	public ModelAndView accdelete(int seq, HttpSession session, ModelAndView mv,String name, 
+			 				String year, String month,
+			              HttpServletRequest request) {
+		logger.info("/accdelete 가계부삭제하기 ");
+		try { //유효성 검사를 위한 초기 세팅
+		String id=(String)session.getAttribute("id");
+		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = okymynongservice.getMynong(id);		
+		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
+		int level =0;
+		if(myfarm.equals("1")) {//농장 주인인지 판단
+			level =1;
+		}
+		if (level==1 &&(!(getmynong.equals(name)) || id==null)) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+			logger.info("가계부 삭제 실패");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당 가계부를 삭제할  권한이 없습니다."); 
+		} else {   //해당 농장 관리자 접근시 		
+		boolean isS=okyaccservice.accDelete(seq);
+		if(isS) {
+			mv.setViewName ("redirect:account?name=" + name + "&year="+year+"&month="+month);
+		}else {
+				mv.setViewName("oky/error/error");
+				mv.addObject("url", request.getRequestURL());
+				mv.addObject("message", "가계부 삭제 실패");			
+			}
+		}
+			return mv;
+		} catch (NullPointerException e) {
+			logger.info("비회원 접근");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");    	
+			return mv;
+		} 
+	}		
 	
 	
-	
+	//가계부수정하기
+	@RequestMapping(value = "/accupdate", method = RequestMethod.POST)
+	public ModelAndView accupdate(int seq, Account account, HttpSession session, 
+			HttpServletRequest request, ModelAndView mv, String name) {
+		logger.info("/accupdate 가계부 수정하기");
+		try { //유효성 검사를 위한 초기 세팅
+			String id=(String)session.getAttribute("id");
+			Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+			String getmynong = okymynongservice.getMynong(id);
+			
+			String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
+			int level =0;
+			if(myfarm.equals("1")) {//농장 주인인지 판단
+				level =1;
+			}
+			if (level==1 &&(!(getmynong.equals(name)) || id==null)) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+				logger.info("가계부수정 실패");
+				mv.setViewName("oky/error/error");
+				mv.addObject("url", request.getRequestURL());
+				mv.addObject("message", "해당 농장 가계부를 수정할  권한이 없습니다."); 
+			} else {   //해당 농장 관리자 접근시 
+				//mdate는 12자리로 만들어서 DB에 저장해야 함
+				String mdate=account.getYear()
+						 +isTwo(account.getMonth())
+						 +isTwo(account.getDate())
+						 +isTwo(account.getHour())
+						 +isTwo(account.getMin());
+				account.setMdate(mdate);	
+				boolean isS=okyaccservice.accUpdate(account);
+				if(isS) {
+					mv.setViewName("redirect:account?name=" + name + "&year="+account.getYear()+"&month="+account.getMonth());
+				} else {
+					mv.setViewName("oky/error/error");
+					mv.addObject("url", request.getRequestURL());
+					mv.addObject("message", "가계부 수정 실패");			
+				}
+				}
+				return mv;
+				} catch (NullPointerException e) {
+					logger.info("비회원 접근");
+					mv.setViewName("oky/error/error");
+					mv.addObject("url", request.getRequestURL());
+					mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");    	
+					return mv;
+				} 
+		} 
 	
 	
 	

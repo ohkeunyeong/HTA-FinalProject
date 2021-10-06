@@ -23,13 +23,43 @@ $("#insertacc").click(function(){
  }
 	
 })
+
+$("#updateaccbtn").click(function(){
+ num = /^[0-9]*$/;
+ 
+ if(!num.test($("#upamount").val())){
+	 alert("금액은 숫자만 입력 가능합니다.")
+	 $("#upamount").val('').focus();		
+	 return false;
+ }
 	
+})
+
 });
+
 function checkTarget(num) {
 	var element = document.getElementById('thisdate');
 	  element.innerHTML = num;
 	$("#inputdate").val(num);
- }
+}
+
+function accupdate(seq ,title, amount, date, hour, min) {
+	$("#upseq").val(seq);
+	$("#uptitle").val(title);
+	$("#upamount").val(amount);
+	$("#update").val(date).prop("selected", true);	
+	$("#uphour").val(hour).prop("selected", true);
+	$("#upmin").val(min).prop("selected", true);
+	
+}
+
+function accdelete(seq) {
+	if(confirm("삭제하시겠습니까?")){
+		location.href='accdelete?name=${name}&year=${year}&month=${month}&seq='+seq; 
+	}else {
+		alert('취소')
+	}
+}
 
 </script>
 <style>
@@ -107,7 +137,6 @@ width: 15px; height: 15px;
           연도 : ${year}   <br>
           월    : ${month}   <br>      
      요일 :    ${dayofweek}  <br>  
-   리스트: ${alist}
 </div>
 	<div id="container">
 		<section id="accordion">
@@ -155,7 +184,7 @@ width: 15px; height: 15px;
                        <fmt:formatNumber value="${total}" pattern="#,###"/>				   		        
 		        </span>원
 		        <c:if test="${level ==1}"> 
-			        <a href="#" onClick="checkTarget(${a})" data-toggle="modal" data-target="#largeModal" id="addacc" >
+			        <a href="#" onClick="checkTarget(${a})" data-toggle="modal" data-target="#insertModal" id="addacc" >
 		     	     	<img id="pen" src="${pageContext.request.contextPath}/resources/image/oky/pen.png" alt="가계부추가"/>
             		</a>
                 </c:if>
@@ -164,9 +193,9 @@ width: 15px; height: 15px;
 		        <table class="table table-striped">
 		         <thead>
 					<tr>
-						<th>지출시간</th>
-						<th>지출금액</th>
-						<th>지출내역</th>
+						<th width="33%">지출시간</th>
+						<th width="33%">지출금액</th>
+						<th width="33%">지출내역</th>
 					</tr>	
 				  </thead>
 				   <tbody>
@@ -179,7 +208,13 @@ width: 15px; height: 15px;
 	             				<jsp:getProperty property="toDates2" name="util"/>
 	             			</td>
 							<td><fmt:formatNumber value="${b.amount}" pattern="#,###"/>원</td>	
-							<td>${b.title}</td>
+							<td>
+							${b.title}
+				                <c:if test="${level ==1}"> 
+							    <button onClick="accupdate(${b.seq}, '${b.title}', ${b.amount}, ${a}, ${fn:substring(b.mdate, 8, 10)}, ${fn:substring(b.mdate, 10, 12)})" data-toggle="modal" data-target="#updateModal" id="updateacc" type="button" class="btn btn-primary" id="insertacc">수정</button>
+        						<button onClick="accdelete(${b.seq})"type="button" class="btn btn-danger" data-dismiss="modal">삭제</button>
+        						</c:if>
+							</td>
 					   </tr>	
 			       </c:if>
 			       </c:forEach>
@@ -191,8 +226,9 @@ width: 15px; height: 15px;
 			</c:forEach>
 		</section>
   </div>  
-  <!-- modal -->
-<div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true" style="disply:none;">
+  
+  <!-- 지출입력 modal -->
+<div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true" style="disply:none;">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <form name="insertacc" action="insertacc" method="post">
@@ -244,15 +280,92 @@ width: 15px; height: 15px;
 		            <th>지출내역</th>
 		            <td><input type="text" name="title" required/></td>
 		       </tr>
-		       
-		       <tr>
-		            <th>내용</th>
-		            <td><textarea rows="10" cols="50" name="content" style="resize: none;"></textarea></td>
-		       </tr>
 		   </table>     
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary" id="insertacc">등록</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+      </div>
+     </form>            
+    </div>
+  </div>
+</div>
+
+  <!-- 지출수정 modal -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true" style="disply:none;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form name="accupdateform" action="accupdate" method="post">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">내역수정</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		   <table border="1">
+		       <tr>
+		            <th>일정</th>
+		            <td>
+<%-- 		            <input type="hidden"  value="${year}" name="year">
+		            <input type="hidden"  value="${month}" name="month">
+		            <input type="hidden"  id="inputdate" name="date"> --%> 	               
+ 		            <input type="hidden"  value="${name}" name="name">
+ 		            <input type="hidden"  id="upseq" name="seq">
+		               	<select name="year" id="upyear">  
+		                   <c:set var="year" value="${year}"/>
+                      		<c:forEach var="i"  begin="${year-2}"   end="${year+2}"   step="1">
+                             <option ${year==i?"selected":""} value="${i}">${i}</option>
+                      		</c:forEach> 		                                                   
+		                 </select>년
+		                 
+		                 <select name="month" id="upmonth">  
+		                   <c:set var="month" value="${month}"/>
+                      		<c:forEach var="i"  begin="1"   end="12"   step="1">
+                             <option ${month==i?"selected":""} value="${i}">${i}</option>
+                      		</c:forEach> 		                                                   
+		                 </select>월
+		                 
+		                 <select name="date" id="update">
+                      		 <c:forEach var="thisupdate"  begin="1"   end="31"   step="1">
+                              <option value="${thisupdate}">${thisupdate}</option>
+                      		 </c:forEach>                
+                  		 </select>일
+		               
+		                 <select name="hour" id="uphour">  
+		                   <c:forEach var="thishour" begin="0" end="24">
+<%-- 		                   <c:if test="${thishour == hour}">
+		                   <option value="${hour}" selected>${hour}</option>
+		                   </c:if>
+		                   <c:if test="${thishour != hour}"> --%>
+		                   <option value="${thishour}" > ${thishour}</option>
+<%-- 		                   </c:if>     --%>                    
+		                   </c:forEach>                                  
+		                 </select>시
+		                 <select name="min" id="upmin">
+		                   <c:forEach var="thismin" begin="0" end="60">
+<%-- 		                   <c:if test="${thismin == min}">
+		                   <option value="${min}" selected>${min}</option>
+		                   </c:if> --%>
+<%-- 		                   <c:if test="${thismin != min}"> --%>
+		                   <option value="${thismin}" >${thismin}</option>
+<%-- 		                   </c:if>   --%>                      
+		                   </c:forEach>                     
+		                 </select>분
+		            </td>
+		       </tr>
+		       <tr>
+		            <th>금액</th>
+		            <td><input type="text" id="upamount" name="amount" placeholder="예) 5만원 => 50000" required/></td>
+		       </tr>        
+		       <tr>
+		            <th>지출내역</th>
+		            <td><input type="text" id="uptitle" name="title" required/></td>
+		       </tr>
+		   </table>     
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" id="updateaccbtn">수정</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
       </div>
      </form>            

@@ -22,10 +22,25 @@ public class OkyAccDAO {
 	}
 
 	public List<Account> accViewList(String name, String yyyyMM) {
-		Map<String, String>map = new HashMap<>();
-		map.put("name", name);
-		map.put("yyyyMM", yyyyMM);
+	Map<String, String>map = new HashMap<>();
+	map.put("name", name);
+	map.put("yyyyMM", yyyyMM);
 		return sqlSession.selectList("Accounts.accViewList", map);	
+	}
+
+	public Account accDetail(int seq) {
+	Account dao = sqlSession.selectOne("Accounts.accDetail", seq);			
+		return dao;
+	}
+
+	public boolean accDelete(int seq) {
+		int count= sqlSession.delete("Accounts.accDelete", seq);
+		return count>0?true:false;
+	}
+
+	public boolean accUpdate(Account account) {
+		int count = sqlSession.update("Accounts.accUpdate", account);
+		return count>0?true:false;	
 	}
 	
 	
