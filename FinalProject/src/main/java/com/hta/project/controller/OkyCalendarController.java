@@ -126,8 +126,6 @@ public class OkyCalendarController {
         		String yyyyMM=year+isTwo(month);
         		List<MyCalendar> clist = okycalservice.calViewList(name, yyyyMM);
         		mv.addObject("clist", clist);
-        		mv.addObject("year", year);
-        		mv.addObject("month", month);  //year, month 20211006추가
         		mv.addObject("id",id);
         		mv.addObject("name", getmynong);
         		mv.addObject("level", level);
@@ -157,7 +155,6 @@ public class OkyCalendarController {
 		int level =0;
 		logger.info("/calboardlist 농장 이름은" +name);
 		logger.info("/calboardlist 농장 접속자 아이디는" +id);
-		logger.info("/calboardlist ymd는" + ymd);
 		if(myfarm.equals("1")) {//농장 주인인지 판단
 			level =1;
 		}
@@ -360,6 +357,43 @@ public class OkyCalendarController {
 		}    	    		
 	}
 	
+	//메인화면 통해 일정상세내용보기
+		@RequestMapping(value = "/caldetailmain", method = RequestMethod.GET)
+		public ModelAndView calDetailmain(int seq, MyCalendar calendar,HttpSession session, 
+				ModelAndView mv,String name,
+	            HttpServletRequest request) {
+			logger.info("/caldetailmain");
+			try { //유효성 검사를 위한 초기 세팅
+			String id=(String)session.getAttribute("id");
+			Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+			String getmynong = okymynongservice.getMynong(id);
+			
+			String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
+			int level =0;
+			if(myfarm.equals("1")) {//농장 주인인지 판단
+				level =1;
+			}
+			if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+				logger.info("메인화면으로 부터 일정상세보기 실패");
+				mv.setViewName("oky/error/error");
+				mv.addObject("url", request.getRequestURL());
+				mv.addObject("message", "해당 농장 캘린더를 볼  권한이 없습니다.");    	   		
+			} else {   //해당 농장 멤버 접근시 		
+			calendar =okycalservice.calDetail(seq);								
+			mv.addObject("calendar", calendar);	
+			mv.addObject("name", name);
+			mv.addObject("level", level);
+			mv.setViewName("oky/calendar/caldetailmain");
+			}
+			return mv;
+			} catch (NullPointerException e) {
+				logger.info("비회원 접근");
+				mv.setViewName("oky/error/error");
+				mv.addObject("url", request.getRequestURL());
+				mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");    	
+				return mv;
+			}    	    		
+		}
 	//일정수정폼이동
 	@RequestMapping(value = "/updateform", method = RequestMethod.GET)
 	public ModelAndView updateForm(int seq, ModelAndView mv,String name,

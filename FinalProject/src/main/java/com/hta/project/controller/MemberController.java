@@ -3,7 +3,9 @@ package com.hta.project.controller;
 
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -18,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,12 +34,14 @@ import com.hta.project.service.MemberService;
 
 
 @Controller
-@RequestMapping(value="/member")//http://localhost:8088/myhome5/member/�� �����ϴ� �ּ� ����
+@RequestMapping(value="/member")
 public class MemberController {
-	//import org.slf4j.Logger;
-	//import org.slf4j.LoggerFactory;
+	
 	private static final Logger logger
 							= LoggerFactory.getLogger(MemberController.class);
+	
+	private static int memberCount = 0;
+	private static List<String> memberChatList = new ArrayList<String>();
 	
 	@Autowired
 	private MemberService memberService;
@@ -53,8 +58,7 @@ public class MemberController {
 
 	
 	@RequestMapping(value="/idcheck", method = RequestMethod.GET)
-	public void idcheck(@RequestParam("id") String id,
-						   HttpServletResponse response) throws Exception {
+	public void idcheck(String id, HttpServletResponse response) throws Exception {
 		int result = memberService.isId(id);
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -81,7 +85,7 @@ public class MemberController {
 			return "redirect:/main";
 		}else {
 			model.addAttribute("url", request.getRequestURL());
-			model.addAttribute("message", "회원가입을 실패하였습니다.");
+			model.addAttribute("message", "회원 가입 실패");
 			return "error/error";
 		}
 	}
@@ -98,15 +102,19 @@ public class MemberController {
 		int result = (int) member.get("result");
 		
 		if(result == 1) {
-			// 로그인 성공
 			Cookie savecookie = new Cookie("saveid", id);
 			if(!remember.equals("")) {
 				savecookie.setMaxAge(60*60);
-				logger.info("쿠키저장 : 60 * 60");
+				logger.info("쿠키저장: 60*60");
 			}else {
-				logger.info("쿠키저장 : 0");
+				logger.info("쿠키저장: 0");
 				savecookie.setMaxAge(0);
 			}
+			memberCount++;
+			memberChatList.add(m.getNick());
+			logger.info("memberCount = " + memberCount);
+			logger.info("memberChatList = " + memberChatList);
+			
 			response.addCookie(savecookie);
 			session.setAttribute("id", m.getId());
 			session.setAttribute("nick", m.getNick());
@@ -119,6 +127,11 @@ public class MemberController {
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String loginout(HttpSession session) {
+		memberCount--;
+		memberChatList.remove(session.getAttribute("nick"));
+		logger.info("memberCount = " + memberCount);
+		logger.info("memberChatList = " + memberChatList);
+		
 		session.invalidate();
 		return "redirect:/main";
 	}
@@ -135,7 +148,6 @@ public class MemberController {
 		return map;
 	}
 
-	//수정폼
 	  @RequestMapping(value = "/update", method = RequestMethod.GET)
 	  public ModelAndView member_update(HttpSession session,
 			  							ModelAndView mv)     {
@@ -145,12 +157,11 @@ public class MemberController {
 		  } else {
 			  Member m = memberService.member_info(id);
 			  mv.setViewName("member/member_updateForm");
-			  mv.addObject("member_info", m); //member_info가 키값 
+			  mv.addObject("member_info", m); 
 		  }
 		  return mv;
 	  }
 	  
-	  //수정처리 
 	  @RequestMapping(value = "/updateProcess", method = RequestMethod.POST)
 	  public String updateProcess(Member member, Model model,
 			  					  HttpServletRequest request,
@@ -165,6 +176,15 @@ public class MemberController {
 			  model.addAttribute("message", "정보 수정 실패");
 			  return "error/error";
 		  }
+	  }
+	  
+	  @PostMapping("/memberChatList")
+	  @ResponseBody
+	  public Map<String, Object> getMemberChatList() {
+		  Map<String, Object> map = new HashMap<String, Object>();
+		  map.put("memberChatList", memberChatList);
+		  map.put("memberCount", memberCount);
+		  return map;
 	  }
 	  
 }

@@ -25,6 +25,10 @@
 	
 <script>
 $(function(){
+	$('#chatIcon').click(function(){
+		location.href = "chat";
+	});
+	
 	$('#btnSend').on('click', function(evt){
 		evt.preventDefault();
 		if(socket.readyState !== 1){

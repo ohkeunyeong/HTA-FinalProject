@@ -124,7 +124,7 @@ $(function(){
 	
 	//더 보기를 클릭하면 page 내용이 추가로 보여집니다.
 	$("#message").click(function(){
-		getList(++page);
+		getList(++page,1);
 	}); // click end
 	
 	
@@ -163,7 +163,7 @@ $(function(){
 				$("#content").val('');
 				if (result == 1){
 					//page=1
-					getList(page); // 등록, 수정완료 후 해당 페이지 보여줍니다.
+					getList(page,1); // 등록, 수정완료 후 해당 페이지 보여줍니다.
 				}//if
 			}//success
 		})//ajax end
@@ -205,7 +205,7 @@ $(function(){
 			success : function(result){
 				if (result == 1){
 					//page=1;
-					getList(page); // 삭제 후 해당 페이지 보여줍니다.
+					getList(page,1); // 삭제 후 해당 페이지 보여줍니다.
 				}//if
 			}//success
 		})//ajax end
