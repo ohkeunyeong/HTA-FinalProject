@@ -10,6 +10,7 @@ CREATE TABLE ORDER_DETAIL(
   FOREIGN KEY (PRODUCT_CODE) REFERENCES PRODUCT (PRODUCT_CODE)
 );
 
+delete from ORDER_DETAIL;
 
 select * from order_detail;
 
@@ -18,37 +19,37 @@ create sequence order_detail_seq;
 drop sequence order_detail_seq;
 
 insert into order_detail
-values(order_detail_seq.nextval, '210924_332142', 'A00001', 3);
+values(order_detail_seq.nextval, '210924_332142', '000001', 3);
 
 insert into order_detail
-values(order_detail_seq.nextval, '210924_332142', 'A00002', 3);
+values(order_detail_seq.nextval, '210924_332142', '000002', 3);
 
 insert into order_detail
-values(order_detail_seq.nextval, '210924_332142', 'A00003', 3);
+values(order_detail_seq.nextval, '210924_332142', '000003', 3);
 
 insert into order_detail
-values(order_detail_seq.nextval, '210924_332143', 'A00002', 3);
+values(order_detail_seq.nextval, '210924_332143', '000002', 3);
 
 insert into order_detail
-values(order_detail_seq.nextval, '210924_332144', 'A00003', 3);
+values(order_detail_seq.nextval, '210924_332144', '000003', 3);
 
 insert into order_detail
-values(order_detail_seq.nextval, '210924_332145', 'A00004', 3);
+values(order_detail_seq.nextval, '210924_332145', '000004', 3);
 
 insert into order_detail
-values(order_detail_seq.nextval, '210924_332146', 'A00005', 3);
+values(order_detail_seq.nextval, '210924_332146', '000005', 3);
 
 insert into order_detail
-values(order_detail_seq.nextval, '210924_332147', 'A00006', 3);
+values(order_detail_seq.nextval, '210924_332147', '000006', 3);
 
 insert into order_detail
-values(order_detail_seq.nextval, '210924_332148', 'A00007', 3);
+values(order_detail_seq.nextval, '210924_332148', '000007', 3);
 
 insert into order_detail
-values(order_detail_seq.nextval, '210924_332149', 'A00008', 3);
+values(order_detail_seq.nextval, '210924_332149', '000008', 3);
 
 insert into order_detail
-values(order_detail_seq.nextval, '210924_332150', 'A00001', 3);
+values(order_detail_seq.nextval, '210924_332150', '000001', 3);
 
 select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
 	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date

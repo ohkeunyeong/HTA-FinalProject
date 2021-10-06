@@ -38,7 +38,7 @@
 	<nav class="navbar navbar-expand-sm bg-success navbar-dark fixed-top main-header">
 		<!-- fixed-top -->
 		<!-- Brand -->
-		<a class="navbar-brand" href="${pageContext.request.contextPath}" style="height:120%; padding-left:2%;"> <img src="${pageContext.request.contextPath}/resources/image/logo2.png" alt="Logo">
+		<a class="navbar-brand" href="${pageContext.request.contextPath}/main" style="height:120%; padding-left:2%;"> <img src="${pageContext.request.contextPath}/resources/image/logo2.png" alt="Logo">
 		</a>
 
 

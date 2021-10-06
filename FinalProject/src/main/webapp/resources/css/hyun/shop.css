@@ -7,7 +7,7 @@ h5 {
 .container .nav {
 	margin-top: 80px;
 	font-size: 20px;
-}
+} 
 
 .recommendation {
 	margin-top: 1%;
@@ -16,6 +16,10 @@ h5 {
 
 .section1 {
 	text-align: center;
+}
+
+.section2, .section3, .section4, .section5, .section6{
+	margin-left:14%;
 }
 
 .section1 > span {
@@ -30,8 +34,34 @@ h5 {
 	color: gray;
 }
 
-.section2 .section3 .section4 .section5 .section6 {
-	margin-left:14%;
+.section2 .button {
+	font-size: 20px;
+	font-weight: medium;
+	color: gray;
+}
+
+.section3 .button {
+	font-size: 20px;
+	font-weight: medium;
+	color: gray;
+}
+
+.section4 .button {
+	font-size: 20px;
+	font-weight: medium;
+	color: gray;
+}
+
+.section5 .button {
+	font-size: 20px;
+	font-weight: medium;
+	color: gray;
+}
+
+.section6 .button {
+	font-size: 20px;
+	font-weight: medium;
+	color: gray;
 }
 
 #p1 {
@@ -43,33 +73,41 @@ h5 {
 	font-weight: bold;
 }
 
-.section2 .button {
-	font-size: 20px;
-	font-weight: medium;
-	color: gray;
+.container personacon{
+	
 }
 
-.section3 .section4 .section5 .section6 > .button {
-	font-size: 20px;
-	font-weight: medium;
-	color: gray;
+.container{
+	height:500px;
+	width:100%;
 }
 
-
-.recommendation .products {
+.container .products {
 	margin-top: 2%;
 	margin-bottom: 2%;
-	margin-right: 15%;
+	margin-right:5%;
+	margin-left:5%;
+}
 }
 
-.recommendation .products card-deck .card {
+.container  .products card-deck .card {
 	width: 300px;
 	height: 250px;
 }
 
-.recommendation .products>card-img-top {
+.container  .products>card-img-top {
 	height: 200px;
 }
+
+
+
+
+
+
+
+
+
+
 
 /* 슬라이드 배너 */
 * {margin:0;padding:0;box-sizing:border-box;}

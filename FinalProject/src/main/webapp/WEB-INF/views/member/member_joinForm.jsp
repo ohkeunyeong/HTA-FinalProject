@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 <title>회원관리 시스템 회원가입 페이지</title>
 <link href="${pageContext.request.contextPath}/resources/css/chang/join.css" type="text/css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
+
 <jsp:include page="../main/header.jsp" />
+
 <script>
 	$(function() {
 		var checkid=false;
