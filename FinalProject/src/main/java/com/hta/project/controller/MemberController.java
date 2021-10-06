@@ -34,10 +34,9 @@ import com.hta.project.service.MemberService;
 
 
 @Controller
-@RequestMapping(value="/member")//http://localhost:8088/myhome5/member/�� �����ϴ� �ּ� ����
+@RequestMapping(value="/member")
 public class MemberController {
-	//import org.slf4j.Logger;
-	//import org.slf4j.LoggerFactory;
+	
 	private static final Logger logger
 							= LoggerFactory.getLogger(MemberController.class);
 	
@@ -59,8 +58,7 @@ public class MemberController {
 
 	
 	@RequestMapping(value="/idcheck", method = RequestMethod.GET)
-	public void idcheck(@RequestParam("id") String id,
-						   HttpServletResponse response) throws Exception {
+	public void idcheck(String id, HttpServletResponse response) throws Exception {
 		int result = memberService.isId(id);
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -87,7 +85,7 @@ public class MemberController {
 			return "redirect:/main";
 		}else {
 			model.addAttribute("url", request.getRequestURL());
-			model.addAttribute("message", "회원가입을 실패하였습니다.");
+			model.addAttribute("message", "회원 가입 실패");
 			return "error/error";
 		}
 	}
@@ -104,13 +102,12 @@ public class MemberController {
 		int result = (int) member.get("result");
 		
 		if(result == 1) {
-			// 로그인 성공
 			Cookie savecookie = new Cookie("saveid", id);
 			if(!remember.equals("")) {
 				savecookie.setMaxAge(60*60);
-				logger.info("쿠키저장 : 60 * 60");
+				logger.info("쿠키저장: 60*60");
 			}else {
-				logger.info("쿠키저장 : 0");
+				logger.info("쿠키저장: 0");
 				savecookie.setMaxAge(0);
 			}
 			memberCount++;
@@ -151,7 +148,6 @@ public class MemberController {
 		return map;
 	}
 
-	//수정폼
 	  @RequestMapping(value = "/update", method = RequestMethod.GET)
 	  public ModelAndView member_update(HttpSession session,
 			  							ModelAndView mv)     {
@@ -161,12 +157,11 @@ public class MemberController {
 		  } else {
 			  Member m = memberService.member_info(id);
 			  mv.setViewName("member/member_updateForm");
-			  mv.addObject("member_info", m); //member_info가 키값 
+			  mv.addObject("member_info", m); 
 		  }
 		  return mv;
 	  }
 	  
-	  //수정처리 
 	  @RequestMapping(value = "/updateProcess", method = RequestMethod.POST)
 	  public String updateProcess(Member member, Model model,
 			  					  HttpServletRequest request,
