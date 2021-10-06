@@ -18,11 +18,11 @@
  			  		select jik_comm_num, id, nick, jik_comm_content, jik_comm_date,jik_comm_re_ref,jik_comm_re_lev,jik_comm_re_seq,jik_comm_secret
  			  		from jik_comm
  			  		where jik_board_num = #{jik_num}
- 			  		<if test="#{state}.equals('')">
+ 			  		<if test="state!=null">
  					order by jik_comm_re_ref 
  						<choose>
- 							<when test="#{state}==1">asc</when>
- 							<when test="#{state}==2">desc</when>
+ 							<when test="state==1">desc</when>
+ 							<when test="state==2">asc</when>
  						</choose>
  					, jik_comm_re_seq asc
  					</if>
