@@ -5,9 +5,9 @@ $(document).ready(function(){
 		
 
 	
-		if($.trim($("input").eq(1).val()) ==""){
+		if($.trim($("#jik_subject").val()) ==""){
 			alert("제목을 입력하세요");
-			$("input:eq(1)").focus();
+			$("#jik_subject").focus();
 			return false;
 		}
 		

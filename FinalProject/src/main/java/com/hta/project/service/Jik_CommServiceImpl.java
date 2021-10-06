@@ -26,7 +26,7 @@ public class Jik_CommServiceImpl implements Jik_CommService{
 	@Override
 	public List<Jik_Comm> getJik_CommList(int jik_num, int page, int state) {
 		int startrow=1;
-		int endrow=page*3;
+		int endrow=page*5;
 		
 		Map<String,Integer> map =new HashMap<String,Integer>();
 		map.put("state", state);
