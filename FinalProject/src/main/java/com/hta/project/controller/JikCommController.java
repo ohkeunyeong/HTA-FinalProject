@@ -26,9 +26,9 @@ public class JikCommController {
 		
 		@ResponseBody
 		@PostMapping(value = "/list")
-		public Map<String,Object> Jik_CommList(int jik_num, int page,String jik_comm_secret){
+		public Map<String,Object> Jik_CommList(int jik_num, int state, int page,String jik_comm_secret){
 			
-			List<Jik_Comm> list = jik_commService.getJik_CommList(jik_num, page);
+			List<Jik_Comm> list = jik_commService.getJik_CommList(jik_num, page,state);
 			int listcount = jik_commService.getListCount(jik_num);
 			Map<String,Object> map=new HashMap<String,Object>();
 			map.put("list", list);

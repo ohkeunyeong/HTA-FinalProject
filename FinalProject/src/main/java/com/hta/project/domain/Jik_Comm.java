@@ -12,7 +12,14 @@ public class Jik_Comm {
 	private String jik_comm_re_lev;	
 	private String jik_comm_re_seq;  
 	private String jik_comm_secret;
+	private int state;
 	
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
 	public int getJik_comm_num() {
 		return jik_comm_num;
 	}

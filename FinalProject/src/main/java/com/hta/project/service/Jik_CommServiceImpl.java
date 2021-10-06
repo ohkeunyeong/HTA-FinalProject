@@ -24,11 +24,12 @@ public class Jik_CommServiceImpl implements Jik_CommService{
 	}
 
 	@Override
-	public List<Jik_Comm> getJik_CommList(int jik_num, int page) {
+	public List<Jik_Comm> getJik_CommList(int jik_num, int page, int state) {
 		int startrow=1;
 		int endrow=page*3;
 		
 		Map<String,Integer> map =new HashMap<String,Integer>();
+		map.put("state", state);
 		map.put("jik_num",jik_num);
 		map.put("start",startrow);
 		map.put("end",endrow);
