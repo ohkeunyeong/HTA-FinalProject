@@ -22,9 +22,10 @@
 		<typeAlias alias="order" 		type="com.hta.project.domain.Order_Market"/>
 		<typeAlias alias="orderList" 	type="com.hta.project.domain.OrderDetailList"/>
 		<typeAlias alias="orderDetail" 	type="com.hta.project.domain.OrderDetail"/>
-		<typeAlias alias="calendar"    	type="com.hta.project.domain.MyCalendar" />
-		
+		<typeAlias alias="calendar"    	type="com.hta.project.domain.MyCalendar" />		
 		<typeAlias alias="account"      type="com.hta.project.domain.Account" />
+		<typeAlias alias="nong"         type="com.hta.project.domain.Nong"/>
+		<typeAlias alias="nong_co"      type="com.hta.project.domain.Nong_Co"/>
      </typeAliases>
          
      <mappers>
@@ -40,6 +41,8 @@
        	<mapper resource="sql/order.xml" />
        	<mapper resource="sql/calendar.xml" />
        	<mapper resource="sql/account.xml" />
+       	<mapper resource="sql/nong.xml" />
+       	<mapper resource="sql/nong_co.xml" />
        	
      </mappers>
 </configuration>

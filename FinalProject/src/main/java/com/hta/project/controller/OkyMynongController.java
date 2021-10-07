@@ -1,4 +1,4 @@
-//내농장 컨트롤러
+//내농장 생성 컨트롤러
 package com.hta.project.controller;
 
 import java.io.IOException;

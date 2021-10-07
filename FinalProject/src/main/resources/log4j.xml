@@ -58,7 +58,15 @@
 	<logger name="Accounts">
 		<level value="trace" />
 	</logger>
-		
+
+	<logger name="Nongs">
+		<level value="trace" />
+	</logger>
+	
+	<logger name="Nong_Cos">
+		<level value="trace" />
+	</logger>
+	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />
