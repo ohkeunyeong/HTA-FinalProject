@@ -14,7 +14,7 @@
    body > div > table > thead > tr:nth-child(2) > th:nth-child(4){width:17%}
    body > div > table > thead > tr:nth-child(2) > th:nth-child(5){width:11%}
  </style>
-  <script src="../resources/js/chang/list.js"></script>
+<script src="../resources/js/chang/list.js"></script>
   	<script>
 	if('${result}'=='deleteSuccess'){
 		alert("글 삭제 성공")
@@ -25,7 +25,7 @@
 </head>
 <body>
 <div class="container">
-  
+<input type="hidden" id="Loginid" value="${id}" name="loginid"> 
 <%-- 게시글이 있는 경우--%> 
 <c:if test="${listcount > 0 }">
   <div class="rows">

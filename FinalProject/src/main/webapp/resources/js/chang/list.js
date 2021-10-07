@@ -84,8 +84,12 @@ $(function() {
 		$("#viewcount").change(function(){
 			go(1); //보여줄 페이지를 1페이지로 설정합니다.
 		}); // change end
-	
-		$("button").click(function(){
-			location.href="write";
-		})
+		
+		if($("#Loginid").val()!=null){  
+			$("button").click(function(){
+				location.href="write";
+			})
+		}else{
+			alert("로그인 시 가능합니다.")
+		}
 })

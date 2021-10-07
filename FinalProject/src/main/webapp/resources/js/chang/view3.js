@@ -1,5 +1,6 @@
 function getList(currentPage,state){
 		option=state;
+		
 		$.ajax({
 					type: "post",
 					url: "../jik_comm/list",
@@ -65,7 +66,7 @@ function getList(currentPage,state){
 								   
 							//글쓴이가 로그인한 경우 나타나는 더보기입니다.
 	                        //수정과 삭제 기능이 있습니다.							
-							if($("#Loginid").val()==this.id){  
+							if($("#Loginid").val()==this.id ||$("#Loginid").val()=='admin'){  
 							 output +=  '<div class="comment_tool">'
 								   + '    <div title="더보기" class="comment_tool_button">'
 								   + '       <div>&#46;&#46;&#46;</div>' 
@@ -104,6 +105,95 @@ function getList(currentPage,state){
 			 
 		}//function(getList) end
 
+function updateForm(jik_comm_num){ //num : 수정할 댓글 글번호
+	
+	//선택한 내용을 구합니다.
+	var content=$('#'+jik_comm_num).find('.text_comment').text();
+	
+	var selector = '#'+comm_+'.comment_area'
+	$(selector).hide(); //selector 영역  숨겨요 - 수정에서 취소를 선택하면 보여줄 예정입니다.
+	
+	//$('.comment_list+.CommentWriter').clone() : 기본 글쓰기 영역 복사합니다.
+	//글이 있던 영역에 글을 수정할 수 있는 폼으로 바꿉니다.
+	selector=$('#'+jik_comm_num);
+	selector.append($('.comment_list+.CommentWriter').clone());
+	
+	//댓글쓰기 영역 숨깁니다.
+	$('.comment_list+.CommentWriter').hide();
+	
+	//수정 폼의 <textarea>에 내용을 나타냅니다.
+	selector.find('textarea').val(content);
+	
+	
+	//'.btn_register' 영역에 수정할 글 번호를 속성 'data-id'에 나타내고 클래스 'update'를 추가하며 등록을 수정완료
+	selector.find('.btn_register').attr('data-id',jik_comm_num).addClass('update').text('수정완료');
+	
+	//폼에서 취소를 사용할 수 있도록 보이게 합니다.
+	selector.find('.btn_cancel').css('display','block').addClass('update_cancel');
+	
+	selector.find('.comment_inbox_count').text(content.length+"/200");
+}//function(updateForm) end
+
+//더보기 -> 삭제 클릭한 경우 실행하는 함수
+function del(jik_comm_num){//num : 댓글 번호
+	if(!confirm('정말 삭제하시겠습니까')){
+		return;
+	}
+	
+	$.ajax({
+		url:'ReplyDelete.freebo',
+		data:{jik_comm_num:jik_comm_num},
+		success:function(rdata){
+			if(radata==1){
+				getList(option);
+			}
+		}
+	})
+}//function(del) end
+//답글 달기 폼
+function replyform(jik_comm_num,lev,seq,ref){
+	//댓글달기 폼이 열려있다는 것은 다른 폼이 열려있지 않은 경우입니다.
+	if($('.comment_list+.CommentWriter').css('display')=='block'){
+		var output = '<li class="CommentItem CommentItem--reply lev'
+				   +  lev 	+ ' CommentItem-form"></li>'
+				   
+		var selector = $('#'+jik_comm_num);
+		
+		//선택한 글 뒤에 답글 폼을 추가합니다.
+		selector.after(output);
+		
+		//글쓰기 영역 복사합니다.
+		output=$('.comment_list+.CommentWriter').clone();
+		
+		//댓글쓰기 영역 숨깁니다.
+		$('.comment_list+.CommentWriter').hide();
+		
+		
+		//더보기를 누른 상태에서 답글 달기 폼을 연 경우 더보기의 영역 보이지 않게 합니다.
+		$(".CommentBox .LayerMore").css('display','none');
+		
+		//선택한 글 뒤에 답글 폼 생성합니다.
+		selector.next().html(output);
+		
+		//답글 폼의 <textarea>의 속성 'placeholder'를 '답글을 남겨보세요'로 바꾸어 줍니다.
+		selector.next().find('textarea').attr('placeholder','답글을 남겨보세요');
+		
+		//답글 폼의 '.btn_cancel'을 보여주고 클래스 'reply_cancel'를 추가합니다.
+		selector.next().find('.btn_cancel').css('display','block')
+							.addClass('reply_cancel');
+		
+		//답글 폼의 '.btn_register'에 클래스 'reply' 추가합니다.
+		//속성 'data-ref'에 ref, 'data-lev'에 lev, 'data-seq'에 seq값을 설정합니다.
+		selector.next().find('.btn_register').addClass('reply').text('답글완료')
+					.attr('data-ref',ref).attr('data-lev',lev).attr('data-seq',seq);
+	}else{
+		alert('다른 작업 완료 후 선택하세요')
+	}
+}//function(replyform) end
+
+
+
+
 $(function(){
 	var page=1; //더 보기에서 보여줄 페이지를 기억할 변수
 	count = parseInt($("#count").text());
@@ -114,7 +204,43 @@ $(function(){
 		$("#message").text("등록된 댓글이 없습니다.")
 	}
 	
-	
+	$('.CommentBox').on('click','.reply',function(){
+		 
+		 var content=$(this).parent().parent().find('.comment_inbox_text').val();
+		 if(!content){
+			 alert('답변 내용을 입력하세요');
+			 return
+		 }
+		 
+		 //댓글쓰기 영역 보이도록 합니다.
+		 $('.comment_list+.CommentWriter').show();
+		 
+		 $.ajax({
+			 url : 'ReplyComment.freebo',
+			 data : {
+				 mem_nickname : $("#mem_nickname").val(),
+				 reply_content : content,
+				 reply_board_idx : $("#reply_board_idx").val(),
+				 reply_re_lev : $(this).attr('data-lev'),
+				 reply_re_ref : $(this).attr('data-ref'),
+				 reply_re_seq : $(this).attr('data-seq')
+			 },
+			 type : 'post',
+			 success : function(rdata){
+				 if(rdata == 1){
+					 getList(option);
+				 }
+			 }
+		 })//ajax
+	})//답변 달기 등록 버튼을 클릭한 경우
+
+	//답변달기 후 취소 버튼을 클릭한 경우
+	$('.CommentBox').on('click','.reply_cancel',function(){
+		$(this).parent().parent().parent().remove();
+			
+		//댓글쓰기 영역 보이도록 합니다.
+		$('.comment_list+.CommentWriter').show();
+	})//수정 후 취소 버튼을 클릭한 경우	
 	
 	
 	// 글자수 50개 제한하는 이벤트
@@ -174,6 +300,7 @@ $(function(){
 			data : data,
 			success : function(result){
 				$(".comment_inbox_text").val('');
+				$('.comment_inbox_count').text('');
 				if (result == 1){
 					//page=1
 					getList(page,1); // 등록, 수정완료 후 해당 페이지 보여줍니다.
@@ -244,82 +371,4 @@ $(function(){
 		 }
 	 })//'.comment_tool_button' click end
 	 
-	//답글 달기 폼
-	 function replyform(jik_comm_num,lev,seq,ref){
-	 	//댓글달기 폼이 열려있다는 것은 다른 폼이 열려있지 않은 경우입니다.
-	 	if($('.comment_list+.CommentWriter').css('display')=='block'){
-	 		var output = '<li class="CommentItem CommentItem--reply lev'
-	 				   +  lev 	+ ' CommentItem-form"></li>'
-	 				   
-	 		var selector = $('#'+reply_num);
-	 		
-	 		//선택한 글 뒤에 답글 폼을 추가합니다.
-	 		selector.after(output);
-	 		
-	 		//글쓰기 영역 복사합니다.
-	 		output=$('.comment_list+.CommentWriter').clone();
-	 		
-	 		//댓글쓰기 영역 숨깁니다.
-	 		$('.comment_list+.CommentWriter').hide();
-	 		
-	 		
-	 		//더보기를 누른 상태에서 답글 달기 폼을 연 경우 더보기의 영역 보이지 않게 합니다.
-	 		$(".CommentBox .LayerMore").css('display','none');
-	 		
-	 		//선택한 글 뒤에 답글 폼 생성합니다.
-	 		selector.next().html(output);
-	 		
-	 		//답글 폼의 <textarea>의 속성 'placeholder'를 '답글을 남겨보세요'로 바꾸어 줍니다.
-	 		selector.next().find('textarea').attr('placeholder','답글을 남겨보세요');
-	 		
-	 		//답글 폼의 '.btn_cancel'을 보여주고 클래스 'reply_cancel'를 추가합니다.
-	 		selector.next().find('.btn_cancel').css('display','block')
-	 							.addClass('reply_cancel');
-	 		
-	 		//답글 폼의 '.btn_register'에 클래스 'reply' 추가합니다.
-	 		//속성 'data-ref'에 ref, 'data-lev'에 lev, 'data-seq'에 seq값을 설정합니다.
-	 		selector.next().find('.btn_register').addClass('reply').text('답글완료')
-	 					.attr('data-ref',ref).attr('data-lev',lev).attr('data-seq',seq);
-	 	}else{
-	 		alert('다른 작업 완료 후 선택하세요')
-	 	}
-	 }
-	
-	 $('.CommentBox').on('click','.reply',function(){
-		 
-		 var content=$(this).parent().parent().find('.comment_inbox_text').val();
-		 if(!content){
-			 alert('답변 내용을 입력하세요');
-			 return
-		 }
-		 
-		 //댓글쓰기 영역 보이도록 합니다.
-		 $('.comment_list+.CommentWriter').show();
-		 
-		 $.ajax({
-			 url : 'ReplyComment.freebo',
-			 data : {
-				 mem_nickname : $("#mem_nickname").val(),
-				 reply_content : content,
-				 reply_board_idx : $("#reply_board_idx").val(),
-				 reply_re_lev : $(this).attr('data-lev'),
-				 reply_re_ref : $(this).attr('data-ref'),
-				 reply_re_seq : $(this).attr('data-seq')
-			 },
-			 type : 'post',
-			 success : function(rdata){
-				 if(rdata == 1){
-					 getList(option);
-				 }
-			 }
-		 })//ajax
-	 })//답변 달기 등록 버튼을 클릭한 경우
-	 
-	//답변달기 후 취소 버튼을 클릭한 경우
-	$('.CommentBox').on('click','.reply_cancel',function(){
-		$(this).parent().parent().parent().remove();
-			
-		//댓글쓰기 영역 보이도록 합니다.
-		$('.comment_list+.CommentWriter').show();
-	})//수정 후 취소 버튼을 클릭한 경우
 })
