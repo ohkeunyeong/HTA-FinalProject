@@ -14,6 +14,8 @@ input[type=file]{
 </head>
 <body>
 <jsp:include page="../main/header.jsp"/>
+<br><br><br><br>
+
 <form name="joinform" action="updateProcess" method="post"
       enctype="multipart/form-data">
          <h3>회원 정보 수정</h3>
@@ -23,27 +25,27 @@ input[type=file]{
           <span id="message"></span>
          
          <b>비밀번호</b>
-         <input type="password" name="pass" value="${memberinfo.password}" placeholder="비밀번호를 입력해주세요" required>
+         <input type="password" name="pass" value="${memberinfo.password}" placeholder="비밀번호를 입력하세요" required>
          <span id="pass_message"></span>
          
          <b>이름</b>
-         <input type="text" name="name" value="${member_info.name}" placeholder="Enter name" required>
+         <input type="text" name="name" value="${member_info.name}" placeholder="이름을 입력하세요" required>
          <span id="name_message"></span>
          
          <b>닉네임</b>
-         <input type="text" name="nick" maxLength="2" value="${member_info.nick}" 
-                placeholder="Enter nick" required>
+         <input type="text" name="nick" maxLength="8" value="${member_info.nick}" 
+                placeholder="닉네임을 입력하세요" required>
          <span id="nick_message"></span>
          
          <b>전화번호</b>
-         <input type="text" name="tel" maxLength="2" value="${member_info.tel}" 
-                placeholder="Enter tel" required>
+         <input type="text" name="tel" maxLength="11" value="${member_info.tel}" 
+                placeholder="전화번호를 입력하세요" required>
          <span id="tel_message"></span>
          
          
          <b>이메일 주소</b>
          <input type="text" name="email" value="${member_info.mail}" maxLength="30" 
-         placeholder="Enter email" required>
+         placeholder="이메일을 입력하세요" required>
          <span id="email_message"></span>
          
          

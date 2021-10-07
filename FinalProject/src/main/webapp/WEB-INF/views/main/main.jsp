@@ -52,7 +52,13 @@ width:100%
 </style>
 </head>
 <body>
-<br>
+<br><br><br><br><br>
+<div class="container justify-content-center">
+		<img src="${pageContext.request.contextPath}/resources/image/farm4.jpeg" alt="Logo" style="height: 400px; margin-bottom: 30px; margin-left:15%">
+	</div>
+	<!--  <a href='https://www.freepik.com/vectors/water'>Water vector created by upklyak - www.freepik.com</a> -->
+	
+	
 <div class="container">
 
   <h4>내 농장 일정</h4>
@@ -106,6 +112,7 @@ width:100%
 				</p>
 			</a>
 		</div>
+		
 		
 <jsp:include page="footer.jsp" />  
 </body>

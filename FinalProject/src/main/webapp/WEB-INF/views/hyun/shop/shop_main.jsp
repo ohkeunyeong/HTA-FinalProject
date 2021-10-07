@@ -93,7 +93,7 @@
 			<span>주말농장에서 추천하는 제품!</span> <a href="#" class="button">더보기</a>
 		</div>
 		
-		<div class="container recommendation">
+		<div class="recommendation">
 		 <c:forEach items="${productList}" var="product" varStatus="status">
 		
 		 <c:if test="${status.index % 4 == 0}">
@@ -121,7 +121,7 @@
 	<!-- 퍼스나콘 카드 목록 리스트 -->		
 	<br><br>
 	
-	<div class="container personacon" style="background:lightgray; padding-top:60px; padding-bottom:60px">
+	<div class="container" style="background:lightgray; padding-top:60px; padding-bottom:60px">
 		
 		<div class="section2">
 			<p id="p1" style="margin-bottom: -8px;">따끈따끈한 </p><p id="p2"> 퍼스나콘</p>
@@ -129,7 +129,7 @@
 			<a href="#" class="button">더보기</a>
 		</div>
 		
-		<div class="container personaconlist">
+		<div class="personaconlist">
 		 <c:forEach items="${personaconList}" var="personacon" varStatus="status">
 		
 		 <c:if test="${status.index % 2 == 0}">
@@ -158,13 +158,13 @@
 
 	<br>
 	<br>
-	<div class="container tools" style="padding-top:60px; padding-bottom:60px">
-		<div class="section3">
+	<div class="container" style="padding-top:60px; padding-bottom:60px">
+		<div class="section2">
 			<p id="p1" style="margin-bottom: -8px;">가을철 </p><p id="p2"> 필요한 도구 조합</p>
 			<a href="#" class="button">더보기</a>
 		</div>
 		
-		<div class="container toolslist">
+		<div class="toolslist">
 		 <c:forEach items="${toolsList}" var="tools" varStatus="status">
 		
 		 <c:if test="${status.index % 4 == 0}">
@@ -191,8 +191,8 @@
 
 	<br>
 	<br>
-	<div class="container goods" style="background:lightgray; padding-top:60px; padding-bottom:60px">
-		<div class="section4">
+	<div class="container" style="background:lightgray; padding-top:60px; padding-bottom:60px">
+		<div class="section2">
 			<p id="p1" style="margin-bottom: -8px;">인기좋은 </p><p id="p2"> 주말굿즈</p>
 			<p>주말농부라면 하나쯤<br>다 갖고있다는 그 제품들!</p> 
 			<a href="#" class="button">더보기</a>
@@ -227,13 +227,13 @@
 
 	<br>
 	<br>
-	<div class="container review" style="padding-top:60px; padding-bottom:60px">
-		<div class="section5">
+	<div class="container" style="padding-top:60px; padding-bottom:60px">
+		<div class="section2">
 			<p id="p1" style="margin-bottom: -8px;">후기가 가장 많은 </p><p id="p2"> 제품들</p>
 			<a href="#" class="button">더보기</a>
 		</div>
 		
-		<div class="review">
+		<div class="reviewProduct">
 		 <c:forEach items="${reviewList}" var="review" varStatus="status">
 		
 		 <c:if test="${status.index % 4 == 0}">
@@ -242,11 +242,11 @@
 		 
 			<div class="card" >
 				<img class="card-img-top" style="height:300px"
-					src="${pageContext.request.contextPath}/resources/image/hyun/${review.product_img}"
+					src="${pageContext.request.contextPath}/resources/image/hyun/${reviewProduct.product_img}"
 					alt="Card image" style="width:100%; height:300px">
 				<div class="card-body">
-					<h5 class="card-title">${review.product_name}</h5>
-					<p class="card-text">${review.product_detail}</p>
+					<h5 class="card-title">${reviewProduct.product_name}</h5>
+					<p class="card-text">${reviewProduct.product_detail}</p>
 					<a href="shop_detail.jsp" class="btn btn-info">제품 보기</a>
 				</div>
 			
@@ -260,8 +260,8 @@
 
 	<br>
 	<br>
-	<div class="container review" style="background:lightgray; padding-top:60px; padding-bottom:60px">
-		<div class="section6">
+	<div class="container" style="background:lightgray; padding-top:60px; padding-bottom:60px">
+		<div class="section2">
 			<p id="p1" style="margin-bottom: -8px;">주말농부들의 </p><p id="p2"> 따뜻한 후기</p>
 			<p>주말농부들의<br>생생한 후기를 읽어보세요</p> 
 			<a href="#" class="button">더보기</a>
