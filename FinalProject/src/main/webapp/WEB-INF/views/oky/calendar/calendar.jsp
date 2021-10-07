@@ -10,6 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <title>캘린더</title>
+<jsp:include page="../../main/header.jsp" /> 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
 <script>
 
@@ -88,7 +89,7 @@
     List<MyCalendar> clist=(List<MyCalendar>)request.getAttribute("clist");
 %>
 <body>
-<jsp:include page="../../main/header.jsp" /> 
+<br><br><br>
 <input type="hidden" id="id" value="${id}" name="id">
 <style>
     #calendar{

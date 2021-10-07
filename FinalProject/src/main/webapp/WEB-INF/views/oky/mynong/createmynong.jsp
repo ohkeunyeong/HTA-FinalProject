@@ -5,12 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>내 농장 생성</title>
-
+<jsp:include page="../../main/header.jsp" /> 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/oky/createmynong.js"></script>
 </head>
 <body>
-<jsp:include page="../../main/header.jsp" /> 
+<br><br><br>
  <form name="createform" action="createProcess" method="post">
 <input type="hidden" id="id" value="${id}" name="id">
 <h1>내 농장 만들기</h1>

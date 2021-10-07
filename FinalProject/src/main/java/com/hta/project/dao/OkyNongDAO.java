@@ -23,4 +23,9 @@ public class OkyNongDAO {
 		return sqlSession.selectList("Nongs.list", map);
 	}
 
+	public void insertBoard(Nong nong) {
+		sqlSession.insert("Nongs.insert", nong);
+		
+	}
+
 }

@@ -11,6 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>일정목록보기</title>
+<jsp:include page="../../main/header.jsp" /> 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
 <script>
   function allSel(val){
@@ -56,7 +57,7 @@
     List<MyCalendar> list = (List<MyCalendar>)request.getAttribute("list");
 %>
 <body>
-<jsp:include page="../../main/header.jsp" /> 
+<br><br><br>
 <input type="hidden" id="id" value="${id}" name="id">
 <h1>일정목록보기</h1>
 <form action="calmuldel" method="post">

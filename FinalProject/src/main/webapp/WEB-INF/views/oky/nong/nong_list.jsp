@@ -1,22 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="java.util.Calendar"%>
-<%@page import="com.hta.project.domain.MyCalendar"%>
-<%@page import="java.util.List"%>
-<%@page import="com.hta.project.controller.OkyCalendarController"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>멤버게시판</title>
+<jsp:include page="../../main/header.jsp" /> 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/oky/list.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/oky/list.css"></link>
-<script>	
-</script>
 </head>
 <body>
-<jsp:include page="../../main/header.jsp" /> 
+<br><br><br>
 <input type="hidden" id="id" value="${id}" name="id">
 농장명 : ${name} <br>
           아이디 : ${id}   <br>
@@ -138,6 +134,7 @@
 	  </c:forEach> 
 	 </tbody>	
 	</table>
+	<br>
 	<div class="center-block">
 		  <ul class="pagination justify-content-center">		
 			 <c:if test="${page <= 1 }">
@@ -179,7 +176,7 @@
 			</c:if>
 		 </ul>
       <div class="btn-wrap">   
-       <button type="button" id="write" class="btn btn-light btn-sm">글 쓰 기</button>  
+       <button type="button" id="write" onclick="location.href='nongwrite?name=${name}'" class="btn btn-light btn-sm">글 쓰 기</button>  
       </div>
 		</div>
 	</div>
@@ -188,9 +185,13 @@
 	
 <%-- 게시글이 없는 경우--%>
 <c:if test="${listcount == 0 }">
+<div class="container">
 	<font size=5>등록된 글이 없습니다.</font>
+	<div class="btn-wrap">   
+       <button type="button" id="write" onclick="location.href='nongwrite?name=${name}'" class="btn btn-light btn-sm">글 쓰 기</button>  
+      </div>
+</div>
 </c:if>
-
  </div>
 </body>
 </html>

@@ -24,6 +24,7 @@ $(function(){
 </script>
 </head>
 <body>
+<br><br><br>
 <jsp:useBean id="util" class="com.hta.project.controller.OkyCalendarController" />
 <h1>일정상세보기</h1>
 <table border="1">
