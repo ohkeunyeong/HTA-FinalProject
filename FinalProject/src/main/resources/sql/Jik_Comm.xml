@@ -49,7 +49,24 @@
  			where jik_comm_num= #{jik_comm_num}
  	</update>
  	
-
+	<update id= "reply_update" parameterType="jik_comm">
+ 		update jik_comm
+ 		set jik_comm_re_seq=jik_comm_re_seq+1
+ 		where jik_comm_re_ref=#{jik_comm_re_seq}
+ 		and jik_comm_re_seq <![CDATA[ > ]]> #{jik_comm_re_seq}
+ 	</update>
+ 	
+ 	 	
+ 	<insert id="reply_insert" parameterType="jik_comm">
+ 		insert into jik_comm
+ 		(jik_comm_num, id,nick,jik_board_num,
+ 		 jik_comm_content,jik_comm_re_ref, jik_comm_re_lev,jik_comm_re_seq,
+ 		 jik_comm_date)
+ 		 values
+ 		 (jik_comm_seq.nextval,#{id},#{nick},#{jik_board_num},
+ 		 #{jik_comm_content},#{jik_comm_re_ref},#{jik_comm_re_lev},
+ 		 #{jik_comm_re_seq},sysdate)
+ 	</insert>
  	
  	
  </mapper>

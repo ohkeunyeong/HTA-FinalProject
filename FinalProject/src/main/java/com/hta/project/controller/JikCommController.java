@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.hta.project.domain.Jik_Comm;
 import com.hta.project.service.Jik_CommService;
@@ -52,18 +54,28 @@ public class JikCommController {
 			response.getWriter().print(ok);
 		}
 		
-		@PostMapping(value = "/delete")
+		@RequestMapping(value = "/delete")
 		public void Jik_CommDelete(int jik_comm_num, HttpServletResponse response)
 				throws Exception{ // int num => Integer.parseInt(request.getParameter)
 			int result = jik_commService.Jik_CommsDelete(jik_comm_num);
 			response.getWriter().print(result);
 		}
 		
-		@PostMapping(value = "/update")
+		@RequestMapping(value = "/update")
 		public void Jik_CommUpdate(Jik_Comm co, HttpServletResponse response)
 				throws Exception{
 			int ok = jik_commService.Jik_CommsUpdate(co);
 			response.getWriter().print(ok);
 		}
+		
+		@RequestMapping("/reply")
+		public void BoardReplyAction(Jik_Comm co, HttpServletResponse response)
+				throws Exception{
+			logger.info("jik_comm_re_ref = " + co.getJik_comm_re_ref());
+				int result =jik_commService.Jik_CommsReply(co);
+				
+				response.getWriter().print(result);
+				
+			}
 		
 }

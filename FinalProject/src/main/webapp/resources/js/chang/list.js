@@ -85,11 +85,13 @@ $(function() {
 			go(1); //보여줄 페이지를 1페이지로 설정합니다.
 		}); // change end
 		
-		if($("#Loginid").val()!=null){  
-			$("button").click(function(){
+		 $("button").click(function(){
+			 if($("#Loginid").val()!=null || $("#Loginid").val()!=""){ 
 				location.href="write";
-			})
-		}else{
-			alert("로그인 시 가능합니다.")
-		}
+				console.log("아이디:"+$("#Loginid").val());
+			 }else{
+				alert("로그인 시 가능합니다.")
+			 }
+		 })
+		
 })

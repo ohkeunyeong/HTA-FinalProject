@@ -9,9 +9,9 @@ public class Jik_Comm {
 	private String jik_comm_content; 
 	private String jik_comm_date;
 	private int jik_comm_re_ref;
-	private String jik_comm_re_lev;	
-	private String jik_comm_re_seq;  
-	private String jik_comm_secret;
+	private int jik_comm_re_lev;	
+	private int jik_comm_re_seq;  
+	private int jik_comm_secret;
 	private int state;
 	
 	public int getState() {
@@ -56,22 +56,22 @@ public class Jik_Comm {
 	public void setJik_comm_re_ref(int jik_comm_re_ref) {
 		this.jik_comm_re_ref = jik_comm_re_ref;
 	}
-	public String getJik_comm_re_lev() {
+	public int getJik_comm_re_lev() {
 		return jik_comm_re_lev;
 	}
-	public void setJik_comm_re_lev(String jik_comm_re_lev) {
+	public void setJik_comm_re_lev(int jik_comm_re_lev) {
 		this.jik_comm_re_lev = jik_comm_re_lev;
 	}
-	public String getJik_comm_re_seq() {
+	public int getJik_comm_re_seq() {
 		return jik_comm_re_seq;
 	}
-	public void setJik_comm_re_seq(String jik_comm_re_seq) {
+	public void setJik_comm_re_seq(int jik_comm_re_seq) {
 		this.jik_comm_re_seq = jik_comm_re_seq;
 	}
-	public String getJik_comm_secret() {
+	public int getJik_comm_secret() {
 		return jik_comm_secret;
 	}
-	public void setJik_comm_secret(String jik_comm_secret) {
+	public void setJik_comm_secret(int jik_comm_secret) {
 		this.jik_comm_secret = jik_comm_secret;
 	}
 	public String getId() {

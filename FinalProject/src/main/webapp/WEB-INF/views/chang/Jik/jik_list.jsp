@@ -25,7 +25,7 @@
 </head>
 <body>
 <div class="container">
-<input type="hidden" id="Loginid" value="${id}" name="loginid"> 
+<input type="hidden" id="Loginid" value="${id}" name="loginid">
 <%-- 게시글이 있는 경우--%> 
 <c:if test="${listcount > 0 }">
   <div class="rows">
