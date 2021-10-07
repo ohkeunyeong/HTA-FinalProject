@@ -116,11 +116,6 @@
 		</ul>
 	</nav>
 	<br>
-
-	<div class="container justify-content-center">
-		<img src="${pageContext.request.contextPath}/resources/image/farm4.jpeg" alt="Logo" style="height: 400px; margin-bottom: 30px; margin-left:15%">
-	</div>
-	<!--  <a href='https://www.freepik.com/vectors/water'>Water vector created by upklyak - www.freepik.com</a> -->
 	
 	<jsp:include page="../main/modal/login.jsp"/>
 

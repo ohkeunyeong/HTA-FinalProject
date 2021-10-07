@@ -55,4 +55,11 @@
 		where ID = #{id}
 	</delete>
 	
+	<update id="update" parameterType="member">
+    	update member
+    	set name = #{name}, pass = #{pass} ,
+    		nick = #{nick} , mail = #{mail}, tel = #{tel}
+    	where id = #{id}
+    </update>
+ 	
 </mapper>

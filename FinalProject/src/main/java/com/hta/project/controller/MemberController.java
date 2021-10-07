@@ -159,7 +159,7 @@ public class MemberController {
 		  int result = memberService.update(member);
 		  if (result == 1) {
 			  rattr.addFlashAttribute("result", "updateSuccess");
-			  return "redirect:/member/member_list";
+			  return "redirect:/main";
 		  } else {
 			  model.addAttribute("url", request.getRequestURL());
 			  model.addAttribute("message", "정보 수정 실패");
