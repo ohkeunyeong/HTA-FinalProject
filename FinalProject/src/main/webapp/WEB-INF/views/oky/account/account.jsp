@@ -8,22 +8,22 @@
 <head>
 <meta charset="UTF-8">
 <title>가계부</title>
+<jsp:useBean id="util" class="com.hta.project.controller.OkyAccountController" />
+<jsp:include page="../../main/header.jsp" /> 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/oky/account.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/oky/account.css"></link>
 </head>
 <body>
-<jsp:useBean id="util" class="com.hta.project.controller.OkyAccountController" />
-<jsp:include page="../../main/header.jsp" /> 
+<br><br><br>
 <input type="hidden" id="id" value="${id}" name="id">
-
-<div>농장명 : ${name} <br>
+<%-- <div>농장명 : ${name} <br>
           아이디 : ${id}   <br>
  관리자 레벨 : ${level}   <br>
           연도 : ${year}   <br>
           월    : ${month}   <br>      
      요일 :    ${dayofweek}  <br>  
-</div>
+</div> --%>
 	<div id="container">
 		<section id="accordion">
 		<a href="account?name=${name}&year=${year-1}&month=${month}">◁</a>

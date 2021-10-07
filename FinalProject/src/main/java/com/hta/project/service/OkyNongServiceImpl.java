@@ -30,4 +30,10 @@ public class OkyNongServiceImpl implements OkyNongService{
 		map.put("end", endrow);
 		return dao.getBoardList(map);
 	}
+
+	@Override
+	public void insertBoard(Nong nong) {
+		dao.insertBoard(nong);
+		
+	}
 }

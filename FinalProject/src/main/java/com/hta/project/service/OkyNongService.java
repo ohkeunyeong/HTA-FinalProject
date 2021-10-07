@@ -11,5 +11,8 @@ public interface OkyNongService {
 	
 	// 글 목록 보기
 	List<Nong> getBoardList(String name, int page, int limit);
+	
+	// 글 등록하기
+	void insertBoard(Nong nong);
 
 }

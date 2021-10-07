@@ -7,9 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>일정수정하기</title>
+<jsp:include page="../../main/header.jsp" /> 
 </head>
 <body>
-<jsp:include page="../../main/header.jsp" /> 
+<br><br><br>
 <h1>일정수정하기</h1>
 <form action="calupdate" method="post">
 <input type="hidden" name="seq" value="${calendar.seq}"/>

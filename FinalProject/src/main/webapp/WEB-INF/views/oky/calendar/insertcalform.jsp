@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>일정추가</title>
+<jsp:include page="../../main/header.jsp" />
 <%
 	int year=Integer.parseInt(request.getParameter("year"));
  	int month=Integer.parseInt(request.getParameter("month"));
@@ -26,7 +27,7 @@
 </head>
 
 <body>
-<jsp:include page="../../main/header.jsp" />
+<br><br><br>
 <h1>일정추가</h1>
 <form action="insertcalboard" method="post">
 <input type="hidden" name="name" value="${name}"/>

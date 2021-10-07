@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>일정 상세보기</title>
 <jsp:include page="../../main/header.jsp" /> 
+<jsp:useBean id="util" class="com.hta.project.controller.OkyCalendarController" />
 <script>
 function page_back(){
 	history.go(-1);
@@ -14,7 +15,7 @@ function page_back(){
 </script>
 </head>
 <body>
-<jsp:useBean id="util" class="com.hta.project.controller.OkyCalendarController" />
+<br><br><br>
 <h1>일정상세보기</h1>
 <table border="1">
 
