@@ -39,6 +39,14 @@ public class Jik_CommDAO {
 		return sqlSession.update("Jik_Comms.update",co);
 	}
 
+	public int Jik_CommsReply(Jik_Comm co) {
+		return sqlSession.insert("Jik_Comms.reply_insert", co);
+	}
+
+	public int Jik_CommsReplyUpdate(Jik_Comm co) {
+		return sqlSession.update("Jik_Comms.reply_update", co);
+	}
+
 
 
 }

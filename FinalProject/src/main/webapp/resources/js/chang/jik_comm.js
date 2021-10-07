@@ -32,7 +32,7 @@ function getList(currentPage,state){
                      
 				    output='';
 					$(rdata.list).each(function(){
-						var lev = this.jik_comm_lev;
+						var lev = this.jik_comm_re_lev;
 						var comment_reply='';
 						//레벨에 따라 왼쪽 여백줍니다.
 						if(lev>=1){
@@ -62,8 +62,9 @@ function getList(currentPage,state){
 						   	         + lev + ',' + this.jik_comm_re_seq +',' 
 						   	         + this.jik_comm_re_ref +')"  class="comment_info_button">답글쓰기</a>'
 						     
-						output += '   </div>' //comment_info_box;
+						   	  output += '   </div>' //comment_info_box;
 							   
+						 
 						//글쓴이가 로그인한 경우 나타나는 더보기입니다.
                         //수정과 삭제 기능이 있습니다.							
 						if($("#Loginid").val()==this.id ||$("#Loginid").val()=='admin'){ 
@@ -80,6 +81,17 @@ function getList(currentPage,state){
 							   + '          class="layer_button">삭제</a></li></ul>'
 							   + '     </div>'//LayerMore
 							   + '   </div>'//comment_tool
+						}else{
+							 output +=  '<div class="comment_tool">'
+								   + '    <div title="더보기" class="comment_tool_button">'
+								   + '       <div>&#46;&#46;&#46;</div>' 
+								   + '    </div>'
+								   + '    <div id="commentItem' +  this.jik_comm_num + '"  class="LayerMore">' //스타일에서 display:none; 설정함
+								   + '     <ul class="layer_list">'							   
+								   + '      <li class="layer_item">'
+								   + ' 		<a href="javascript:void(0);" onclick="#" class="layer_button">신고하기 </a>'
+								   + '     </div>'//LayerMore
+								   + '   </div>'//comment_tool
 						}
 							   
 						output += '</div>'// comment_area
@@ -140,11 +152,11 @@ function del(jik_comm_num){//num : 댓글 번호
 	}
 	
 	$.ajax({
-		url:'../jik_comm/del',
+		url:'../jik_comm/delete',
 		data:{jik_comm_num:jik_comm_num},
 		success:function(rdata){
 			if(rdata==1){
-				getList(1,option);
+				getList(page,option);
 			}
 		}
 	})
@@ -294,11 +306,11 @@ $(function(){
 			 return
 		 }
 		 $.ajax({
-			 url :'ReplyUpdate.freebo',
-			 data:{jik_comm_num:$(this).attr('data-id'), reply_content:content},
+			 url :'../jik_comm/update',
+			 data:{jik_comm_num:$(this).attr('data-id'), jik_comm_content:content},
 			 success:function(rdata){
 				 if(rdata==1){
-					getList(option); 
+					getList(page,option); 
 				 }//if
 			 }//success
 		 });//ajax
@@ -335,20 +347,21 @@ $(function(){
 		 $('#message+.CommentWriter').show();
 		 
 		 $.ajax({
-			 url : 'ReplyComment.freebo',
+			 url : '../jik_comm/reply',
 			 data : {
-				 mem_nickname : $("#mem_nickname").val(),
-				 reply_content : content,
-				 reply_board_idx : $("#reply_board_idx").val(),
-				 reply_re_lev : $(this).attr('data-lev'),
-				 reply_re_ref : $(this).attr('data-ref'),
-				 reply_re_seq : $(this).attr('data-seq')
+				 id : $("#Loginid").val(),
+				 nick : $("#Loginnick").val(),
+				 jik_comm_content : content,
+				 jik_board_num : $("#jik_num").val(),
+				 jik_comm_re_lev : $(this).attr('data-lev'),
+				 jik_comm_re_ref : $(this).attr('data-ref'),
+				 jik_comm_re_seq : $(this).attr('data-seq')
 			 },
 			 type : 'post',
 			 success : function(rdata){
-				 if(rdata == 1){
-					 getList(option);
-				 }
+				 if(rdata==1){
+						getList(page,option); 
+				}//if
 			 }
 		 })//ajax
 	 })//답변 달기 등록 버튼을 클릭한 경우

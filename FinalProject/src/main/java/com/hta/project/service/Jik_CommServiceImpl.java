@@ -52,4 +52,19 @@ public class Jik_CommServiceImpl implements Jik_CommService{
 		return dao.Jik_CommsUpdate(co);
 	}
 
+	@Override
+	public int Jik_CommsReply(Jik_Comm co) {
+		Jik_CommsReplyUpdate(co);
+		co.setJik_comm_re_lev(co.getJik_comm_re_lev()+1);
+		co.setJik_comm_re_seq(co.getJik_comm_re_seq()+1);
+		return dao.Jik_CommsReply(co);
+	}
+
+	@Override
+	public int Jik_CommsReplyUpdate(Jik_Comm co) {
+		return dao.Jik_CommsReplyUpdate(co);
+	}
+
+	
+
 }
