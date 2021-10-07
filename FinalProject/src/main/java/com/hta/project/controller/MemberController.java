@@ -40,9 +40,6 @@ public class MemberController {
 	private static final Logger logger
 							= LoggerFactory.getLogger(MemberController.class);
 	
-	private static int memberCount = 0;
-	private static List<String> memberChatList = new ArrayList<String>();
-	
 	@Autowired
 	private MemberService memberService;
 	
@@ -95,7 +92,8 @@ public class MemberController {
 							   @RequestParam(value="pass") String password,
 							   @RequestParam(value="remember", defaultValue="", required=false) String remember,
 							   HttpSession session, HttpServletResponse response,
-							   RedirectAttributes rattr){
+							   RedirectAttributes rattr, HttpServletRequest request,
+							   Model mv){
 		Map<String, Object> member = memberService.isId(id, password);
 		Member m = (Member) member.get("member");
 		
@@ -110,10 +108,6 @@ public class MemberController {
 				logger.info("쿠키저장: 0");
 				savecookie.setMaxAge(0);
 			}
-			memberCount++;
-			memberChatList.add(m.getNick());
-			logger.info("memberCount = " + memberCount);
-			logger.info("memberChatList = " + memberChatList);
 			
 			response.addCookie(savecookie);
 			session.setAttribute("id", m.getId());
@@ -127,11 +121,6 @@ public class MemberController {
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String loginout(HttpSession session) {
-		memberCount--;
-		memberChatList.remove(session.getAttribute("nick"));
-		logger.info("memberCount = " + memberCount);
-		logger.info("memberChatList = " + memberChatList);
-		
 		session.invalidate();
 		return "redirect:/main";
 	}
@@ -176,15 +165,6 @@ public class MemberController {
 			  model.addAttribute("message", "정보 수정 실패");
 			  return "error/error";
 		  }
-	  }
-	  
-	  @PostMapping("/memberChatList")
-	  @ResponseBody
-	  public Map<String, Object> getMemberChatList() {
-		  Map<String, Object> map = new HashMap<String, Object>();
-		  map.put("memberChatList", memberChatList);
-		  map.put("memberCount", memberCount);
-		  return map;
 	  }
 	  
 }
