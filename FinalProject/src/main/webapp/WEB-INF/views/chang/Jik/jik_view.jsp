@@ -5,7 +5,7 @@
 <title>MVC 게시판 - view</title>
  <jsp:include page="../../main/header.jsp" />
   <script src="../resources/js/jquery-3.6.0.min.js"></script>
- <script src="../resources/js/chang/view3.js"></script>
+ <script src="../resources/js/chang/jik_comm.js"></script>
  <link rel="stylesheet" href="../resources/css/chang/view.css">
 </head>
 <body>
@@ -103,19 +103,21 @@
 		</div><!--  comment option end -->
 		<ul class="comment_list">
 		</ul>
-		<div id="message"></div>
+		<span id="message"></span>
 		<div class="CommentWriter">
 			<div class="comment_inbox">
 				<b class="comment_inbox_name">${nick}</b><span
 				   class="comment_inbox_count">0/200</span>
-				  <textarea placeholder="댓글을 남겨보세요" rows="1"
+				  <textarea placeholder="로그인 후 댓글을 남겨보세요" rows="3"
 				  class="comment_inbox_text" maxLength="200"></textarea> 
 				  
 			</div>
+		<c:if test="${id!=null}">
 			<div class="register_box">
 				<div class="button btn_cancel">취소</div>
 				<div class="button btn_register" id="write">등록</div>
 			</div>
+		</c:if>
 		</div><!-- CommentWriter end -->
 	</div><!-- CommentBox end -->
   </div><!-- class="container" -->

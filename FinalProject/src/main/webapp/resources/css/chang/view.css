@@ -195,7 +195,7 @@ textarea.comment_inbox_text {
 	color: #979797
 }
 
-.CommentBox .comment_list+.CommentWriter {
+.CommentBox #message+.CommentWriter {
 	margin-top: 30px;
 }
 
