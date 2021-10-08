@@ -34,6 +34,7 @@ function getList(currentPage,state){
 					$(rdata.list).each(function(){
 						var lev = this.jik_comm_re_lev;
 						var comment_reply='';
+						var s = this.jik_comm_secret.toString().trim();
 						//레벨에 따라 왼쪽 여백줍니다.
 						if(lev>=1){
 							comment_reply = ' CommentItem--reply lev1';//margin-left: 46px;
@@ -41,7 +42,7 @@ function getList(currentPage,state){
 						
 					
 						
-						output += '<li id="' + this.jik_comm_num + '" class="CommentItem' + comment_reply + '">'
+					   output  += '<li id="' + this.jik_comm_num + '" class="CommentItem' + comment_reply + '">'
 							   + '   <div class="comment_area">'
 							   + '    <div class="comment_box">'
 							   + '      <div class="comment_nick_box">'
@@ -51,9 +52,18 @@ function getList(currentPage,state){
 							   + '       </div>'  // comment_nick_box
 							   + '     </div>'   //comment_box
 							   + '    <div class="comment_text_box">'
-							   + '       <p class="comment_text_view">'
-							   + '         <span class="text_comment">' + this.jik_comm_content + '</span>'
-							   + '       </p>'
+							   + '       <p class="comment_text_view">';
+							   if(s=='Y'){
+								   if(this.jik_id== $("#Loginid").val() || this.id== $("#Loginid").val()){
+									   output += '         <span class="text_comment">' + this.jik_comm_content + '</span>';
+								   }else{
+									   output += '         <span class="text_comment">' + "비밀 댓글입니다." + '</span>';
+								   }
+							   }else if(s=='N'){
+								   output += '         <span class="text_comment">' + this.jik_comm_content +'</span>';
+							   }
+						
+					   output  += '       </p>'
 							   + '    </div>' //comment_text_box
 							   + '    <div class="comment_info_box">'
 							   + '      <span class="comment_info_date">' + this.jik_comm_date + '</span>';
@@ -156,7 +166,7 @@ function del(jik_comm_num){//num : 댓글 번호
 		data:{jik_comm_num:jik_comm_num},
 		success:function(rdata){
 			if(rdata==1){
-				getList(page,option);
+				getList(1,option);
 			}
 		}
 	})
@@ -246,7 +256,12 @@ $(function(){
 			alert("댓글을 입력하세요");
 			return;
 		}
-		
+		if($('.secret').is(':checked')){
+			secret='Y'
+			$('.secret').attr('checked',false);
+		}else{
+			secret='N'
+		}
 		$.ajax({
 			url : "../jik_comm/add",
 			data : {
@@ -255,7 +270,9 @@ $(function(){
 					"nick" : $("#Loginnick").val(),
 					"jik_board_num" : $("#jik_num").val(),
 					"jik_comm_re_lev" : 0,
-					"jik_comm_re_seq" : 0
+					"jik_comm_re_seq" : 0,
+					"jik_comm_secret" : secret,
+					"jik_id" : $("#Jik_id").val()
 			},
 			type : 'post',
 			success : function(rdata){
@@ -305,9 +322,15 @@ $(function(){
 			 alert('수정할 내용을 입력하세요');
 			 return
 		 }
+		 if($('.secret').is(':checked')){
+				secret='Y'
+				$('.secret').attr('checked',false);
+			}else{
+				secret='N'
+			}
 		 $.ajax({
 			 url :'../jik_comm/update',
-			 data:{jik_comm_num:$(this).attr('data-id'), jik_comm_content:content},
+			 data:{jik_comm_num:$(this).attr('data-id'), jik_comm_content:content, jik_comm_secret:secret},
 			 success:function(rdata){
 				 if(rdata==1){
 					getList(page,option); 
@@ -346,6 +369,13 @@ $(function(){
 		 //댓글쓰기 영역 보이도록 합니다.
 		 $('#message+.CommentWriter').show();
 		 
+		 if($('.secret').is(':checked')){
+				secret='Y'
+				$('.secret').attr('checked',false);
+			}else{
+				secret='N'
+			}
+		 
 		 $.ajax({
 			 url : '../jik_comm/reply',
 			 data : {
@@ -355,7 +385,9 @@ $(function(){
 				 jik_board_num : $("#jik_num").val(),
 				 jik_comm_re_lev : $(this).attr('data-lev'),
 				 jik_comm_re_ref : $(this).attr('data-ref'),
-				 jik_comm_re_seq : $(this).attr('data-seq')
+				 jik_comm_re_seq : $(this).attr('data-seq'),
+				 jik_comm_secret : secret,
+				 jik_id : $("#Jik_id").val()
 			 },
 			 type : 'post',
 			 success : function(rdata){

@@ -9,9 +9,11 @@ jik_comm_date			DATE default sysdate,
 jik_comm_re_ref			NUMBER(10),
 jik_comm_re_lev			NUMBER(10),
 jik_comm_re_seq			NUMBER(10),
-jik_comm_secret			CHAR(2)
+jik_comm_secret			CHAR(2),
+jik_id					VARCHAR2(50)
 )
 
+drop sequence jik_comm_seq;
 create sequence jik_comm_seq;
 
 select * from jik_comm;

@@ -65,6 +65,24 @@ public class Jik_CommServiceImpl implements Jik_CommService{
 		return dao.Jik_CommsReplyUpdate(co);
 	}
 
+	@Override
+	public int Jik_comm_ref_select(int jik_comm_num) {
+		
+		return dao.Jik_comm_ref_select(jik_comm_num);
+	}
+
+	@Override
+	public int Jik_comm_ref_select2(int select) {
+		
+		return dao.Jik_comm_ref_select2(select);
+	}
+
+	@Override
+	public int Jik_CommsDelete2(int jik_comm_num) {
+		
+		return dao.Jik_CommsDelete2(jik_comm_num);
+	}
+
 	
 
 }
