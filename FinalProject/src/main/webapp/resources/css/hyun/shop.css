@@ -5,9 +5,11 @@ h5 {
 }
 
 .container .nav {
-	margin-top: 80px;
+	margin-top: 60px;
 	font-size: 20px;
+	width:100%
 }
+
 
 .recommendation {
 	margin-top: 1%;
@@ -34,6 +36,17 @@ h5 {
 	margin-left:14%;
 }
 
+.section2 > span {
+	font-size: 30px;
+	font-weight: bold;
+	margin-right:48%;
+}
+
+.section2  .button {
+	font-size: 20px;
+	font-weight: medium;
+	color: gray;
+}
 #p1 {
 	font-size: 30px;
 }
@@ -42,13 +55,6 @@ h5 {
 	font-size: 30px;
 	font-weight: bold;
 }
-
-.section2  .button {
-	font-size: 20px;
-	font-weight: medium;
-	color: gray;
-}
-
 
 .recommendation .products {
 	margin-top: 2%;
@@ -64,6 +70,82 @@ h5 {
 .recommendation .products>card-img-top {
 	height: 200px;
 }
+
+
+.personacon .products {
+	margin-top: 2%;
+	margin-bottom: 2%;
+	margin-right: 15%;
+}
+
+.personacon .products card-deck .card {
+	width: 300px;
+	height: 250px;
+}
+
+.personacon .products>card-img-top {
+	height: 200px;
+}
+
+.tools .products {
+	margin-top: 2%;
+	margin-bottom: 2%;
+	margin-right: 15%;
+}
+
+.tools .products card-deck .card {
+	width: 300px;
+	height: 250px;
+}
+
+.tools .products>card-img-top {
+	height: 200px;
+}
+
+.goods .products {
+	margin-top: 2%;
+	margin-bottom: 2%;
+}
+
+.goods .products card-deck .card {
+	width: 300px;
+	height:250px;
+}
+
+.goods .products>card-img-top {
+	height: 200px;
+}
+
+.reviewProduct .products {
+	margin-top: 2%;
+	margin-bottom: 2%;
+	margin-right: 15%;
+}
+
+.reviewProduct .products card-deck .card {
+	width: 300px;
+	height: 250px;
+}
+
+.reviewProduct .products>card-img-top {
+	height: 200px;
+}
+
+.review .products {
+	margin-top: 2%;
+	margin-bottom: 2%;
+	margin-right: 15%;
+}
+
+.review .products card-deck .card {
+	width: 300px;
+	height: 250px;
+}
+
+.review .products>card-img-top {
+	height: 200px;
+}
+
 
 /* 슬라이드 배너 */
 * {margin:0;padding:0;box-sizing:border-box;}

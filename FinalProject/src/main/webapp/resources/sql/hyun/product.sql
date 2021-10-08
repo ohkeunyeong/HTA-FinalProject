@@ -18,16 +18,52 @@ CREATE TABLE PRODUCT(
 
 select * from product;
 
-select *
-from (select rownum rnum, pr.*
-	  from(select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
+select * from 
+
+	(select rownum rnum, pr.*
+	  from
+	  (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
 	  	   		  p.product_detail, p.product_img, p.product_original, p.product_date
-	  	   from product p, CATEGORY c
+	  	   from 
+	  	   product p, CATEGORY c, review r 
 	  	   where p.category_code = c.category_code
-	  	   order by p.product_code) pr
+	  	   and p.category_code= r.category_code ) a
+	  	   group by p.category_code
+	  	   order by review cnt
+	  	   ,p.product_code) pr
 	 )
 where rnum >= 1 and rnum <= 10;
 
+
+select * from 
+
+	(select rownum rnum, b.*
+	  from
+	  (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
+	  	   		  p.product_detail, p.product_img, p.product_original, p.product_date
+	  	   from 
+	  	   product left outer join (select *, count(*) cnt
+ 			        				from 
+ 			        				review left outer join(select * 
+ 			        					   					from category) c
+ 			        				group by cnt) r
+	       on product.category_code = c.category_code   
+	       order by cnt desc  ) b
+	 			 )
+where rnum >= 1 and rnum <= 10;
+
+
+select * from
+	 			( select rownum rnum, b.*
+	 			  from
+	 			       (select product.*, nvl(cnt,0) cnt
+	 			        from
+	 			        product left outer join (select *, count(*) cnt
+	 			        					   from review
+	 			        					   group by cnt) c
+	 			        on product.category_code = c.category_code
+	 			        order by cnt desc  ) b
+	 			 )
 
 INSERT INTO PRODUCT(PRODUCT_CODE, CATEGORY_CODE, PRODUCT_NAME, PRODUCT_PRICE ,
 PRODUCT_DETAIL, PRODUCT_IMG, PRODUCT_ORIGINAL, PRODUCT_DATE)

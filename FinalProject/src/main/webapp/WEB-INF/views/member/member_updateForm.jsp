@@ -25,7 +25,7 @@ input[type=file]{
           <span id="message"></span>
          
          <b>비밀번호</b>
-         <input type="password" name="pass" value="${memberinfo.password}" placeholder="비밀번호를 입력하세요" required>
+         <input type="password" name="pass" value="${member_info.pass}" placeholder="비밀번호를 입력하세요" required>
          <span id="pass_message"></span>
          
          <b>이름</b>
@@ -44,7 +44,7 @@ input[type=file]{
          
          
          <b>이메일 주소</b>
-         <input type="text" name="email" value="${member_info.mail}" maxLength="30" 
+         <input type="text" name="mail" value="${member_info.mail}" maxLength="30" 
          placeholder="이메일을 입력하세요" required>
          <span id="email_message"></span>
          
