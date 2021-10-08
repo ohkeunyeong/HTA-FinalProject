@@ -893,10 +893,5 @@ public class AdminController {
 		
 		response.getWriter().print(result);
 	}
-	
-	@GetMapping(value="/chat")
-	public String chat() {
-		return "jjs/admin/Chat";
-	}
 
 }

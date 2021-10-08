@@ -1,166 +1,145 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<script
-	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<link
-	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	rel="stylesheet" id="bootstrap-css">
-
-<meta charset='UTF-8'>
-<meta name="robots" content="noindex">
-<link rel="shortcut icon" type="image/x-icon"
-	href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" />
-<link rel='stylesheet prefetch'
-	href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
-<link rel='stylesheet prefetch'
-	href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jjs/chat.css">
-<style>
-#frame .content {
-	width: 100%
-}
-
-sup {
-	position: relative;
-	top: -10px;
-	right: -95%;
-	font-size: 3px;
-}
-
-.inout {
-	text-align: center;
-}
-</style>
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.min.js"></script>
+<meta charset="UTF-8">
+	<title>Chating</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		.container{
+			width: 500px;
+			margin: 0 auto;
+			padding: 25px
+		}
+		.container h1{
+			text-align: left;
+			padding: 5px 5px 5px 15px;
+			color: #FFBB00;
+			border-left: 3px solid #FFBB00;
+			margin-bottom: 20px;
+		}
+		.chating{
+			background-color: #000;
+			width: 500px;
+			height: 500px;
+			overflow: auto;
+		}
+		.chating .me{
+			color: #F6F6F6;
+			text-align: right;
+		}
+		.chating .others{
+			color: #FFE400;
+			text-align: left;
+		}
+		input{
+			width: 330px;
+			height: 25px;
+		}
+		#yourMsg{
+			display: none;
+		}
+	</style>
 </head>
-<body>
-	<div id="frame">
-		<div class="content">
-			<div class="contact-profile">
-				<img src="${pageContext.request.contextPath}/resources/image/jjs/among us.png" alt="avatar"/>
-				<p>${name}</p>
-				<div class="social-media">
-					<i class="fa fa-facebook" aria-hidden="true"></i>
-					<i class="fa fa-twitter" aria-hidden="true"></i>
-					<i class="fa fa-instagram" aria-hidden="true"></i>
-				</div>
-			</div>
-			<div class="messages">
-				<ul>
-					
-				</ul>
-			</div>
-			<div class="message-input">
-				<div class="wrap">
-					<input type="text" id="write"
-						placeholder="Write your message..." />
-					<button class="exit">나가기</button>
-				</div>
-			</div>
-		</div>	
-	</div>
-	<script>
-		function newMessage(){
-			var message = $(".message-input input").val();
-			
-			if($.trim(message) == ''){
-				return false;
-			}
-			
-			output = '<li class="sent">'
-					+ '<img src="upload${filename}" alt=""/>'
-					+ '<p></p></li>';
-			$(output).appendTo($('.messages ul'));
-			
-			// 입력한 내용들을 문자열로 변환하기 위해 text()를 이용합니다.
-			$('.messages>ul>li').last().find('p').text(message);
-			
-			$(".message-input input").val('');
-			
-			moveScroll();
-			
-			return message;
-		}; // newMessage end
+
+<script type="text/javascript">
+	var ws;
+
+	function wsOpen(){
+		ws = new WebSocket("ws://" + location.host + "/project/echo");
+		wsEvt();
+	}
 		
-		$(".exit").click(function(){
-			if(confirm("정말로 나가시겠습니까?")){
-				send("${name}님이 퇴장하셨습니다.out");
-				ws.close();
-			}
-		}); // $('.exit').click end
+	function wsEvt() {
+		ws.onopen = function(data){
+			//소켓이 열리면 동작
+		}
 		
-		$(window).on("keyup", function(e){
-			if(e.which == 13){ // 엔터
-				var message = newMessage(); // 화면에 보이는 메시지 전송
-				if(message){ // 메시지가 존재하는 경우
-					send(message); // 소켓에 보내는 메시지 전송				
+		ws.onmessage = function(data) {
+			//메시지를 받으면 동작
+			var msg = data.data;
+			if(msg != null && msg.trim() != ''){
+				console.log(msg)
+				var d = JSON.parse(msg);
+				if(d.type == "getId"){
+					var si = d.sessionId != null ? d.sessionId : "";
+					if(si != ''){
+						$("#sessionId").val(si); 
+					}
+				}else if(d.type == "message"){
+					if(d.sessionId == $("#sessionId").val()){
+						$("#chating").append("<p class='me'>나 :" + d.msg + "</p>");	
+					}else{
+						$("#chating").append("<p class='others'>" + d.userName + " :" + d.msg + "</p>");
+					}
+						
+				}else{
+					console.warn("unknown type!")
 				}
 			}
-		}); //keyup end
-		
-		// ws = new WebSocket("ws://localhost:8088/mychat/boot.do?id=${name}&filename=${filename}");
-		var url = "ws://localhost:8088${pageContext.request.contextPath}/echo?id=${id}&nick=${nick}";
-		ws = new WebSocket(url);
-		
-		// 웹 소켓이 연결되었을 때 호출되는 이벤트
-		ws.onopen = function(event){
-			console.log("연결되었습니다.");
 		}
-		
-		// 서버에서 전송하는 데이터를 받으려면 message이벤트를 구현하면 됩니다.
-		// 웹 소켓에서 메시지가 날라왔을 때 호출되는 이벤트입니다.
-		ws.onmessage = function(event){
-			console.log("받은 데이터 : " + event.data);
-			// 님이 퇴장하셨습니다.out
-			response(event.data);
-		}
-		
-		// 웹 소켓이 닫혔을 때 호출되는 이벤트입니다.
-		ws.onclose = function(event){
-			location.href="logout";
-		}
-		
-		function send(message){
-			ws.send(message); // 웹 소켓으로 message를 보냅니다.
-		}
-		
-		function moveScroll(){
-			console.log($('.messages')[0].scrollHeight);
-			// scrollTop()은 선택한 요소의 스크롤바 수직 위치를 반환하거나 스크롤바 수직 위치를 정합니다.
-			// scrollHeight : 스크롤 시키지 않았을때의 전체 높이
-			$('.messages').scrollTop($(".messages")[0].scrollHeight);
-		}
-		
-		function response(text){
-			// text 전달 형식 - 
-			arr = text.split('&');
-			message = arr[2];
-			var out = "님이 퇴장하셨습니다.out";
-			var inin = "님이 입장하셨습니다.in";
-			console.log(message)
-			
-			// 입장과 퇴장의 경우 css가 가운데로 위치해야 해서 클래스 inout을 이용합니다.
-			if(message.indexOf(out) > -1 || message.indexOf(inin) > -1){
-				index = message.lastIndexOf('.');
-				output = "<li class='inout'><p></p></li>";
-				message = message.substring(0, index);
-			}else{
-				name = arr[0];
-				filename = arr[1];
-				output = "<li class='replies'>"
-						+ "<img src='upload" + filename + "'>"
-						+ "<sup>" + name + "</sup><p></p></li>";
+
+		document.addEventListener("keypress", function(e){
+			if(e.keyCode == 13){ //enter press
+				send();
 			}
-			
-			$('#frame > div.content > div.messages > ul').append(output);
-			$(".messages>ul>li").last().find('p').text(message);
-			
-			moveScroll();
-		} // response() end
-	</script>
+		});
+	}
+
+	function chatName(){
+		var userName = $("#userName").val();
+		if(userName == null || userName.trim() == ""){
+			alert("사용자 이름을 입력해주세요.");
+			$("#userName").focus();
+		}else{
+			wsOpen();
+			$("#yourName").hide();
+			$("#yourMsg").show();
+		}
+	}
+
+	function send() {
+		var option ={
+			type: "message",
+			sessionId : $("#sessionId").val(),
+			userName : $("#userName").val(),
+			msg : $("#chatting").val()
+		}
+		ws.send(JSON.stringify(option))
+		$('#chatting').val("");
+	}
+</script>
+<body>
+	<div id="container" class="container">
+		<h1>채팅</h1>
+		<input type="hidden" id="sessionId" value="">
+		
+		<div id="chating" class="chating">
+		</div>
+		
+		<div id="yourName">
+			<table class="inputTable">
+				<tr>
+					<th>사용자명</th>
+					<th><input type="text" name="userName" id="userName"></th>
+					<th><button onclick="chatName()" id="startBtn">이름 등록</button></th>
+				</tr>
+			</table>
+		</div>
+		<div id="yourMsg">
+			<table class="inputTable">
+				<tr>
+					<th>메시지</th>
+					<th><input id="chatting" placeholder="보내실 메시지를 입력하세요."></th>
+					<th><button onclick="send()" id="sendBtn">보내기</button></th>
+				</tr>
+			</table>
+		</div>
+	</div>
 </body>
 </html>
