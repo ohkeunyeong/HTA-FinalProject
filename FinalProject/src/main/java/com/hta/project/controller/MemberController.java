@@ -155,7 +155,10 @@ public class MemberController {
 	  public String updateProcess(Member member, Model model,
 			  					  HttpServletRequest request,
 			  					  RedirectAttributes rattr)   {
-		  
+		  	String encPassword = passwordEncoder.encode(member.getPass());
+			logger.info(encPassword);
+			member.setPass(encPassword);
+			
 		  int result = memberService.update(member);
 		  if (result == 1) {
 			  rattr.addFlashAttribute("result", "updateSuccess");
