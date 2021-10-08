@@ -36,4 +36,15 @@ public class OkyNongServiceImpl implements OkyNongService{
 		dao.insertBoard(nong);
 		
 	}
+
+	@Override
+	public Nong getDetail(int num) {
+		if(setReadCountUpdate(num)!=1)
+			   return null;
+		    return dao.getDetail(num);
+		}
+
+	private int setReadCountUpdate(int num) {
+		return dao.setReadCountUpdate(num);
+	}	
 }

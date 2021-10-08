@@ -57,5 +57,6 @@ $(function(){
          </td>
     </tr>  
 </table>
+<jsp:include page="../../main/footer.jsp" /> 
 </body>
 </html>

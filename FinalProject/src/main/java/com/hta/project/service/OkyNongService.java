@@ -15,4 +15,7 @@ public interface OkyNongService {
 	// 글 등록하기
 	void insertBoard(Nong nong);
 
+	// 게시물 상세보기
+	public Nong getDetail(int num);
+
 }

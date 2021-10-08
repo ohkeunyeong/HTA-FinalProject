@@ -40,9 +40,9 @@ function accupdate(seq ,title, amount, date, hour, min) {
 	
 }
 
-function accdelete(seq) {
+function accdelete(seq, name, year, month) {
 	if(confirm("삭제하시겠습니까?")){
-		location.href='accdelete?name=${name}&year=${year}&month=${month}&seq='+seq; 
+		location.href='accdelete?name='+ name + '&year=' + year + '&month=' + month + '&seq='+seq; 
 	}else {
 		alert('취소')
 	}

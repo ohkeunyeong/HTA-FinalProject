@@ -105,6 +105,7 @@
          </td>
 </table>
 </form>
+<jsp:include page="../../main/footer.jsp" /> 
 </body>
 <%!
 	public String toDates(String mdate){

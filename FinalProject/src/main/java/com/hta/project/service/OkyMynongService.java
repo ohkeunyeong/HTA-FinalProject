@@ -48,13 +48,13 @@ public interface OkyMynongService {
 	
 	//농장 멤버 삭제
 	public void delete(String id);
+	
 
 
 
 
 
 	
-
 
 
 }

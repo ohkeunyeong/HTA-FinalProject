@@ -98,7 +98,7 @@
 							${b.title}
 				                <c:if test="${level ==1}"> 
 							    <button onClick="accupdate(${b.seq}, '${b.title}', ${b.amount}, ${a}, ${fn:substring(b.mdate, 8, 10)}, ${fn:substring(b.mdate, 10, 12)})" data-toggle="modal" data-target="#updateModal" id="updateacc" type="button" class="btn btn-primary" id="insertacc">수정</button>
-        						<button onClick="accdelete(${b.seq})"type="button" class="btn btn-danger" data-dismiss="modal">삭제</button>
+        						<button onClick="accdelete(${b.seq}, '${name}', '${year}', '${month}')"type="button" class="btn btn-danger" data-dismiss="modal">삭제</button>
         						</c:if>
 							</td>
 					   </tr>	
@@ -258,5 +258,6 @@
     </div>
   </div>
 </div>
+<jsp:include page="../../main/footer.jsp" />  
 </body>
 </html>
