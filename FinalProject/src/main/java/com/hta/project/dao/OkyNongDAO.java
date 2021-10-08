@@ -28,4 +28,12 @@ public class OkyNongDAO {
 		
 	}
 
+	public int setReadCountUpdate(int num) {
+		return sqlSession.update("Nongs.readCountUpdate",num);
+	}
+
+	public Nong getDetail(int num) {
+		return sqlSession.selectOne("Nongs.detail", num);
+	}
+
 }

@@ -49,6 +49,17 @@ where rnum &gt;= #{start} and rnum &lt;= #{end} and name = #{name}
       
 </insert>
 
+<update id="readCountUpdate" parameterType="int">
+   update nong
+   set    NONG_READ = NONG_READ+1
+   where  NONG_NUM = #{number}
+</update>
+
+<select id="detail" parameterType="int" resultType="nong">
+   select *
+   from   nong
+   where  NONG_NUM = #{number}
+</select>
 
 </mapper>
 

@@ -150,8 +150,8 @@
     text-decoration: none; /* 앵커태그 밑줄 지워짐*/  
 }
 </style>
-<div>농장명 : ${name} <br>
-      아이디 : ${id}</div>
+<%-- <div>농장명 : ${name} <br>
+      아이디 : ${id}</div> --%>
     <div id="container">
     <h1>일정달력보기</h1>
     <table border="1" id="calendar">
@@ -224,5 +224,6 @@
 	   return cList; //결과: "<p>title</p><p>title</p>"
 }
 %> 
+<jsp:include page="../../main/footer.jsp" /> 
 </body>
 </html>

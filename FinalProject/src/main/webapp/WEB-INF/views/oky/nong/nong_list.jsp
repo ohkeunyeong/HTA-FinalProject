@@ -14,9 +14,9 @@
 <body>
 <br><br><br>
 <input type="hidden" id="id" value="${id}" name="id">
-농장명 : ${name} <br>
+<%-- 농장명 : ${name} <br>
           아이디 : ${id}   <br>
- 관리자 레벨 : ${level}   <br>
+ 관리자 레벨 : ${level}   <br> --%>
 <div class="container1" role="main">
       
 <%--     <h1>게시판</h1>
@@ -113,16 +113,17 @@
 				<c:forEach var="a" begin="0" end="${b.nong_re_lev*2}" step="1">
 				&nbsp; 	
 				</c:forEach>		
-<!-- 				<img src='image/line.gif'> -->
+< 				<img src='${pageContext.request.contextPath}/resources/image/oky/line.gif'> 
 			</c:if>  
 			 
 			<c:if test="${b.nong_re_lev == 0}">  <%-- 원문인 경우 --%>
 				&nbsp;  
 			</c:if> 			
 			
-			<a href="FreeboardDetailAction.okybo?num=${b.nong_num}">
-				 <c:out value="${b.nong_sub}" />  
-				<%-- ${b.board_subject} --%>
+			<a href="nongdetail?name=${name}&num=${b.nong_num}">
+				 <c:out value="${b.nong_sub}" escapeXml="true" /> 
+				 <span class="gray small">[<c:out value="${b.cnt}"/>]</span>
+				<%-- ${b.nong_sub} --%>
 				<%-- escapeXml="true" : HTML 태그를 화면에 그대로 보여줍니다. --%>	
 			</a>
 		  </div>
@@ -193,5 +194,6 @@
 </div>
 </c:if>
  </div>
+<jsp:include page="../../main/footer.jsp" /> 
 </body>
 </html>

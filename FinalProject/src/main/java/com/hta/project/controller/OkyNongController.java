@@ -27,6 +27,7 @@ import com.hta.project.domain.Member;
 import com.hta.project.domain.Nong;
 import com.hta.project.service.OkyMynongService;
 import com.hta.project.service.OkyNongService;
+import com.hta.project.service.OkyNong_CoService;
 
 
 @Controller
@@ -39,6 +40,9 @@ public class OkyNongController {
 
 	@Autowired
 	private OkyNongService okynongservice;
+	
+	@Autowired
+	private OkyNong_CoService okynongcoservice;
 	
 	//savefolder.properties에서 작성한 savefoldername 속성의 값을 String saveFolder에 주입합니다.
 	 @Value("${savefoldername}")
@@ -174,11 +178,11 @@ public class OkyNongController {
 	}
 	
 	//멤버게시판 글추가
-	@PostMapping("/add")
+	@PostMapping("/nongadd")
 	public ModelAndView add(String name,HttpServletRequest request,  
 			HttpSession session, HttpServletResponse response, 
 			ModelAndView mv, Nong nong) throws Exception {
-		logger.info("/add 멤버게시판 글추가");
+		logger.info("/nongadd 멤버게시판 글추가");
 		try { //유효성 검사를 위한 초기 세팅
 		String id=(String)session.getAttribute("id");
 		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
@@ -265,6 +269,97 @@ public class OkyNongController {
 	      logger.info("fileDBName = " + fileDBName);
 	      return fileDBName;
 	}	
+	
+	//게시판 상세보기
+	@GetMapping("/nongdetail")
+	public ModelAndView detail(int num, String name,HttpServletRequest request,  
+			HttpSession session, HttpServletResponse response, ModelAndView mv) {
+		logger.info("/detail 멤버게시판 상세보기 ");
+		try { //유효성 검사를 위한 초기 세팅
+		String id=(String)session.getAttribute("id");
+		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = okymynongservice.getMynong(id);
+		
+		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
+		int level =0;
+		if(myfarm.equals("1")) {//농장 주인인지 판단
+			level =1;
+		}
+		if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+			logger.info("멤버게시판보기 실패");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당 멤버게시판을 볼  권한이 없습니다.");    	   		
+		} else {   //해당 농장 멤버 접근시 	
+			Nong nong = okynongservice.getDetail(num);
+			//board=null; //eroor 페이지 이동 확인하고자 임의로 지정합니다.
+			if (nong == null) {
+				logger.info("상세보기 실패");
+				mv.setViewName("error/error");
+				mv.addObject("url", request.getRequestURL());
+				mv.addObject("message", "상세보기 실패입니다.");
+			} else {
+				logger.info("상세보기 성공");
+				int count = okynongcoservice.getListCount(num);
+				mv.setViewName("oky/nong/nong_view");
+				mv.addObject("count", count);
+				mv.addObject("boarddata", nong);
+				mv.addObject("name", name);
+				mv.addObject("level", level);
+			}			
+			}
+			return mv;
+			} catch (NullPointerException e) {
+				logger.info("비회원 접근");
+				mv.setViewName("oky/error/error");
+				mv.addObject("url", request.getRequestURL());
+				mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");    	
+				return mv;
+			}    	    		
+		}    	
+
+	//답글 쓰기프로세스
+	@GetMapping("/nongreplyView")
+	public ModelAndView add(int num, String name,HttpServletRequest request,  
+			HttpSession session, HttpServletResponse response, ModelAndView mv) {
+		logger.info("/nongreplyView 답글쓰기");
+		try { //유효성 검사를 위한 초기 세팅
+		String id=(String)session.getAttribute("id");
+		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = okymynongservice.getMynong(id);
+		
+		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
+		int level =0;
+		if(myfarm.equals("1")) {//농장 주인인지 판단
+			level =1;
+		}
+		if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+			logger.info("답글쓰기 프로세스실패");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당 멤버게시판을 볼  권한이 없습니다.");    	   		
+		} else {   //해당 농장 멤버 접근시 	
+				Nong nong = okynongservice.getDetail(num);
+				if (nong == null) {
+					mv.setViewName("error/error");
+					mv.addObject("url", request.getRequestURL());
+					mv.addObject("message", "게시판 답변글 가져오기 실패");
+				}else {
+					mv.addObject("boarddata", nong);
+					mv.addObject("name", name);
+					mv.addObject("level", level);
+					mv.setViewName("oky/nong/nong_reply");
+				}			
+			}
+			return mv;
+			} catch (NullPointerException e) {
+				logger.info("비회원 접근");
+				mv.setViewName("oky/error/error");
+				mv.addObject("url", request.getRequestURL());
+				mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");    	
+				return mv;
+			}    	    		
+		}  
 	
 }		
 	

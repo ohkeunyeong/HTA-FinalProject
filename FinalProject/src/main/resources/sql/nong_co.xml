@@ -5,7 +5,11 @@
 
 <mapper namespace="Nong_Cos">
 
-
+    <select id="count" resultType="int" parameterType="int">
+      select count(*)
+      from   NONG_CO
+      where NONG_NUM  = #{num}
+    </select>
 
 </mapper>
 

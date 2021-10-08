@@ -21,7 +21,7 @@
 <br><br><br>
 <input type="hidden" id="id" value="${id}" name="id">
  <div class="container">
-   <form action = "add" method="post" enctype="multipart/form-data"
+   <form action = "nongadd" method="post" enctype="multipart/form-data"
        name="boardform">
      <input type="hidden" id="name" value="${name}" name="name">
      <h1>멤버게시판 글쓰기</h1>
@@ -64,5 +64,6 @@
       </div>           
    </form>
  </div>
+<jsp:include page="../../main/footer.jsp" />  
 </body>
 </html>
