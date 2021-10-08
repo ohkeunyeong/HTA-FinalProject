@@ -11,6 +11,7 @@
 <body>
   <input type="hidden" id="Loginid" value="${id}" name="loginid">
   <input type="hidden" id="Loginnick" value="${nick}" name="Loginnick">
+  <input type="hidden" id="Jik_id" value="${jikdata.jik_id}" name="Jik_id">
   <div class="container">
  	<table class="table table-striped">
  		<tr>
@@ -110,10 +111,10 @@
 				   class="comment_inbox_count">0/200</span>
 				  <textarea placeholder="로그인 후 댓글을 남겨보세요" rows="3"
 				  class="comment_inbox_text" maxLength="200"></textarea> 
-				  
 			</div>
 		<c:if test="${id!=null}">
 			<div class="register_box">
+				<input type="checkbox" class="secret" />비밀댓글
 				<div class="button btn_cancel">취소</div>
 				<div class="button btn_register" id="write">등록</div>
 			</div>

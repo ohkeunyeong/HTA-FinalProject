@@ -23,4 +23,12 @@ public interface Jik_CommService {
 	
 	//jik_comm_re_seq값 수정
 	public int Jik_CommsReplyUpdate(Jik_Comm co);
+
+
+	public int Jik_comm_ref_select(int jik_comm_num);
+
+	public int Jik_comm_ref_select2(int select);
+	
+	public int Jik_CommsDelete2(int jik_comm_num);
+
 }

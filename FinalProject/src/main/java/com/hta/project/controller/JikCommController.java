@@ -57,8 +57,18 @@ public class JikCommController {
 		@RequestMapping(value = "/delete")
 		public void Jik_CommDelete(int jik_comm_num, HttpServletResponse response)
 				throws Exception{ // int num => Integer.parseInt(request.getParameter)
-			int result = jik_commService.Jik_CommsDelete(jik_comm_num);
-			response.getWriter().print(result);
+			
+			int select = jik_commService.Jik_comm_ref_select(jik_comm_num);
+			int select2 = jik_commService.Jik_comm_ref_select2(select);
+			if(select2>=2) {
+				int result2=jik_commService.Jik_CommsDelete2(jik_comm_num);
+				response.getWriter().print(result2);
+			}else {
+				int result = jik_commService.Jik_CommsDelete(jik_comm_num);
+				response.getWriter().print(result);
+			}
+			
+			
 		}
 		
 		@RequestMapping(value = "/update")
@@ -75,7 +85,6 @@ public class JikCommController {
 				int result =jik_commService.Jik_CommsReply(co);
 				
 				response.getWriter().print(result);
-				
 			}
 		
 }
