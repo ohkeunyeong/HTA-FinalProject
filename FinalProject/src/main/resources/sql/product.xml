@@ -155,20 +155,33 @@
 	
 	<!-- 카테고리별 상품 리스트 : 리뷰많은 제품 리스트 -->	
   
-		<select id="reviewProduct" resultType="product" parameterType="map">
-		select a.product_code, count(*) cnt
-		 from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
-		  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
-		  	   			from product p, CATEGORY c, review r
-		  	   			where p.category_code = c.category_code
-		  	   			and p.category_code = r.category_code) a
-		 group by a.product_code
-		 order by cnt desc)
-		 
-			where rnum &gt;= #{start} and rnum &lt;= #{end}
+	 <select id="reviewProduct" resultType="product" parameterType="map">
+	    select *
+		from (select rownum rnum, b.* 
+			from
+
+			(select COUNT(a.product_code), product.product_code, product.product_name, product.product_detail,
+			product.category_code, product.product_price, product.product_img, product.product_original, product.product_date,
+			a.review_content, a.review_img, a.review_date, a.member_nick
+			
+			from product left outer join
+			
+			(SELECT COUNT(product_code), review.product_code, review.product_name, review.category_code, review.review_content,
+			review.review_img, review.review_date, review.member_nick
+			FROM review
+			group by product_code, product_name, category_code, review_content, review_img, review_date, member_nick)a
+			
+			on product.product_code = a.product_code
+			group by a.product_code, product.product_code, product.product_name, product.product_detail,
+			product.category_code, product.product_price, product.product_img, product.product_original, product.product_date,
+			a.review_content, a.review_img, a.review_date, a.member_nick
+			order by a.product_code) b
+			)
+		where rnum &gt;= #{start} and rnum &lt;= #{end}
 	</select>
 	
 	
+		  
 	<!-- 카테고리별 상품 리스트 : 리뷰 리스트 -->	
 	<select id="review" resultType="product" parameterType="map">
 		select *
@@ -183,6 +196,6 @@
 	  	   			,p.product_code) pr
 			 )
 		where rnum &gt;= #{start} and rnum &lt;= #{end}
-	</select>
+	</select> 
 	
 </mapper>
