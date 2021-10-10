@@ -2,6 +2,7 @@ package com.hta.project.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,18 @@ public class OkyNongDAO {
 
 	public Nong getDetail(int num) {
 		return sqlSession.selectOne("Nongs.detail", num);
+	}
+
+	public int boardReplyUpdate(Nong nong) {
+		return sqlSession.update("Nongs.reply_update", nong);
+	}
+
+	public int baordReply(Nong nong) {
+		return sqlSession.insert("Nongs.reply_insert", nong);
+	}
+
+	public Nong isBoardWriter(Map<String, Object> map) {
+		return sqlSession.selectOne("Nongs.boardWriter", map);
 	}
 
 }

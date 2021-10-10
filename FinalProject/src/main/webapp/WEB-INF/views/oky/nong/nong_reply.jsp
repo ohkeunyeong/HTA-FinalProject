@@ -13,8 +13,10 @@
      </style>
 </head>
 <body>
+<br><br><br>
  <div class="container">
-   <form action = "replyAction" method="post" name="boardform">
+   <form action = "nongreplyAction" method="post" name="boardform">
+     <input type="hidden" id="name" value="${name}" name="name">
      <input type="hidden" name="nong_re_ref" value="${boarddata.nong_re_ref}">
      <input type="hidden" name="nong_re_lev" value="${boarddata.nong_re_lev}">
      <input type="hidden" name="nong_re_seq" value="${boarddata.nong_re_seq}">
@@ -49,5 +51,6 @@
       </div>           
    </form>
  </div>
+<jsp:include page="../../main/footer.jsp" />  
 </body>
 </html>

@@ -61,5 +61,36 @@ where rnum &gt;= #{start} and rnum &lt;= #{end} and name = #{name}
    where  NONG_NUM = #{number}
 </select>
 
+<update id = "reply_update" parameterType="nong">
+  update nong
+  set    NONG_RE_SEQ = NONG_RE_SEQ + 1
+  where  NONG_RE_REF  = #{nong_re_ref}
+    and  NONG_RE_SEQ <![CDATA[ >]]> #{nong_re_seq}
+</update>
+
+<!--  NONG_FILE, NONG_ORI 필드 필요 없음 -->
+<insert id="reply_insert" parameterType="nong">
+    <selectKey resultType="int"      order="BEFORE"
+               keyProperty="nong_num">
+         select nvl(max(NONG_NUM),0)+1 from nong     
+    </selectKey>
+        insert into nong
+    (NONG_NUM,
+     NAME, ID, NONG_PASS, NONG_SUB,
+     NONG_CON, NONG_RE_REF, NONG_RE_LEV, 
+     NONG_RE_SEQ, NONG_READ, NONG_DATE)
+     values
+     (#{nong_num},
+      #{name}, #{id}, #{nong_pass}, #{nong_sub},
+      #{nong_con}, #{nong_re_ref}, #{nong_re_lev}, #{nong_re_seq},
+       #{nong_read}, sysdate)
+</insert>
+
+<select id ="boardWriter" parameterType="map" resultType="nong">
+    select * from nong
+    where    NONG_NUM  = #{num}
+    and      NONG_PASS= #{pass}
+</select>
+
 </mapper>
 

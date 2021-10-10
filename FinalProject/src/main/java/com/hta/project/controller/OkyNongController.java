@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hta.project.domain.Member;
 import com.hta.project.domain.Nong;
@@ -361,6 +362,196 @@ public class OkyNongController {
 			}    	    		
 		}  
 	
+	//답글쓰기
+	@PostMapping("/nongreplyAction")
+	public ModelAndView add(Nong nong, String name, HttpServletRequest request,  
+			HttpSession session, HttpServletResponse response, ModelAndView mv) {
+		logger.info("/nongreplyAction 답글쓰기");
+		try { //유효성 검사를 위한 초기 세팅
+		String id=(String)session.getAttribute("id");
+		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = okymynongservice.getMynong(id);
+		
+		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
+		int level =0;
+		if(myfarm.equals("1")) {//농장 주인인지 판단
+			level =1;
+		}
+		if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+			logger.info("답글쓰기 실패");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당 멤버게시판을 볼  권한이 없습니다.");    	   		
+		} else {   //해당 농장 멤버 접근시 	
+			int result = okynongservice.boardReply(nong);
+			if (result == 0) {
+				mv.setViewName("error/error");
+				mv.addObject("url", request.getRequestURL());
+				mv.addObject("message", "게시판 답변 처리실패");			
+			} else {
+				mv.setViewName("redirect:nongdetail?num=" + nong.getNong_num());
+				mv.addObject("name", name);
+				mv.addObject("level", level);
+			}
+			}
+			return mv;
+			} catch (NullPointerException e) {
+				logger.info("비회원 접근");
+				mv.setViewName("oky/error/error");
+				mv.addObject("url", request.getRequestURL());
+				mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");    	
+				return mv;
+			}    	    		
+		}  
+
+	//수정 프로세스
+	@GetMapping("nongmodifyView")
+	public ModelAndView BoardModifyView(int num,String name,HttpServletRequest request,  
+			HttpSession session, HttpServletResponse response, ModelAndView mv) {
+		logger.info("/nongmodifyView 수정 프로세스");
+		try { //유효성 검사를 위한 초기 세팅
+		String id=(String)session.getAttribute("id");
+		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = okymynongservice.getMynong(id);
+		
+		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
+		int level =0;
+		if(myfarm.equals("1")) {//농장 주인인지 판단
+			level =1;
+		}
+		if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+			logger.info("수정보기 실패");
+			mv.setViewName("oky/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "해당 멤버게시판을 볼  권한이 없습니다.");    	   		
+		} else {   //해당 농장 멤버 접근시 	
+			Nong boarddata = okynongservice.getDetail(num);
+
+			// 글 내용 불러오기 실패한 경우입니다.
+			if (boarddata == null) {
+				logger.info("수정보기 실패");
+				mv.setViewName("error/error");
+				mv.addObject("url", request.getRequestURL());
+				mv.addObject("message", "수정보기 실패입니다.");	
+				return mv;
+		   }
+			mv.addObject("boarddata", boarddata);
+			mv.addObject("name", name);
+		    mv.addObject("level", level);
+			mv.setViewName("oky/nong/nong_modify");
+			}
+			return mv;
+			} catch (NullPointerException e) {
+				logger.info("비회원 접근");
+				mv.setViewName("oky/error/error");
+				mv.addObject("url", request.getRequestURL());
+				mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");    	
+				return mv;
+			}    	    		
+		} 
+	
+	
+//	//멤버게시판 수정
+//	@PostMapping("/nongmodifyAction")
+//	public ModelAndView BoardModifyAction(Nong nong, String before_file,
+//			String check, String name ,HttpServletRequest request,  
+//			HttpSession session, HttpServletResponse response, RedirectAttributes rattr, ModelAndView mv) {
+//		logger.info("/nongmodifyAction 멤버게시판 수정");
+//		try { //유효성 검사를 위한 초기 세팅
+//		String id=(String)session.getAttribute("id");
+//		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+//		String getmynong = okymynongservice.getMynong(id);
+//		
+//		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
+//		int level =0;
+//		if(myfarm.equals("1")) {//농장 주인인지 판단
+//			level =1;
+//		}
+//		if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+//			logger.info("멤버게시판 수정 실패");
+//			mv.setViewName("oky/error/error");
+//			mv.addObject("url", request.getRequestURL());
+//			mv.addObject("message", "해당 멤버게시판을 볼  권한이 없습니다.");    	   		
+//		} else {   //해당 농장 멤버 접근시 
+//			boolean usercheck =
+//			  okynongservice.isBoardWriter(nong.getNong_num(), nong.getNong_pass());
+//			String url="";
+//			// 비밀번호가 다른 경우
+//			if (usercheck == false) {
+//				rattr.addFlashAttribute("result", "passFail");
+//				rattr.addAttribute("num", nong.getNong_num());
+//				mv.addObject("name", name);
+//			    mv.addObject("level", level);
+//			    mv.setViewName("redirect:nongmodifyView");
+//			    return mv;
+//			}
+//			
+//			MultipartFile uploadfile = nong.getUploadfile();
+//			
+//			if (check != null && !check.equals("")) { // 기존파일 그대로 사용하는 경우입니다.
+//				logger.info("기존파일 그대로 사용합니다.");
+//				nong.setNong_ori(check);
+//			} else {
+//				
+//				if (uploadfile!=null && !uploadfile.isEmpty()) {
+//					logger.info("파일 변경되었습니다");
+//					//답변글을 수정할 경우 <input type="file" id="upfile" name="uploadfile" > 
+//					//엘리먼트가 존재하지 않아
+//					//private MultipartFile uploadfile;에서 uploadfile은 null 입니다.
+//					
+//					String fileName = uploadfile.getOriginalFilename(); //원래 파일 명
+//					nong.setNong_ori(fileName);
+//					
+//					String fileDBName = fileDBName(fileName, saveFolder);
+//					
+//					//transferTo(File path) : 업로드한 파일을 매개변수의 경로에 저장합니다.
+//					uploadfile.transferTo(new File(saveFolder + fileDBName));
+//					
+//					// 바뀐 파일명으로 저장
+//					nong.setNong_file(fileDBName);
+//				} else { // uploadfile.isEmpty() 인 경우 - 파일 선택하지 않은 경우
+//					logger.info("선택 파일 없습니다.");
+//					//<input type="hidden" name="BOARD_FILE" value="${boarddata.BOARD_FILE}">
+//					//위 태그에 값이 없다면 ""로 값을 변경합니다.
+//					nong.setNong_file(""); //""로 초기화힙니다.
+//					nong.setNong_ori(""); //""로 초기화 합니다.				
+//				}// else end
+//			}//else end
+//
+//			//DAO에서 수정 메서드 호출하여 수정합니다.
+//			int result = okynongservice.boardModify(nong);
+//			//수정에 실패한 경우
+//			if (result ==0) {
+//				logger.info("게시판 수정 실패");
+//				mv.addObject("url", request.getRequestURL());
+//				mv.addObject("message", "게시판 수정 실패");
+//				mv.setViewName("error/error");
+//			} else { // 수정 성공의 경우
+//				logger.info("게시판 수정 완료");
+//				// 수정한 글 내용을 보여주기 위해 글 내용 보기 보기 페이지로 이동하기 위해 경로를 설정합니다.
+//				mv.setViewName("redirect:nongdetail");
+//				rattr.addAttribute("num", nong.getNong_num());
+//				
+//				//수정 성공한 경우
+//				  //파일 삭제를 위해 추가한 부분
+//				//수정 전에 파일이 있고 새로운 파일을 선택한 경우는 삭제할 목록을 테이블에 추가합니다.
+//				if(!before_file.equals("") && !before_file.equals(nong.getNong_file())) {
+//					okynongcoservice.insert_deleteFile(before_file);
+//				}
+//			}		
+//			mv.addObject("name", name);
+//		    mv.addObject("level", level);
+//			}
+//			return mv;
+//			} catch (NullPointerException e) {
+//				logger.info("비회원 접근");
+//				mv.setViewName("oky/error/error");
+//				mv.addObject("url", request.getRequestURL());
+//				mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");    	
+//				return mv;
+//			}    	    		
+//		}    	
+
 }		
 	
 	
