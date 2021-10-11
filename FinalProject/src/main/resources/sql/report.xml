@@ -4,6 +4,12 @@
 
 <mapper namespace="Reports">
 
+	<insert id="insert" parameterType="report">
+		insert into report
+		values(report_seq.nextval, #{board_num}, #{board_id}, #{board_subject}, #{board_content},
+			   #{report_content}, #{board_table}, sysdate);
+	</insert>
+
 	<select id="list" resultType="report" parameterType="map">
 		select report_num, board_num, board_subject, report_content, board_table, report_date
 		from (select rownum rnum, r.*

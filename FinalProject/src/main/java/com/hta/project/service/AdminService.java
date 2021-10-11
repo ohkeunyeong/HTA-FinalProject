@@ -89,5 +89,15 @@ public interface AdminService {
 
 	public void numReportDelete(int board_num, String board_table);
 
+	public int reportInsert(Report report);
+
+	public int getUserOrderListCount(String id);
+
+	public List<Order_Market> getUserOrderList(String id, int page, int limit);
+
+	public OrderDetail getUserOrderDetail(String id, String order_num);
+
+	public List<OrderDetailList> getUserOrderDetailList(String id, String order_num);
+
 	
 }

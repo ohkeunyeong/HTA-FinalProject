@@ -41,12 +41,6 @@ public class MainController {
 		  mv.setViewName("main/main");
 		  return mv;
 	}
-	
-	@RequestMapping(value = "/chatting", method = RequestMethod.GET) 
-	public ModelAndView chat(ModelAndView mv) { 
-		mv.setViewName("jjs/admin/Chat");
-		return mv; 
-	}
 
 	
 	//굿즈 장터 메인 이동 - 상품 목록 

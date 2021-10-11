@@ -41,6 +41,19 @@
 		where rnum &gt;= #{start} and rnum &lt;= #{end}
 	</select>
 	
+	<select id="adminProductList" resultType="product" parameterType="map">  	   			
+		select *
+		from (select rownum rnum, pr.*
+			  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
+	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
+	  	   			from product p, CATEGORY c
+	  	   			where p.category_code = c.category_code
+	  	   			<include refid="search_" />
+	  	   			order by p.product_code) pr
+			 )
+		where rnum &gt;= #{start} and rnum &lt;= #{end}
+	</select>
+	
 	<sql id="search_">
 		<if test="search_field != null">
 			and

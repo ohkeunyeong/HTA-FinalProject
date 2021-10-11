@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -356,6 +356,16 @@ public class AdminController {
 		
 		logger.info("공지사항 글 삭제 성공");
 		return "redirect:noticeList";
+	}
+	
+	@PostMapping("/reportAdd")
+	@ResponseBody
+	public int reportAdd(Report report) {
+		logger.info("Admin reportAdd()");
+		
+		int result = adminService.reportInsert(report);
+		
+		return result;
 	}
 	
 	@GetMapping("/reportList")
@@ -892,6 +902,68 @@ public class AdminController {
 		int result = adminService.orderDeliveryUpdate(order_num, deliveryStatus);
 		
 		response.getWriter().print(result);
+	}
+	
+	@GetMapping("/userOrderView")
+	public ModelAndView userOrderView(@RequestParam(value="page", defaultValue="1", required=false) int page,
+			ModelAndView mv, HttpServletRequest request) {
+		logger.info("Admin userOrderView()");
+		
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("id");
+		
+		int limit = 7;
+		
+		int listcount = adminService.getUserOrderListCount(id);
+		
+		int maxpage = (listcount + limit - 1) / limit;
+		
+		int startpage = ((page - 1) / 10) * 10 + 1;
+		
+		int endpage = startpage + 10 - 1;
+		
+		if(endpage > maxpage) {
+			endpage = maxpage;
+		}
+		
+		List<Order_Market> orderlist = adminService.getUserOrderList(id, page, limit);
+		
+		mv.addObject("page", page);
+		mv.addObject("maxpage", maxpage);
+		mv.addObject("startpage", startpage);
+		mv.addObject("endpage", endpage);
+		mv.addObject("listcount", listcount);
+		mv.addObject("orderlist", orderlist);
+		mv.addObject("limit", limit);
+		
+		mv.setViewName("jjs/userOrderView");
+		return mv;
+	}
+	
+	@GetMapping("/userOrderDetail")
+	public ModelAndView userOrderDetail(String order_num, ModelAndView mv, 
+			   HttpServletRequest request) {
+		logger.info("Admin orderDetail()");
+		
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("id");
+		
+		OrderDetail orderdetail = adminService.getUserOrderDetail(id, order_num);
+		
+		List<OrderDetailList> orderlist = adminService.getUserOrderDetailList(id, order_num);
+		
+		if(orderdetail==null) {
+			logger.info("상세보기 실패");
+			mv.setViewName("jjs/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "상세보기 실패입니다.");
+		}else {
+			logger.info("상세보기 성공");
+			mv.setViewName("jjs/userOrderDetail");
+			mv.addObject("orderdetail", orderdetail);
+			mv.addObject("orderlist", orderlist);
+		}
+		return mv;
 	}
 
 }

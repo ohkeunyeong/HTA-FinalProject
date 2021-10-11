@@ -15,6 +15,9 @@ CREATE TABLE ORDER_MARKET(
   FOREIGN KEY (ID) REFERENCES MEMBER (ID)
 );
 
+update ORDER_MARKET
+set id = 'admin'
+
 
 select * from order_market;
 

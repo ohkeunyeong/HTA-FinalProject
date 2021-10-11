@@ -62,5 +62,45 @@
 		set order_delivery = #{deliveryStatus}
 		where order_num = #{order_num}
 	</update>
+	
+	<select id="userOrderList" resultType="order" parameterType="map">
+		select *
+		from (select rownum rnum, o.*
+			  from (select *
+			  		from order_market
+			  		where id = #{id}
+			  		order by order_date) o
+			 )
+		where rnum &gt;= #{start} and rnum &lt;= #{end}
+	</select>
+	
+	<select id="userOrederListCount" resultType="int" parameterType="String">
+		select count(*)
+ 		from order_market
+ 		where id = #{id} 
+	</select>
+	
+	<select id="userDetail" resultType="orderDetail" parameterType="String">
+		select order_num, id, order_name, user_address1, user_address2,
+	   		   order_phone, order_totalprice, order_payment, order_date,
+	   	 	   order_delivery
+		from order_market
+		where order_num = #{order_num}
+		and id = #{id}
+	</select>
+	
+	<select id="userDetailList" resultType="orderList" parameterType="String">
+		select o.order_num, o.id, o.order_name, o.user_address1, o.user_address2,
+	   		   o.order_phone, o.order_totalprice, o.order_payment, o.order_date,
+	   		   o.order_delivery, d.order_de_num, d.product_code, d.order_de_count,
+	   		   p.product_name, p.product_img, p.product_price
+		from order_market o 
+			   inner join order_detail d
+					on o.order_num = d.order_num
+			   inner join PRODUCT p
+					on d.product_code = p.product_code
+		where o.order_num = #{order_num}
+		and id = #{id}
+	</select>
  	
  </mapper>

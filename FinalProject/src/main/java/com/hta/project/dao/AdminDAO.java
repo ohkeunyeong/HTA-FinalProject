@@ -85,7 +85,7 @@ public class AdminDAO {
 	}
 
 	public List<Product> getProductList(Map<String, Object> map) {
-		return sqlSession.selectList("Products.list", map);
+		return sqlSession.selectList("Products.adminProductList", map);
 	}
 
 	public Product getProductDetail(String code) {
@@ -178,6 +178,26 @@ public class AdminDAO {
 
 	public void numReportDelete(Map<String, Object> map) {
 		sqlSession.delete("Reports.numReportDelete", map);
+	}
+
+	public int reportInsert(Report report) {
+		return sqlSession.insert("Reports.insert", report);
+	}
+
+	public List<Order_Market> getUserOrderList(Map<String, Object> map) {
+		return sqlSession.selectList("Orders.userOrderList", map);
+	}
+
+	public int getUserOrderListCount(String id) {
+		return sqlSession.selectOne("Orders.userOrederListCount", id);
+	}
+
+	public OrderDetail getUserOrderDetail(Map<String, Object> map) {
+		return sqlSession.selectOne("Orders.userDetail", map);
+	}
+
+	public List<OrderDetailList> getUserOrderDetailList(Map<String, Object> map) {
+		return sqlSession.selectList("Orders.userDetailList", map);
 	}
 
 }
