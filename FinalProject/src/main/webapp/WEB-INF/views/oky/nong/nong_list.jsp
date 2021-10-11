@@ -103,7 +103,7 @@
 		<c:out value="${num}"/><%-- num 출력 --%>		
 		<c:set var="num" value="${num-1}"/>	<%-- num=num-1; 의미--%>	
 	  </td> 
-	  <td colspan=2><%--제목 --%>
+	  <td colspan=2 id="subject"><%--제목 --%>
 	     <div>			
 			<%-- 답변글 제목앞에 여백 처리 부분 
 			      board_re_lev,  board_num, 
@@ -113,7 +113,7 @@
 				<c:forEach var="a" begin="0" end="${b.nong_re_lev*2}" step="1">
 				&nbsp; 	
 				</c:forEach>		
-< 				<img src='${pageContext.request.contextPath}/resources/image/oky/line.gif'> 
+ 				<img src='${pageContext.request.contextPath}/resources/image/oky/line.gif'> 
 			</c:if>  
 			 
 			<c:if test="${b.nong_re_lev == 0}">  <%-- 원문인 경우 --%>

@@ -96,7 +96,7 @@ form[action=down] > input[type=submit]{
     <tr>
       <td><div>첨부파일</div></td>
      <c:if test="${!empty boarddata.nong_file}"><%-- 파일첨부한 경우 --%>
-      <td><img src="../resources/image/down.png" width="10px">
+      <td><img src="${pageContext.request.contextPath}/resources/image/okydown.png" width="10px">
           <form method="post" action="down">
             <input type="hidden" value="${boarddata.nong_file}" name="filename">
             <input type="hidden" value="${boarddata.nong_ori}" name="original">
@@ -130,7 +130,7 @@ form[action=down] > input[type=submit]{
            </a>
            
            
-           <a href="list">
+           <a href="nong?name=${name}">
               <button class="btn btn-secondary">목록</button>
            </a>
          </td>

@@ -17,5 +17,11 @@ public interface OkyNongService {
 
 	// 게시물 상세보기
 	public Nong getDetail(int num);
+	
+	// 글 답변
+	int boardReply(Nong nong);
+	
+	// 글쓴이인지 확인
+	boolean isBoardWriter(int nong_num, String nong_pass);
 
 }

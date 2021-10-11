@@ -93,7 +93,7 @@ section.notice {
 
 .board-table tbody td {
 	border-top: 1px solid #e7e7e7;
-	text-align: center;
+ 	text-align: center; 
 }
 
 .board-table tbody th {
@@ -346,3 +346,7 @@ aside {
 	justify-content: center;
 }
 
+/* 力格篮 啊款单 沥纺  x*/
+#subject {
+	text-align: left;
+}

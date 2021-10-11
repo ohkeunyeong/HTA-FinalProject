@@ -2,6 +2,7 @@ package com.hta.project.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,5 +47,30 @@ public class OkyNongServiceImpl implements OkyNongService{
 
 	private int setReadCountUpdate(int num) {
 		return dao.setReadCountUpdate(num);
-	}	
+	}
+
+	@Override
+	public int boardReply(Nong nong) {
+		boardReplyUpdate(nong);
+		nong.setNong_re_lev(nong.getNong_re_lev()+1);
+		nong.setNong_re_seq(nong.getNong_re_seq()+1);
+		return dao.baordReply(nong);
+	}
+
+	private int boardReplyUpdate(Nong nong) {
+		return dao.boardReplyUpdate(nong);		
+	}
+
+	@Override
+	public boolean isBoardWriter(int nong_num, String nong_pass) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", nong_num);
+		map.put("pass", nong_pass);
+		Nong result = dao.isBoardWriter(map);
+		if (result == null)
+			return false;
+		else
+		return true;
+	}
+	
 }
