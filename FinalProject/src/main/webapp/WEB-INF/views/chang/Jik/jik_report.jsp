@@ -31,7 +31,7 @@ textarea {
 		$.ajax(
 		{
 			url : '../admin/reportAdd',
-			type:"POST"
+			type:"POST",
 			data : report,
 			success : function(rdata){		
 						alert("신고 되었습니다.")
