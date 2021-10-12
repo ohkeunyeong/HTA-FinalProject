@@ -12,21 +12,26 @@
   <input type="hidden" id="Loginid" value="${id}" name="loginid">
   <input type="hidden" id="Loginnick" value="${nick}" name="Loginnick">
   <input type="hidden" id="Jik_id" value="${jikdata.jik_id}" name="Jik_id">
+  <input type="hidden" id="jik_subject" value="${jikdata.jik_subject}">
+  <input type="hidden" id="jik_content" value="${jikdata.jik_content}" >
+  <br><br><br><br><br><br><br><br><br><br>
+  
+
   <div class="container">
  	<table class="table table-striped">
  		<tr>
- 			<th colspan="2">직거래 게시판 - view페이지</th></tr>
+ 			<th colspan="2">직거래 장터</th></tr>
  		<tr>
- 			<td><div>글쓴이</div></td>
- 			<td><div id="nick">${jikdata.nick}</div></td>
+ 			
+ 			<td colspan="2"><div id="nick"> <img  src="${pageContext.request.contextPath}/resources/image/chang/${jikdata.p}" alt="프로필 사진" width="25px">&nbsp;&nbsp;${jikdata.nick}
+ 							<a href="#" class="report_button" onclick=" window.open('../jik/report', '신고하기', 'width=500, height=700, scrollbars=no, resizable=no')">신고하기</a>
+ 			</div></td>
  		</tr>
  		<tr>
- 			<td><div>제목</div></td>
- 			<td><c:out value="${jikdata.jik_subject}" /></td>
+ 			<td colspan="2"><c:out value="${jikdata.jik_subject}" /></td>
  		</tr>
  		<tr>
- 			<td><div>내용</div></td>
- 			<td style="padding-right:0px"><textarea class="form-control" rows="5"
+ 			<td colspan="2" style="padding-right:0px"><textarea class="form-control" rows="5"
  				readOnly >${jikdata.jik_content}</textarea></td>
  		</tr>
  		

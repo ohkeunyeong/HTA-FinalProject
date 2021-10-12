@@ -1,5 +1,7 @@
 package com.hta.project.domain;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Member {
 	private String id;
 	private String pass;
@@ -11,6 +13,7 @@ public class Member {
 	private String persnacon;
 	private int point;
 	private String mynong_name;
+	private MultipartFile uploadfile;
 	
 	public String getId() {
 		return id;
@@ -90,6 +93,14 @@ public class Member {
 	
 	public void setMynong_name(String mynong_name) {
 		this.mynong_name = mynong_name;
+	}
+
+	public MultipartFile getUploadfile() {
+		return uploadfile;
+	}
+
+	public void setUploadfile(MultipartFile uploadfile) {
+		this.uploadfile = uploadfile;
 	}
 
 }

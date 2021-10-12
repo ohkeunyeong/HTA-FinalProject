@@ -29,8 +29,8 @@ public class JikDAO {
 		return sqlSession.selectList("Jiks.list", map);
 	}
 
-	public Jik getDetail(int num) {
-		return sqlSession.selectOne("Jiks.detail", num);
+	public Jik getDetail(HashMap<String, Object> map) {
+		return sqlSession.selectOne("Jiks.detail", map);
 		
 	}
 
@@ -63,6 +63,10 @@ public class JikDAO {
 	public int insert_deleteFile(String before_file) {
 		return sqlSession.insert("Jiks.insert_deleteFile", before_file);
 		
+	}
+
+	public Jik getDetail(int num) {
+		return sqlSession.selectOne("Jiks.detail2", num);
 	}
 	
 	

@@ -2,11 +2,14 @@ package com.hta.project.controller;
 
 
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -46,7 +51,9 @@ public class MemberController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-
+	@Value("${savefoldername}")
+	private String saveFolder;
+	
 	@RequestMapping(value="/join", method = RequestMethod.GET)
 	public String join() {
 		return "member/member_joinForm";
@@ -73,6 +80,23 @@ public class MemberController {
 		logger.info(encPassword);
 		member.setPass(encPassword);
 		
+		MultipartFile uploadfile = member.getUploadfile();
+		
+		if (!uploadfile.isEmpty()) {
+			String fileName = uploadfile.getOriginalFilename();
+			
+			
+			String fileDBName = fileDBName(fileName, saveFolder);
+			logger.info("fileDBName =" + fileDBName);
+			
+			 
+			uploadfile.transferTo(new File(saveFolder + fileDBName));
+			
+		
+			member.setPersnacon(fileName);
+		}else {
+			member.setPersnacon("profile.png");
+		}
 		
 		int result = memberService.insert(member);
 		
@@ -85,6 +109,38 @@ public class MemberController {
 			model.addAttribute("message", "회원 가입 실패");
 			return "error/error";
 		}
+	}
+	
+	private String fileDBName(String fileName, String saveFolder) {
+		Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR);
+		int month =  c.get(Calendar.MONTH) + 1; 
+		int date =  c.get(Calendar.DATE); 
+		
+		String homedir = saveFolder + year + "-" + month + "-" + date;
+		logger.info(homedir);
+		File path1 = new File(homedir);
+		if(!(path1.exists())) {
+			path1.mkdir();
+		}
+		
+		
+		Random r = new Random();
+		int random = r.nextInt(100000000);
+		
+		int index = fileName.lastIndexOf(".");
+		
+		logger.info("index = " + index);
+		
+		String fileExtension = fileName.substring(index + 1);
+		logger.info("fileExtension = " + fileExtension);
+		
+		String refileName = "bbs" + year + month +date + random + "." + fileExtension;
+		logger.info("refileName = " + refileName);
+		
+		String fileDBName = "/" + year + "-" +month+ "-" +date+"/"+refileName;
+		logger.info("fileDBName = " + fileDBName);
+		return fileDBName;
 	}
 	
 	@RequestMapping(value="/loginProcess", method=RequestMethod.POST)

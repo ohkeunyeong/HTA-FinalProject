@@ -31,10 +31,14 @@ public class JikServiceImpl implements JikService{
 	}
 
 	@Override
-	public Jik getDetail(int num) {
+	public Jik getDetail(int num, String id) {
 		if(setReadCountUpdate(num)!=1)
 			return null;
-		return dao.getDetail(num);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("num", num);
+		map.put("id", id);
+		return dao.getDetail(map);
 	}
 
 	
@@ -46,7 +50,9 @@ public class JikServiceImpl implements JikService{
 	@Override
 	public int jikDelete(int jik_num) {
 		int result = 0;
-		Jik jik = dao.getDetail(jik_num);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("num", jik_num);
+		Jik jik = dao.getDetail(map);
 		if(jik != null) {
 			result=dao.jikDelete(jik);
 			
@@ -68,6 +74,13 @@ public class JikServiceImpl implements JikService{
 	public int insert_deleteFile(String before_file) {
 		return dao.insert_deleteFile(before_file);
 		
+	}
+
+	@Override
+	public Jik getDetail2(int num) {
+		if(setReadCountUpdate(num)!=1)
+			return null;
+		return dao.getDetail(num);
 	}
 
 

@@ -21,9 +21,10 @@
 	}
 	</script>
 </head>
- <title>MVC 게시판</title>
+ <title>직거래 장터</title>
 </head>
 <body>
+<br><br><br><br><br><br><br>
 <div class="container">
 <input type="hidden" id="Loginid" value="${id}" name="loginid">
 <%-- 게시글이 있는 경우--%> 
@@ -64,7 +65,7 @@
 	  </td>
 	  <td><%--제목 --%>
 	     <div>			
-			<a href="detail?num=${b.jik_num}" >
+			<a href="detail?num=${b.jik_num}&id=${b.jik_id}" >
 				 <c:out value="${b.jik_subject}" escapeXml="true"/>  
 			<span class="gray small">[<c:out value="${b.cnt}" />]</span>
 			</a>

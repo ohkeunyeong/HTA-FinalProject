@@ -57,6 +57,11 @@ public class JikController {
 	public String jik_write() {
 		return "chang/Jik/jik_write";
 	}
+	
+	@RequestMapping(value = "/report")
+	public String report() {
+		return "chang/Jik/jik_report";
+	}
 
 	@PostMapping("/add")
 	
@@ -185,17 +190,18 @@ public class JikController {
 	}
 	
 	@GetMapping(value = "/detail")
-	public ModelAndView jik_detail(int num, ModelAndView mv,
+	public ModelAndView jik_detail(int num, String id, ModelAndView mv,
 			HttpServletRequest request) {
-		Jik jik = jikService.getDetail(num);
+		
+		Jik jik = jikService.getDetail(num,id);
 		
 		if(jik == null) {
-			logger.info("»ó¼¼º¸±â ½ÇÆÐ");
+			logger.info("ï¿½ó¼¼ºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			mv.setViewName("error/error");
 			mv.addObject("url", request.getRequestURL());
-			mv.addObject("message", "»ó¼¼º¸±â ½ÇÆÐÀÔ´Ï´Ù.");
+			mv.addObject("message", "ï¿½ó¼¼ºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
 		}else {
-			logger.info("»ó¼¼º¸±â ¼º°ø");
+			logger.info("ï¿½ó¼¼ºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			int count = jik_commService.getListCount(num);
 			mv.setViewName("chang/Jik/jik_view");
 			mv.addObject("count", count);
@@ -210,16 +216,16 @@ public class JikController {
 	public ModelAndView jikmodifyView(int num, ModelAndView mv,
 								   HttpServletRequest request) {
 			
-			Jik jikdata =jikService.getDetail(num);
+			Jik jikdata =jikService.getDetail2(num);
 			
 			if(jikdata == null) {
-				logger.info("¼öÁ¤º¸±â ½ÇÆÐ");
+				logger.info("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 				mv.setViewName("error/error");
 				mv.addObject("url", request.getRequestURL());
-				mv.addObject("message", "¼öÁ¤ ÆäÀÌÁö ·Îµù½ÇÆÐ");
+				mv.addObject("message", "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½");
 				return mv;
 			}
-			logger.info("¼öÁ¤ »ó¼¼º¸±â ¼º°ø");
+			logger.info("ï¿½ï¿½ï¿½ï¿½ ï¿½ó¼¼ºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			
 			mv.addObject("jikdata", jikdata);
 			
@@ -238,13 +244,13 @@ public class JikController {
 		MultipartFile uploadfile = jikdata.getUploadfile();
 		
 		if(check != null && !check.equals("")) {
-			logger.info("±âÁ¸ÆÄÀÏ ±×´ë·Î »ç¿ëÇÕ´Ï´Ù.");
+			logger.info("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
 			jikdata.setJik_original(check);
 			
 		} else {
 			
 			if(uploadfile!=null && !uploadfile.isEmpty()) {
-				logger.info("ÆÄÀÏ º¯°æµÇ¾ú½À´Ï´Ù.");
+				logger.info("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 				
 				String fileName = uploadfile.getOriginalFilename();
 				jikdata.setJik_original(fileName);
@@ -255,7 +261,7 @@ public class JikController {
 				
 				jikdata.setJik_file(fileDBName);
 			}else { 
-				logger.info("¼±ÅÃ ÆÄÀÏ ¾ø½À´Ï´Ù.");
+				logger.info("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 				
 				jikdata.setJik_file("");
 				jikdata.setJik_original("");
@@ -265,11 +271,11 @@ public class JikController {
 		int result = jikService.jikModify(jikdata);
 		
 		if(result == 0) {
-			logger.info("°Ô½ÃÆÇ ¼öÁ¤ ½ÇÆÐ");
+			logger.info("ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			mv.addAttribute("url", request.getRequestURL());
-			mv.addAttribute("message", "°Ô½ÃÆÇ ¼öÁ¤ ½ÇÆÐ");
+			mv.addAttribute("message", "ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		}else { 
-			logger.info("°Ô½ÃÆÇ ¼öÁ¤ ¿Ï·á");
+			logger.info("ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½");
 	
 			url = "redirect:detail";
 			rattr.addAttribute("num", jikdata.getJik_num());
@@ -292,13 +298,13 @@ public class JikController {
 		int result = jikService.jikDelete(jik_num);
 		
 		if(result == 0) {
-			logger.info("°Ô½ÃÆÇ »èÁ¦ ½ÇÆÐ");
+			logger.info("ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 				mv.addAttribute("url", request.getRequestURL());
-				mv.addAttribute("message", "»èÁ¦ ½ÇÆÐ");
+				mv.addAttribute("message", "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 				return "error/error";
 		}
 		
-		logger.info("°Ô½ÃÆÇ »èÁ¦ ¼º°ø");
+		logger.info("ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		rattr.addFlashAttribute("result", "deleteSuccess");
 		return "redirect:list";
 	}

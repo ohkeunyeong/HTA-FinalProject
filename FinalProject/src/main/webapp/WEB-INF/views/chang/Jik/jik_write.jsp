@@ -39,7 +39,7 @@
        <label for="upfile">
        	  <img src="../resources/image/chang/attach.png" id="f" alt="파일첨부">
        </label>
-       <input type="file" id="upfile" name="uploadfile">
+       <input type="file" name="uploadfile">
        <span id="filevalue"></span>
      </div>	
      <div class="form-group">

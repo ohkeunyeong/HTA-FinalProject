@@ -19,4 +19,4 @@ INSERT INTO jik
  			VALUES
  			(1,'asd','asd','asd','asd','asd',1,sysdate)
 select * from jik;
-drop table jik
+drop table jik cascade constraints;
