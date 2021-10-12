@@ -64,8 +64,8 @@
 			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}products/list?category_code=300">살충제</a>
 			</li>
 			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}products/list?category_code=400">농기구</a></li>
-			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}products/list?category_code=500">퍼스나콘</a>
-			</li>
+			<%-- <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}products/list?category_code=500">퍼스나콘</a>
+			</li> --%>
 			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}products/list?category_code=600">굿즈</a></li>
 		</ul>
 	</div>
@@ -93,6 +93,8 @@
 			<span>주말농장에서 추천하는 제품!</span> <a href="#" class="button">더보기</a>
 		</div>
 		
+		<div class="container">
+		
 		<div class="recommendation">
 		 <c:forEach items="${productList}" var="product" varStatus="status">
 		
@@ -107,7 +109,7 @@
 				<div class="card-body">
 					<h5 class="card-title">${product.product_name}</h5>
 					<p class="card-text">${product.product_detail}</p>
-					<a href="shop_detail.jsp" class="btn btn-info">제품 보기</a>
+					<a href="shop/shop_detail?product_code=${product.product_code}" class="btn btn-info">제품 보기</a>
 				</div>
 			</div>
 			
@@ -117,9 +119,10 @@
 		  
 		  </c:forEach>
 		</div>
+		</div>
 	
-	<!-- 퍼스나콘 카드 목록 리스트 -->		
-	<br><br>
+	<!-- 퍼스나콘 카드 목록 리스트 -->	 <!-- 취소됨 -->	
+	<%-- <br><br>
 	
 		<div class="section2" >
 			<p id="p1" style="margin-bottom: -8px;">따끈따끈한 </p><p id="p2"> 퍼스나콘</p>
@@ -150,7 +153,7 @@
 		  </c:if>
 		  
 		  </c:forEach>
-		</div>
+		</div> --%>
 	
 	<!-- 도구 카드 목록 리스트 -->		
 	<br><br>
@@ -159,11 +162,12 @@
 			<p id="p1" style="margin-bottom: -8px;">가을철 </p><p id="p2"> 필요한 도구 조합</p>
 			<a href="#" class="button">더보기</a>
 		</div>
-			
+		
+		<div class="container">	
 			<div class="tools">
 		 <c:forEach items="${toolsList}" var="tools" varStatus="status">
 		
-		 <c:if test="${status.index % 4 == 0}">
+		 <c:if test="${status.index % 2 == 0}">
 		  <div class="products card-deck">
 		 </c:if>
 		 
@@ -176,13 +180,14 @@
 					<p class="card-text">${tools.product_detail}</p>
 					<a href="shop_detail.jsp" class="btn btn-info">제품 보기</a>
 				</div>
-			
-		  <c:if test="${status.index % 4 == 2}">
+			</div>
+		  <c:if test="${status.index % 2 == 1}">
 		   </div>
 		  </c:if>
 		  </c:forEach>
 			</div>
-	
+		</div>
+		
 	<!-- 굿즈 카드 목록 리스트 -->		
 
 	<br><br>
@@ -192,7 +197,8 @@
 			<p>주말농부라면 하나쯤<br>다 갖고있다는 그 제품들!</p> 
 			<a href="#" class="button">더보기</a>
 		</div>
-			
+		
+		<div class="container">	
 		<div class="goods">
 		 <c:forEach items="${goodsList}" var="goods" varStatus="status">
 		
@@ -209,13 +215,13 @@
 					<p class="card-text">${goods.product_detail}</p>
 					<a href="shop_detail.jsp" class="btn btn-info">제품 보기</a>
 				</div>
-				
+			</div>
 				<c:if test="${status.index % 4 == 3}">
 		   </div>
 		  </c:if>
 		  </c:forEach>
 		</div>
-			
+		</div>	
 	
 	<!-- 후기많은 제품 카드 목록 리스트 -->		
 
@@ -226,8 +232,9 @@
 			<a href="#" class="button">더보기</a>
 		</div>
 		
+		<div class="container">
 		<div class="reviewProduct">
-		 <c:forEach items="${reviewList}" var="review" varStatus="status">
+		 <c:forEach items="${reviewProductList}" var="reviewProduct" varStatus="status">
 		
 		 <c:if test="${status.index % 4 == 0}">
 		  <div class="products card-deck">
@@ -242,13 +249,13 @@
 					<p class="card-text">${reviewProduct.product_detail}</p>
 					<a href="shop_detail.jsp" class="btn btn-info">제품 보기</a>
 				</div>
-			
+		  </div>
 		  <c:if test="${status.index % 4 == 3}">
 		   </div>
 		  </c:if>
 		  </c:forEach>
 		</div>
-		
+		</div>
 	
 	<!-- 후기 카드 목록 리스트 -->		
 
@@ -260,6 +267,7 @@
 			<a href="#" class="button">더보기</a>
 		</div>
 		
+		<div class="container">
 		<div class="review">
 		 <c:forEach items="${reviewList}" var="review" varStatus="status">
 		
@@ -276,13 +284,13 @@
 					<p class="card-text">${review.product_detail}</p>
 					<a href="shop_detail.jsp" class="btn btn-info">제품 보기</a>
 				</div>
-			
+			 </div>
 		  <c:if test="${status.index % 4 == 3}">
 		   </div>
 		  </c:if>
 		  </c:forEach>
 		</div>
-		
+		</div>
 	
 
 	<jsp:include page="../../main/footer.jsp" />

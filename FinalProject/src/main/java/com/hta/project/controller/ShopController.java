@@ -32,8 +32,12 @@ public class ShopController {
     	@Autowired
     	private ShopService shopService;
     	
-    	@RequestMapping(value = "/shopdetail", method = RequestMethod.GET)
-    	public ModelAndView main(ModelAndView mv) {
+    	//http:localhost:8088/project/shop/shop_detail?product_code=000001
+    	@RequestMapping(value = "/shop_detail", method = RequestMethod.GET)
+    	public ModelAndView main(ModelAndView mv, String product_code) {
+    		Product product = shopService.getProductDetail(product_code);
+    		  //ModelAndView mv = new ModelAndView();
+    		  mv.addObject("product", product);
     		  mv.setViewName("hyun/shop/shop_detail");
     		  return mv;
     	}

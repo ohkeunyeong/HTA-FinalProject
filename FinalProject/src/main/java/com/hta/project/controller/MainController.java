@@ -63,9 +63,9 @@ public class MainController {
 		List<Product> productlist  = shopService.getProductList(index, search_word, page, limit);		
 		model.addAttribute("productList", productlist);
 		
-		//퍼스나콘 제품 리스트
-		List<Product> personaconlist  = shopService.getPersonaconList(index, search_word, page, limit);		
-		model.addAttribute("personaconList", personaconlist);
+		//취소됨 //퍼스나콘 제품 리스트
+//		List<Product> personaconlist  = shopService.getPersonaconList(index, search_word, page, limit);		
+//		model.addAttribute("personaconList", personaconlist);
 		
 		//도구 제품 리스트
 		List<Product> toolslist  = shopService.getToolsList(index, search_word, page, limit);		
@@ -94,11 +94,11 @@ public class MainController {
 	}
 	
 	
-	//굿즈 장터 퍼스나콘 페이지 이동 
-	@RequestMapping("/personacon")
-	public String shop_personacon() {		
-		return "hyun/shop/shop_personacon";
-	}
+	//취소됨 //굿즈 장터 퍼스나콘 페이지 이동 
+//	@RequestMapping("/personacon")
+//	public String shop_personacon() {		
+//		return "hyun/shop/shop_personacon";
+//	}
 		
 	//굿즈 장터 주말굿즈 이동 
 	@RequestMapping("/goods")

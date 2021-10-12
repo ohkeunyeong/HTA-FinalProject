@@ -15,7 +15,7 @@
 <style>
 h5 {
 	padding-top: 10px;
-	font-weight:bold;
+	font-weight:medium;
 }
 
 .container .nav {
@@ -33,8 +33,8 @@ h5 {
 }
 
 .section1> span {
-	font-size: 30px;
-	font-weight: bold;
+	font-size: 20px;
+	font-weight: medium;
 	margin-right:48%;
 }
 
@@ -74,11 +74,9 @@ h5 {
 			</li>
 			<li class="nav-item"><a class="nav-link" href="seed">씨앗/모종</a></li>
 			<li class="nav-item"><a class="nav-link" href="soil">비료/상토</a></li>
-			<li class="nav-item"><a class="nav-link" href="pesticide">살충제</a>
-			</li>
+			<li class="nav-item"><a class="nav-link" href="pesticide">살충제</a></li>
 			<li class="nav-item"><a class="nav-link" href="tools">농기구</a></li>
-			<li class="nav-item"><a class="nav-link" href="personacon">퍼스나콘</a>
-			</li>
+			<li class="nav-item"><a class="nav-link" href="personacon">퍼스나콘</a></li>
 			<li class="nav-item"><a class="nav-link" href="goods">굿즈</a></li>
 		</ul>
 	</div>
@@ -87,21 +85,54 @@ h5 {
 	<br>
 	<br>
 	
-		<div class="section1">
-			<span>주말농장에서 추천하는 제품!</span> <a href="#" class="button">더보기</a>
+	<div class="section1">
 		</div>
 		
+		<div class="container">
+		
 		<div class="recommendation">
+		 <c:forEach items="${productList}" var="product" varStatus="status">
+		
+		 <c:if test="${status.index % 4 == 0}">
+		  <div class="products card-deck">
+		 </c:if>
+		 
+			<div class="card" >
+				<img class="card-img-top" style="height:300px"
+					src="${pageContext.request.contextPath}/resources/image/hyun/${product.product_img}"
+					alt="Card image" style="width:100%; height:300px">
+				<div class="card-body">
+					<h5 class="card-title">${product.product_name}</h5>
+					<p class="card-text">${product.product_detail}</p>
+					<a href="shop/shop_detail?product_code=${product.product_code}" class="btn btn-info">제품 보기</a>
+				</div>
+			</div>
+			
+		  <c:if test="${status.index % 4 == 3}">
+		   </div>
+		  </c:if>
+		  
+		  </c:forEach>
+		</div>
+		</div>
+		
+		
+		<div class="section1">
+			<span>제품 상세 > ${product.product_name}</span> 
+		</div>
+		<br><br>
+		<div class="recommendation">
+		
+		
 		<div class="products card-deck">
 			<div class="card">
 				<img class="card-img-top"
-					src="${pageContext.request.contextPath}/resources/image/homi.jpg"
-					alt="Card image" style="width: 100%">
+					src="${product.product_img}"
+					alt="Card image" style="width: 100%; height:300px">
 				<div class="card-body">
-					<h5 class="card-title">튼튼 호미(중)</h5>
-					<p class="card-text">얕은 땅을 팔 때 유용한 튼튼호미입니다. 가볍고 오래 사용해도 녹슬지
-						않습니다.</p>
-					<a href="#" class="btn btn-info">제품 보기</a>
+					<h5 class="card-title">${product.product_name}</h5>
+					<p class="card-text">${product.product_detail}</p>
+					<a href="#" class="btn btn-primary">장바구니 추가</a>
 				</div>
 			</div>			
 		</div>
