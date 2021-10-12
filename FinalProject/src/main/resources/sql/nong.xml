@@ -92,5 +92,219 @@ where rnum &gt;= #{start} and rnum &lt;= #{end} and name = #{name}
     and      NONG_PASS= #{pass}
 </select>
 
+<update id ="modify" parameterType="nong">
+   update nong
+   set
+      NONG_SUB = #{nong_sub},
+      NONG_CON = #{nong_con},
+      NONG_FILE = #{nong_file, jdbcType=VARCHAR},
+      NONG_ORI  = #{nong_ori, jdbcType=VARCHAR}
+    where NONG_NUM   = #{nong_num}
+</update>
+
+<insert id="insert_deleteFile" parameterType="String">
+   insert into nongdelete_file
+   values(#{file})
+</insert>
+
+<delete id="delete" parameterType="nong">
+   <![CDATA[
+       delete from nong
+           where NONG_RE_REF = #{nong_re_ref}
+           and   NONG_RE_LEV >=#{nong_re_lev}
+           and   NONG_RE_SEQ  >=#{nong_re_seq}
+           and   NONG_RE_SEQ  <=(
+                                  nvl((SELECT min(nong_re_seq)-1
+                                       FROM   NONG
+                                       WHERE  NONG_RE_REF=#{nong_re_ref}
+                                       AND    NONG_RE_LEV=#{nong_re_lev}
+                                       AND    NONG_RE_SEQ>#{nong_re_seq}),
+                                      (SELECT max(nong_re_seq)
+                                       FROM   NONG
+                                       where  NONG_RE_REF=#{nong_re_ref} ))
+                                      )
+   ]]>
+</delete>
+
+ <select id ="deleteFileList" resultType="String">
+   select nong_file  from nongdelete_file
+ </select>
+
+<select id="ajaxlist1" parameterType="java.util.Map" resultType="nong" >
+ select * from 
+ (select rownum rnum, b.*
+  from 
+        (select nong.*, nvl(cnt,0) cnt
+         from 
+         nong left outer join (select nong_num, count(*) cnt
+                                from NONG_CO
+                                group by nong_num) c
+         on nong.nong_num = c.nong_num
+	     order by NONG_RE_REF desc,
+	     NONG_RE_SEQ asc) b
+ )
+where rnum &gt;= #{start} and rnum &lt;= #{end} and name = #{name}
+</select>
+
+<select id="ajaxlist2" parameterType="java.util.Map" resultType="nong" >
+ select * from 
+ (select rownum rnum, b.*
+  from 
+        (select nong.*, nvl(cnt,0) cnt
+         from 
+         nong left outer join (select nong_num, count(*) cnt
+                                from NONG_CO
+                                group by nong_num) c
+         on nong.nong_num = c.nong_num
+	     order by NONG_DATE asc, NONG_RE_REF desc,
+	     NONG_RE_SEQ asc) b
+ )
+where rnum &gt;= #{start} and rnum &lt;= #{end} and name = #{name}
+</select>
+
+<select id="ajaxlist3" parameterType="java.util.Map" resultType="nong" >
+ select * from 
+ (select rownum rnum, b.*
+  from 
+        (select nong.*, nvl(cnt,0) cnt
+         from 
+         nong left outer join (select nong_num, count(*) cnt
+                                from NONG_CO
+                                group by nong_num) c
+         on nong.nong_num = c.nong_num
+	     order by NONG_READ DESC, NONG_RE_REF desc,
+	     NONG_RE_SEQ asc) b
+ )
+where rnum &gt;= #{start} and rnum &lt;= #{end} and name = #{name}
+</select>
+
+<select id="searchlist1" parameterType="java.util.Map" resultType="nong" >
+ select * from 
+ (select rownum rnum, b.*
+  from 
+        (select nong.*, nvl(cnt,0) cnt
+         from 
+         nong left outer join (select nong_num, count(*) cnt
+                                from NONG_CO
+                                group by nong_num) c
+         on nong.nong_num = c.nong_num 
+<choose>
+<when test ="type.equalsIgnoreCase('subAcon')">
+where nong.nong_sub like '%'||#{search}||'%' or nong.nong_con like '%'||#{search}||'%'
+</when>
+
+<when test ="type.equalsIgnoreCase('subject')">
+where nong.nong_sub like '%'||#{search}||'%'
+</when>
+
+<when test ="type.equalsIgnoreCase('content')">
+where nong.nong_con like '%'||#{search}||'%'
+</when>
+
+<when test ="type.equalsIgnoreCase('writer')">
+where nong.id like '%'||#{search}||'%'
+</when>
+
+
+</choose>
+	     order by NONG_RE_REF desc,
+	     NONG_RE_SEQ asc) b
+ )
+where rnum &gt;= #{start} and rnum &lt;= #{end} and name = #{name}
+</select>
+
+<select id="searchlist2" parameterType="java.util.Map" resultType="nong" >
+ select * from 
+ (select rownum rnum, b.*
+  from 
+        (select nong.*, nvl(cnt,0) cnt
+         from 
+         nong left outer join (select nong_num, count(*) cnt
+                                from NONG_CO
+                                group by nong_num) c
+         on nong.nong_num = c.nong_num 
+<choose>
+<when test ="type.equalsIgnoreCase('subAcon')">
+where nong.nong_sub like '%'||#{search}||'%' or nong.nong_con like '%'||#{search}||'%'
+</when>
+
+<when test ="type.equalsIgnoreCase('subject')">
+where nong.nong_sub like '%'||#{search}||'%'
+</when>
+
+<when test ="type.equalsIgnoreCase('content')">
+where nong.nong_con like '%'||#{search}||'%'
+</when>
+
+<when test ="type.equalsIgnoreCase('writer')">
+where nong.id like '%'||#{search}||'%'
+</when>
+
+
+</choose>
+	     order by NONG_DATE asc, NONG_RE_REF desc,
+	     NONG_RE_SEQ asc) b
+ )
+where rnum &gt;= #{start} and rnum &lt;= #{end} and name = #{name}
+</select>
+
+<select id="searchlist3" parameterType="java.util.Map" resultType="nong" >
+ select * from 
+ (select rownum rnum, b.*
+  from 
+        (select nong.*, nvl(cnt,0) cnt
+         from 
+         nong left outer join (select nong_num, count(*) cnt
+                                from NONG_CO
+                                group by nong_num) c
+         on nong.nong_num = c.nong_num 
+<choose>
+<when test ="type.equalsIgnoreCase('subAcon')">
+where nong.nong_sub like '%'||#{search}||'%' or nong.nong_con like '%'||#{search}||'%'
+</when>
+
+<when test ="type.equalsIgnoreCase('subject')">
+where nong.nong_sub like '%'||#{search}||'%'
+</when>
+
+<when test ="type.equalsIgnoreCase('content')">
+where nong.nong_con like '%'||#{search}||'%'
+</when>
+
+<when test ="type.equalsIgnoreCase('writer')">
+where nong.id like '%'||#{search}||'%'
+</when>
+
+
+</choose>
+	     order by NONG_READ DESC, NONG_RE_REF desc,
+	     NONG_RE_SEQ asc) b
+ )
+where rnum &gt;= #{start} and rnum &lt;= #{end} and name = #{name}
+</select>
+
+
+<select id="searchlistcount" parameterType="java.util.Map" resultType="int" >
+select count(*) from nong 
+<choose>
+<when test ="type.equalsIgnoreCase('subAcon')">
+where nong_sub like '%'||#{search}||'%' or nong_con like '%'||#{search}||'%' and name = #{name}
+</when>
+
+<when test ="type.equalsIgnoreCase('subject')">
+where nong_sub like '%'||#{search}||'%' and name = #{name}
+</when>
+
+<when test ="type.equalsIgnoreCase('content')">
+where nong_con like '%'||#{search}||'%' and name = #{name}
+</when>
+
+<when test ="type.equalsIgnoreCase('writer')">
+where id like '%'||#{search}||'%' and name = #{name}
+</when>
+
+</choose>
+</select>
+
 </mapper>
 
