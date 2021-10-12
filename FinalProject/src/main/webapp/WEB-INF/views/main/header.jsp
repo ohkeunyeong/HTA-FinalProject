@@ -72,7 +72,7 @@
 			<!-- Dropdown -->
 			<li class="nav-item dropdown active" style="padding-left: 4%"><a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 고객 센터 </a>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" href="#">고객 센터</a> <a class="dropdown-item" href="#">FAQ</a> <a class="dropdown-item" href="#">공지사항</a>
+				   <a class="dropdown-item" href="#">공지사항</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/faq">FAQ</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/emailprocess?id=${id}">메일문의</a> 
 				</div></li>
 
 		</ul>

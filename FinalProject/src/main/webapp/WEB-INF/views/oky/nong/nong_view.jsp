@@ -75,6 +75,8 @@ form[action=down] > input[type=submit]{
 <body>
 <br><br><br>
 <input type="hidden" id="id" value="${id}" name="id">
+<input type="hidden" id="nongname" value="${name}" name="name">
+<input type="hidden" id="path" value="${pageContext.request.contextPath}" name="path">
  <div class="container">
    <table class="table table-striped">
      <tr><th colspan="2">멤버게시판 상세보기</th></tr>
@@ -96,7 +98,7 @@ form[action=down] > input[type=submit]{
     <tr>
       <td><div>첨부파일</div></td>
      <c:if test="${!empty boarddata.nong_file}"><%-- 파일첨부한 경우 --%>
-      <td><img src="${pageContext.request.contextPath}/resources/image/okydown.png" width="10px">
+      <td><img src="${pageContext.request.contextPath}/resources/image/oky/down.png" width="10px">
           <form method="post" action="down">
             <input type="hidden" value="${boarddata.nong_file}" name="filename">
             <input type="hidden" value="${boarddata.nong_ori}" name="original">
@@ -144,18 +146,19 @@ form[action=down] > input[type=submit]{
                <div class="modal-content">
                  <%-- Modal body --%>
                  <div class="modal-body">
-                  <form name="deleteForm" action="delete" method="post">
+                  <form name="deleteForm" action="nongdelete" method="post">
                     <%-- http://localhost:8888/myhome6/detail?num=22
                                                  주소를 보면 num을 파라미터로 넘기고 있습니다.
                                                  이 값을 가져와서 ${param.num}를 사용
                                                  또는 ${boarddata.BOARD_NUM}
                      --%>
                      <input type="hidden" name="num" value="${param.num}" id="board_num">
+                     <input type="hidden" id="nongname" value="${name}" name="name">
                      <div class="form-group">
                         <label for="pwd">비밀번호</label>
                         <input type="password"
                                class="form-control" placeholder="Enter password"
-                               name="BOARD_PASS" id="board_pass">
+                               name="nong_pass" id="board_pass">
                      </div>
                      <button type="submit" class="btn btn-primary">전송</button>
                      <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
@@ -167,6 +170,7 @@ form[action=down] > input[type=submit]{
              <!-- class="modal" -->
              
              <div id="comment">
+             	<input type="hidden" id="loginid" value="${id}" name="loginid">
                 <button class="btn btn-info float-left">총 50자 까지 가능합니다.</button>
                 <button id="write" class="btn btn-info float-right">등록</button>
                 <textarea rows=3 class="form-control"

@@ -1,4 +1,7 @@
 $(function(){
+	var path = $("#path").val();
+	var loginid = $("#loginid").val();
+	console.log("id는" + loginid);
 	$("#comment table").hide(); //1
 	var page=1; //더 보기에서 보여줄 페이지를 기억할 변수
 	count = parseInt($("#count").text());
@@ -12,10 +15,11 @@ $(function(){
 	function getList(currentPage) {
 		$.ajax({
 			        type : "post",
-			        url  : "../comment/list",
+			        url  : path+ "/nongcolist",
 			        data : {
-			        	"board_num" : $("#board_num").val(),
-			        	"page"  : currentPage
+			        	"nong_num" : $("#board_num").val(),
+			        	"page"  : currentPage,
+						"name" : $("#nongname").val()
 			        },
 			        dataType : "json",
 			        success : function(rdata) {
@@ -27,17 +31,17 @@ $(function(){
 			        			output = '';
 			        			img = '';
 			        			if ($("#loginid").val() == this.id) {
-			        				img = "<img src='../resources/image/pencil2.png' width='15px' class='update'>"
-			        					+ "<img src='../resources/image/delete.png' width='15px' class='remove'>"
-			        					+ "<input type='hidden' value='"   +this.num + "' >";
+			        				img = "<img src='" + path + "/resources/image/oky/pencil2.png' width='15px' class='update'>"
+			        					+ "<img src='" + path + "/resources/image/oky/delete.png' width='15px' class='remove'>"
+			        					+ "<input type='hidden' value='"   +this.nong_co_num + "' >";
 			        			}
 			        			output += "<tr><td>" + this.id + "</td>";
 			        			output += "<td></td>";
 			        			//output += "<td>" + this.content + "</td>"; <-- xss테스트 용
-			        			output += "<td>" + this.reg_date + img + "</td></tr>";
+			        			output += "<td>" + this.nong_co_date + img + "</td></tr>";
 			        			$("#comment tbody").append(output);
 			        			//append한 마지막 tr의 2번째 자식 td를 찾아 text()메서드로 content를 넣습니다.
-			        			$("#comment tbody tr:last").find("td:nth-child(2)").text(this.content); // xss 테스트 할때 주석처리해야함
+			        			$("#comment tbody tr:last").find("td:nth-child(2)").text(this.nong_co_con); // xss 테스트 할때 주석처리해야함
 			        		});//each end
 			        		
 			        		if(rdata.listcount > rdata.list.length){   //전체 댓글 갯수 > 현재까지 보여준 댓글 갯수
@@ -80,17 +84,18 @@ $(function(){
 		buttonText = $("#write").text(); //버튼의 라벨로 add할지 update 할지 결정
 		$(".float-left").text('총 50자까지 가능합니다.');
 		if (buttonText== "등록") { // 댓글을 추가하는 경우
-			url = "../comment/add";
+			url = path+ "/nongcoadd";
 			data = {
-				"content" : content,//content = $("#content").val();
-				"id" : $("#loginid").val(),
-				"board_num" : $("#board_num").val()
+				"nong_co_con" : content,//content = $("#content").val();
+				"id": loginid,
+				"nong_num" : $("#board_num").val(),
+				"name" : $("#nongname").val()
 			};
 		} else { //댓글을 수정하는 경우
-			url = "../comment/update";
+			url = path+ "/nongcoupdate";
 			data = {
-				"num" : num,
-				"content" : content
+				"nong_co_num" : num,
+				"nong_co_con" : content
 			};
 			$("#write").text("등록"); //다시 등록으로 변경
 		}
@@ -131,10 +136,11 @@ $(function(){
 		if(!confirm("정말 삭제하시겠습니까?")) {
 			return;
 		}
-		var deleteNum = $(this).next().val(); //댓글번호		
+		var deleteNum = $(this).next().val(); //댓글번호	
+		console.log("삭제 번호는" + deleteNum)
 			$.ajax({
 				type : "post",
-				url : "../comment/delete",
+				url : path+ "/nongcodelete",
 				data : {
 					"num" : deleteNum
 				},

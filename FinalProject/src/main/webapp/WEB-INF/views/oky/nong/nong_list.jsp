@@ -10,10 +10,20 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/oky/list.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/oky/list.css"></link>
+ <script>
+  var result="${result}";
+  if(result =='deleteSuccess') {
+	  alert("삭제 완료 되었습니니다.")
+  }else if(result =='updateSuccess') {
+	  alert("수정 완료 되었습니니다.")
+  }
+ </script>
 </head>
 <body>
 <br><br><br>
 <input type="hidden" id="id" value="${id}" name="id">
+<input type="hidden" id="name" value="${name}" name="name">
+<input type="hidden" id="path" value="${pageContext.request.contextPath}" name="path">
 <%-- 농장명 : ${name} <br>
           아이디 : ${id}   <br>
  관리자 레벨 : ${level}   <br> --%>
@@ -145,7 +155,7 @@
 			 </c:if>
 			 <c:if test="${page > 1 }">			
 				<li class="page-item">
-				   <a href="list?page=${page-1}" 
+				   <a href="nong?name=${name}&page=${page-1}" 
 				      class="page-link">이전&nbsp;</a>
 				</li> 
 			 </c:if>
@@ -158,7 +168,7 @@
 				</c:if>
 				<c:if test="${a != page }">
 				    <li class="page-item">
-					   <a href="list?page=${a}" 
+					   <a href="nong?name=${name}&page=${a}" 
 					      class="page-link">${a}</a>
 				    </li>	
 				</c:if>
@@ -171,7 +181,7 @@
 			</c:if>
 			<c:if test="${page < maxpage }">
 			  <li class="page-item">
-				<a href="list?page=${page+1}" 
+				<a href="nong?name=${name}&page=${page+1}" 
 				   class="page-link">&nbsp;다음</a>
 			  </li>	
 			</c:if>
