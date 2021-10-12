@@ -358,16 +358,6 @@ public class AdminController {
 		return "redirect:noticeList";
 	}
 	
-	@PostMapping("/reportAdd")
-	@ResponseBody
-	public int reportAdd(Report report) {
-		logger.info("Admin reportAdd()");
-		
-		int result = adminService.reportInsert(report);
-		
-		return result;
-	}
-	
 	@GetMapping("/reportList")
 	public ModelAndView reportList(@RequestParam(value="page", defaultValue="1", required=false) int page, 
 			   ModelAndView mv) {
