@@ -1,7 +1,37 @@
 function go(page) {
-	var limit = $('#viewcount').val();
-	var data = "limit=" + limit + "&state=ajax&page=" + page;
-	ajax(data);
+	var path = $("#path").val();
+	var view = $("#view").val(); //최신순부터 값은 1~3
+	var search = $("#search").val(); //검색어
+	var setype = $("#searchType").val(); //검색어 타입
+	var id= $("#id").val();
+	var name = $("#name").val();
+	console.log(search)
+	console.log(setype)
+	console.log(view)
+	console.log(page)
+	console.log(id)
+	console.log(name)
+	
+	if (!$("#search").val()) {
+	var data = "name=" + name +"&view=" + view + "&state=ajax&page=" + page;	
+//	{
+//	    		"view" : view,
+//			    "page" : page,		
+//			    "name" : name
+//		};
+	} else {
+	var data = "name=" + name +"&view=" + view + "&state=ajax&page=" + page + "&type=" + setype + "&search=" + search;	
+//	{
+//    		"view"  : view,
+//		    "page"  : page,		
+//		    "name"  : name,
+//		    "type"  : setype,
+//		    "search": search
+//	};
+	}
+	
+	console.log(data)
+	ajax(data);	
 }
 
 
@@ -17,6 +47,7 @@ function setPaging(href, digit) {
 }
 
 function ajax(sdata) {
+	var path = $("#path").val();
 	console.log(sdata)
 	output = "";
 	$.ajax({
@@ -38,23 +69,23 @@ function ajax(sdata) {
 				$(data.boardlist).each(
 						function(index, item) {
 						    output += '<tr><td>' + (num--) + '</td>'
-						    blank_count = item.board_RE_LEV * 2 + 1;
+						    blank_count = item.nong_re_lev * 2 + 1;
 						    blank = '&nbsp;';
 						    for (var i =0 ; i < blank_count; i++){
 						    	blank += '&nbsp;&nbsp;';
 						    }
 						    img="";
-						    if (item.board_RE_LEV > 0) {
-						    	img="<img src='image/line.gif'>";
+						    if (item.nong_re_lev > 0) {
+						    	img="<img src='" + path + "/resources/image/oky/line.gif'>";
 						    }
 						    
-						    output += "<td><div>" + blank + img
-						    output += ' <a href="BoardDetailAction.bo?num=' + item.board_NUM + '">'
-						    output += item.board_SUBJECT.replace(/</g,'&lt;').replace(/>/g,'&gt;')
-						              + '</a></div></td>'
-						    output += '<td><div>' + item.board_NAME + '</div></td>'
-						    output += '<td><div>' + item.board_DATE + '</div></td>'
-						    output += '<td><div>' + item.board_READCOUNT + '</div></td>'
+						    output += "<td colspan=2 id='subject'><div>" + blank + img
+						    output += ' <a href="nongdetail?name='+ item.name + '&num=' + item.nong_num + '">'
+						    output += item.nong_sub.replace(/</g,'&lt;').replace(/>/g,'&gt;')
+						    output += '<span class="gray small"> [' + item.cnt   + ']<span></a></div></td>'
+						    output += '<td><div>' + item.id + '</div></td>'
+						    output += '<td><div>' + item.nong_date + '</div></td>'
+						    output += '<td><div>' + item.nong_read + '</div></td>'
 						})
 				   output += "</tbody>"
 				   $('table').append(output) //table 완성
@@ -86,7 +117,14 @@ function ajax(sdata) {
 				   
 				   $('.pagination').append(output)				
 			}//if(data.listcount) end
-			
+			else { //카테고리에 글이 없는 경우
+				$("tbody").remove();
+				var output = "<tbody>";
+				output += "<tr><td colspan=6><div>등록된 글이 없습니다.</div></td></tr>"
+				 output += "</tbody>"
+					   $('table').append(output)
+				$(".pagination").empty();
+			}			
 		}, //succes end
 		error: function() {
 			console.log('에러')
@@ -96,9 +134,20 @@ function ajax(sdata) {
 
 
 $(function() {
-	$("#viewcount").change(function(){
-		go(1); //보여줄 페이지를 1페이지로 설정합니다.
-	}); // change end
+	$("#view").change(function(){ //최신순, 등록순, 조회순 변경 시
+		$("#search").val("");
+		go(1); 
+	}); 
 	
+	$("#searchbtn").click(function(){
+		if (!$("#search").val()){
+			return false
+		} else {			
+			go(1);
+		}
+	})	
 	
+	$(document).keypress(function(e) { //엔터키 방지
+		if (e.keyCode == 13) e.preventDefault(); 
+		});
 })   
