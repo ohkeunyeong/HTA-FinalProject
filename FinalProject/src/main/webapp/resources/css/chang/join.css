@@ -9,6 +9,10 @@ input[type=text], input[type=password] {
     display: inline-block;
 }
 
+input[type=file]{
+    display: none;
+}
+
 input[type=radio]{
 	width: 5%;
     display: inline-block;

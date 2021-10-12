@@ -12,6 +12,32 @@
 	$(function() {
 		var checkid=false;
 		var checkemail=false;
+		var check=0;
+		
+		$('input[type=file]').change(function(event){
+			check++;
+			var inputfile = $(this).val().split('\\');
+			var filename=inputfile[inputfile.length -1];
+			
+			var pattern = /(gif|jpg|gpeg|png)$/i; //플래그 i는 대소문자 구분 없는 검색
+			if(pattern.test(filename)){
+				$('#filename').text(filename);//inputfile.length - 1=2
+				
+				var reader = new FileReader(); //파일을 읽기 위한 객체 생성
+				//DataURL 형식으로 파일을 읽어옵니다.
+				//읽어온 결과는 reader 객체의 result 속성에 저장됩니다.
+				//event.target.files[0] : 선택한 그림의 파일객체에서 첫번째 객체를 가져옵니다.
+				reader.readAsDataURL(event.target.files[0]);
+				
+				reader.onload = function(event){
+					$('#showImage').html('<img width="25px" src ="'
+										  + event.target.result + '">');
+				};
+			}else{
+				alert('확장자는 gif, jpg, jpeg, png가 가능합니다.');
+				check=0;
+			}
+		});
 		
 		$('form').submit(function() {
 			if (!$.isNumeric($("input[name='tel']").val())) {
@@ -86,7 +112,7 @@
 </head>
 <body>
 
-	<form name="joinform" action="joinProcess" method="post">
+	<form name="joinform" action="joinProcess" method="post"  enctype="multipart/form-data">
 		<h1>회원가입 페이지</h1>
 		<hr>
 		<b>아이디</b> 
@@ -108,11 +134,19 @@
 		
 		<b>전화번호</b><input type="text" name="tel" id="jointel"
 			maxLength="11" required> 
+		
+		
+				<b>프로필 사진</b>
+		<label>
+			<img src="../resources/image/chang/attach.png" width="25px">&nbsp;&nbsp;:&nbsp;&nbsp;
+			<span id="showImage"><img width="25px" src ="${pageContext.request.contextPath}/resources/image/chang/profile.png"></span>
+			<input type="file" name="uploadfile" accept="image/*">
+		</label>
+		
 		<div class="clearfix">
 			<button type="submit" class="submitbtn">회원가입</button>
 			<button type="reset" class="cancelbtn">다시작성</button>
 		</div>
-		
 	
 	</form>
 	

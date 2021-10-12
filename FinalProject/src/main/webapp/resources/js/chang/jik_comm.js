@@ -21,15 +21,14 @@ function getList(currentPage,state){
 				}
 				var output="";
 				
-			 if(rdata.listcount > 0){
 				   output += '<li class="comment_tab_item ' +  red1 + '" >'
 				   		  + ' <a href="javascript:void(0);" onclick="getList(1,1);" class="comment_tab_button">최신순 </a>'
                           + '</li>'
                           + '<li class="comment_tab_item ' +  red2 + '" >'
                           + '   <a href="javascript:getList(1,2)" class="comment_tab_button">등록순</a>'
-                          + '</li>';
+                          + '</li>'
                      $('.comment_tab_list').html(output);//댓글 수 등록순 최신순 출력
-                     
+               if(rdata.listcount > 0){    
 				    output='';
 					$(rdata.list).each(function(){
 						var lev = this.jik_comm_re_lev;
@@ -117,8 +116,7 @@ function getList(currentPage,state){
 			 }//if(rdata.boardlist.length>0)
 			 else{ //댓글 1개가 있었는데 삭제하는 경우 갯수는 0이라  if문을 수행하지 않고 이곳으로 옵니다.
 				   //이곳에서 아래의 두 영역을 없앱니다.
-				 $('.comment_list').empty();  
-				 $('.comment_tab_list').empty(); 
+				 $('.comment_list').empty(); 
 			 }
 			}//success end
 		});//ajax end
@@ -397,7 +395,20 @@ $(function(){
 			 }
 		 })//ajax
 	 })//답변 달기 등록 버튼을 클릭한 경우
-	 
+	/* 
+	 * 새창띄우기 -- 이상하게 작동됨.
+		function popupOpen(){
+	
+		 window.open("../jik/report", "신고", "width=500, height=700, scrollbars=no, resizable=no");
+		 return false;
+		
+	}
+	 $(".report_button").click(function(){
+		 popupOpen();
+		
+		 
+	 })
+	 */
 	//답변달기 후 취소 버튼을 클릭한 경우
 	$('.CommentBox').on('click','.reply_cancel',function(){
 		$(this).parent().parent().parent().remove();

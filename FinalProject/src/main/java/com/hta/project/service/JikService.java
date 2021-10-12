@@ -11,7 +11,7 @@ public interface JikService {
 	
 	public List<Jik> getJikList(int page, int limit);
 	
-	public Jik getDetail(int num);
+	public Jik getDetail(int num,String id);
 	
 	public int jikModify(Jik modifyjik);
 	
@@ -22,6 +22,8 @@ public interface JikService {
 	public void insertJik(Jik jik);
 
 	public int insert_deleteFile(String before_file);
+
+	public Jik getDetail2(int num);
 
 
 

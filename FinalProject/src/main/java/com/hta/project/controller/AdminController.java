@@ -437,7 +437,7 @@ public class AdminController {
 		logger.info("신고글 삭제 성공");
 		if(board_table.equals("jik")) {
 			Jik jik = new Jik();
-			jik = jikService.getDetail(board_num);
+			jik = jikService.getDetail2(board_num);
 			if(jik == null) {
 				adminService.numReportDelete(board_num, board_table);
 			}

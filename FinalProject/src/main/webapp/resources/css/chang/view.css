@@ -3,10 +3,6 @@ body>div>table>tbody>tr:nth-child(1) {
 	text-align: center
 }
 
-body>div>table>tbody td:nth-child(1) {
-	font-weight: bold;
-	font-size: 1.2em
-}
 
 td:nth-child(1) {
 	width: 20%
@@ -73,7 +69,7 @@ body, button, li, ol,  textarea,  ul {
 	padding: 0;
 }
 
-.CommentBox .comment_option .comment_tab .comment_tab_item .comment_tab_button[aria-selected=true]
+.CommentBox .report_button .comment_option .comment_tab .comment_tab_item .comment_tab_button[aria-selected=true]
 	{
 	color: #000000;
 }
@@ -81,6 +77,14 @@ body, button, li, ol,  textarea,  ul {
 .comment_tab_button {
 	color: #b7b7b7;
 	font-weight: 700;
+}
+
+.report_button {
+	color: #e69888;
+	font-weight: 700;
+	float: right;
+
+
 }
 
 a {

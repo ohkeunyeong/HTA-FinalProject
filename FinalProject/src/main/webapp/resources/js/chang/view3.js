@@ -20,16 +20,18 @@ function getList(currentPage,state){
 						}					
 						var output="";
 						$("#count").text(rdata.listcount);
-						if(rdata.listcount > 0){
 							
 							  output += '<li class="comment_tab_item ' +  red1 + '" >'
 	                          + '   <a href="javascript:void(0);" onclick="getList(1,1);" class="comment_tab_button">최신순 </a>'
 	                          + '</li>'
 	                          + '<li class="comment_tab_item ' +  red2 + '" >'
 	                          + '   <a href="javascript:getList(1,2)" class="comment_tab_button">등록순</a>'
+	                          + '</li>'
+				              + '<li class="comment_tab_item " >'
+	                          + '   <a href="javascript:report()" class="comment_tab_button">신고하기</a>'
 	                          + '</li>';
 	                     $('.comment_tab_list').html(output);//댓글 수 등록순 최신순 출력
-	                     
+	                     if(rdata.listcount > 0){ 
 					    output='';
 						$(rdata.list).each(function(){
 							var lev = this.jik_comm_lev;
