@@ -10,10 +10,8 @@ h5 {
 	width:100%
 }
 
-
-.recommendation {
-	margin-top: 1%;
-	margin-left: 14%;
+.container {
+	margin:auto
 }
 
 .section1 {
@@ -56,93 +54,18 @@ h5 {
 	font-weight: bold;
 }
 
-.recommendation .products {
+.products {
 	margin-top: 2%;
 	margin-bottom: 2%;
 	margin-right: 15%;
 }
 
-.recommendation .products card-deck .card {
+.products card-deck .card {
 	width: 300px;
 	height: 250px;
 }
 
-.recommendation .products>card-img-top {
-	height: 200px;
-}
-
-
-.personacon .products {
-	margin-top: 2%;
-	margin-bottom: 2%;
-	margin-right: 15%;
-}
-
-.personacon .products card-deck .card {
-	width: 300px;
-	height: 250px;
-}
-
-.personacon .products>card-img-top {
-	height: 200px;
-}
-
-.tools .products {
-	margin-top: 2%;
-	margin-bottom: 2%;
-	margin-right: 15%;
-}
-
-.tools .products card-deck .card {
-	width: 300px;
-	height: 250px;
-}
-
-.tools .products>card-img-top {
-	height: 200px;
-}
-
-.goods .products {
-	margin-top: 2%;
-	margin-bottom: 2%;
-}
-
-.goods .products card-deck .card {
-	width: 300px;
-	height:250px;
-}
-
-.goods .products>card-img-top {
-	height: 200px;
-}
-
-.reviewProduct .products {
-	margin-top: 2%;
-	margin-bottom: 2%;
-	margin-right: 15%;
-}
-
-.reviewProduct .products card-deck .card {
-	width: 300px;
-	height: 250px;
-}
-
-.reviewProduct .products>card-img-top {
-	height: 200px;
-}
-
-.review .products {
-	margin-top: 2%;
-	margin-bottom: 2%;
-	margin-right: 15%;
-}
-
-.review .products card-deck .card {
-	width: 300px;
-	height: 250px;
-}
-
-.review .products>card-img-top {
+.products>card-img-top {
 	height: 200px;
 }
 
