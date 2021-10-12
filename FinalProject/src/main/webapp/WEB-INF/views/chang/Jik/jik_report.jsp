@@ -24,24 +24,23 @@ textarea {
 	$('#board_subject').val(opener.document.getElementById('jik_subject').value);
 	$('#board_content').val(opener.document.getElementById('jik_content').value);
 	
-	function submit()
-	{
-		var report = $("#report").serialize();
-		
-		$.ajax(
+	$("#submit").on("click",function()
+	{	$.ajax(
 		{
-			url : '../admin/reportAdd',
+			url : '../../project/admin/reportAdd',
 			type:"POST",
-			data : report,
-			success : function(rdata){		
+			data : $("#report").serialize(),
+			success : function(){		
 						alert("신고 되었습니다.")
 						window.close();
 					},//success
 			error : function(xhr, status) {
 			                alert(xhr + " : " + status);
 			            }
-		});
-	}
+		});//ajax
+	});//submit
+	
+
 	});
 	</script>
 </head>
@@ -54,12 +53,12 @@ textarea {
      <hr>
      <br>
      <input type="hidden" name="board_num" id="board_num">
+     <input type="hidden" name="board_table" id="board_table" value="jik">
      <div class="form-group">
      	<label for="nick">글 작성자</label>
-     	<input name="board_id" id="board_id" 
-     		   readOnly
+     	<input name="board_id" id="board_id"
      		   type="text"	size="10" maxlength="30"
-     		   class="form-control"
+     		   class="form-control" readOnly
      		  >
      </div>
 
@@ -79,7 +78,7 @@ textarea {
      			rows="10" 	class="form-control" placeholder="신고사유를 적어주세요."></textarea>
      </div>	
      <div class="form-group">
-     	<button type=button class="btn btn-primary" onClick='submit(); return false;'>신고하기</button>
+     	<button type=button class="btn btn-primary" id=submit>신고하기</button>
      	<button type=button class="btn btn-danger"  onClick='window.close()'>취소</button>
      </div>
    </form>
