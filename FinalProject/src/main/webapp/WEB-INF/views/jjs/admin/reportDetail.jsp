@@ -63,7 +63,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 								<div class="card-header">
 									<h3 class="card-title mt-2">제목 : ${reportdetail.board_subject}</h3>
 									<div class="float-right">
-										<span>작성자 : ${reportdetail.board_nick}</span>&nbsp;&nbsp;&nbsp;&nbsp; 신고날짜 : <span>${reportdetail.report_date}</span>
+										<span>작성자 : ${reportdetail.board_id}</span>&nbsp;&nbsp;&nbsp;&nbsp; 신고날짜 : <span>${reportdetail.report_date}</span>
 									</div>
 								</div>
 								<!-- /.card-header -->
