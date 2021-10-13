@@ -187,7 +187,7 @@
                     for(int i=1; i<=lastDay; i++){
         %>
             	<td>
-            	     <a class="countView" style="color:<%=OkyCalendarController.fontColor(dayOfWeek, i)%>;" href="calboardlist?name=${name}&year=<%=year%>&month=<%=month%>&date=<%=i%>"><%=i%></a>
+            	     <a class="countView" style="color:<%=CalendarController.fontColor(dayOfWeek, i)%>;" href="calboardlist?name=${name}&year=<%=year%>&month=<%=month%>&date=<%=i%>"><%=i%></a>
             	     <a href="insertcalform?name=${name}&year=<%=year%>&month=<%=month%>&date=<%=i%>">
             	     <c:if test="${level ==1}">
             	     		<img id="pen" src="${pageContext.request.contextPath}/resources/image/oky/pen.png" alt="일정추가"/>

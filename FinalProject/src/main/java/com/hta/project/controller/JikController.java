@@ -56,10 +56,12 @@ public class JikController {
 	@Value("${savefoldername}")
 	private String saveFolder;
 	
-
+	@Value("${resource.path}")
+	private String resourceFolder;
+	
 	@GetMapping(value = "/write")
 	public String jik_write() {
-		return "chang/Jik/jik_write2";
+		return "chang/Jik/jik_write";
 	}
 	
 	@RequestMapping(value = "/report")
@@ -254,9 +256,10 @@ public class JikController {
 		}else {
 			logger.info("�󼼺��� ����");
 			int count = jik_commService.getListCount(num);
-			mv.setViewName("chang/Jik/jik_view");
+			mv.setViewName("chang/Jik/jik_view2");
 			mv.addObject("count", count);
 			mv.addObject("jikdata", jik);
+			mv.addObject("resourceFolder", resourceFolder);
 		}
 		return mv;
 		
