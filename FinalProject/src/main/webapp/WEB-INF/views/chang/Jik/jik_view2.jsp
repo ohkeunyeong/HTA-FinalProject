@@ -33,8 +33,9 @@
  		<tr>
  			<td colspan="2" style="padding-right:0px">	
  			<div contentEditable="false" >
- 			<img width="90" height="90" class="img_veritcal_top" src="${resourceFolder}/${jikdata.jik_file}">
+ 			<img width="90" height="90" class="img_veritcal_top" src="display?fileName=${jikdata.jik_file}">
  			${jikdata.jik_content}
+ 			${resourceFolder}
  			</div>
  			</td>
  		</tr>
