@@ -51,4 +51,12 @@ public class MemberDAO {
 		return sqlSession.update("Members.update", m);
 	}
 
+	public String findid(Map<String, Object> map) {
+		return sqlSession.selectOne("Members.findid", map);
+	}
+
+	public int findpw(Map<String, Object> map) {
+		return sqlSession.update("Members.findpw", map);
+	}
+
 }

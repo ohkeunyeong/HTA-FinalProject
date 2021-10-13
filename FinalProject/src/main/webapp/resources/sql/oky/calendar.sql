@@ -7,7 +7,7 @@ TITLE       VARCHAR2(1000)      NOT NULL, -- 일정 제목--
 CONTENT     VARCHAR2(4000)      NOT NULL, -- 일정 내용--
 MDATE       VARCHAR2(12)        NOT NULL, -- 일정 시작시간--
 REGDATE     DATE                NOT NULL, -- 생성 시간--
-foreign key (NAME) REFERENCES mynong(MYNONG_NAME)
+foreign key (NAME) REFERENCES mynong(MYNONG_NAME) ON DELETE CASCADE
 );
 
 drop sequence CALBOARD_SEQ;

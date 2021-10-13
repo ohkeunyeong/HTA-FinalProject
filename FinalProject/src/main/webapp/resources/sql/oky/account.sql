@@ -6,7 +6,7 @@ NAME        VARCHAR2(50)        NOT NULL, -- 농장 이름--
 TITLE       VARCHAR2(1000)      NOT NULL, -- 지출 명--
 AMOUNT      VARCHAR2(30)           NOT NULL, -- 지출 금액--
 MDATE       VARCHAR2(12)        NOT NULL, -- 지출 시간--
-foreign key (NAME) REFERENCES mynong(MYNONG_NAME)
+foreign key (NAME) REFERENCES mynong(MYNONG_NAME) ON DELETE CASCADE
 );
 
 drop sequence ACCOUNT_SEQ;

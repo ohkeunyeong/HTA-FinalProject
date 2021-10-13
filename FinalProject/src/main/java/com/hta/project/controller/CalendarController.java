@@ -30,19 +30,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hta.project.domain.Member;
 import com.hta.project.domain.MyCalendar;
-import com.hta.project.service.OkyCalService;
-import com.hta.project.service.OkyMynongService;
+import com.hta.project.service.CalService;
+import com.hta.project.service.MynongService;
 
 @Controller
-public class OkyCalendarController {
+public class CalendarController {
 
 	@Autowired
-	private OkyMynongService okymynongservice;	
+	private MynongService mynongservice;	
 	@Autowired
-	private OkyCalService okycalservice;
+	private CalService calservice;
 	
 	private static final Logger logger
-	= LoggerFactory.getLogger(OkyCalendarController.class);
+	= LoggerFactory.getLogger(CalendarController.class);
 	
     //메인에서 캘린더 버튼 클릭 시
     @GetMapping("/calprocess")	
@@ -51,7 +51,8 @@ public class OkyCalendarController {
     response.setContentType("text/html;charset=utf-8");
 	PrintWriter out =response.getWriter();
 	String id=(String)session.getAttribute("id");
-	String mynongname = okymynongservice.getMynong(id); //아이디가 속해있는 농장이름 가져오기
+	String mynongname = mynongservice.getMynong(id); //아이디가 속해있는 농장이름 가져오기
+	Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
 	
 	if(id == null) {
 		logger.info("/calprocess 로그인 안되어있음");
@@ -61,7 +62,7 @@ public class OkyCalendarController {
 		out.println("</script>");
 		out.close();
 		return null;
-	} else if(mynongname == null){ //로그인 했지만 농장에 소속되어있지 않은경우
+	} else if(mynongname == null || list.getMy_farm().equals("3")){ //로그인 했지만 농장에 소속되어있지 않은경우
 		logger.info("/calprocess 농장없음");
 		out.println("<script>");
 		out.println("alert('농장 가입 또는 생성 시 이용 가능합니다');");
@@ -84,13 +85,13 @@ public class OkyCalendarController {
     	try {
     		int level =0;
     		String id=(String)session.getAttribute("id");
-    		String getmynong = okymynongservice.getMynong(id);
-    		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+    		String getmynong = mynongservice.getMynong(id);
+    		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
     		String myfarm=list.getMy_farm();
     		if(myfarm.equals("1")) {//농장 주인인지 판단
     			level =1;
     		}
-        	if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+        	if ((!(getmynong.equals(name))) || id==null || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
     			logger.info("스케줄 보기 실패");
     			mv.setViewName("oky/error/error");
     			mv.addObject("url", request.getRequestURL());
@@ -124,7 +125,7 @@ public class OkyCalendarController {
         		
         		//월별 일정에 대해 하루마다 일정 3개씩 표시하기 기능 구현
         		String yyyyMM=year+isTwo(month);
-        		List<MyCalendar> clist = okycalservice.calViewList(name, yyyyMM);
+        		List<MyCalendar> clist = calservice.calViewList(name, yyyyMM);
         		mv.addObject("clist", clist);
         		mv.addObject("id",id);
         		mv.addObject("name", getmynong);
@@ -148,8 +149,8 @@ public class OkyCalendarController {
 		logger.info("/calboardlist 일정목록보기");
 		try {
 		String id=(String)session.getAttribute("id");
-		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-		String getmynong = okymynongservice.getMynong(id);
+		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = mynongservice.getMynong(id);
 		
 		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 		int level =0;
@@ -158,7 +159,7 @@ public class OkyCalendarController {
 		if(myfarm.equals("1")) {//농장 주인인지 판단
 			level =1;
 		}
-    	if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+    	if ((!(getmynong.equals(name))) || id==null || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
 			logger.info("스케줄 보기 실패");
 			mv.setViewName("oky/error/error");
 			mv.addObject("url", request.getRequestURL());
@@ -178,7 +179,7 @@ public class OkyCalendarController {
 	            + isTwo(ymd.get("date"));
 
 		logger.info("/calboardlist 년월일" +yyyyMMdd);
-		List<MyCalendar> list2= okycalservice.calboardList(getmynong, yyyyMMdd);
+		List<MyCalendar> list2= calservice.calboardList(getmynong, yyyyMMdd);
 		mv.addObject("list", list2);
 		mv.addObject("name", name);
 		mv.addObject("level", level);
@@ -202,15 +203,15 @@ public class OkyCalendarController {
 		logger.info("/insertcalform 일정추가폼으로 이동");
 		try { //유효성 검사를 위한 초기 세팅
 		String id=(String)session.getAttribute("id");
-		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-		String getmynong = okymynongservice.getMynong(id);
+		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = mynongservice.getMynong(id);
 		
 		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 		int level =0;
 		if(myfarm.equals("1")) {//농장 주인인지 판단
 			level =1;
 		}
-		if (level==1 &&(!(getmynong.equals(name)) || id==null)) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+		if (level==1 &&((!(getmynong.equals(name))) || id==null) || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
 			logger.info("일정추가 보기실패");
 			mv.setViewName("oky/error/error");
 			mv.addObject("url", request.getRequestURL());
@@ -237,15 +238,15 @@ public class OkyCalendarController {
 		logger.info("/insertcalboard 일정추가하기");
 		try { //유효성 검사를 위한 초기 세팅
 		String id=(String)session.getAttribute("id");
-		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-		String getmynong = okymynongservice.getMynong(id);
+		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = mynongservice.getMynong(id);
 		
 		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 		int level =0;
 		if(myfarm.equals("1")) {//농장 주인인지 판단
 			level =1;
 		}
-		if (level==1 &&(!(getmynong.equals(name)) || id==null)) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+		if (level==1 &&((!(getmynong.equals(name))) || id==null) || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
 			logger.info("일정추가 보기실패");
 			mv.setViewName("oky/error/error");
 			mv.addObject("url", request.getRequestURL());
@@ -258,7 +259,7 @@ public class OkyCalendarController {
 				 +isTwo(calendar.getHour())
 				 +isTwo(calendar.getMin());
 		calendar.setMdate(mdate);
-		boolean isS= okycalservice.insertCal(calendar);
+		boolean isS= calservice.insertCal(calendar);
 
 		if(isS) {
 			mv.setViewName("redirect:calendar?name=" + name + "&year="+calendar.getYear()+"&month="+calendar.getMonth());
@@ -285,21 +286,21 @@ public class OkyCalendarController {
 		logger.info("/calmuldel 일정삭제하기 ");
 		try { //유효성 검사를 위한 초기 세팅
 		String id=(String)session.getAttribute("id");
-		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-		String getmynong = okymynongservice.getMynong(id);
+		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = mynongservice.getMynong(id);
 		
 		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 		int level =0;
 		if(myfarm.equals("1")) {//농장 주인인지 판단
 			level =1;
 		}
-		if (level==1 &&(!(getmynong.equals(name)) || id==null)) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+		if (level==1 &&((!(getmynong.equals(name))) || id==null) || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
 			logger.info("일정 삭제 실패");
 			mv.setViewName("oky/error/error");
 			mv.addObject("url", request.getRequestURL());
 			mv.addObject("message", "해당 농장 캘린더를 볼  권한이 없습니다."); 
 		} else {   //해당 농장 관리자 접근시 		
-		boolean isS=okycalservice.calMuldel(seq);
+		boolean isS=calservice.calMuldel(seq);
 		if(isS) {
 			mv.addObject("name", name);
 			mv.setViewName ("redirect:calboardlist");
@@ -327,21 +328,21 @@ public class OkyCalendarController {
 		logger.info("/caldetail");
 		try { //유효성 검사를 위한 초기 세팅
 		String id=(String)session.getAttribute("id");
-		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-		String getmynong = okymynongservice.getMynong(id);
+		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = mynongservice.getMynong(id);
 		
 		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 		int level =0;
 		if(myfarm.equals("1")) {//농장 주인인지 판단
 			level =1;
 		}
-		if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+		if ((!(getmynong.equals(name))) || id==null || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
 			logger.info("일정상세보기 실패");
 			mv.setViewName("oky/error/error");
 			mv.addObject("url", request.getRequestURL());
 			mv.addObject("message", "해당 농장 캘린더를 볼  권한이 없습니다.");    	   		
 		} else {   //해당 농장 멤버 접근시 		
-		calendar =okycalservice.calDetail(seq);								
+		calendar =calservice.calDetail(seq);								
 		mv.addObject("calendar", calendar);	
 		mv.addObject("name", name);
 		mv.addObject("level", level);
@@ -365,21 +366,21 @@ public class OkyCalendarController {
 			logger.info("/caldetailmain");
 			try { //유효성 검사를 위한 초기 세팅
 			String id=(String)session.getAttribute("id");
-			Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-			String getmynong = okymynongservice.getMynong(id);
+			Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+			String getmynong = mynongservice.getMynong(id);
 			
 			String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 			int level =0;
 			if(myfarm.equals("1")) {//농장 주인인지 판단
 				level =1;
 			}
-			if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+			if ((!(getmynong.equals(name))) || id==null || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
 				logger.info("메인화면으로 부터 일정상세보기 실패");
 				mv.setViewName("oky/error/error");
 				mv.addObject("url", request.getRequestURL());
 				mv.addObject("message", "해당 농장 캘린더를 볼  권한이 없습니다.");    	   		
 			} else {   //해당 농장 멤버 접근시 		
-			calendar =okycalservice.calDetail(seq);								
+			calendar =calservice.calDetail(seq);								
 			mv.addObject("calendar", calendar);	
 			mv.addObject("name", name);
 			mv.addObject("level", level);
@@ -402,21 +403,21 @@ public class OkyCalendarController {
 		logger.info("/updateform");
 		try { //유효성 검사를 위한 초기 세팅
 		String id=(String)session.getAttribute("id");
-		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-		String getmynong = okymynongservice.getMynong(id);
+		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = mynongservice.getMynong(id);
 		
 		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 		int level =0;
 		if(myfarm.equals("1")) {//농장 주인인지 판단
 			level =1;
 		}
-		if (level==1 &&(!(getmynong.equals(name)) || id==null)) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+		if (level==1 &&((!(getmynong.equals(name))) || id==null) || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
 			logger.info("수정페이지 접근 실패");
 			mv.setViewName("oky/error/error");
 			mv.addObject("url", request.getRequestURL());
 			mv.addObject("message", "해당 농장 캘린더를 볼  권한이 없습니다."); 
 		} else {   //해당 농장 관리자 접근시 				
-		calendar =okycalservice.calDetail(seq);
+		calendar =calservice.calDetail(seq);
 		mv.addObject("calendar", calendar);
 		mv.addObject("name", name);
 		mv.setViewName("oky/calendar/calupdateform");
@@ -439,15 +440,15 @@ public class OkyCalendarController {
 		logger.info("/calupdate");
 		try { //유효성 검사를 위한 초기 세팅
 			String id=(String)session.getAttribute("id");
-			Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-			String getmynong = okymynongservice.getMynong(id);
+			Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+			String getmynong = mynongservice.getMynong(id);
 			
 			String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 			int level =0;
 			if(myfarm.equals("1")) {//농장 주인인지 판단
 				level =1;
 			}
-			if (level==1 &&(!(getmynong.equals(name)) || id==null)) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+			if (level==1 &&((!(getmynong.equals(name))) || id==null) || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
 				logger.info("관리자 인증 실패");
 				mv.setViewName("oky/error/error");
 				mv.addObject("url", request.getRequestURL());
@@ -460,7 +461,7 @@ public class OkyCalendarController {
 				 +isTwo(calendar.getHour())
 				 +isTwo(calendar.getMin());
 		calendar.setMdate(mdate);
-		boolean isS=okycalservice.calUpdate(calendar);
+		boolean isS=calservice.calUpdate(calendar);
 		if(isS) {
 			mv.setViewName("redirect:caldetail?name=" + name + "&seq=" + seq);
 		} else {
@@ -485,8 +486,8 @@ public class OkyCalendarController {
 	public String calCountAjax(@RequestParam("yyyyMMdd") String ymd, HttpSession session) {
 		logger.info("/calcountajax");
 		String id=(String)session.getAttribute("id");
-		String name = okymynongservice.getMynong(id);
-		int count= okycalservice.calCount(name, ymd);
+		String name = mynongservice.getMynong(id);
+		int count= calservice.calCount(name, ymd);
 		
 		return count+"";
 }	
@@ -537,8 +538,8 @@ public class OkyCalendarController {
 
 //try { //유효성 검사를 위한 초기 세팅
 //String id=(String)session.getAttribute("id");
-//Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-//String getmynong = okymynongservice.getMynong(id);
+//Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+//String getmynong = mynongservice.getMynong(id);
 //
 //String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 //int level =0;

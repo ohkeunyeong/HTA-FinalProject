@@ -3,6 +3,7 @@ package com.hta.project.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.hta.project.domain.Member;
 
 @Repository
-public class OkyMynongDAO {
+public class MynongDAO {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
@@ -53,8 +54,8 @@ public class OkyMynongDAO {
 		return sqlSession.selectList("Mynong.list3", map);
 	}
 
-	public int getSearchListCount(String name) {
-		return sqlSession.selectOne("Mynong.searchCount", name);
+	public int getSearchListCount(Map<String, Object> map) {
+		return sqlSession.selectOne("Mynong.searchCount", map);
 	}
 
 	public String checkmyfarm(String id) {
@@ -71,6 +72,19 @@ public class OkyMynongDAO {
 
 	public void delete(String id) {
 		sqlSession.update("Mynong.deletenongmen", id);
+	}
+
+	public void changeoption(Map<String, Object> map) {
+		sqlSession.update("Mynong.changeoption", map);
+		
+	}
+
+	public void deletenongmember(String name) {
+		sqlSession.update("Mynong.deletenongmember", name);
+	}
+
+	public void deletenong(String name) {
+		sqlSession.delete("Mynong.deletenong", name);
 	}
 
 

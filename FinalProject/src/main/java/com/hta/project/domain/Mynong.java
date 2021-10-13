@@ -1,6 +1,6 @@
 package com.hta.project.domain;
 
-public class OkyMynong {
+public class Mynong {
 	private String mynong_name; //농장명
 
 	public String getMynong_name() {

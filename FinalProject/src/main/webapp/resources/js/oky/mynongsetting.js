@@ -1,3 +1,15 @@
+	  function checkTarget(id) {
+			$("#userid").text(id);		
+			$("#usersetid").val(id);	
+	  }
+	  
+	  function deletecheck(name, id){
+		  if (confirm("정말 삭제하시겠습니까??") == true){    
+			  location.href='deletemynong?name='+ name + '&id=' + id; 
+			}else{   
+			 return;
+	        }
+	  }
 $(function() {
 	$(document).keypress(function(e) { //엔터키 방지
 		if (e.keyCode == 13) e.preventDefault(); 
@@ -35,4 +47,6 @@ $(function() {
         	  }
           });//ajax end 
 	  }); //$("#search").on('click') end
+
 })//function end
+

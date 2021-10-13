@@ -35,24 +35,24 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hta.project.domain.Member;
 import com.hta.project.domain.Nong;
-import com.hta.project.service.OkyMynongService;
-import com.hta.project.service.OkyNongService;
-import com.hta.project.service.OkyNong_CoService;
+import com.hta.project.service.MynongService;
+import com.hta.project.service.NongService;
+import com.hta.project.service.Nong_CoService;
 
 
 @Controller
-public class OkyNongController {
+public class NongController {
 	private static final Logger logger
-	= LoggerFactory.getLogger(OkyNongController.class);
+	= LoggerFactory.getLogger(NongController.class);
 	
 	@Autowired
-	private OkyMynongService okymynongservice;
+	private MynongService mynongservice;
 
 	@Autowired
-	private OkyNongService okynongservice;
+	private NongService nongservice;
 	
 	@Autowired
-	private OkyNong_CoService okynongcoservice;
+	private Nong_CoService nongcoservice;
 	
 	//savefolder.properties에서 작성한 savefoldername 속성의 값을 String saveFolder에 주입합니다.
 	 @Value("${savefoldername}")
@@ -64,7 +64,8 @@ public class OkyNongController {
     		HttpServletResponse response, HttpSession session) throws Exception {
 		logger.info("/nongprocess 멤버게시판접속 ");
 		String id = (String)session.getAttribute("id");
-    	String mynongname = okymynongservice.getMynong(id); //아이디가 속해있는 농장이름 가져오기
+    	String mynongname = mynongservice.getMynong(id); //아이디가 속해있는 농장이름 가져오기
+    	Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
     	response.setContentType("text/html;charset=utf-8");
     	PrintWriter out =response.getWriter();
     	if(id == null) {
@@ -75,7 +76,7 @@ public class OkyNongController {
 			out.println("</script>");
 			out.close();
 			return null;
-    	} else if(mynongname == null){ //로그인 했지만 농장에 소속되어있지 않은경우
+    	} else if(mynongname == null || list.getMy_farm().equals("3")){ //로그인 했지만 농장에 소속되어있지 않은경우
     		logger.info("/nongprocess 농장없음");
     		out.println("<script>");
     		out.println("alert('농장 가입 또는 생성 시 이용 가능합니다');");
@@ -98,15 +99,15 @@ public class OkyNongController {
 		logger.info("/nong 멤버게시판 ");
 		try { //유효성 검사를 위한 초기 세팅
 		String id=(String)session.getAttribute("id");
-		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-		String getmynong = okymynongservice.getMynong(id);
+		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = mynongservice.getMynong(id);
 		
 		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 		int level =0;
 		if(myfarm.equals("1")) {//농장 주인인지 판단
 			level =1;
 		}
-		if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+		if ((!(getmynong.equals(name))) || id==null || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
 			logger.info("멤버게시판보기 실패");
 			mv.setViewName("oky/error/error");
 			mv.addObject("url", request.getRequestURL());
@@ -114,7 +115,7 @@ public class OkyNongController {
 		} else {   //해당 농장 멤버 접근시 	
     	int limit = 10; //한 페이지에 보여줄 게시판 목록의 수
     	
-    	int listcount = okynongservice.getListCount(name); //총 게시글 리스트 수를 받아옴
+    	int listcount = nongservice.getListCount(name); //총 게시글 리스트 수를 받아옴
     	
     	// 총 페이지 수
     	int maxpage = (listcount + limit - 1) / limit;
@@ -128,7 +129,7 @@ public class OkyNongController {
     	if (endpage > maxpage)
     		endpage = maxpage;
     	
-    	List<Nong> boardlist =okynongservice.getBoardList(name, page, limit); //리스트 받아옴
+    	List<Nong> boardlist =nongservice.getBoardList(name, page, limit); //리스트 받아옴
     	
     	
     	mv.setViewName("oky/nong/nong_list");
@@ -159,15 +160,15 @@ public class OkyNongController {
 		logger.info("/nongwrite 멤버게시판 글쓰기 접속");
 		try { //유효성 검사를 위한 초기 세팅
 		String id=(String)session.getAttribute("id");
-		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-		String getmynong = okymynongservice.getMynong(id);
+		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = mynongservice.getMynong(id);
 		
 		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 		int level =0;
 		if(myfarm.equals("1")) {//농장 주인인지 판단
 			level =1;
 		}
-		if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+		if ((!(getmynong.equals(name))) || id==null || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
 			logger.info("멤버게시판 글쓰기 이동 실패");
 			mv.setViewName("oky/error/error");
 			mv.addObject("url", request.getRequestURL());
@@ -195,14 +196,14 @@ public class OkyNongController {
 		logger.info("/nongadd 멤버게시판 글추가");
 		try { //유효성 검사를 위한 초기 세팅
 		String id=(String)session.getAttribute("id");
-		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-		String getmynong = okymynongservice.getMynong(id);
+		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = mynongservice.getMynong(id);
 		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 		int level =0;
 		if(myfarm.equals("1")) {//농장 주인인지 판단
 			level =1;
 		}
-		if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+		if ((!(getmynong.equals(name))) || id==null || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
 			logger.info("멤버게시판글쓰기 실패");
 			mv.setViewName("oky/error/error");
 			mv.addObject("url", request.getRequestURL());
@@ -225,7 +226,7 @@ public class OkyNongController {
 				nong.setNong_file(fileDBName);
 			}
 			
-			okynongservice.insertBoard(nong); //저장메서드 호출
+			nongservice.insertBoard(nong); //저장메서드 호출
 			
 			mv.addObject("name", name);
 			mv.setViewName("redirect:nong");
@@ -287,21 +288,21 @@ public class OkyNongController {
 		logger.info("/detail 멤버게시판 상세보기 ");
 		try { //유효성 검사를 위한 초기 세팅
 		String id=(String)session.getAttribute("id");
-		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-		String getmynong = okymynongservice.getMynong(id);
+		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = mynongservice.getMynong(id);
 		
 		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 		int level =0;
 		if(myfarm.equals("1")) {//농장 주인인지 판단
 			level =1;
 		}
-		if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+		if ((!(getmynong.equals(name))) || id==null || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
 			logger.info("멤버게시판보기 실패");
 			mv.setViewName("oky/error/error");
 			mv.addObject("url", request.getRequestURL());
 			mv.addObject("message", "해당 멤버게시판을 볼  권한이 없습니다.");    	   		
 		} else {   //해당 농장 멤버 접근시 	
-			Nong nong = okynongservice.getDetail(num);
+			Nong nong = nongservice.getDetail(num);
 			//board=null; //eroor 페이지 이동 확인하고자 임의로 지정합니다.
 			if (nong == null) {
 				logger.info("상세보기 실패");
@@ -310,7 +311,7 @@ public class OkyNongController {
 				mv.addObject("message", "상세보기 실패입니다.");
 			} else {
 				logger.info("상세보기 성공");
-				int count = okynongcoservice.getListCount(num);
+				int count = nongcoservice.getListCount(num);
 				mv.setViewName("oky/nong/nong_view");
 				mv.addObject("count", count);
 				mv.addObject("boarddata", nong);
@@ -335,21 +336,21 @@ public class OkyNongController {
 		logger.info("/nongreplyView 답글쓰기");
 		try { //유효성 검사를 위한 초기 세팅
 		String id=(String)session.getAttribute("id");
-		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-		String getmynong = okymynongservice.getMynong(id);
+		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = mynongservice.getMynong(id);
 		
 		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 		int level =0;
 		if(myfarm.equals("1")) {//농장 주인인지 판단
 			level =1;
 		}
-		if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+		if ((!(getmynong.equals(name))) || id==null || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
 			logger.info("답글쓰기 프로세스실패");
 			mv.setViewName("oky/error/error");
 			mv.addObject("url", request.getRequestURL());
 			mv.addObject("message", "해당 멤버게시판을 볼  권한이 없습니다.");    	   		
 		} else {   //해당 농장 멤버 접근시 	
-				Nong nong = okynongservice.getDetail(num);
+				Nong nong = nongservice.getDetail(num);
 				if (nong == null) {
 					mv.setViewName("error/error");
 					mv.addObject("url", request.getRequestURL());
@@ -378,21 +379,21 @@ public class OkyNongController {
 		logger.info("/nongreplyAction 답글쓰기");
 		try { //유효성 검사를 위한 초기 세팅
 		String id=(String)session.getAttribute("id");
-		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-		String getmynong = okymynongservice.getMynong(id);
+		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = mynongservice.getMynong(id);
 		
 		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 		int level =0;
 		if(myfarm.equals("1")) {//농장 주인인지 판단
 			level =1;
 		}
-		if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+		if ((!(getmynong.equals(name))) || id==null || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
 			logger.info("답글쓰기 실패");
 			mv.setViewName("oky/error/error");
 			mv.addObject("url", request.getRequestURL());
 			mv.addObject("message", "해당 멤버게시판을 볼  권한이 없습니다.");    	   		
 		} else {   //해당 농장 멤버 접근시 	
-			int result = okynongservice.boardReply(nong);
+			int result = nongservice.boardReply(nong);
 			if (result == 0) {
 				mv.setViewName("error/error");
 				mv.addObject("url", request.getRequestURL());
@@ -420,21 +421,21 @@ public class OkyNongController {
 		logger.info("/nongmodifyView 수정 프로세스");
 		try { //유효성 검사를 위한 초기 세팅
 		String id=(String)session.getAttribute("id");
-		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-		String getmynong = okymynongservice.getMynong(id);
+		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = mynongservice.getMynong(id);
 		
 		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 		int level =0;
 		if(myfarm.equals("1")) {//농장 주인인지 판단
 			level =1;
 		}
-		if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+		if ((!(getmynong.equals(name))) || id==null || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
 			logger.info("수정보기 실패");
 			mv.setViewName("oky/error/error");
 			mv.addObject("url", request.getRequestURL());
 			mv.addObject("message", "해당 멤버게시판을 볼  권한이 없습니다.");    	   		
 		} else {   //해당 농장 멤버 접근시 	
-			Nong boarddata = okynongservice.getDetail(num);
+			Nong boarddata = nongservice.getDetail(num);
 
 			// 글 내용 불러오기 실패한 경우입니다.
 			if (boarddata == null) {
@@ -469,22 +470,22 @@ public class OkyNongController {
 		logger.info("/nongmodifyAction 멤버게시판 수정");
 		try { //유효성 검사를 위한 초기 세팅
 		String id=(String)session.getAttribute("id");
-		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-		String getmynong = okymynongservice.getMynong(id);
+		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = mynongservice.getMynong(id);
 		
 		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 		int level =0;
 		if(myfarm.equals("1")) {//농장 주인인지 판단
 			level =1;
 		}
-		if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+		if ((!(getmynong.equals(name))) || id==null || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
 			logger.info("멤버게시판 수정 실패");
 			mv.setViewName("oky/error/error");
 			mv.addObject("url", request.getRequestURL());
 			mv.addObject("message", "해당 멤버게시판을 볼  권한이 없습니다.");    	   		
 		} else {   //해당 농장 멤버 접근시 
 			boolean usercheck =
-			  okynongservice.isBoardWriter(nong.getNong_num(), nong.getNong_pass());
+			  nongservice.isBoardWriter(nong.getNong_num(), nong.getNong_pass());
 			String url="";
 			// 비밀번호가 다른 경우
 			if (usercheck == false) {
@@ -529,7 +530,7 @@ public class OkyNongController {
 			}//else end
 
 			//DAO에서 수정 메서드 호출하여 수정합니다.
-			int result = okynongservice.boardModify(nong);
+			int result = nongservice.boardModify(nong);
 			//수정에 실패한 경우
 			if (result ==0) {
 				logger.info("게시판 수정 실패");
@@ -546,7 +547,7 @@ public class OkyNongController {
 				  //파일 삭제를 위해 추가한 부분
 				//수정 전에 파일이 있고 새로운 파일을 선택한 경우는 삭제할 목록을 테이블에 추가합니다.
 				if(!before_file.equals("") && !before_file.equals(nong.getNong_file())) {
-					okynongservice.insert_deleteFile(before_file);
+					nongservice.insert_deleteFile(before_file);
 				}
 			}		
 			mv.addObject("name", name);
@@ -571,15 +572,15 @@ public class OkyNongController {
 		logger.info("/nongdelete 게시글 삭제");
 		try { //유효성 검사를 위한 초기 세팅
 		String id=(String)session.getAttribute("id");
-		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-		String getmynong = okymynongservice.getMynong(id);
+		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = mynongservice.getMynong(id);
 		
 		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 		int level =0;
 		if(myfarm.equals("1")) {//농장 주인인지 판단
 			level =1;
 		}
-		if (!(getmynong.equals(name)) || id==null) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+		if ((!(getmynong.equals(name))) || id==null || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
 			logger.info("멤버게시판 삭제 실패");
 			mv.setViewName("oky/error/error");
 			mv.addObject("url", request.getRequestURL());
@@ -587,7 +588,7 @@ public class OkyNongController {
 		} else {   //해당 농장 멤버 접근시 	
 			//글 삭제 명령을 요청한 사용자가 을을 작성한 사용자인지 판단하기 위해
 			//입력한 비밀번호와 저장된 비밀번호를 비교하여 일치하면 삭제합니다.
-			boolean usercheck = okynongservice.isBoardWriter(num, nong_pass);
+			boolean usercheck = nongservice.isBoardWriter(num, nong_pass);
 
 			// 비밀번호 일치하지 않는 경우
 			if (usercheck == false) {
@@ -600,7 +601,7 @@ public class OkyNongController {
 			}
 			
 			//비밀번호 일치하는 경우 삭제 처리합니다.
-			int result = okynongservice.boardDelete(num);
+			int result = nongservice.boardDelete(num);
 			
 			// 삭제 처리 실패한 경우
 			if (result == 0) {
@@ -707,8 +708,8 @@ public class OkyNongController {
 		System.out.println("search " + search);
 		
 		String id=(String)session.getAttribute("id");
-		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-		String getmynong = okymynongservice.getMynong(id);
+		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = mynongservice.getMynong(id);
 		
 		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 		int level =0;
@@ -726,12 +727,12 @@ public class OkyNongController {
 		
 		if(type.equals("") && search.equals("")) { //일반리스트
 			logger.info("/list_ajax 검색어 적용안됨");
-			boardlist = okynongservice.getBoardList(page, limit, view, name);
-			listcount= okynongservice.getListCount(name);
+			boardlist = nongservice.getBoardList(page, limit, view, name);
+			listcount= nongservice.getListCount(name);
 		}else { //검색적용된리스트
 			logger.info("/list_ajax 검색어 적용됨");
-			boardlist = okynongservice.getBoardSearchList(page, limit, type, search, view, name);
-			listcount = okynongservice.getSearchListCount(type, search, name);
+			boardlist = nongservice.getBoardSearchList(page, limit, type, search, view, name);
+			listcount = nongservice.getSearchListCount(type, search, name);
 		}
 
     	
@@ -772,8 +773,8 @@ public class OkyNongController {
 //	logger.info("/nongwrite 멤버게시판 글쓰기 접속");
 //	try { //유효성 검사를 위한 초기 세팅
 //	String id=(String)session.getAttribute("id");
-//	Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-//	String getmynong = okymynongservice.getMynong(id);
+//	Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+//	String getmynong = mynongservice.getMynong(id);
 //	
 //	String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 //	int level =0;

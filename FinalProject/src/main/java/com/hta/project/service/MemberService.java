@@ -32,5 +32,11 @@ public interface MemberService {
 
 	public int update(Member member);
 	
+	//---------------------------------------/oky 아이디/비밀번호 찾기 작업영역--------------------
+	public String findid(String name, String tel, String email);
+
+	
+	public int findpw(String name, String tel, String email, String encPassword);
+	
 
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.hta.project.domain.Account;
 
 @Repository
-public class OkyAccDAO {
+public class AccDAO {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;

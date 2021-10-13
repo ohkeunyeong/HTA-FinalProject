@@ -17,7 +17,7 @@ CREATE TABLE MEMBER(
 
 select * from member;
 
-update  member set MYNONG_NAME='', MY_FARM='0' where id='admin';
+update  member set MYNONG_NAME='test', MY_FARM='1' where id='test1';
 delete from member where id='admin';
 
 insert into member values('admin', '1111', '운영자', '운영자', 'test@gmail.com', '01012345678', '0', 'null', '0', '')

@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>가계부</title>
-<jsp:useBean id="util" class="com.hta.project.controller.OkyAccountController" />
+<jsp:useBean id="util" class="com.hta.project.controller.AccountController" />
 <jsp:include page="../../main/header.jsp" /> 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/oky/account.js"></script>

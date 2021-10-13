@@ -25,25 +25,26 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hta.project.domain.Account;
 import com.hta.project.domain.Member;
-import com.hta.project.service.OkyAccService;
-import com.hta.project.service.OkyMynongService;
+import com.hta.project.service.AccService;
+import com.hta.project.service.MynongService;
 
 @Controller
-public class OkyAccountController {
+public class AccountController {
 	private static final Logger logger
-	= LoggerFactory.getLogger(OkyAccountController.class);
+	= LoggerFactory.getLogger(AccountController.class);
 	
 	@Autowired
-	private OkyMynongService okymynongservice;	
+	private MynongService mynongservice;	
 	@Autowired
-	private OkyAccService okyaccservice;
+	private AccService accservice;
 	
 	//메인에서 가계부 클릭 시
 	@GetMapping("/accprocess")
 	public ModelAndView accountprocess (ModelAndView mv, HttpServletRequest request,
     		HttpServletResponse response, HttpSession session) throws Exception {
     	String id = (String)session.getAttribute("id");
-    	String mynongname = okymynongservice.getMynong(id); //아이디가 속해있는 농장이름 가져오기
+    	String mynongname = mynongservice.getMynong(id); //아이디가 속해있는 농장이름 가져오기
+		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
     	response.setContentType("text/html;charset=utf-8");
     	PrintWriter out =response.getWriter();
     	if(id == null) {
@@ -54,7 +55,7 @@ public class OkyAccountController {
 			out.println("</script>");
 			out.close();
 			return null;
-    	} else if(mynongname == null){ //로그인 했지만 농장에 소속되어있지 않은경우
+    	} else if(mynongname == null || list.getMy_farm().equals("3")){ //로그인 했지만 농장에 소속되어있지 않은경우
     		logger.info("/calprocess 농장없음");
     		out.println("<script>");
     		out.println("alert('농장 가입 또는 생성 시 이용 가능합니다');");
@@ -78,13 +79,13 @@ public class OkyAccountController {
     		Calendar cal = Calendar.getInstance();
     		int level =0;
     		String id=(String)session.getAttribute("id");
-    		String getmynong = okymynongservice.getMynong(id);
-    		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+    		String getmynong = mynongservice.getMynong(id);
+    		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
     		String myfarm=list.getMy_farm();
     		if(myfarm.equals("1")) {//농장 주인인지 판단
     			level =1;
     		}
-        	if (!(getmynong.equals(name)) || id==null) { //다른 농장 맴버가 접속해서 해당 주소로 들어올 경우
+        	if ((!(getmynong.equals(name))) || id==null || list.getMy_farm().equals("3")) { //다른 농장 맴버가 접속해서 해당 주소로 들어올 경우
     			logger.info("가계부 보기 실패");
     			mv.setViewName("oky/error/error");
     			mv.addObject("url", request.getRequestURL());
@@ -116,7 +117,7 @@ public class OkyAccountController {
         		}
         		//월별 일정에 대해 하루마다 일정 3개씩 표시하기 기능 구현
         		String yyyyMM=year+isTwo(month);
-        		List<Account> alist = okyaccservice.accViewList(name, yyyyMM);
+        		List<Account> alist = accservice.accViewList(name, yyyyMM);
         		mv.addObject("alist", alist);
         		
         	    //현재 월의 1일에 대한 요일 구하기: 1~7 -->1(일요일), 2(월), 3()......7(토)
@@ -165,15 +166,15 @@ public class OkyAccountController {
 				 );
 		try { //유효성 검사를 위한 초기 세팅
 			String id=(String)session.getAttribute("id");
-			Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-			String getmynong = okymynongservice.getMynong(id);
+			Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+			String getmynong = mynongservice.getMynong(id);
 			
 			String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 			int level =0;
 			if(myfarm.equals("1")) {//농장 주인인지 판단
 				level =1;
 			}
-			if (level==1 &&(!(getmynong.equals(name)) || id==null)) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+			if (level==1 &&((!(getmynong.equals(name))) || id==null) || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
 				logger.info("가계부추가 보기실패");
 				mv.setViewName("oky/error/error");
 				mv.addObject("url", request.getRequestURL());
@@ -186,7 +187,7 @@ public class OkyAccountController {
 						 +isTwo(account.getHour())
 						 +isTwo(account.getMin());
 				account.setMdate(mdate);		
-				boolean pan = okyaccservice.insertacc(account);
+				boolean pan = accservice.insertacc(account);
 				
 				if(pan) {
 					mv.setViewName("redirect:account?name=" + name + "&year="+account.getYear()+"&month="+account.getMonth());
@@ -213,7 +214,7 @@ public class OkyAccountController {
 //		logger.info("/caldetail 가계부 상세보기");
 //		logger.info("/caldetail 넘어온 seq 값은" + seq);
 //		
-//		Account acclist = okyaccservice.accDetail(seq);	
+//		Account acclist = accservice.accDetail(seq);	
 //		return acclist;
 //	}
 	
@@ -225,20 +226,20 @@ public class OkyAccountController {
 		logger.info("/accdelete 가계부삭제하기 ");
 		try { //유효성 검사를 위한 초기 세팅
 		String id=(String)session.getAttribute("id");
-		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-		String getmynong = okymynongservice.getMynong(id);		
+		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String getmynong = mynongservice.getMynong(id);		
 		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 		int level =0;
 		if(myfarm.equals("1")) {//농장 주인인지 판단
 			level =1;
 		}
-		if (level==1 &&(!(getmynong.equals(name)) || id==null)) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+		if (level==1 &&((!(getmynong.equals(name))) || id==null) || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
 			logger.info("가계부 삭제 실패");
 			mv.setViewName("oky/error/error");
 			mv.addObject("url", request.getRequestURL());
 			mv.addObject("message", "해당 가계부를 삭제할  권한이 없습니다."); 
 		} else {   //해당 농장 관리자 접근시 		
-		boolean isS=okyaccservice.accDelete(seq);
+		boolean isS=accservice.accDelete(seq);
 		if(isS) {
 			mv.setViewName ("redirect:account?name=" + name + "&year="+year+"&month="+month);
 		}else {
@@ -265,15 +266,15 @@ public class OkyAccountController {
 		logger.info("/accupdate 가계부 수정하기");
 		try { //유효성 검사를 위한 초기 세팅
 			String id=(String)session.getAttribute("id");
-			Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-			String getmynong = okymynongservice.getMynong(id);
+			Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+			String getmynong = mynongservice.getMynong(id);
 			
 			String myfarm=list.getMy_farm();//일반유저 0, 관리자 1
 			int level =0;
 			if(myfarm.equals("1")) {//농장 주인인지 판단
 				level =1;
 			}
-			if (level==1 &&(!(getmynong.equals(name)) || id==null)) { //다른 아이디 접속해서 해당 주소로 들어올 경우
+			if (level==1 &&((!(getmynong.equals(name))) || id==null) || list.getMy_farm().equals("3")) { //다른 아이디 접속해서 해당 주소로 들어올 경우
 				logger.info("가계부수정 실패");
 				mv.setViewName("oky/error/error");
 				mv.addObject("url", request.getRequestURL());
@@ -286,7 +287,7 @@ public class OkyAccountController {
 						 +isTwo(account.getHour())
 						 +isTwo(account.getMin());
 				account.setMdate(mdate);	
-				boolean isS=okyaccservice.accUpdate(account);
+				boolean isS=accservice.accUpdate(account);
 				if(isS) {
 					mv.setViewName("redirect:account?name=" + name + "&year="+account.getYear()+"&month="+account.getMonth());
 				} else {
@@ -377,8 +378,8 @@ public class OkyAccountController {
 //	try {
 //		int level =0;
 //		String id=(String)session.getAttribute("id");
-//		String getmynong = okymynongservice.getMynong(id);
-//		Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+//		String getmynong = mynongservice.getMynong(id);
+//		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
 //		String myfarm=list.getMy_farm();
 //		if(myfarm.equals("1")) {//농장 주인인지 판단
 //			level =1;
