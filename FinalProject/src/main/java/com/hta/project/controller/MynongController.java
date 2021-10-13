@@ -23,15 +23,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hta.project.domain.Member;
-import com.hta.project.service.OkyMynongService;
+import com.hta.project.service.MynongService;
 
 @Controller
-public class OkyMynongController {
+public class MynongController {
 	private static final Logger logger
-	= LoggerFactory.getLogger(OkyMynongController.class);
+	= LoggerFactory.getLogger(MynongController.class);
 	
 	@Autowired
-	private OkyMynongService okymynongservice;
+	private MynongService okymynongservice;
 	
 	//내농장 생성으로 이동
 	@RequestMapping(value="/createmynong", method = RequestMethod.GET)
@@ -53,7 +53,7 @@ public class OkyMynongController {
 		  logger.info("checkmyfarm 넘어온 pan 값: " +pan);
 		  if (pan != 0) {
 				out.println("<script>");
-				out.println("alert('이미 농장에 소속되어 있습니다.');");
+				out.println("alert('이미 농장에 소속되어 있거나 가입 대기중입니다.');");
 				out.println("history.back()");
 				out.println("</script>");
 				out.close();

@@ -7,14 +7,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hta.project.dao.OkyNongDAO;
+import com.hta.project.dao.NongDAO;
 import com.hta.project.domain.Nong;
 
 @Service
-public class OkyNongServiceImpl implements OkyNongService{
+public class NongServiceImpl implements NongService{
 	
 	@Autowired
-	private OkyNongDAO dao;
+	private NongDAO dao;
 	
 	@Override
 	public int getListCount(String name) {

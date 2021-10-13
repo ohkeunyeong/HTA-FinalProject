@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.hta.project.domain.Nong;
 
-public interface OkyNongService {
+public interface NongService {
 
 	// 글의 갯수 구하기
 	public int getListCount(String name);

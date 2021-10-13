@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.hta.project.domain.Nong_Co;
 
 @Repository
-public class OkyNong_CoDAO {
+public class Nong_CoDAO {
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;	

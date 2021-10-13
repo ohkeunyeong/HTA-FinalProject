@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.hta.project.domain.MyCalendar;
 
 @Repository
-public class OkyMycalDAO {
+public class MycalDAO {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;

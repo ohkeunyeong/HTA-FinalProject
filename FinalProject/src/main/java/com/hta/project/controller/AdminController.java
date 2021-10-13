@@ -57,9 +57,23 @@ public class AdminController {
 	private JikService jikService;
 	
 	@GetMapping(value="/main")
-	public String main() {
+	public ModelAndView main(ModelAndView mv) {
 		logger.info("Admin main()");
-		return "jjs/admin/main";
+		
+		List<Member> userlist = memberService.getUserList(1, 2);
+		List<Report> reportlist = adminService.getReportList(1, 2);
+		List<Product> productlist = adminService.getProductList(-1, "",  1, 2);
+		List<Farm> farmlist = adminService.farmList(1, 2); 
+		List<Order_Market> orderlist = adminService.getOrderList(1, 2);
+		System.out.println(reportlist.get(0).getBoard_id());
+		mv.addObject("userlist", userlist);
+		mv.addObject("reportlist", reportlist);
+		mv.addObject("productlist", productlist);
+		mv.addObject("farmlist", farmlist);
+		mv.addObject("orderlist", orderlist);
+		mv.setViewName("jjs/admin/main");
+		
+		return mv;
 	}
 	
 	@GetMapping("/userList")

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.hta.project.domain.Nong;
 
 @Repository
-public class OkyNongDAO {
+public class NongDAO {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;

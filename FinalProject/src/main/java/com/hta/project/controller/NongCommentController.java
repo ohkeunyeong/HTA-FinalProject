@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hta.project.domain.Nong_Co;
-import com.hta.project.service.OkyNong_CoService;
+import com.hta.project.service.Nong_CoService;
 
 
 @Controller
-public class OkyNongCommentController {
+public class NongCommentController {
 	
 	@Autowired
-	private OkyNong_CoService commentService;
+	private Nong_CoService commentService;
 	
 	
 	@ResponseBody

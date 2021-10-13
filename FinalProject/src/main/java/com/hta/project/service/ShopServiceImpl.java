@@ -36,8 +36,8 @@ public class ShopServiceImpl implements ShopService{
 	}
 
 	@Override
-	public Product getProductDetail(String code) {
-		return dao.getProductDetail(code);
+	public Product getShopProductDetail(String code) {
+		return dao.getShopProductDetail(code);
 	}
 
 	@Override
@@ -76,22 +76,6 @@ public class ShopServiceImpl implements ShopService{
 		map.put("start", startrow);
 		map.put("end", endrow);
 		return dao.getProductList(map);
-	}
-
-
-	@Override
-	public List<Product> getPersonaconList(int index, String search_word, int page, int limit) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		if(index != -1) {
-			String[] search_field = new String[] {"product_name", "product_code", "category_name"};
-			map.put("search_field", search_field[index]);
-			map.put("search_word", "%" + search_word + "%");
-		}
-		int startrow = (page - 1) * limit + 1;
-		int endrow = startrow + limit - 1;
-		map.put("start", startrow);
-		map.put("end", endrow);
-		return dao.getPersonaconList(map);
 	}
 
 

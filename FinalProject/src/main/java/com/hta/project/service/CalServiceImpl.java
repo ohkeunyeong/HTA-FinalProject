@@ -5,14 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hta.project.dao.OkyMycalDAO;
+import com.hta.project.dao.MycalDAO;
 import com.hta.project.domain.MyCalendar;
 
 @Service
-public class OkyCalServiceImpl implements OkyCalService{
+public class CalServiceImpl implements CalService{
 	
 	@Autowired
-	private OkyMycalDAO dao;
+	private MycalDAO dao;
 	
 	@Override
 	public boolean insertCal(MyCalendar calendar) {

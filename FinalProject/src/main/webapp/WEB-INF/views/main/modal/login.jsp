@@ -10,7 +10,7 @@
 				<br>
 				<div class="container">
 					<h2 class="text-center">주말장터 로그인</h2>
-					<form action="member/loginProcess" method="post" id="loginForm" name="loginForm">
+					<form action="${pageContext.request.contextPath}/member/loginProcess" method="post" id="loginForm" name="loginForm">
 						<div class="form-group mb-2">
 							<label for="id">ID:</label> <input type="text" class="form-control" id="id" placeholder="Enter ID" name="id"> <span id="id-message"></span>
 						</div>
@@ -24,7 +24,7 @@
 						</div>
 						<button type="submit" class="btn btn-primary" style="width: 100%">Login</button>
 						<p class="mt-3 mb-0 text-center">
-							<span>For got <a href="#">UserID</a> / <a href="#">Password</a></span>
+							<span>For got <a href="member/find">UserID/Password</a></span>
 						</p>
 						<hr>
 						<p class="mt-3 mb-0 text-center">

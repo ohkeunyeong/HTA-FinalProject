@@ -5,7 +5,7 @@ import java.util.List;
 import com.hta.project.domain.Account;
 
 
-public interface OkyAccService {
+public interface AccService {
 	
 	//가계부추가하기
 	boolean insertacc(Account account);

@@ -62,4 +62,19 @@
     	where id = #{id}
     </update>
  	
+ 	<select id="findid" resultType="String" parameterType="map">
+		select ID
+		from member
+		where NAME = #{name}
+		and   TEL  = #{tel}
+		and   MAIL = #{email}
+	</select>
+	
+	<update id="findpw" parameterType="map">
+    	update member
+    	set   PASS = #{pass}
+    	where NAME = #{name}
+		and   TEL  = #{tel}
+		and   MAIL = #{email}
+    </update>
 </mapper>

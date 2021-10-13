@@ -37,7 +37,7 @@ select ID, NICK from member where id = #{id}
  update member
  set
    MYNONG_NAME = #{mynong_name},
-   MY_FARM = '2'
+   MY_FARM = '3'
   where id = #{id}
 </update>
 
@@ -52,21 +52,21 @@ select ID, NICK from member where MYNONG_NAME = #{mynong_name} and MY_FARM = '2'
 
 
 <select id="list3" parameterType="map" resultType="member">
-select ID, NICK
+select *
  from ( select rownum rnum, b.*
          from ( select *
                 from member
-                where MYNONG_NAME = #{mynong_name} and MY_FARM = '2'
+                where MYNONG_NAME = #{mynong_name} and id != #{admin}
                 order by id
                )b
            )
        where rnum &gt;= #{start} and rnum &lt;= #{end}
 </select>
 
-<select id ="searchCount" parameterType="String" resultType="int">
+<select id ="searchCount" parameterType="map" resultType="int">
  select count(*)
  from member
- where MYNONG_NAME = #{mynong_name} and MY_FARM = '2'
+ where MYNONG_NAME = #{name} and id != #{id}
 </select>
 
 <select id ="checkmyfarm" parameterType="String" resultType="String">
@@ -85,5 +85,25 @@ select ID, NICK
 update  member set 
 MYNONG_NAME='', MY_FARM='0' where id= #{id}
 </update>
+
+<update id="changeoption" parameterType="map">
+ update member
+ set
+  MY_FARM = #{option}
+  where id = #{id}
+</update>
+
+<update id="deletenongmember" parameterType="String">
+ update member
+ set
+   MYNONG_NAME = '',
+   MY_FARM = '0'
+  where  MYNONG_NAME = #{name}
+</update>
+
+<delete id="deletenong" parameterType="String">
+delete from mynong where MYNONG_NAME = #{name}
+</delete>
+
 </mapper>
 
