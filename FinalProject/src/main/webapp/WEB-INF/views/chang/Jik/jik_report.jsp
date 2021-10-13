@@ -27,7 +27,7 @@ textarea {
 	$("#submit").on("click",function()
 	{	$.ajax(
 		{
-			url : '../../project/admin/reportAdd',
+			url : '/project/report/reportAdd',
 			type:"POST",
 			data : $("#report").serialize(),
 			success : function(){		

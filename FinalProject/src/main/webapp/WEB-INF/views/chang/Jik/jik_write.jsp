@@ -29,18 +29,18 @@
        <input name="jik_subject" id="jik_subject" type="text" maxlength="100"
      			class="form-control"	placeholder="Enter jik_subject">
      </div>	
+          <div class="form-group">
+       <label for="jik_file">사진 첨부</label>
+       <label for="upfile">
+       	  <img src="../resources/image/chang/attach.png" id="f" alt="파일첨부">
+       </label>
+       <input multiple="multiple" type="file" name="uploadfile">
+       <span id="filevalue"></span>
+     </div>	
      <div class="form-group">
        <label for="jik_content">내용</label>
        <textarea name="jik_content" id="jik_content" 
      			rows="10" 	class="form-control"></textarea>
-     </div>	
-     <div class="form-group">
-       <label for="jik_file">파일 첨부</label>
-       <label for="upfile">
-       	  <img src="../resources/image/chang/attach.png" id="f" alt="파일첨부">
-       </label>
-       <input type="file" name="uploadfile">
-       <span id="filevalue"></span>
      </div>	
      <div class="form-group">
      	<button type=submit class="btn btn-primary">등록</button>
