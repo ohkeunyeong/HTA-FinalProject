@@ -5,7 +5,13 @@ import java.util.Date;
 public class Review {
 
 	private String product_code;
-	
+	private String category_code;
+	private String product_name;
+	private String review_content;
+	private String review_img;
+	private Date review_date;
+	private String member_nick;
+	private int review_star;
 	
 	public String getProduct_code() {
 		return product_code;
@@ -55,11 +61,6 @@ public class Review {
 	public void setReview_star(int review_star) {
 		this.review_star = review_star;
 	}
-	private String category_code;
-	private String product_name;
-	private String review_content;
-	private String review_img;
-	private Date review_date;
-	private String member_nick;
-	private int review_star;
+	
+	
 }
