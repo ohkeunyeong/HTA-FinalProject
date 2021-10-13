@@ -87,6 +87,7 @@ public class JikController {
 					System.out.println(fileRoot);
 					
 					String originalFileName = file.getOriginalFilename();	//오리지날 파일명
+					System.out.println(originalFileName);
 					String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
 					String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
 					
