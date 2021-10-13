@@ -7,14 +7,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hta.project.dao.OkyMynongDAO;
+import com.hta.project.dao.MynongDAO;
 import com.hta.project.domain.Member;
 
 @Service
-public class OkyMynongServiceImpl implements OkyMynongService {
+public class MynongServiceImpl implements MynongService {
 	
 	@Autowired
-	private OkyMynongDAO dao;
+	private MynongDAO dao;
 	
 	
 	@Override
@@ -77,20 +77,24 @@ public class OkyMynongServiceImpl implements OkyMynongService {
 
 
 	@Override
-	public List<Member> getUserList3(int page, int limit, String name) {
+	public List<Member> getUserList3(int page, int limit, String name, String id) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		int startrow = (page -1) * limit +1;
 		int endrow = startrow + limit - 1;
 		map.put("start", startrow);
 		map.put("end", endrow);
 		map.put("mynong_name", name);
+		map.put("admin", id);
 		return dao.getUserList3(map);
 	}
 
 
 	@Override
-	public int getSearchListCount(String name) {
-		return dao.getSearchListCount(name);
+	public int getSearchListCount(String name ,String id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", name);
+		map.put("id", id);
+		return dao.getSearchListCount(map);
 	}
 
 
@@ -103,6 +107,8 @@ public class OkyMynongServiceImpl implements OkyMynongService {
 			ck = 1;
 		} else if (pan.equals("2")){//일반멤버
 			ck = 2;
+		} else if (pan.equals("3")){//가입대기멤버
+			ck = 3;
 		}
 		return ck;
 	}
@@ -124,6 +130,28 @@ public class OkyMynongServiceImpl implements OkyMynongService {
 	public void delete(String id) {
 		dao.delete(id);
 	}
+
+
+	@Override
+	public void changeoption(String userid, String optiontype) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", userid);
+		map.put("option", optiontype);
+		dao.changeoption(map);
+	 }
+
+
+	@Override
+	public void deletenongmember(String name) {
+		dao.deletenongmember(name);
+	}
+
+
+	@Override
+	public void deletenong(String name) {
+		dao.deletenong(name);
+	}
+	
 
 
 

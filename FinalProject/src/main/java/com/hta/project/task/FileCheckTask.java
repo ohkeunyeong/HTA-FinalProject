@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.hta.project.service.OkyNongService;
+import com.hta.project.service.NongService;
 
 
 @Service
@@ -22,7 +22,7 @@ public class FileCheckTask {
 	private String saveFolder;
 	
 	@Autowired
-	private OkyNongService boardService;
+	private NongService boardService;
 	
 	// 스케줄러를 이용해서 주기적으로
 	// 매일, 매주, 매월 프로그램 실행을 위한 작업을 실시합니다.
@@ -36,7 +36,7 @@ public class FileCheckTask {
 	//seconds(초:0~59) minutes(분:0~59) hours(시:0~23) day(일:1~31)
 	//months(달:1~12) day of week(요일:0~6) year(optional)
 	//                 초 분   일  시 달  요일
-	@Scheduled(cron = "0 * * 13 * *")
+	@Scheduled(cron = "0 0 13 * * *")
 	public void checkFiles() throws Exception {
 		
 		logger.info("checkFiles");

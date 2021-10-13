@@ -109,4 +109,24 @@ public class MemberServiceImpl implements MemberService{
 		return dao.update(m);
 	}
 
+//---------------------------------------/oky 아이디/비밀번호 찾기 작업영역--------------------
+	@Override
+	public String findid(String name, String tel, String email) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", name);
+		map.put("tel", tel);
+		map.put("email", email);
+		return dao.findid(map);
+	}
+
+	@Override
+	public int findpw(String name, String tel, String email, String encPassword) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", name);
+		map.put("tel", tel);
+		map.put("email", email);
+		map.put("pass", encPassword);
+		return dao.findpw(map);
+	}
+
 }

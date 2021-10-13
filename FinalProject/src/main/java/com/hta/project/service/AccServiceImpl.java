@@ -5,14 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hta.project.dao.OkyAccDAO;
+import com.hta.project.dao.AccDAO;
 import com.hta.project.domain.Account;
 
 @Service
-public class OkyAccServiceImpl implements OkyAccService{
+public class AccServiceImpl implements AccService{
 	
 	@Autowired
-	private OkyAccDAO dao;
+	private AccDAO dao;
 
 	@Override
 	public boolean insertacc(Account account) {

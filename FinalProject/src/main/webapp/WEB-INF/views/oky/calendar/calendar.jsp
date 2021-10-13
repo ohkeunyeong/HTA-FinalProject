@@ -4,7 +4,7 @@
 <%@page import="java.util.Calendar"%>
 <%@page import="com.hta.project.domain.MyCalendar"%>
 <%@page import="java.util.List"%>
-<%@page import="com.hta.project.controller.OkyCalendarController"%>
+<%@page import="com.hta.project.controller.CalendarController"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,8 +49,8 @@
 	
 </script>
 </head>
-<%  
-    //달력의 날짜를 바꾸기 위해 전달된 year와 month 파라미터를 받는다.
+<%
+	//달력의 날짜를 바꾸기 위해 전달된 year와 month 파라미터를 받는다.
     String paramYear=request.getParameter("year");
     String paramMonth=request.getParameter("month");
     
@@ -177,14 +177,15 @@
          <th>토</th>
     </tr>
     <tr>
-        <%  //달력에서 시작하는 공백을 출력한다.
-            //공백 출력하는 for문
-            for(int i=0; i<dayOfWeek-1; i++){
-            	out.print("<td>&nbsp;</td>");
-            }
-            //날짜 출력하는 for문
-            for(int i=1; i<=lastDay; i++){
-            	%>
+        <%
+        	//달력에서 시작하는 공백을 출력한다.
+                    //공백 출력하는 for문
+                    for(int i=0; i<dayOfWeek-1; i++){
+                    	out.print("<td>&nbsp;</td>");
+                    }
+                    //날짜 출력하는 for문
+                    for(int i=1; i<=lastDay; i++){
+        %>
             	<td>
             	     <a class="countView" style="color:<%=OkyCalendarController.fontColor(dayOfWeek, i)%>;" href="calboardlist?name=${name}&year=<%=year%>&month=<%=month%>&date=<%=i%>"><%=i%></a>
             	     <a href="insertcalform?name=${name}&year=<%=year%>&month=<%=month%>&date=<%=i%>">
@@ -210,9 +211,8 @@
 </table>
 </div>
 
- <%!
-    public String getCalViewList(int i, List<MyCalendar> clist){
-	   String d=OkyCalendarController.isTwo(i+""); // mdate--> "05"
+ <%!public String getCalViewList(int i, List<MyCalendar> clist){
+	   String d=CalendarController.isTwo(i+""); // mdate--> "05"
 	   String cList="";//달력에 출력해줄 일정제목을 저장할 변수
 	   for(MyCalendar cal: clist){
 		   if(cal.getMdate().substring(6, 8).equals(d)){
@@ -222,8 +222,7 @@
 		   }
 	   }
 	   return cList; //결과: "<p>title</p><p>title</p>"
-}
-%> 
+}%> 
 <jsp:include page="../../main/footer.jsp" /> 
 </body>
 </html>

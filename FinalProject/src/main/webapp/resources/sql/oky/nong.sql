@@ -15,7 +15,7 @@ NONG_RE_LEV   NUMBER         , --답변 글의 깊이--
 NONG_RE_SEQ   NUMBER         , --답변 글의 순서--
 NONG_READ     NUMBER         , --글의 조회수--
 NONG_DATE     DATE           , --글 작성 날짜--
-foreign key (NAME) REFERENCES mynong(MYNONG_NAME),
+foreign key (NAME) REFERENCES mynong(MYNONG_NAME) ON DELETE CASCADE,
 foreign key (ID) REFERENCES MEMBER(ID) ON DELETE CASCADE -- 게시글 쓴 회원이 탈퇴처리되면 게시글도 삭제됨--
 )
 

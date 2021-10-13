@@ -24,7 +24,7 @@
 						</div>
 						<button type="submit" class="btn btn-primary" style="width: 100%">Login</button>
 						<p class="mt-3 mb-0 text-center">
-							<span>For got <a href="#">UserID</a> / <a href="#">Password</a></span>
+							<span>For got <a href="member/find">UserID/Password</a></span>
 						</p>
 						<hr>
 						<p class="mt-3 mb-0 text-center">

@@ -9,7 +9,7 @@
 	</settings>
 	
      <typeAliases>
-        <typeAlias alias="mynong"    	type="com.hta.project.domain.OkyMynong" />
+        <typeAlias alias="mynong"    	type="com.hta.project.domain.Mynong" />
         <typeAlias alias="report" 	 	type="com.hta.project.domain.Report" />
         <typeAlias alias="jik" 		   	type="com.hta.project.domain.Jik" />
 		<typeAlias alias="jik_comm" 	type="com.hta.project.domain.Jik_Comm" />
@@ -29,7 +29,7 @@
      </typeAliases>
          
      <mappers>
-        <mapper resource="sql/okymynong.xml" />
+        <mapper resource="sql/mynong.xml" />
       	<mapper resource="sql/report.xml" />
        	<mapper resource="sql/Jik.xml" />
        	<mapper resource="sql/Jik_Comm.xml" />

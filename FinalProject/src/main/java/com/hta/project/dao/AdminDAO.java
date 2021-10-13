@@ -11,7 +11,7 @@ import com.hta.project.domain.Category;
 import com.hta.project.domain.Farm;
 import com.hta.project.domain.Member;
 import com.hta.project.domain.Notice;
-import com.hta.project.domain.OkyMynong;
+import com.hta.project.domain.Mynong;
 import com.hta.project.domain.OrderDetail;
 import com.hta.project.domain.OrderDetailList;
 import com.hta.project.domain.Order_Market;

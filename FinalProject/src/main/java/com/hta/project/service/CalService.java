@@ -5,7 +5,7 @@ import java.util.List;
 import com.hta.project.domain.MyCalendar;
 
 
-public interface OkyCalService {
+public interface CalService {
 
 	//일정추가하기 : insert문 ,파라미터 id, title, content, mdate 4개의 값을 받는다
 	public boolean insertCal(MyCalendar calendar);

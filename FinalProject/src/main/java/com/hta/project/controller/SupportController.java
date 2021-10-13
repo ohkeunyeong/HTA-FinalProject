@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hta.project.domain.MailVO;
 import com.hta.project.domain.Member;
-import com.hta.project.service.OkyMynongService;
+import com.hta.project.service.MynongService;
 import com.hta.project.task.SendMail;
 
 
@@ -26,7 +26,7 @@ public class SupportController {
 	private static final Logger logger = LoggerFactory.getLogger(SupportController.class);
 	
 	@Autowired
-	private OkyMynongService okymynongservice;	
+	private MynongService mynongservice;	
 
 	@Autowired
 	private SendMail sendMail;
@@ -56,7 +56,7 @@ public class SupportController {
 			out.close();
 			return null;		
 	    }
-    	Member list = okymynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+    	Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
 		mv.addObject("list", list);
 		mv.setViewName("oky/support/contactus");
 		return mv;
