@@ -52,7 +52,7 @@ input[type=file]{
          
          <div class="clearfix">
           <button type="submit" class="submitbtn">수정</button>
-          <button type="reset" class="cancelbtn">취소</button>
+          <button type="button" class="cancelbtn" onclick="window.open('${pageContext.request.contextPath}/member/delete','window_name','width=430,height=500,location=no,status=no,scrollbars=yes')">탈퇴하기</button>          
         </div>       
      </form>
 <script>
@@ -117,7 +117,7 @@ input[type=file]{
     		 alert('확장자는 gif, jpg, jpeg, png가 가능합니다.');
     		 check=0;
     	 }
-     })//$('input[type=file]').change() end
+     })//$('input[type=file]').change() end    
 </script>
 </body>
 </html>

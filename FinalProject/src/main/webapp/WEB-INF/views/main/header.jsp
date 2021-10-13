@@ -109,7 +109,10 @@
 					<li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/admin/main"> 관리자페이지</a></li>
 				</c:if>
 				<c:if test="${id != 'admin' }">
-					<li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/member/update"> 정보수정</a></li>
+							<li class="nav-item dropdown active" style="padding-left: 4%"><a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 마이페이지</a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/member/update">정보수정</a> <a class="dropdown-item" href="#">게시글덧글관리</a> <a class="dropdown-item" href="#">구매관리</a>
+				</div></li>
 				</c:if>
 			</c:if>
 
