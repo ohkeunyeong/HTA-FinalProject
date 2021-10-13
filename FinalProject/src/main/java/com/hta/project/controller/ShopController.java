@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hta.project.domain.Category;
+import com.hta.project.domain.Member;
 import com.hta.project.domain.Product;
+import com.hta.project.domain.Review;
 import com.hta.project.service.ShopService;
 
 @Controller
@@ -35,7 +38,7 @@ public class ShopController {
     	//http:localhost:8088/project/shop/shop_detail?product_code=000001
     	@RequestMapping(value = "/shop_detail", method = RequestMethod.GET)
     	public ModelAndView main(ModelAndView mv, String product_code) {
-    		Product product = shopService.getProductDetail(product_code);
+    		Product product = shopService.getShopProductDetail(product_code);
     		  //ModelAndView mv = new ModelAndView();
     		  mv.addObject("product", product);
     		  mv.setViewName("hyun/shop/shop_detail");
@@ -45,7 +48,7 @@ public class ShopController {
     	@PostMapping("/categoryList")
     	@ResponseBody
     	public Map<String, Object> categoryList() {
-    		logger.info("Admin categoryList()");
+    		logger.info("Shop categoryList()");
     		
     		Map<String, Object> map = new HashMap<String, Object>();
     		
@@ -98,32 +101,32 @@ public class ShopController {
     	@PostMapping("/productDetail")
     	@ResponseBody
     	public Map<String, Object> productDetail(String code) {
-    		logger.info("Admin productDetail()");
+    		logger.info("Shop productDetail()");
     		
     		Map<String, Object> map = new HashMap<String, Object>();
     		
-    		Product product = shopService.getProductDetail(code);
+    		Product product = shopService.getShopProductDetail(code);
     		
     		map.put("product", product);
     		
     		return map;
     	}
     	
-    	@GetMapping("/productDetail")
+    	@GetMapping("/productDetailView")
     	public ModelAndView productDetail(String code, ModelAndView mv, 
     			   HttpServletRequest request) {
-    		logger.info("Admin productDetail()");
+    		logger.info("Shop productDetailView()");
     		
-    		Product product = shopService.getProductDetail(code);
+    		Product product = shopService.getShopProductDetail(code);
     		
     		if(product==null) {
     			logger.info("상세보기 실패");
-    			mv.setViewName("jjs/error/error");
+    			mv.setViewName("hyun/error/error");
     			mv.addObject("url", request.getRequestURL());
     			mv.addObject("message", "상세보기 실패입니다.");
     		}else {
     			logger.info("상세보기 성공");
-    			mv.setViewName("jjs/admin/productDetail");
+    			mv.setViewName("hyun/shop/productDetailView");
     			mv.addObject("product", product);
     		}
     		return mv;
@@ -131,15 +134,28 @@ public class ShopController {
     	
     	
     	
-    	@GetMapping("/orderList")
+    	@GetMapping("/orderListView")
     	public String orderList() {
     		logger.info("Shop orderList()");
-    		return "hyun/cart/orderList";
+    		return "hyun/cart/orderListView";
     	}
     	
-    	@GetMapping("/orderDetail")
+    	@GetMapping("/orderDetailView")
     	public String orderDetail() {
     		logger.info("Shop orderDetail()");
-    		return "hyun/cart/orderDetail";
+    		return "hyun/cart/orderDetailView";
     	}
+    	
+//    	// 상품 조회 - 소감(댓글) 작성
+//    	@RequestMapping(value = "/view", method = RequestMethod.POST)
+//    	public String registReview(Review review, HttpSession session) throws Exception {
+//    	 logger.info("regist reply");
+//    	 
+//    	 Member member = (Member)session.getAttribute("id");
+//    	 review.setMember_nick(member.getNick());
+//    	 
+//    	 shopService.List(review);
+//    	 
+//    	 return "redirect:/shop/shop_detail?n=" + review.getProduct_code();
+//    	}
 }

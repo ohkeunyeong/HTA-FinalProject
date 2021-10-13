@@ -59,4 +59,10 @@
 		from product 
 		where category_code like #{word}
 	</select>
+	
+	<!-- 상품 소감(댓글) 작성 -->
+	<insert id="registReview">
+	 insert into review (product_code, member_nick , repNum, review_content)
+	     values (#{product_code}, #{member_nick}, review_seq.nextval, #{review_content})
+	</insert>
 </mapper>

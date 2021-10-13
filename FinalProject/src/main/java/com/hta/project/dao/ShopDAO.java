@@ -24,8 +24,8 @@ public class ShopDAO {
 		return sqlSession.selectOne("Products.count", map);
 	}
 
-	public Product getProductDetail(String code) {
-		return sqlSession.selectOne("Products.getProductDetail", code);
+	public Product getShopProductDetail(String code) {
+		return sqlSession.selectOne("Products.getShopProductDetail", code);
 	}
 	
 	public int getProductCategoryCount(String word) {
@@ -40,9 +40,6 @@ public class ShopDAO {
 		return sqlSession.selectList("Products.list", map);
 	}
 
-	public List<Product> getPersonaconList(Map<String, Object> map) {
-		return sqlSession.selectList("Products.personacon", map);
-	}
 
 	public List<Product> getToolsList(Map<String, Object> map) {
 		return sqlSession.selectList("Products.tools", map);
@@ -61,4 +58,5 @@ public class ShopDAO {
 	}
 
 	
+
 }
