@@ -65,4 +65,5 @@
 	 insert into review (product_code, member_nick , repNum, review_content)
 	     values (#{product_code}, #{member_nick}, review_seq.nextval, #{review_content})
 	</insert>
+	
 </mapper>

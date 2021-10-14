@@ -148,12 +148,13 @@ div.goods {
 		 
 		 <c:if test="${id != null}">
 		 <section class="reviewForm">
-		  <form role="form" method="post" autocomplete="off">
+		  <form role="form" method="post" autocomplete="off" action="/project/shop/registReview">
 		  	
-		  	<input type="hidden" name="productcode" value="${product.product_code}">
+		  	<input type="hidden" name="product_code" value="${product.product_code}">
+		  	<input type="hidden" name="member_nick" value="${member.nick}">
 		  	
 		   <div class="input_area">
-		    <textarea name="repCon" id="repCon"></textarea>
+		    <textarea name="review_content" id="review_content"></textarea>
 		   </div>
 		   
 		   <div class="input_area">

@@ -9,8 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hta.project.dao.ShopDAO;
+import com.hta.project.domain.Cart;
 import com.hta.project.domain.Category;
+import com.hta.project.domain.OrderDetailList;
+import com.hta.project.domain.Order_Detail;
+import com.hta.project.domain.Order_Market;
 import com.hta.project.domain.Product;
+import com.hta.project.domain.Review;
 
 @Service
 public class ShopServiceImpl implements ShopService{
@@ -141,6 +146,88 @@ public class ShopServiceImpl implements ShopService{
 		return dao.getReviewList(map);
 	}
 
-	
+	// 상품 소감(댓글) 작성
+		@Override
+		public void registReview(Review review) throws Exception {
+			dao.registReview(review);		
+		}
+
+		// 상품 소감(댓글) 리스트
+		@Override
+		public List<Review> reviewList(String product_code) throws Exception {
+			return dao.reviewList(product_code);
+		}
+
+		// 상품 소감(댓글) 삭제
+		@Override
+		public void deleteReview(Review review) throws Exception {
+			dao.deleteReview(review);
+		}
+
+		// 아이디 체크
+		@Override
+		public String idCheck(String id) throws Exception {
+			return dao.idCheck(id);
+		}
+
+		// 상품 소감(댓글) 수정
+		@Override
+		public void modifyReview(Review review) throws Exception {
+			dao.modifyReply(review);
+		}
+
+		// 카트 담기
+		@Override
+		public void addCart(Cart cart) throws Exception {
+			dao.addCart(cart);
+		}
+
+		// 카트 리스트
+		@Override
+		public List<Cart> cartList(String userId) throws Exception {
+			return dao.cartList(userId);
+		}
+
+		// 카트 삭제
+		@Override
+		public void deleteCart(Cart cart) throws Exception {
+			dao.deleteCart(cart);
+		}
+
+		// 주문 정보
+		@Override
+		public void orderInfo(Order_Market ordermarket) throws Exception {
+			dao.orderInfo(ordermarket);
+		}
+
+		// 주문 상세 정보
+		@Override
+		public void orderInfo_Details(Order_Detail orderDetail) throws Exception {
+			dao.orderInfo_Details(orderDetail);
+		}
+
+		// 카트 비우기 
+		@Override
+		public void cartAllDelete(String userId) throws Exception {
+			dao.cartAllDelete(userId);
+		}
+
+		// 주문 목록
+		@Override
+		public List<Order_Market> orderList(Order_Market ordermarket) throws Exception {
+			return dao.orderList(ordermarket);
+		}
+
+
+		@Override
+		public String nickCheck(String member_nick) throws Exception {
+			return dao.nickCheck(member_nick);
+		}
+
+
+		@Override
+		public List<OrderDetailList> orderView(Order_Market ordermarket) throws Exception {
+			return dao.orderView(ordermarket);
+		}
 	
 }
