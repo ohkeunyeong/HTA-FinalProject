@@ -12,6 +12,7 @@ select * from notice
 
 drop table notice
 
+insert into notice values (1,'asd','asd',1,sysdate,'Y')
 --공지사항 리스트 출력
 select *
 from (select rownum rnum, b.*

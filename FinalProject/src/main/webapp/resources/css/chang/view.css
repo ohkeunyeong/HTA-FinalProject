@@ -3,6 +3,9 @@ body>div>table>tbody>tr:nth-child(1) {
 	text-align: center
 }
 
+tr.space {
+  border-bottom: 50px solid #fff;
+}
 
 td:nth-child(1) {
 	width: 20%

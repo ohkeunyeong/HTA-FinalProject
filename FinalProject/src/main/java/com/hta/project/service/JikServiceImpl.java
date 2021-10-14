@@ -83,6 +83,35 @@ public class JikServiceImpl implements JikService{
 		return dao.getDetail(num);
 	}
 
+	@Override
+	public List<Jik> getJikListSearchList(int page, int limit, int type, String search) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int startrow=(page-1)*limit+1;
+		int endrow=startrow + limit -1 ;
+		
+		map.put("start", startrow);
+		map.put("end", endrow);
+		map.put("type", type);
+		
+		if(type!=-1) {
+			String[] search_field = new String[] {"(jik_subject || jik_content)","jik_subject", "jik_content", "nick"};
+			map.put("search_field", search_field[type]);
+			map.put("search_word", "%" + search + "%");
+		}
+		return dao.getJikListSearchList(map);
+	}
+
+	@Override
+	public int getSearchListCount(int type, String search) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		if(type!=-1) {
+			String[] search_field = new String[] {"(jik_subject || jik_content)","jik_subject", "jik_content", "nick"};
+			map.put("search_field", search_field[type]);
+			map.put("search_word", "%" + search + "%");
+		}
+		return dao.getSearchListCount(map);
+	}
+
 
 
 }
