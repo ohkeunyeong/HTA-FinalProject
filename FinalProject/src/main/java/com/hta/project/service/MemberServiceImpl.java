@@ -129,4 +129,18 @@ public class MemberServiceImpl implements MemberService{
 		return dao.findpw(map);
 	}
 
+	@Override
+	public int isPass(String id, String pass) {
+		Member member = dao.isId(id);
+		int result = -1;
+		if(member != null) {
+			if(passwordEncoder.matches(pass, member.getPass())){
+				result = 1;
+			}else {
+				result = 0;
+			}
+		}
+		return result;
+	}
+
 }

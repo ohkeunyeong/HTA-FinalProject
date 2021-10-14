@@ -37,6 +37,8 @@ public interface MemberService {
 
 	
 	public int findpw(String name, String tel, String email, String encPassword);
+
+	public int isPass(String id, String pass);
 	
 
 }

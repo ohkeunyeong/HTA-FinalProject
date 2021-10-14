@@ -8,6 +8,14 @@
 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
 <jsp:include page="header.jsp" />  
+<script>
+//oky 로그인시 농장 가입 받았을때 팝업 띄우기
+	$(function(){
+		if('${invite}' == '3'){
+			window.open("${pageContext.request.contextPath}/member/invite", "window_name","width=400,height=230,location=no,status=no,scrollbars=yes");
+		}	
+	});
+</script>
 <style>
 /* 고객센터 / 공지사항 버튼 */
 

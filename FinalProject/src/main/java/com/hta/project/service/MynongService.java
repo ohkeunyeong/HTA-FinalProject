@@ -58,6 +58,12 @@ public interface MynongService {
 	//농장 삭제
 	public void deletenong(String name);
 	
+	//해당 농장 모든 관리자 수 구해옴
+	public int getSerachListAdminCount(String id, String name);
+	
+	//농장 가입 승낙
+	public void okinvite(String id);
+	
 
 
 
