@@ -158,7 +158,17 @@ select * from
   group by a.product_code
   order by cnt desc
   
-  
+select *
+		from (select rownum rnum, pr.*
+			  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
+	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
+	  	   			from product p, CATEGORY c ,order_detail o
+	  	   			where p.category_code = c.category_code
+	  	   		    and   p.PRODUCT_CODE = o.PRODUCT_CODE
+	  	   			order by o.ORDER_DE_COUNT,
+	  	   			p.product_code) pr
+			 )
+		where rnum >= 1 and rnum <= 8  
   
 INSERT INTO PRODUCT(PRODUCT_CODE, CATEGORY_CODE, PRODUCT_NAME, PRODUCT_PRICE ,
 PRODUCT_DETAIL, PRODUCT_IMG, PRODUCT_ORIGINAL, PRODUCT_DATE)

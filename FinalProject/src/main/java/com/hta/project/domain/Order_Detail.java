@@ -6,6 +6,7 @@ public class Order_Detail {
 	private String order_num;
 	private String product_code;
 	private int order_de_count;
+	private String id;
 	
 	
 	public String getOrder_de_num() {
@@ -32,4 +33,11 @@ public class Order_Detail {
 	public void setOrder_de_count(int order_de_count) {
 		this.order_de_count = order_de_count;
 	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 }

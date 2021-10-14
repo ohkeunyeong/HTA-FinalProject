@@ -1,8 +1,9 @@
 drop table review  cascade constraints;
 
 CREATE TABLE REVIEW(
+  REP
   PRODUCT_CODE       VARCHAR2(6)     ,                -- 상품코드 
-  CATEGORY_CODE      VARCHAR2(50)    not null,        -- 카테고리 코드 
+  CATEGORY_CODE      VARCHAR2(50)    ,        -- 카테고리 코드 
   PRODUCT_NAME       VARCHAR2(50)    not null,        -- 상품명 
   REVIEW_CONTENT     VARCHAR2(1000)  not null,        -- 리뷰 내용 
   REVIEW_IMG       	 VARCHAR2(50)	 ,        		  -- 리뷰 이미지 
