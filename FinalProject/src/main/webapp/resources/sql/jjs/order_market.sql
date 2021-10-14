@@ -16,7 +16,7 @@ CREATE TABLE ORDER_MARKET(
 );
 
 update ORDER_MARKET
-set id = 'admin'
+set id = 'ajaxk'
 
 
 select * from order_market;

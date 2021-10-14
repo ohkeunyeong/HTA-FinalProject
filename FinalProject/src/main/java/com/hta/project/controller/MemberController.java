@@ -24,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,6 +36,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hta.project.domain.MailVO;
 import com.hta.project.domain.Member;
+import com.hta.project.domain.OrderDetail;
+import com.hta.project.domain.OrderDetailList;
+import com.hta.project.domain.Order_Market;
+import com.hta.project.service.AdminService;
 import com.hta.project.service.MemberService;
 import com.hta.project.task.SendMail;
 
@@ -53,6 +58,9 @@ public class MemberController {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private AdminService adminService;
 	
 	@Value("${savefoldername}")
 	private String saveFolder;
@@ -155,7 +163,7 @@ public class MemberController {
 							   @RequestParam(value="remember", defaultValue="", required=false) String remember,
 							   HttpSession session, HttpServletResponse response,
 							   RedirectAttributes rattr, HttpServletRequest request,
-							   Model mv){
+							   Model mv) throws Exception{
 		Map<String, Object> member = memberService.isId(id, password);
 		Member m = (Member) member.get("member");
 		
@@ -177,7 +185,7 @@ public class MemberController {
 			return "redirect:/main";
 		}else {
 			rattr.addFlashAttribute("result", result);
-			return "redirect:/main";
+			return "redirect:/member/login";
 		}
 	}
 	
@@ -187,16 +195,80 @@ public class MemberController {
 		return "redirect:/main";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public Map<String, Object> login(@CookieValue(value="saveid", required=false) Cookie readCookie
+	@RequestMapping(value="/login", method=RequestMethod.GET)
+	public ModelAndView login(ModelAndView mv,
+			@CookieValue(value="saveid", required=false) Cookie readCookie
 			) {
-		Map<String, Object> map = new HashMap<String, Object>();
 		if(readCookie != null) {
-			map.put("saveid", readCookie.getValue());
+			mv.addObject("saveid", readCookie.getValue());
 			logger.info("cookie time = " + readCookie.getMaxAge());
 		}
-		return map;
+		mv.setViewName("member/loginForm");
+		return mv;
+	}
+	
+	// 회원 구매목록 리스트
+	@GetMapping("/userOrderView")
+	public ModelAndView userOrderView(@RequestParam(value="page", defaultValue="1", required=false) int page,
+			ModelAndView mv, HttpServletRequest request) {
+		logger.info("Admin userOrderView()");
+		
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("id");
+		
+		int limit = 7;
+		
+		int listcount = adminService.getUserOrderListCount(id);
+		
+		int maxpage = (listcount + limit - 1) / limit;
+		
+		int startpage = ((page - 1) / 10) * 10 + 1;
+		
+		int endpage = startpage + 10 - 1;
+		
+		if(endpage > maxpage) {
+			endpage = maxpage;
+		}
+		
+		List<Order_Market> orderlist = adminService.getUserOrderList(id, page, limit);
+		
+		mv.addObject("page", page);
+		mv.addObject("maxpage", maxpage);
+		mv.addObject("startpage", startpage);
+		mv.addObject("endpage", endpage);
+		mv.addObject("listcount", listcount);
+		mv.addObject("orderlist", orderlist);
+		mv.addObject("limit", limit);
+		
+		mv.setViewName("jjs/userOrderView");
+		return mv;
+	}
+	
+	// 회원 구매목록 상세보기
+	@GetMapping("/userOrderDetail")
+	public ModelAndView userOrderDetail(String order_num, ModelAndView mv, 
+			   HttpServletRequest request) {
+		logger.info("Admin orderDetail()");
+		
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("id");
+		
+		OrderDetail orderdetail = adminService.getUserOrderDetail(id, order_num);
+		
+		List<OrderDetailList> orderlist = adminService.getUserOrderDetailList(id, order_num);
+		
+		if(orderdetail==null) {
+			logger.info("상세보기 실패");
+			mv.setViewName("jjs/error/error");
+			mv.addObject("url", request.getRequestURL());
+			mv.addObject("message", "상세보기 실패입니다.");
+		}else {
+			logger.info("상세보기 성공");
+			mv.setViewName("jjs/userOrderDetail");
+			mv.addObject("orderdetail", orderdetail);
+			mv.addObject("orderlist", orderlist);
+		}
+		return mv;
 	}
 
 	  @RequestMapping(value = "/update", method = RequestMethod.GET)
