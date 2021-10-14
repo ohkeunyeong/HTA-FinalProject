@@ -85,4 +85,46 @@
  	<select id="deleteFileList" resultType="String">
  		select board_file from delete_file
  	</select>
+ 	
+ 	 	<sql id="search_">
+ 		<if test="search_field!=null">
+ 				and
+ 				<choose>
+ 					<when test="search_field=='(jik_subject || jik_content)'">(jik_subject || jik_content)</when>
+ 					<when test="search_field=='jik_subject'">jik_subject</when>
+ 					<when test="search_field=='jik_content'">jik_content</when>
+ 					<when test="search_field=='nick'">nick</when>
+ 				</choose>
+ 				like #{search_word}
+ 		</if>
+ 	</sql>
+ 	 	<select id="list2" resultType="jik" parameterType="map">
+ 			select * from
+ 			( select ROWNUM RNUM, b.*
+				   from 
+				   		(select jik.*, nvl(cnt,0) cnt
+						 from
+						 jik left outer join (select jik_board_num, count(*) cnt
+							  					from jik_comm
+							  					group by jik_board_num) c
+						  on c.jik_board_num=jik.jik_num
+						  order by jik_num desc) b
+					) 
+			where		
+			 <![CDATA[
+			  RNUM>= #{start} and RNUM <= #{end}
+ 			]]>
+ 			<include refid="search_"/>
+ 	</select>
+ 	
+ 	 <select id="count2" resultType="int" parameterType="map">
+ 			select count(*) 
+ 			from jik
+ 			<![CDATA[
+ 			where jik_num > 0
+ 			]]>
+ 			<include refid="search_"/>
+ 	 </select>
+ 	
+ 	
  </mapper>

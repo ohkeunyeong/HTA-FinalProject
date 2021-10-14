@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +48,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hta.project.domain.Jik;
+import com.hta.project.domain.Nong;
 import com.hta.project.service.JikService;
 import com.hta.project.service.Jik_CommService;
 
@@ -224,10 +226,24 @@ public class JikController {
 	@RequestMapping(value = "/list_ajax")
 	public Map<String,Object> jikListAjax(
 			@RequestParam(value="page",defaultValue="1",required=false) int page,
-			@RequestParam(value="limit",defaultValue="10",required=false) int limit
+			@RequestParam(value="limit",defaultValue="10",required=false) int limit,
+			@RequestParam(value="type", defaultValue="-1", required=false) int type,
+			@RequestParam(value="search", defaultValue="", required=false) String search
 			) {
 		
-		int listcount = jikService.getListCount();
+		List<Jik> jiklist =  new ArrayList<Jik>();
+		int listcount;
+		
+		if(type==-1 && search.equals("")) {
+			logger.info("/list_ajax 검색어 적용안됨");
+			jiklist = jikService.getJikList(page, limit);
+			listcount = jikService.getListCount();
+		}else { //검색적용된리스트
+			logger.info("/list_ajax 검색어 적용됨");
+			jiklist = jikService.getJikListSearchList(page, limit, type, search);
+			listcount = jikService.getSearchListCount(type, search);
+		}
+		
 		
 		
 		int maxpage = (listcount + limit - 1) / limit;
@@ -241,8 +257,6 @@ public class JikController {
 		if(endpage > maxpage)
 			endpage = maxpage;
 		
-		List<Jik> jiklist = jikService.getJikList(page, limit);
-		
 		Map<String, Object> map = new HashMap<String,Object>();
 		map.put("page",page);
 		map.put("maxpage",maxpage);
@@ -251,6 +265,8 @@ public class JikController {
 		map.put("listcount",listcount);
 		map.put("jiklist",jiklist);
 		map.put("limit",limit);
+		map.put("search_field", type);
+		map.put("search_word", search);
 		return map;
 	}
 	

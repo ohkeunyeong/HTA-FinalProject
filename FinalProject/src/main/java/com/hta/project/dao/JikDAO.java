@@ -68,6 +68,14 @@ public class JikDAO {
 	public Jik getDetail(int num) {
 		return sqlSession.selectOne("Jiks.detail2", num);
 	}
+
+	public List<Jik> getJikListSearchList(HashMap<String, Object> map) {
+		return sqlSession.selectList("Jiks.list2", map);
+	}
+
+	public int getSearchListCount(HashMap<String, Object> map) {
+		return sqlSession.selectOne("Jiks.count2",map);
+	}
 	
 	
 }
