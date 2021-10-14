@@ -4,7 +4,11 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.Files;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -18,13 +22,21 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.tomcat.jni.FileInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,10 +68,12 @@ public class JikController {
 	@Value("${savefoldername}")
 	private String saveFolder;
 	
-
+	@Value("${resource.path}")
+	private String resourceFolder;
+	
 	@GetMapping(value = "/write")
 	public String jik_write() {
-		return "chang/Jik/jik_write2";
+		return "chang/Jik/jik_write";
 	}
 	
 	@RequestMapping(value = "/report")
@@ -240,6 +254,36 @@ public class JikController {
 		return map;
 	}
 	
+	/* @GetMapping(path = "/detail/{dir}/{id}")
+	 public ModelAndView image(@PathVariable(name = "dir") String dir,
+			 				   @PathVariable(name = "id") String id) {
+			logger.info(dir);
+			logger.info(id);
+		 return null;
+		 //매핑잘되면 -> 로그 -> 아까 코드 
+	 }*/
+	@GetMapping("/display")
+	public ResponseEntity<byte[]> getImage(String fileName){
+		File file = new File(saveFolder+ fileName);
+		logger.info(fileName);
+		ResponseEntity<byte[]> result = null;
+		
+		try {
+			
+			HttpHeaders header = new HttpHeaders();
+			
+			header.add("Content-type", Files.probeContentType(file.toPath()));
+			
+			result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+			
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	
 	@GetMapping(value = "/detail")
 	public ModelAndView jik_detail(int num, String id, ModelAndView mv,
 			HttpServletRequest request) {
@@ -247,16 +291,17 @@ public class JikController {
 		Jik jik = jikService.getDetail(num,id);
 		
 		if(jik == null) {
-			logger.info("�󼼺��� ����");
+			logger.info("디테일 오류");
 			mv.setViewName("error/error");
 			mv.addObject("url", request.getRequestURL());
-			mv.addObject("message", "�󼼺��� �����Դϴ�.");
+			mv.addObject("message", "디테일 페이지 오류");
 		}else {
-			logger.info("�󼼺��� ����");
+			logger.info("디테일 뷰 페이지 불러오기 성공");
 			int count = jik_commService.getListCount(num);
-			mv.setViewName("chang/Jik/jik_view");
+			mv.setViewName("chang/Jik/jik_view2");
 			mv.addObject("count", count);
 			mv.addObject("jikdata", jik);
+			mv.addObject("resourceFolder", resourceFolder);
 		}
 		return mv;
 		
