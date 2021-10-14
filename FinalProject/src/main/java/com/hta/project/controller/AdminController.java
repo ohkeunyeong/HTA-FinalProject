@@ -65,7 +65,7 @@ public class AdminController {
 		List<Product> productlist = adminService.getProductList(-1, "",  1, 2);
 		List<Farm> farmlist = adminService.farmList(1, 2); 
 		List<Order_Market> orderlist = adminService.getOrderList(1, 2);
-		System.out.println(reportlist.get(0).getBoard_id());
+		
 		mv.addObject("userlist", userlist);
 		mv.addObject("reportlist", reportlist);
 		mv.addObject("productlist", productlist);
