@@ -117,7 +117,6 @@
 	</nav>
 	<br>
 
-	<jsp:include page="../../main/modal/login.jsp"/>
 
 </body>
 </html>
