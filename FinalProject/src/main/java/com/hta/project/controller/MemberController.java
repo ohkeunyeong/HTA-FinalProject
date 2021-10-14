@@ -238,7 +238,7 @@ public class MemberController {
 			return "member/member_findForm";		  
 	  }
 	  
-	//oky 아이디/비밀번호 찾기 프로세스
+	  //oky 아이디/비밀번호 찾기 프로세스
 	  @RequestMapping(value = "/findProcess", method = RequestMethod.POST)
 	  public String findProcess(HttpServletResponse response, String name, String tel, 
 			  String email, String find) throws Exception{
@@ -308,4 +308,24 @@ public class MemberController {
 		  return null;
 	  }
 	  
+	  
+	  @RequestMapping(value="/delete", method = RequestMethod.GET)
+	  public String delete() {
+		  return "member/member_deleteForm";
+	  }	  
+	  
+	  //oky 회원탈퇴 프로세스
+//	  @RequestMapping(value = "/deleteProcess", method = RequestMethod.GET)
+//	  public ModelAndView delete(HttpServletRequest request,  
+//				HttpSession session, HttpServletResponse response, ModelAndView mv) throws Exception{
+//		  logger.info("/delete 회원탈퇴");
+//			try { //유효성 검사를 위한 초기 세팅
+//			String id=(String)session.getAttribute("id");
+//			Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+//			String getmynong = mynongservice.getMynong(id);
+//			
+//			String myfarm=list.getMy_farm();//일반유저 0, 관리자 1, 멤버 2, 대기 3
+//			int level =0;  
+//		  return null;
+//	  }
 }
