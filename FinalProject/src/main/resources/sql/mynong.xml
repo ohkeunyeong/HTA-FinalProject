@@ -105,5 +105,18 @@ MYNONG_NAME='', MY_FARM='0' where id= #{id}
 delete from mynong where MYNONG_NAME = #{name}
 </delete>
 
+<select id ="searchAdminCount" parameterType="map" resultType="int">
+ select count(*)
+ from member
+ where MYNONG_NAME = #{name} and id != #{id} and MY_FARM='1'
+</select>
+
+<update id="okinvite" parameterType="String">
+ update member
+ set
+ MY_FARM = '2'
+ where id = #{id}
+</update>
+
 </mapper>
 

@@ -130,7 +130,7 @@ public class CalendarController {
         		mv.addObject("id",id);
         		mv.addObject("name", getmynong);
         		mv.addObject("level", level);
-        		mv.setViewName("oky/calendar/calendar");
+        		mv.setViewName("oky/calendar/calendartest");
         	}
           return mv;
     	} catch (NullPointerException e) {

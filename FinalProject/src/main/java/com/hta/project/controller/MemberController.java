@@ -36,6 +36,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.hta.project.domain.MailVO;
 import com.hta.project.domain.Member;
 import com.hta.project.service.MemberService;
+import com.hta.project.service.MynongService;
 import com.hta.project.task.SendMail;
 
 
@@ -53,7 +54,10 @@ public class MemberController {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
+	@Autowired
+	private MynongService mynongservice;
+
 	@Value("${savefoldername}")
 	private String saveFolder;
 	
@@ -158,7 +162,7 @@ public class MemberController {
 							   Model mv){
 		Map<String, Object> member = memberService.isId(id, password);
 		Member m = (Member) member.get("member");
-		
+		int invite = mynongservice.checkmyfarm(id); //oky 농장 초대 여부
 		int result = (int) member.get("result");
 		
 		if(result == 1) {
@@ -174,6 +178,7 @@ public class MemberController {
 			response.addCookie(savecookie);
 			session.setAttribute("id", m.getId());
 			session.setAttribute("nick", m.getNick());
+			rattr.addFlashAttribute("invite", invite); //oky 농장 초대 여부
 			return "redirect:/main";
 		}else {
 			rattr.addFlashAttribute("result", result);
@@ -308,24 +313,103 @@ public class MemberController {
 		  return null;
 	  }
 	  
-	  
+	  //oky 회원탈퇴
 	  @RequestMapping(value="/delete", method = RequestMethod.GET)
 	  public String delete() {
 		  return "member/member_deleteForm";
 	  }	  
 	  
 	  //oky 회원탈퇴 프로세스
-//	  @RequestMapping(value = "/deleteProcess", method = RequestMethod.GET)
-//	  public ModelAndView delete(HttpServletRequest request,  
-//				HttpSession session, HttpServletResponse response, ModelAndView mv) throws Exception{
-//		  logger.info("/delete 회원탈퇴");
-//			try { //유효성 검사를 위한 초기 세팅
-//			String id=(String)session.getAttribute("id");
-//			Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
-//			String getmynong = mynongservice.getMynong(id);
-//			
-//			String myfarm=list.getMy_farm();//일반유저 0, 관리자 1, 멤버 2, 대기 3
-//			int level =0;  
-//		  return null;
-//	  }
+	  @RequestMapping(value = "/deleteProcess", method = RequestMethod.POST)
+	  public String deleteProcess(String id, String pass,HttpServletRequest request,  
+				HttpSession session, HttpServletResponse response) throws Exception{
+		logger.info("/deleteProcess 회원탈퇴");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기	
+		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1, 멤버 2, 대기 3
+		String name=list.getMynong_name();
+		if(myfarm.equals("1")) {//농장 관리자인지 판단
+			int pan2 = mynongservice.getSerachListAdminCount(id, name);//해당 농장 관리자가 몇명인지 판단 용	
+			if(pan2 == 0) {
+				logger.info("/deleteProcess 농장관리자 1명");
+				out.println("<script>");
+				out.println("alert('소속된 농장을 삭제하거나  \\n다른 유저에게 관리자 임명 후 탈퇴 처리 가능합니다.');");
+				out.println("history.back()");
+				out.println("</script>");
+				out.close();		
+				return null;
+			}			
+		}
+		int pan1 = memberService.isPass(id, pass);//입력한 아이디 비밀번호 확인(아이디 없으면 -1, 비밀번호 틀리면 0, 정상일 시 1)
+		if(pan1 == -1) { //아이디가 없을경우
+			logger.info("/deleteProcess 아이디없음");
+			out.println("<script>");
+			out.println("alert('입력한 정보의 회원을 찾을 수 없습니다.');");
+		    out.println("history.back()");
+		    out.println("</script>");
+			out.close();		
+			return null;
+		}
+		else if (pan1 == 0){ //비밀번호를 틀렸을 경우
+			logger.info("/deleteProcess 비밀번호 오류");
+			out.println("<script>");
+			out.println("alert('비밀번호가 일치하지 않습니다.');");
+		    out.println("history.back()");
+		    out.println("</script>");
+			out.close();	
+			return null;
+		} else if (pan1 == 1) {//정상
+			memberService.delete(id);
+			logger.info("/deleteProcess 정상탈퇴처리");
+			out.println("<script>");
+		    out.println("alert('정상 탈퇴 처리 되었습니다. \\n지금까지 주말농장을 이용해주셔서 감사합니다.');");
+		    out.println("window.opener.location.href='logout'");
+		    out.println("window.close()");
+		    out.println("</script>");
+			out.close();	
+			
+		}
+		return null;
+	  }
+	  
+	  //oky 내농장초대
+	  @RequestMapping(value="/invite", method = RequestMethod.GET)
+	  public ModelAndView invite(ModelAndView mv, HttpSession session) {
+		  String id = (String) session.getAttribute("id");
+		  String name = mynongservice.getMynong(id); //농장 이름 가져오기
+		  Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기	
+		  mv.setViewName("member/member_inviteForm");
+		  mv.addObject("name", name); 
+		  mv.addObject("list", list);
+	      return mv;
+	  }	
+	  //oky 내농장초대 프로세스
+	  @RequestMapping(value = "/inviteProcess", method = RequestMethod.POST)
+	  public String inviteProcess(String invite, HttpServletRequest request,  
+				HttpSession session, HttpServletResponse response) throws Exception{
+		logger.info("/inviteProcess 회원초대 프로세스");
+		logger.info("/inviteProcess invite는?" + invite);
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		String id = (String) session.getAttribute("id");
+		if(invite.equals("ok")) {
+			mynongservice.okinvite(id);
+			out.println("<script>");
+			out.println("alert('농장 가입 완료하였습니다.');");
+			out.println("window.close()");
+		    out.println("window.opener.location.href='../main'");
+			out.println("</script>");
+			out.close();				
+		}else if(invite.equals("no")) {//농장가입 거절
+			mynongservice.delete(id);
+			out.println("<script>");
+			out.println("alert('농장 가입을 거절하였습니다.');");
+			out.println("window.close()");
+		    out.println("window.opener.location.href='../main'");
+			out.println("</script>");
+			out.close();	
+		}
+		return null;
+	  }
 }
