@@ -16,4 +16,5 @@ create sequence cart_seq;
 
 select * from cart;
 
+create sequence cart_seq;
 --실행함 9.19

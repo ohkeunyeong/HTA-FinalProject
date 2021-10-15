@@ -1,8 +1,8 @@
 package com.hta.project.domain;
 
-import java.sql.Date;
+import java.util.Date;
 
-public class Review {
+public class ReviewList {
 
 	private String id;
 	private String product_code;

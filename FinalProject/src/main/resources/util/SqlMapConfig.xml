@@ -16,7 +16,7 @@
 		<typeAlias alias="notice" 		type="com.hta.project.domain.Notice"/>
 		<typeAlias alias="member" 		type="com.hta.project.domain.Member"/>
 		<typeAlias alias="product" 		type="com.hta.project.domain.Product"/>
-		<typeAlias alias="product1" 	type="com.hta.project.domain.Product"/> <!-- 추 -->
+		<typeAlias alias="product1" 	type="com.hta.project.domain.Product"/> 
 		<typeAlias alias="category" 	type="com.hta.project.domain.Category"/>
 		<typeAlias alias="farm" 		type="com.hta.project.domain.Farm"/>
 		<typeAlias alias="order" 		type="com.hta.project.domain.Order_Market"/>
@@ -26,6 +26,8 @@
 		<typeAlias alias="account"      type="com.hta.project.domain.Account" />
 		<typeAlias alias="nong"         type="com.hta.project.domain.Nong"/>
 		<typeAlias alias="nong_co"      type="com.hta.project.domain.Nong_Co"/>
+		<typeAlias alias="review"  	    type="com.hta.project.domain.Review"/>
+		<typeAlias alias="reviewList"   type="com.hta.project.domain.ReviewList"/>
 		<typeAlias alias="cart"      type="com.hta.project.domain.Cart"/>
 		<typeAlias alias="cartList"      type="com.hta.project.domain.CartList"/>
      </typeAliases>
