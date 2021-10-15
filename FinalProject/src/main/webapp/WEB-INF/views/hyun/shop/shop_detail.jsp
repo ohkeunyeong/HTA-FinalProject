@@ -43,6 +43,40 @@ div.goods {
 
 </style>
 
+<!--리뷰 목록 스크립트 -->
+ <script> 
+		   function reviewList() {
+			   
+			   
+			 var product_code = ${product.product_code};
+			 $.getJSON("/shop/shop_detail/reviewList" + "?n=" + product_code, function(data){
+			  var str = "";
+			  
+			  $(data).each(function(){
+			   
+			   console.log(data);
+			   
+			   var review_Date = new Date(this.review_Date);
+			   review_Date = review_Date.toLocaleDateString("ko-US")
+			   
+			   str += "<li data-product_code='" + this.product_code + "'>"
+			     + "<div class='userInfo'>"
+			     + "<span class='ID'>" + this.ID + "</span>"
+			     + "<span class='date'>" + review_Date + "</span>"
+			     + "</div>"
+			     + "<div class='review_Content'>" + this.review_content + "</div>"
+			     + "<div class='product_code' type='hidden'>" + this.product_code + "</div>"
+			     + "<div class='product_name' type='hidden'>" + this.product_name + "</div>"
+			     + "<div class='category_code'type='hidden'>" + this.category_code + "</div>"
+			     + "</li>";           
+			  });
+			  
+			  $("section.reviewList ol").html(str);
+			 });
+			 
+			 }
+			</script>
+			
 </head>
 <body>
 	<jsp:include page="shop_header.jsp" />
@@ -151,7 +185,8 @@ div.goods {
 		  <form role="form" method="post" autocomplete="off" action="/project/shop/registReview">
 		  	
 		  	<input type="hidden" name="product_code" value="${product.product_code}">
-		  	<input type="hidden" name="member_nick" value="${member.nick}">
+		  	<input type="hidden" name="product_name" value="${product.product_name}">
+		  	<input type="hidden" name="category_code" value="${product.category_code}">
 		  	
 		   <div class="input_area">
 		    <textarea name="review_content" id="review_content"></textarea>
@@ -161,6 +196,32 @@ div.goods {
 		    <button type="submit" id="review_btn">리뷰 남기기</button>
 		   </div>
 		   
+		   		<script>
+				 $("#review_btn").click(function(){
+				  
+				  var formObj = $(".reviewForm form[role='form']");
+				  var product_code = $("#product_code").val();
+				  var review_content = $("#review_content").val();
+				  var product_name = $("#product_name").val();
+				  var category_code = $("#category_code").val();
+				  
+				  var data = {
+					  product_code : product_code,
+					  review_content : review_content
+					  product_name : product_name
+				    };
+				  
+				  $.ajax({
+				   url : "/shop/registReview",
+				   type : "post",
+				   data : data,
+				   success : function(){
+				    reviewList();
+				    $("#review_content").val("");
+				   }
+				  });
+				 });
+				</script>
 		  </form>
 		 </section>
 		 </c:if>
@@ -168,7 +229,13 @@ div.goods {
 		 <section class="reviewList">
 		  <ol>
 		   <li>댓글 목록</li>
-		   </ol>    
+		   </ol>
+		   
+		   <script>
+		   reviewList();
+		   </script>
+		  
+    
 		 </section>
 		</div>
 	</section>

@@ -39,7 +39,7 @@ import com.hta.project.service.ShopService;
 public class ShopController<ReviewList, CartList> {
 
     	private static final Logger logger
-        = LoggerFactory.getLogger(MainController.class);
+        = LoggerFactory.getLogger(ShopController.class);
     	
     	@Autowired
     	private ShopService shopService;
@@ -171,6 +171,8 @@ public class ShopController<ReviewList, CartList> {
     	 
     	 String id = (String)session.getAttribute("id");
     	 Member member = memberService.member_info(id);
+    	 review.setId(id);
+    	 
     	 review.setMember_nick(member.getNick());
     	 
     	 shopService.registReview(review);
@@ -178,16 +180,18 @@ public class ShopController<ReviewList, CartList> {
     	}
     	
     	
+    	
     	// 상품 소감(댓글) 목록
     	@ResponseBody
     	@RequestMapping(value = "/reviewList", method = RequestMethod.GET)
-    	public List<ReviewList> getReplyList(@RequestParam("n") String product_code) throws Exception {
-    		logger.info("get review list");
-
-    		List<ReviewList> review = shopService.reviewList(product_code);
-
-    		return review;
-    	}
+    	public List<Review> getReviewList(@RequestParam("n") String product_code) throws Exception {
+    	 logger.info("get review list");
+    	   
+    	 List<Review> review = shopService.reviewList(product_code);
+    	 
+    	 return review;
+    	} 
+    	
     	
     	
     	// 상품 소감(댓글) 삭제
