@@ -292,7 +292,7 @@ main {
 </style>
 </head>
 <body style="overflow-x:hidden; overflow-y:auto;">
-<br><br><br>
+<br><br>
 <div class="wrapper">
 <main>
 <input type="hidden" id="id" value="${id}" name="id">

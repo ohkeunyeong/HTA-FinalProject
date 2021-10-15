@@ -16,9 +16,18 @@
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,500,700"/>
 </head>
 <style>
+    #arrowy{ /* 연표시 화살표*/
+    width: 15px; height: 15px;
+    }
+    #arrowm{ /* 달표시 화살표*/
+    width: 20px; height: 21px;
+    }
     #sideicon{ /* 사이드바 아이콘 */
     width: 15px; height: 15px;
     }   
+    
+    #footer { position: fixed; bottom: 0; width: 100%; }
+
 
 /**
  * ALL the UI design credit goes to:
@@ -287,14 +296,27 @@ main {
 }
 </style>
 <body style="overflow-x:hidden; overflow-y:auto;">
-<br><br><br>
+<br><br>
 <input type="hidden" id="id" value="${id}" name="id">
 <div class="wrapper">
  <main>
-
-	<div id="container">
-		<section id="accordion">
-		<a href="account?name=${name}&year=${year-1}&month=${month}">◁</a>
+     <div class="toolbar" style="margin-left: 407px;">
+      <div class="caption" style="color:black; font-size:18px;">
+        <a href="account?name=${name}&year=${year-1}&month=${month}"><img id="arrowy" src="${pageContext.request.contextPath}/resources/image/oky/by.png" alt="by"/></a>
+        <a href="account?name=${name}&year=${year}&month=${month-1}"><img id="arrowm" src="${pageContext.request.contextPath}/resources/image/oky/bm.png" alt="bm"/></a>
+        <span class="y">
+        ${year}
+        </span>년
+        <span class="m">
+        ${month}
+        </span>월 
+        <a href="account?name=${name}&year=${year}&month=${month+1}"><img id="arrowm" src="${pageContext.request.contextPath}/resources/image/oky/fm.png" alt="fm"/></a>
+        <a href="account?name=${name}&year=${year+1}&month=${month}"><img id="arrowy" src="${pageContext.request.contextPath}/resources/image/oky/fy.png" alt="fy"/></a>   
+	</div>
+    </div>
+	<div id="container" >
+		<section id="accordion" style="width: 872px;">
+<%-- 		<a href="account?name=${name}&year=${year-1}&month=${month}">◁</a>
         <a href="account?name=${name}&year=${year}&month=${month-1}">◀</a>
         <span class="y">
         ${year}
@@ -303,20 +325,21 @@ main {
         ${month}
         </span>월 
         <a href="account?name=${name}&year=${year}&month=${month+1}">▶</a>
-        <a href="account?name=${name}&year=${year+1}&month=${month}">▷</a>   
+        <a href="account?name=${name}&year=${year+1}&month=${month}">▷</a>  --%>  
 		<h3>${year}년 ${month} 월 합계:
 		<span>
 		<c:set var = "total" value = "0" />
 			<c:forEach var="result" items="${alist}" varStatus="status">     
-			<c:set var= "total" value="${total + result.amount}"/>
+<%-- 			<c:set var= "total" value="${total + result.amount}"/> --%>
 			</c:forEach>
         <fmt:formatNumber value="${total}" pattern="#,###"/>
 		</span>원
 		</h3>
+		<br>
 		<c:set var="yoil" value="${dayofweek}"/>
 		<c:forEach var="a" begin="1" end="${lastday}">
 			<div>
-				 <input type="checkbox" id="${a}" />
+				<input type="checkbox" id="${a}" />
 				<label for="${a}" id="date"> 
 				${month} 월 ${a}일
 				<c:if test="${yoil ==1 }">일요일</c:if>
@@ -326,8 +349,8 @@ main {
 	            <c:if test="${yoil ==5 }">목요일</c:if>
 		        <c:if test="${yoil ==6 }">금요일</c:if>
 		        <c:if test="${yoil ==0 ||yoil ==7 }">토요일</c:if>   
-		         		합계:
-		        <span>		          
+		        <div style="margin-left: 518px;">
+		             합계:		          
 		             <c:set var = "total" value = "0" />  
                    <c:forEach var="b" items="${alist}">
 				   <c:set var="date" value="${fn:substring(b.mdate, 6, 8)}"/>
@@ -336,12 +359,13 @@ main {
 			       </c:if>
 			       </c:forEach>		        		        
                        <fmt:formatNumber value="${total}" pattern="#,###"/>				   		        
-		        </span>원
+              		        원
 		        <c:if test="${level ==1}"> 
 			        <a href="#" onClick="checkTarget(${a})" data-toggle="modal" data-target="#insertModal" id="addacc" >
 		     	     	<img id="pen" src="${pageContext.request.contextPath}/resources/image/oky/pen.png" alt="가계부추가"/>
             		</a>
                 </c:if>
+		        </div>
 		        </label>                               
 				<article>
 		        <table class="table table-striped">
@@ -380,7 +404,6 @@ main {
 			</c:forEach>
 		</section>
   </div>  
-  </main>
   <!-- 지출입력 modal -->
 <div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true" style="disply:none;">
   <div class="modal-dialog modal-lg">
@@ -513,6 +536,7 @@ main {
     </div>
   </div>
 </div>
+</main>
 <sidebar>
    <!--  <div class="logo">logo</div> -->
     <div class="avatar">
@@ -542,6 +566,8 @@ main {
     </nav>
   </sidebar>
   </div>   
+  <div id="footer" >
 <jsp:include page="../../main/footer.jsp" />
+</div>
 </body>
 </html>

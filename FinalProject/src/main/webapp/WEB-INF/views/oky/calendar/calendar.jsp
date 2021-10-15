@@ -90,7 +90,7 @@
     List<MyCalendar> clist=(List<MyCalendar>)request.getAttribute("clist");
 %>
 <body style="overflow-x:hidden; overflow-y:auto;">
-<br><br><br>
+<br><br>
 <input type="hidden" id="id" value="${id}" name="id">
 <style>
     #pen{
@@ -449,15 +449,17 @@ main {
       <div class="avatar__name">John Smith</div>
     </div>
     <nav class="menu">
-      <a class="menu__item menu__item--active" href="${pageContext.request.contextPath}/calprocess?id=${id}">
+      <a class="menu__item menu__item--active" 
+      href="${pageContext.request.contextPath}/calprocess?id=${id}">
       <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/calendar.png" alt="by"/>
         <span style="padding:0px 0px 0px 17px;" class="menu__text">캘린더</span>
-      </a>
-      <a class="menu__item" href="${pageContext.request.contextPath}/accprocess?id=${id}">
-      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/accounting.png" alt="by"/>
-        <span style="padding:0px 0px 0px 17px;" class="menu__text">가계부</span>
-      </a>    
-      <a class="menu__item" href="${pageContext.request.contextPath}/nongprocess?id=${id}">
+      </a> <a class="menu__item"
+				href="${pageContext.request.contextPath}/accprocess?id=${id}"> <img
+				id="sideicon"
+				src="${pageContext.request.contextPath}/resources/image/oky/accounting.png"
+				alt="by" /> <span style="padding: 0px 0px 0px 17px;"
+				class="menu__text">가계부</span>
+			</a> <a class="menu__item" href="${pageContext.request.contextPath}/nongprocess?id=${id}">
       <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/bbs.png" alt="by"/>
         <span style="padding:0px 0px 0px 17px;" class="menu__text">멤버게시판</span>
       </a>
