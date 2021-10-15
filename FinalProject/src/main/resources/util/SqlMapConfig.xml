@@ -26,6 +26,8 @@
 		<typeAlias alias="account"      type="com.hta.project.domain.Account" />
 		<typeAlias alias="nong"         type="com.hta.project.domain.Nong"/>
 		<typeAlias alias="nong_co"      type="com.hta.project.domain.Nong_Co"/>
+		<typeAlias alias="cart"      type="com.hta.project.domain.Cart"/>
+		<typeAlias alias="cartList"      type="com.hta.project.domain.CartList"/>
      </typeAliases>
          
      <mappers>
@@ -43,6 +45,7 @@
        	<mapper resource="sql/account.xml" />
        	<mapper resource="sql/nong.xml" />
        	<mapper resource="sql/nong_co.xml" />
+       	<mapper resource="sql/cart.xml" />
        	
      </mappers>
 </configuration>

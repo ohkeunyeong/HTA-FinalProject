@@ -1,10 +1,9 @@
 package com.hta.project.controller;
 
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -12,14 +11,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.hta.project.domain.Category;
 import com.hta.project.domain.Product;
+import com.hta.project.service.CartService;
 import com.hta.project.service.MemberService;
 import com.hta.project.service.ShopService;
 
@@ -36,9 +34,21 @@ public class MainController {
 	@Autowired
 	private MemberService memberService;
 	
+	@Autowired
+	private CartService cartService;
+	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public ModelAndView main(ModelAndView mv) {
 		  mv.setViewName("main/main");
+		  return mv;
+	}
+	
+	@RequestMapping(value = "/cart", method = RequestMethod.GET)
+	public ModelAndView cart(HttpServletRequest request,
+							ModelAndView mv) {
+		  mv.setViewName("hyun/cart/cart");
+		  HttpSession session = request.getSession();
+		  String id = (String)session.getAttribute("id");
 		  return mv;
 	}
 
@@ -47,41 +57,30 @@ public class MainController {
 	@RequestMapping("/shopmain")
 	public String shopmain(Model model,
 			@RequestParam(value="page", defaultValue="1", required = false) int page,
-			@RequestParam(value="limit", defaultValue="8", required=false) int limit,
-			ModelAndView mv,
-			@RequestParam(value="search_field", defaultValue="-1", required=false) int index,
-			@RequestParam(value="search_word", defaultValue="", required=false) String search_word) {
+			@RequestParam(value="limit", defaultValue="6", required=false) int limit) {
 		logger.info("Shop productList()");
 		
+		List<Product> productlist  = shopService.getProductList(page, limit);		
 		
-		//보여줄 값 구한다.
-		//1. 모든 것
-		//2. 살충제 
-		//3. 비료/상토 
+		int listcount = shopService.getProductListCount();
 		
-		//추천(판매량 많은) 제품 리스트 
-		List<Product> productlist  = shopService.getProductList(index, search_word, page, limit);		
-		model.addAttribute("productList", productlist);
+		int maxpage = (listcount + limit - 1) / limit;
 		
-		//취소됨 //퍼스나콘 제품 리스트
-//		List<Product> personaconlist  = shopService.getPersonaconList(index, search_word, page, limit);		
-//		model.addAttribute("personaconList", personaconlist);
+		int startpage = ((page - 1) / 10) * 10 + 1;
 		
-		//도구 제품 리스트
-		List<Product> toolslist  = shopService.getToolsList(index, search_word, page, limit);		
-		model.addAttribute("toolsList", toolslist);
+		int endpage = startpage + 10 - 1;
 		
-		//굿즈 제품 리스트
-		List<Product> goodslist  = shopService.getGoodsList(index, search_word, page, limit);		
-		model.addAttribute("goodsList", goodslist);
+		if(endpage > maxpage) {
+			endpage = maxpage;
+		}
 		
-		//후기많은 제품 리스트
-		List<Product> reviewProductlist  = shopService.getReviewProductList(index, search_word, page, limit);		
-		model.addAttribute("reviewProductList", reviewProductlist);
-		
-		//후기 리스트
-		List<Product> reviewlist  = shopService.getReviewList(index, search_word, page, limit);		
-		model.addAttribute("reviewList", reviewlist);
+		model.addAttribute("page", page);
+		model.addAttribute("maxpage", maxpage);
+		model.addAttribute("startpage", startpage);
+		model.addAttribute("endpage", endpage);
+		model.addAttribute("listcount", listcount);
+		model.addAttribute("productlist", productlist);
+		model.addAttribute("limit", limit);
 		
 		return "hyun/shop/shop_main";
 	}

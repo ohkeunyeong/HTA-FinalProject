@@ -11,6 +11,8 @@ CREATE TABLE CART(
   FOREIGN KEY (ID) REFERENCES MEMBER (ID)
 );
 
+create sequence cart_seq;
+
 
 select * from cart;
 

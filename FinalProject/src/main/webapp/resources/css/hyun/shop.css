@@ -1,74 +1,25 @@
-<style>
-h5 {
-	padding-top: 10px;
-	font-weight:bold;
+.content--item{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 }
 
-.container .nav {
-	margin-top: 60px;
-	font-size: 20px;
-	width:100%
+.shop--nav{
+	justify-content: center;
 }
 
-.container {
-	margin:auto
+.shop--item{
+	padding-right : 98px;
 }
 
-.section1 {
-	text-align: center;
-}
-
-.section1 > span {
-	font-size: 30px;
-	font-weight: bold;
-	margin-right:48%;
-}
-
-.section1  .button {
-	font-size: 20px;
-	font-weight: medium;
+.gray {
 	color: gray;
 }
 
-.section2 {
-	margin-left:14%;
+a:not([href]) {
+    color: gray;
+    text-decoration: none;
 }
-
-.section2 > span {
-	font-size: 30px;
-	font-weight: bold;
-	margin-right:48%;
-}
-
-.section2  .button {
-	font-size: 20px;
-	font-weight: medium;
-	color: gray;
-}
-#p1 {
-	font-size: 30px;
-}
-
-#p2 {
-	font-size: 30px;
-	font-weight: bold;
-}
-
-.products {
-	margin-top: 2%;
-	margin-bottom: 2%;
-	margin-right: 15%;
-}
-
-.products card-deck .card {
-	width: 300px;
-	height: 250px;
-}
-
-.products>card-img-top {
-	height: 200px;
-}
-
 
 /* 슬라이드 배너 */
 * {margin:0;padding:0;box-sizing:border-box;}
@@ -171,5 +122,3 @@ label.right {
 	98% {left:100%;}
 	100% {left:0%;}
 }
-
-</style>

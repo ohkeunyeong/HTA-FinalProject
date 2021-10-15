@@ -164,7 +164,7 @@ label.right {
 </style>
 </head>
 <body>
-	<jsp:include page="shop_header.jsp" />
+	<jsp:include page="../../main/header.jsp" />
 
     <br><br><br>    	
     <div class="slidebox">

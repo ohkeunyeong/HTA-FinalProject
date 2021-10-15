@@ -14,7 +14,7 @@ public interface ShopService<ReviewList, CartList> {
 
 	public List<Category> getCategoryList();
 
-	public int getProductListCount(int index, String search_word);
+	public int getProductListCount();
 
 	public Product getShopProductDetail(String code);
 	
@@ -22,7 +22,7 @@ public interface ShopService<ReviewList, CartList> {
 
 	public List<Product> getProductCategoryList(int page, int limit, String category_name);
 	
-	public List<Product> getProductList(int index, String search_word, int page, int limit);
+	public List<Product> getProductList(int page, int limit);
 
 	public List<Product> getToolsList(int index, String search_word, int page, int limit );
 

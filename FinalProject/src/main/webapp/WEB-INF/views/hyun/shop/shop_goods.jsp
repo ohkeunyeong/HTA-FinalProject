@@ -12,7 +12,7 @@ h4{padding-top:30px;}
 </style>
 </head>
 <body>
-<jsp:include page="shop_header.jsp" />  
+<jsp:include page="../../main/header.jsp" />  
 
 <!-- 굿즈 장터 내 네비게이션 바 -->
 <!-- 굿즈 장터 내 네비게이션 바 -->

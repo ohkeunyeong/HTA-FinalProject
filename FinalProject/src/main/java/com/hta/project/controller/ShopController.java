@@ -51,10 +51,9 @@ public class ShopController<ReviewList, CartList> {
     	@RequestMapping(value = "/shop_detail", method = RequestMethod.GET)
     	public ModelAndView main(ModelAndView mv, String product_code) {
     		Product product = shopService.getShopProductDetail(product_code);
-    		  //ModelAndView mv = new ModelAndView();
-    		  mv.addObject("product", product);
-    		  mv.setViewName("hyun/shop/shop_detail");
-    		  return mv;
+    		mv.addObject("p", product);
+    		mv.setViewName("hyun/shop/shop_detail");
+    		return mv;
     	}
     	
     	@PostMapping("/categoryList")
@@ -69,45 +68,6 @@ public class ShopController<ReviewList, CartList> {
     		map.put("categoryList", categoryList);
     		
     		return map;
-    	}
-    	
-    	@GetMapping("/productList")
-    	public ModelAndView productList(@RequestParam(value="page", defaultValue="1", required = false) int page,
-    			@RequestParam(value="limit", defaultValue="12", required=false) int limit,
-    			ModelAndView mv,
-    			@RequestParam(value="search_field", defaultValue="-1", required=false) int index,
-    			@RequestParam(value="search_word", defaultValue="", required=false) String search_word) {
-    		logger.info("Shop productList()");
-    		
-    		List<Product> productlist = null;
-    		int listcount = 0;
-    		
-    		productlist = shopService.getProductList(index, search_word, page, limit);
-    		listcount = shopService.getProductListCount(index, search_word);
-    		
-    		int maxpage = (listcount + limit - 1) / limit;
-    		
-    		int startpage = ((page - 1) / 10) * 10 + 1;
-    		
-    		int endpage = startpage + 10 - 1;
-    		
-    		if(endpage > maxpage) {
-    			endpage = maxpage;
-    		}
-    		
-    		mv.addObject("page", page);
-    		mv.addObject("maxpage", maxpage);
-    		mv.addObject("startpage", startpage);
-    		mv.addObject("endpage", endpage);
-    		mv.addObject("listcount", listcount);
-    		mv.addObject("productlist", productlist);
-    		mv.addObject("limit", limit);
-    		mv.addObject("search_field", index);
-    		mv.addObject("search_word", search_word);
-    		
-    		
-    		mv.setViewName("hyun/shop/shop_main");
-    		return mv;
     	}
     	
     	@PostMapping("/productDetail")
@@ -239,66 +199,6 @@ public class ShopController<ReviewList, CartList> {
 
     		return result;
 
-    	}	
-
-    	// 카트 담기
-    	@ResponseBody
-    	@RequestMapping(value = "/addCart", method = RequestMethod.POST)
-    	public int addCart(Cart cart, HttpSession session) throws Exception {
-
-    		int result = 0;
-
-    		Member member = (Member)session.getAttribute("member");
-    		String userId = shopService.idCheck(cart.getId());
-    		
-    		if(member != null) {
-    			
-    			cart.setMember_nick(member.getId());
-    			shopService.addCart(cart);
-    			result = 1;
-    		}
-
-    		return result;
-    	}
-
-    	// 카트 목록
-    	@RequestMapping(value = "/cartList", method = RequestMethod.GET)
-    	public void getCartList(HttpSession session, Model model) throws Exception {
-    		logger.info("get cart list");
-
-    		Member member = (Member)session.getAttribute("member");
-    		String userId = member.getId();  // 소감(댓글)을 작성한 사용자의 아이디를 가져옴
-
-    		List<CartList> cartList = shopService.cartList(userId);
-
-    		model.addAttribute("cartList", cartList);
-    	}
-
-
-    	// 카트 삭제
-    	@ResponseBody
-    	@RequestMapping(value = "/deleteCart", method = RequestMethod.POST)
-    	public int deleteCart(HttpSession session, @RequestParam(value = "chbox[]") List<String> chArr, Cart cart) throws Exception {
-    		logger.info("delete cart");
-
-    		Member member = (Member)session.getAttribute("member");
-    		String userId = member.getId();
-
-    		int result = 0;
-			int cartNum;		
-
-    		// 로그인 여부 구분
-    		if(member != null) {
-    			cart.setId(userId);
-
-    			for(String i : chArr) {  // 에이젝스에서 받은 chArr의 갯수만큼 반복
-    				cartNum = Integer.parseInt(i);  // i번째 데이터를 cartNum에 저장
-    				cart.setCart_num(cartNum);
-    				shopService.deleteCart(cart);
-    			}			
-    			result = 1;
-    		}		
-    		return result;		
     	}
 
     	// 주문
