@@ -346,7 +346,7 @@ main {
     List<MyCalendar> list = (List<MyCalendar>)request.getAttribute("list");
 %>
 <body style="overflow-x:hidden; overflow-y:auto;">
-<br><br><br>
+<br><br>
 <div class="wrapper">
 <main>
 <input type="hidden" id="id" value="${id}" name="id">
@@ -374,9 +374,9 @@ main {
                <thead>              
                   <tr>
                      <th scope="col" class="th-num"><input type="checkbox" name="all" onclick="allSel(this.checked)" /></th>
-                     <th scope="col" class="th-date">제목</th>
-                     <th scope="col" class="th-date">일정 시간</th>
-                     <th scope="col" class="th-date">작성일</th>
+                     <th style="font-size:20px;" scope="col" class="th-date">제목</th>
+                     <th style="font-size:20px;" scope="col" class="th-date">일정 시간</th>
+                     <th style="font-size:20px;" scope="col" class="th-date">작성일</th>
                   </tr>
                </thead>
                <tbody>
@@ -410,9 +410,9 @@ main {
        		<table class="board-table">
           <thead>              
              <tr>                
-                <th scope="col" class="th-date">제목</th>
-                <th scope="col" class="th-date">일정</th>
-                <th scope="col" class="th-date">작성일</th>
+                <th style="font-size:20px;" scope="col" class="th-date">제목</th>
+                <th style="font-size:20px;" scope="col" class="th-date">일정</th>
+                <th style="font-size:20px;" scope="col" class="th-date">작성일</th>
              </tr>
           </thead>
           <tbody>
