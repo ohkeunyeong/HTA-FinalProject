@@ -84,6 +84,20 @@ public class JikDAO {
 	public int Like(HashMap<String, Object> map) {
 		return sqlSession.insert("Jiks.like", map);
 	}
+
+	public int dLike(HashMap<String, Object> map) {
+		return sqlSession.delete("Jiks.dlike", map);
+	}
+
+	public void LikeUp(int num) {
+		sqlSession.update("Jiks.LikeUp", num);
+	}
+
+	public void LikeDown(int num) {
+		sqlSession.update("Jiks.LikeDown", num);
+	}
+
+
 	
 	
 }

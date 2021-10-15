@@ -21,7 +21,7 @@
   <div class="container">
  	<table class="table">
  		<tr>
- 			<th colspan="2">직거래 장터</th></tr>
+ 			<th colspan="2">직거래 장터${jik_like}</th></tr>
  		<tr>
  			
  			<td colspan="2"><div id="nick"> <img width="25" class="display" src="display?fileName=${jikdata.profile}">&nbsp;&nbsp;${jikdata.nick}
@@ -43,13 +43,7 @@
  		</tr>
  	<tr>
  		<td colspan="2" class="center noborder">
- 		<c:if test="${jik_like ne 1}">
- 			<img src="../resources/image/chang/dlike.png" width="50px">
- 		</c:if>
- 		 <c:if test="${jik_like eq 1}">
- 			<img src="../resources/image/chang/like.png" width="50px">
- 		</c:if>
- 			 	<button class="btn btn-light" id="like" name="like">좋아요</button>
+ 	
  		</td>
  	</tr>
  	

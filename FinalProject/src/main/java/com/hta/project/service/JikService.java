@@ -33,6 +33,12 @@ public interface JikService {
 
 	public int like(int num, String id);
 
+	public int dlike(int num, String id);
+
+	public void LikeUp(int num);
+
+	public void LikeDown(int num);
+
 
 
 	

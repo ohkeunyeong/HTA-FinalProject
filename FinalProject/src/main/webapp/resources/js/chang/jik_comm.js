@@ -1,3 +1,71 @@
+ // $('.center.noborder')영역에 좋아요 이미지와 버튼 달리 보여주기
+function getLike(){
+	 $.ajax({
+		 url : '../jik/isLike',
+		 data : {
+			 id : $("#Loginid").val(),
+			 num : $("#jik_num").val()
+		 },
+		 type : 'post',
+		 success : function(rdata){
+			 var output="";
+			 if(rdata==1){
+				 $('.center.noborder').empty();
+				 output += "<img src='../resources/image/chang/like.png' width='50px'>"
+				 output += "<button class='btn btn-light' id='like' name='like' onclick='like();'>좋아요</button>"
+				
+			}else{
+				 $('.center.noborder').empty();
+				 output += "<img src='../resources/image/chang/dlike.png' width='50px'>"
+				 output += "<button class='btn btn-light' id='like' name='like' onclick='like();'>좋아요</button>"
+			}
+			 $('.center.noborder').html(output);
+		 }
+	 })
+}
+
+//좋아요 버튼 클릭 시 
+function like(){
+	var output="";
+	 $.ajax({
+			 url : '../jik/like',
+			 data : {
+				 id : $("#Loginid").val(),
+				 num : $("#jik_num").val()
+			 },
+			 type : 'post',
+			 success : function(rdata){
+				 if(rdata==1){
+					 $('.center.noborder').empty();
+					 output += "<img src='../resources/image/chang/like.png' width='50px'>"
+					 output += "<button class='btn btn-light' id='like' name='like' onclick='like();'>좋아요</button>"
+					 $('.center.noborder').html(output);
+				}else{
+					if(confirm("좋아요를 취소 하시겠습니까?")){
+					$.ajax({
+							url : '../jik/dlike',
+								data : {
+										id : $("#Loginid").val(),
+										num : $("#jik_num").val()
+										},
+										type : 'post',
+										success : function(rdata){
+											if(rdata==1){
+												$('.center.noborder').empty();
+												output += "<img src='../resources/image/chang/dlike.png' width='50px'>"
+												output += "<button class='btn btn-light' id='like' name='like' onclick='like();'>좋아요</button>"
+												$('.center.noborder').html(output);
+											}
+										}
+					})
+					}else{
+						return false;
+					}
+				}
+			 }
+	 })
+}
+
 function getList(currentPage,state){
 	    option=state;//현재 선택한 댓글 정렬방식을 저장합니다. 1=>등록순, 2=>최신순
 	    
@@ -217,6 +285,8 @@ $(function(){
 	option=1;
 	count = parseInt($("#count").text());
 	
+	getLike();//좋아요 이미지와 버튼 불러옵니다.
+	
 	if(count !=0){ //댓글 갯수가 0이 아니면
 		getList(1,option) // 첫 페이지의 댓글을 구해 옵니다. ( 한 페이지에 3개씩 가져옵니다.)
 	}else { //댓글이 없는 경우 
@@ -409,13 +479,13 @@ $(function(){
 		 
 	 })
 	 */
+	
+	 
 	 //좋아요 버튼 클릭 시 
-	 $('#like').on('click',function(){
+	 $('#like').click(function(){
+		 console.log("asdfasdfasdfasdfasdf")
 	 	var output="";
-		if(jik_like==1){
-			alert("이미 좋아요를 누르셨습니다.")
-		}else{
-			 $.ajax({
+		 $.ajax({
 				 url : '../jik/like',
 				 data : {
 					 id : $("#Loginid").val(),
@@ -428,13 +498,11 @@ $(function(){
 						 output += "<img src='../resources/image/chang/like.png' width='50px'>"
 						 output += "<button class='btn btn-light' id='like' name='like'>좋아요</button>"
 						
-					}//if
+					}
 					 $('.center.noborder').html(output);
 				 }
 			 })
-		}
-		 
-	 })
+		})
 	//답변달기 후 취소 버튼을 클릭한 경우
 	$('.CommentBox').on('click','.reply_cancel',function(){
 		$(this).parent().parent().parent().remove();

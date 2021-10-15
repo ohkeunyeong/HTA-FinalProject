@@ -301,19 +301,47 @@ public class JikController {
 		}
 		
 		return result;
-	}	
+	}
+	
+	@PostMapping(value= "/isLike")
+	@ResponseBody
+	public int isLike(int num, String id) {
+		int jik_like = jikService.isLike(id,num);
+		
+		return jik_like;
+	}
+	
+	@PostMapping("/like")
+	@ResponseBody
+	public int like(int num, String id){
+			int result = jikService.isLike(id, num);
+			if(result==1) {
+				return 0;
+			}else {
+				jikService.LikeUp(num);
+				return jikService.like(num,id);
+			}
+			
+	}
+	
+	@PostMapping("/dlike")
+	@ResponseBody
+	public int dlike(int num, String id){
+			int result = jikService.isLike(id, num);
+			if(result==1) {
+				jikService.LikeDown(num);
+				return jikService.dlike(num,id);
+			}else {
+				return 0;
+			}
+			
+	}
 	@GetMapping(value = "/detail")
 	public ModelAndView jik_detail(int num, String id, ModelAndView mv,
 			HttpServletRequest request) {
 		
 		Jik jik = jikService.getDetail(num,id);
-		int jik_like = jikService.isLike(id,num);
 		
-		if(jik_like == 1) {
-			mv.addObject("jik_like", 1);
-		}else {
-			mv.addObject("jik_like", 2);
-		}
 		
 		if(jik == null) {
 			logger.info("디테일 오류");
@@ -478,18 +506,7 @@ public class JikController {
 		}
 	}
 	
-	@PostMapping("/like")
-	@ResponseBody
-	public int like(int num, String id){
-			int result = jikService.isLike(id, num);
-			if(result==1) {
-				return 1;
-			}else {
-				return jikService.like(num,id);
-			}
-			
-		}
-	
+
 }	
 
 	
