@@ -33,7 +33,15 @@ public class CartDAO {
 		return sqlSession.selectOne("Carts.count", id);
 	}
 
-	public List<CartList> getCartList(Map<String, Object> map) {
-		return sqlSession.selectList("Carts.list", map);
+	public List<CartList> getCartList(String id) {
+		return sqlSession.selectList("Carts.list", id);
+	}
+
+	public int cartDelete(int cart_num) {
+		return sqlSession.delete("Carts.delete", cart_num);
+	}
+
+	public int cartSelectionDelete(Map<String, Object> map) {
+		return sqlSession.delete("Carts.selectionDelete", map);
 	}
 }

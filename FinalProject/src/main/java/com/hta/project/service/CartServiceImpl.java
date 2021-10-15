@@ -26,18 +26,25 @@ public class CartServiceImpl implements CartService{
 	}
 
 	@Override
-	public List<CartList> getCartList(String id, int page, int limit) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		int startrow = (page - 1) * limit + 1;
-		int endrow = startrow + limit - 1;
-		map.put("start", startrow);
-		map.put("end", endrow);
-		return cartdao.getCartList(map);
+	public List<CartList> getCartList(String id) {
+		return cartdao.getCartList(id);
 	}
 
 	@Override
 	public int getCartListCount(String id) {
 		return cartdao.getCartListCount(id);
+	}
+
+	@Override
+	public int cartDelete(int cart_num) {
+		return cartdao.cartDelete(cart_num);
+	}
+
+	@Override
+	public int cartSelectionDelete(int[] valueArr) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("arr", valueArr);
+		return cartdao.cartSelectionDelete(map);
 	}
 	
 }

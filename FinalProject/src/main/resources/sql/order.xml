@@ -102,5 +102,9 @@
 		where o.order_num = #{order_num}
 		and id = #{id}
 	</select>
+	
+	<insert id="insert" parameterType="order">
+		insert 
+	</insert>
  	
  </mapper>

@@ -1,11 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+	
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>주말 장터 메인</title>
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jjs/productDetailView.js"></script>
 
 <style>
 h5 {
@@ -38,7 +43,6 @@ div.goods {
 
 
 </style>
-
 <!--리뷰 목록 스크립트 -->
  <script> 
 		   function reviewList() {
@@ -72,194 +76,85 @@ div.goods {
 			 
 			 }
 			</script>
-			
+
 </head>
 <body>
-	<jsp:include page="shop_header.jsp" />
-
-    <br><br><br>    	
-    
-	<!-- 굿즈 장터 내 네비게이션 바 -->
-	<div class="container">
-		<ul class="nav nav-tabs nav-justified">
-			<li class="nav-item"><a class="nav-link active" href="home">장터홈</a>
-			</li>
-			<li class="nav-item"><a class="nav-link" href="seed">씨앗/모종</a></li>
-			<li class="nav-item"><a class="nav-link" href="soil">비료/상토</a></li>
-			<li class="nav-item"><a class="nav-link" href="pesticide">살충제</a></li>
-			<li class="nav-item"><a class="nav-link" href="tools">농기구</a></li>
-			<li class="nav-item"><a class="nav-link" href="personacon">퍼스나콘</a></li>
-			<li class="nav-item"><a class="nav-link" href="goods">굿즈</a></li>
-		</ul>
-	</div>
-
+	<jsp:include page="../../main/header.jsp" />
+		<jsp:include page="shop_nav.jsp" />
+		<div class="section1" style="width:80%; margin:auto" >
+			<span>제품 상세 > ${p.product_name}</span> 
+		</div>
+		<br><br>
+		
+		<section id="content" style="margin-top:0rem;">
+			
+		<input type="hidden" class="code" value="${p.product_code}" />
+		<input type="hidden" class="id" value="${id}" />
 	
-	<br><br><br>
-		
-		<!-- 주문 정보 입력 모달창 -->
-		<div class="modal fade" id="MainOrderInfoModal">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content">
-		      
-			        <!-- Modal Header -->
-					<div class="modal-header text-center">
-						<h2 class="modal-title">주문 정보 입력</h2>
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-					</div>
-		        
-			        <!-- Modal body -->
-			        <div class="modal-body">
-		          		<form action="MainOrderAction.ma" id="OrderForm" method="post" name="OrderFrom">
-		          			<input type="hidden" value="${user_id}" name="user_id">
-		          			<input type="hidden" value="${p.product_code}" name="product_code">
-							<!-- 수령인 -->
-							<div class="form-group text-left">
-				      			<label for="order_name">수령인</label>
-				      			<input type="text" class="form-control" id="order_name" name="order_name" placeholder="수령인 입력">
-				    		</div>
-				    			
-				    		<!-- 수령인 연락처 -->
-				    		<div class="form-group text-left">
-				      			<label for="order_phone">수령인 연락처</label>
-				      			<input type="text" class="form-control" id="order_phone" name="order_phone" placeholder="ex) 010-XXXX-XXXX">
-				    		</div>
-				    		
-				    		<!-- 우편번호 -->
-				    		<div class="form-group text-left">
-				      			<label for="order_address1">우편번호</label>
-				      			<div class="input-group">
-				      				<input type="text" class="form-control" id="order_address1" name="order_address1" readOnly>
-				      				<input type="button" class="btn btn-info" id="postsearchbtn" value="주소 검색">
-				      			</div>
-				    		</div>
-				    		
-				    		<!-- 주소 -->
-				    		<div class="form-group text-left">
-				      			<label for="order_address2">주소</label>
-				      			<input type="text" class="form-control" id="order_address2" name="order_address2" readOnly>
-				    		</div>
-				    		
-				    		<!-- 상세 주소 -->
-				    		<div class="form-group text-left">
-				      			<label for="order_address3">상세 주소</label>
-				      			<input type="text" class="form-control" id="order_address3" name="order_address3" placeholder="상세주소 입력">
-				    		</div>
-				    		
-				    		<!-- 결제 방식 -->
-				    		<div class="form-group text-center">
-				      			<div><h4>결제 방식</h4></div>
-								<div class="form-check-inline">
-									<label class="form-check-label" for="creditcardPayment">
-										<input type="radio" class="form-check-input" id="creditcardPayment" name="order_payment" value="카드결제">카드결제
-									</label>
-								</div>
-							    <div class="form-check-inline">
-									<label class="form-check-label" for="phonePayment">
-										<input type="radio" class="form-check-input" id="phonePayment" name="order_payment" value="휴대전화">휴대전화
-									</label>
-								</div>
-								<div class="form-check-inline">
-									<label class="form-check-label" for="accountPayment">
-										<input type="radio" class="form-check-input" id="accountPayment" name="order_payment" value="계좌이체">계좌이체
-									</label>
-								</div>
-								<div class="form-check-inline">
-									<label class="form-check-label" for="samsungpayPayment">
-										<input type="radio" class="form-check-input" id="samsungpayPayment" name="order_payment" value="삼성페이">삼성페이
-									</label>
-								</div>
-				    		</div>
-				    		
-				    		<!-- 총 결제 금액 -->
-				    		<div class="form-group text-left">
-				      			<p style="font-size : 30px;" class="text-center">총 결제 금액 : <span style="font-size : 30px;" class="total_price"></span></p>
-				    		</div>
-						   
-							<!-- 버튼 -->
-							<div class="text-right">
-								<button type="submit" class="btn btn-primary">주문</button>
-								<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-							</div>
-						</form>
-					</div>
-				</div>
+		<div class="goods">
+			<div class="goodsImg">
+				<img src="${pageContext.request.contextPath}/resources/upload${p.product_img}">
+			</div>
+	
+		<div class="container goodsInfo p-3 border">
+			<div class="goodsInfo">
+			
+				<p class="gdsName">
+					<span>상품명  </span>${p.product_name}</p>
+	
+				<p class="cateName">
+					<span>카테고리  </span>${p.category_name}</p>
+	
+				<p class="gdsPrice">
+					<span>가격 </span>
+					<fmt:formatNumber pattern="###,###,###" value="${p.product_price}" />
+					원
+				</p>
+	
+				<p class="cartStock">
+				 <span>구입 수량</span>
+				 <button type="button" class="plus">+</button>
+				 <input type="number" class="numBox" min="1" max="100" value="1" readonly="readonly"/>
+				 <button type="button" class="minus">-</button>
+				 
+				 <script>
+				  $(".plus").click(function(){
+				   var num = $(".numBox").val();
+				   var plusNum = Number(num) + 1;
+				   
+				   if(plusNum >= 100) {
+				    $(".numBox").val(num);
+				   } else {
+				    $(".numBox").val(plusNum);          
+				   }
+				  });
+				  
+				  $(".minus").click(function(){
+				   var num = $(".numBox").val();
+				   var minusNum = Number(num) - 1;
+				   
+				   if(minusNum <= 0) {
+				    $(".numBox").val(num);
+				   } else {
+				    $(".numBox").val(minusNum);          
+				   }
+				  });
+				 </script>
+				 
+				</p>
+				
+				<br>
+				<p class="addToCart" style="padding-right:70%">
+					<button type="button" class="btn btn-warning" id="cartbtn">카트에 담기</button>
+				</p>
 			</div>
 		</div>
 		
-		<!-- 주문 오류 모달창 -->
-		<div class="modal hide fade" id="productOrderModal">
-			<div class="modal-dialog modal-sm modal-dialog-centered">
-				<div class="modal-content">
-		      
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<h4 class="modal-title">상품 주문</h4>
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-					</div>
-		        
-					<!-- Modal body -->
-					<div class="modal-body">
-					  <h4>로그인 후 구매 해주십시오.</h4>
-					</div>
-		        
-					<!-- Modal footer -->
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary productOrderErrorBtn">확인</button>
-					</div>
-		        
-				</div>
-			</div>
+		<div class="gdsDes">${p.product_detail}</div>
 		</div>
-		
-		<!-- 주문 정보 입력 오류 모달창 -->
-		<div class="modal hide fade" id="DetailOrderInfoErrorModal">
-			<div class="modal-dialog modal-sm modal-dialog-centered">
-				<div class="modal-content">
-		      
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<h4 class="modal-title" id="DetailOrderInfoErrorModal-Title"></h4>
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-					</div>
-		        
-					<!-- Modal body -->
-					<div class="modal-body" id="DetailOrderInfoErrorModal-body">
-					  
-					</div>
-		        
-					<!-- Modal footer -->
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
-					</div>
-		        
-				</div>
-			</div>
-		</div>
-		
-		<!-- 장바구니 담기 오류 모달창 -->
-		<div class="modal hide fade" id="CartErrorModal">
-			<div class="modal-dialog modal-sm modal-dialog-centered">
-				<div class="modal-content">
-		      
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<h4 class="modal-title">장바구니 담기</h4>
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-					</div>
-		        
-					<!-- Modal body -->
-					<div class="modal-body">
-					  <h4>로그인 후 담아주세요.</h4>
-					</div>
-		        
-					<!-- Modal footer -->
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" id="cartErrorBtn">확인</button>
-					</div>
-		        
-				</div>
-			</div>
-		</div>
+	
+	
+			<div id="review">
 		
 		 <c:if test="${id == null }"> <!-- 세션아이디 = id -->
 		  <p>리뷰를 남기시려면 <a id="shop_login" style="color:blue">로그인</a>해주세요</p>
@@ -314,63 +209,31 @@ div.goods {
 		 <section class="reviewList">
 		  <ol>
 		   <li>댓글 목록</li>
-		   </ol>
-		   
-		   <script>
+		   </ol>    
+		    <script>
 		   reviewList();
 		   </script>
-		  
-    
 		 </section>
-		<!-- 장바구니 담기 실패 오류 모달창 -->
-		<div class="modal hide fade" id="CartAddErrorModal">
-			<div class="modal-dialog modal-sm modal-dialog-centered">
-				<div class="modal-content">
-		      
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<h4 class="modal-title">장바구니 담기</h4>
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-					</div>
-		        
-					<!-- Modal body -->
-					<div class="modal-body">
-					  <h4>장바구니 담기 실패했습니다.</h4>
-					</div>
-		        
-					<!-- Modal footer -->
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
-					</div>
-		        
-				</div>
-			</div>
 		</div>
-		
-		<!-- 장바구니 담기 확인 모달창 -->
-		<div class="modal hide fade" id="CartAddConfirmModal">
-			<div class="modal-dialog modal-sm modal-dialog-centered">
-				<div class="modal-content">
-		      
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<h4 class="modal-title">장바구니 담기</h4>
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-					</div>
-		        
-					<!-- Modal body -->
-					<div class="modal-body CartAddConfirmModal_body">
-						
-					</div>
-		        
-					<!-- Modal footer -->
-					<div class="modal-footer">
-						<a type="button" class="btn btn-primary" href="javascript:location.href='MainCartView.ma?user_id=${user_id}';">장바구니로 </a>
-						<button type="button" class="btn btn-info" data-dismiss="modal">계속 쇼핑</button>
-					</div>
-		        
-				</div>
-			</div>
-		</div>
-	</body>
+	</section>
+	
+	<script>
+	$("#shop_login").click(function(){
+		$.ajax({
+			url : "member/login",
+			type : "post",
+			success : function(data){
+				console.log(data.saveid);
+				if(data.saveid != null){
+					$('#id').val(data.saveid);
+					$('#remember').prop('checked', true);
+				}
+			}
+		})
+		$("#loginModal").modal({backdrop : 'static', keyboard: false});
+	});
+	</script>	
+	<jsp:include page="shopModal.jsp" />
+	<jsp:include page="../../main/footer.jsp" />
+</body>
 </html>

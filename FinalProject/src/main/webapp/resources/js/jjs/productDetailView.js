@@ -1,25 +1,4 @@
 $(function(){
-	$('.plus').click(function(){
-		var num = $(".order_de_count").val();
-		var plusNum = Number(num) + 1;
-		   
-		if(plusNum >= 1000) {
-			$(".order_de_count").val(num);
-		}else{
-			$(".order_de_count").val(plusNum);       
-		}
-	});
-		  
-	$(".minus").click(function(){
-		var num = $(".order_de_count").val();
-		var minusNum = Number(num) - 1;
-		   
-		if(minusNum <= 0) {
-			$(".order_de_count").val(num);
-		} else {
-			$(".order_de_count").val(minusNum);          
-		}
-	});
 	
 	// 다음 우편 검색 API
 	$('#postsearchbtn').click(function(){
@@ -128,8 +107,8 @@ $(function(){
 	
 	// 장바구니 담기 버튼 클릭시
 	$('#cartbtn').click(function(){
-		var user_id = $('.checkid').val();
-		var product_code = $('.product_code').val();
+		var user_id = $('.id').val();
+		var product_code = $('.code').val();
 		if(user_id == ''){
 			$('#CartErrorModal').modal('show');
 			$("#cartErrorBtn").click(function(){
@@ -145,8 +124,8 @@ $(function(){
 				url : "/project/cart/add",
 				type : 'post',
 				data : {product_code : product_code, 
-						user_id : user_id,
-						order_de_count : $('.order_de_count').val()
+						id : user_id,
+						order_de_count : $('.numBox').val()
 					   },
 				success : function(data){
 					console.log(data);

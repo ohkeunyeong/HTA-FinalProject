@@ -9,20 +9,33 @@
 		values(cart_seq.nextval, #{product_code}, #{id}, #{order_de_count})
 	</insert>
 	
-	<select id="list" resultType="cart" parameterType="map">
-		select *
-		from (select rownum rnum, c.*
-			  from (select *
-			  		from cart
-			  		order by add_date desc) c
-			 )
-		where rnum &gt;= #{start} and rnum &lt;= #{end}
+	<select id="list" resultType="cartlist" parameterType="map">
+		select c.cart_num, c.id, c.product_code, c.order_de_count,
+			   c.add_date, p.product_name, p.product_price, p.product_img
+		from cart c, product p
+		where c.product_code = p.product_code
+		and c.id = #{id}
+		order by c.cart_num
 	</select>
 	
-	<select id="count" resultType="int" parameterType="int">
+	<select id="count" resultType="int" parameterType="String">
 		select count(*)
 		from cart
-		where id = ${id}
+		where id = #{id}
 	</select>
+	
+	<delete id="delete" parameterType="int">
+		delete cart
+		where cart_num = #{cart_num}
+	</delete>
+	
+	<delete id="selectionDelete" parameterType="map">
+		delete cart
+		where cart_num in
+		<foreach item="item" collection="arr" 
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
 	
 </mapper>

@@ -63,6 +63,10 @@
 		<level value="trace" />
 	</logger>
 	
+	<logger name="Carts">
+		<level value="trace" />
+	</logger>
+	
 	<logger name="Nong_Cos">
 		<level value="trace" />
 	</logger>

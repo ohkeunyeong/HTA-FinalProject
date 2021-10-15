@@ -153,7 +153,7 @@ $(function(){
 	
 	function deleteValue(){
 		 var valueArr = new Array();
-		 var user_id = $('.checkUser_id').val();
+		 var id = $('.id').val();
 		 var list = $("input[name='RowCheck']");
 		 for(var i = 0; i < list.length; i++){
 			 if(list[i].checked){
@@ -169,13 +169,13 @@ $(function(){
 			 $("#cartmodaldelbtn").click(function(){
 				 $("#CartDeleteModal").modal('hide');
 				 $.ajax({
-					url : 'MainCartSelectionDelete.ma',
+					url : 'selectionDelete',
 					type : 'post',
 					traditional : true,
-					data : {valueArr : valueArr, user_id : user_id},
+					data : {valueArr : valueArr, id : id},
 					success : function(data){
 						if(data == valueArr.length){
-							location.href="MainCartView.ma?user_id=" + user_id;
+							location.href="list?user_id=" + id;
 						}else{
 							$("#CartSelectionDeleteFailModal").modal('show');
 						}
@@ -191,17 +191,17 @@ $(function(){
 	
 	// 장바구니 삭제 부분
 	function cartDelete(cart_num){
-		var user_id = $(".checkUser_id").val();
+		var id = $(".id").val();
 		$('#CartDeleteModal').modal('show');
 		$('#cartmodaldelbtn').click(function(){
 			$('#CartDeleteModal').modal('hide');
 			$.ajax({
-				url : "MainCartDeleteAction.ma",
+				url : "cartDelete",
 				type : 'post',
-				data : {cart_num : cart_num, user_id : user_id},
+				data : {cart_num : cart_num, id : id},
 				success : function(data){
 					if(data == 1){
-						location.href="MainCartView.ma?user_id=" + user_id;
+						location.href="list?user_id=" + id;
 					}else{
 						$('#ErrorModal').modal('show');
 						$('#ErrorModal-Title').text('장바구니');
