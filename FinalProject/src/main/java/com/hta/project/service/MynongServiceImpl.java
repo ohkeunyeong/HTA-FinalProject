@@ -101,6 +101,9 @@ public class MynongServiceImpl implements MynongService {
 	@Override
 	public int checkmyfarm(String id) {
 		String pan = dao.checkmyfarm(id);
+		if(pan == null) {
+			pan ="0";
+		}
 		System.out.println("check farm은 " + pan);
 		int ck = 0; //MY_FARM 값이 0인 경우
 		if (pan.equals("1")) {//관리자
@@ -109,6 +112,8 @@ public class MynongServiceImpl implements MynongService {
 			ck = 2;
 		} else if (pan.equals("3")){//가입대기멤버
 			ck = 3;
+		} else if (pan.equals("0")){//내농장 없는 멤버
+			ck = 0;
 		}
 		return ck;
 	}
@@ -150,6 +155,22 @@ public class MynongServiceImpl implements MynongService {
 	@Override
 	public void deletenong(String name) {
 		dao.deletenong(name);
+	}
+
+
+	@Override
+	public int getSerachListAdminCount(String id, String name) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", name);
+		map.put("id", id);
+		return dao.getSerachListAdminCount(map);
+	}
+
+
+	@Override
+	public void okinvite(String id) {
+		dao.okinvite(id);
+		
 	}
 	
 

@@ -13,8 +13,20 @@
    body > div > table > thead > tr:nth-child(2) > th:nth-child(3){width:14%}
    body > div > table > thead > tr:nth-child(2) > th:nth-child(4){width:17%}
    body > div > table > thead > tr:nth-child(2) > th:nth-child(5){width:11%}
+
+form{margin: 0 auto; width:80%; text-align: center}
+select{
+	color: #495057;
+	background-color: #fff;
+	background-clip: padding-box;
+	border : 1px solid #ced4da;
+	border-radius: .25rem;
+	transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	outline:none;
+}
+.input-group{ display : block;}
  </style>
-<script src="../resources/js/chang/list.js"></script>
+<script src="../resources/js/chang/list2.js"></script>
   	<script>
 	if('${result}'=='deleteSuccess'){
 		alert("글 삭제 성공")
@@ -42,7 +54,7 @@
   <table class="table table-striped">
    <thead>
 	<tr>
-	   <th colspan="3">MVC 게시판 - list</th>
+	   <th colspan="3">직거래 장터</th>
 	   <th colspan="2">
 			<font size=3>글 개수 : ${listcount}</font>
 	   </th>
@@ -78,7 +90,7 @@
 	  </c:forEach>
 	 </tbody>	
 	</table>
-		
+		<br>
 	<div class="center-block">
 		  <ul class="pagination justify-content-center">		
 			 <c:if test="${page <= 1 }">
@@ -126,7 +138,19 @@
 <c:if test="${listcount == 0 }">
 	<font size=5>등록된 글이 없습니다.</font>
 </c:if>
-
+<br>
+          <form  method="get" action="" name="search">
+             <div class="input-group">
+ 				<select name="searchType" id="searchType">
+					<option value="0" selected>제목+내용</option>
+					<option value="1">제목</option>
+					<option value="2">내용</option>
+					<option value="3">글쓴이</option>
+                </select>
+                <input type="text" placeholder="검색어를 입력해주세요." name="search" id="search">
+                <input type="button" id="searchbtn" class="btn" value="검색">
+              </div>
+           </form>
 <button type="button" class="btn btn-info float-right">글 쓰 기</button>
 </div>
 </body>

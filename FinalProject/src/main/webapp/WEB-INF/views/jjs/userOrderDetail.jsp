@@ -53,8 +53,7 @@ hr, footer {
 					<td>${orderdetail.order_num}</td>
 					<td>${orderdetail.order_name}</td>
 					<td>${orderdetail.order_phone}</td>
-					<c:set var="user_address1" value="${fn:substring(orderdetail.user_address1,0,3)}-${fn:substring(orderdetail.user_address1,3,6)}" />
-					<td>(${user_address1}) ${orderdetail.user_address2}</td>
+					<td>(${orderdetail.user_address1}) ${orderdetail.user_address2}</td>
 				</tr>
 			</thead>
 			<tbody>

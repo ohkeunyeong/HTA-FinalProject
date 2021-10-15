@@ -15,7 +15,7 @@ public class Cart {
 	private int cart_num; 	
 	private String id;  	 //member id	
 	private int order_de_count;  	
-	private Date add_date;								
+	private Date add_date;			
 	
 	public String getProduct_code() {
 		return product_code;
@@ -89,9 +89,5 @@ public class Cart {
 	public void setCart_num(int cart_num) {
 		this.cart_num = cart_num;
 	}
-	
-	
-	
-	
 	
 }

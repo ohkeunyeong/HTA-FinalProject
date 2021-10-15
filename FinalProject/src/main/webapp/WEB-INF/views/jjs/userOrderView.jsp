@@ -39,8 +39,7 @@
 								</div>
 							<td>
 								<div>
-									<c:set var="user_address1" value="${fn:substring(o.user_address1,0,3)}-${fn:substring(o.user_address1,3,6)}"></c:set>
-									<span>${user_address1} ${o.user_address2}</span>
+									<span>${orderdetail.user_address1} ${o.user_address2}</span>
 								</div>
 							<td>
 								<div>

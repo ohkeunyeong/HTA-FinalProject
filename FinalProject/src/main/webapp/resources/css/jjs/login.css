@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.main-loginFrom{
+	width : 500px;
+	margin : 8% auto 5% auto;
+	border: 1px solid gray;
+	padding : 30px;
+	border-radius: 5px;
+}

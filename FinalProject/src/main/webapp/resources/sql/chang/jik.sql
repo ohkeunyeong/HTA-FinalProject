@@ -17,6 +17,20 @@ INSERT INTO jik
  			 jik_content, jik_file, jik_original,
  			 jik_readcount,jik_date)
  			VALUES
- 			(1,'asd','asd','asd','asd','asd',1,sysdate)
+ 			(55,'asd','asd','gg','asd','asd',1,sysdate)
 select * from jik;
+
+select * from jik
+where (jik_subject || jik_content) like '%g%'
+
+
+select * from 
+( select ROWNUM RNUM, b.* 
+from (select jik.*, nvl(cnt,0) cnt 
+from jik left outer join 
+(select jik_board_num, count(*) cnt from jik_comm group by jik_board_num) c 
+on c.jik_board_num=jik.jik_num order by jik_num desc) b ) 
+where RNUM>= 10 and RNUM <= 1 
+and jik_content like %d% 
+
 drop table jik cascade constraints;

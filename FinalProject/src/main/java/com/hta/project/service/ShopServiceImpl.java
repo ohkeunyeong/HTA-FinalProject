@@ -30,14 +30,8 @@ public class ShopServiceImpl implements ShopService{
 
 
 	@Override
-	public int getProductListCount(int index, String search_word) {
-		Map<String, String> map = new HashMap<String, String>();
-		if(index != -1) {
-			String[] search_field = new String[] {"product_name", "product_code", "category_name"};
-			map.put("search_field", search_field[index]);
-			map.put("search_word", "%" + search_word + "%");
-		}
-		return dao.getProductListCount(map);
+	public int getProductListCount() {
+		return dao.getProductListCount();
 	}
 
 	@Override
@@ -68,14 +62,9 @@ public class ShopServiceImpl implements ShopService{
 	}
 
 	@Override
-	public List<Product> getProductList(int index, String search_word, int page, int limit) {
+	public List<Product> getProductList(int page, int limit) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		if(index != -1) {
-			String[] search_field = new String[] {"product_name", "product_code", "category_name"};
-			map.put("search_field", search_field[index]);
-			map.put("search_word", "%" + search_word + "%");
-		}
 		int startrow = (page - 1) * limit + 1;
 		int endrow = startrow + limit - 1;
 		map.put("start", startrow);

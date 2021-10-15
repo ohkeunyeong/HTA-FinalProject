@@ -25,6 +25,10 @@ public interface JikService {
 
 	public Jik getDetail2(int num);
 
+	public List<Jik> getJikListSearchList(int page, int limit, int type, String search);
+
+	public int getSearchListCount(int type, String search);
+
 
 
 	

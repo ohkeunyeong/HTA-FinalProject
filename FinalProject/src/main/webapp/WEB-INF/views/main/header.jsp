@@ -15,23 +15,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="/project/resources/js/jjs/header.js"></script> <!-- 절대주소로 변경 -->
-<script>
-	$(function(){
-		if('${result}' == '-1'){
-			$('#loginFailModal').modal({backdrop: 'static', keyboard: false});
-			$('#loginFailModal-body').html("<h4>아이디가 존재하지 않습니다.</h4>");
-		}
-		
-		if('${result}' == '0'){
-			$('#loginFailModal').modal({backdrop: 'static', keyboard: false});
-			$('#loginFailModal-body').html("<h4>비밀번호를 틀렸습니다.</h4>");
-		}
-	});
-</script>
-
-
-
-
 </head>
 <body>
 
@@ -48,7 +31,7 @@
 			<li class="nav-item dropdown active" style="padding-left: 4%">
 			<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 내 농장 </a>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/calprocess?id=${id}">캘린더</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/accprocess?id=${id}">가계부</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/nongprocess?id=${id}">멤버게시판</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/createmynong">농장생성</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/mynongprocess?id=${id}">농장관리</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/calprocess?id=${id}">캘린더</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/accprocess?id=${id}">가계부</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/nongprocess?id=${id}">멤버게시판</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/mynongprocess?id=${id}">농장관리</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/createmynong">농장생성</a>
 				</div></li>
 
 			<!-- Dropdown -->
@@ -72,7 +55,9 @@
 			<!-- Dropdown -->
 			<li class="nav-item dropdown active" style="padding-left: 4%"><a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 고객 센터 </a>
 				<div class="dropdown-menu">
-				   <a class="dropdown-item" href="#">공지사항</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/faq">FAQ</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/emailprocess?id=${id}">메일문의</a> 
+				   <a class="dropdown-item" href="${pageContext.request.contextPath}/notice/noticeList">공지사항</a> 
+				   <a class="dropdown-item" href="${pageContext.request.contextPath}/faq">FAQ</a> 
+				   <a class="dropdown-item" href="${pageContext.request.contextPath}/emailprocess?id=${id}">메일문의</a> 
 				</div></li>
 
 		</ul>
@@ -89,10 +74,10 @@
     			
 				<!-- Links -->
 				<li class="nav-item active">
-					<a class="nav-link" href="cart">장바구니</a>
+					<a class="nav-link" href="${pageContext.request.contextPath}/cart">장바구니</a>
 				</li>
 				<li class="nav-item active">
-					<a class="nav-link" id="login">로그인</a>
+					<a class="nav-link" href="${pageContext.request.contextPath}/member/login">로그인</a>
 				</li>
 				<li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/member/join">회원가입</a></li>
 			</c:if>
@@ -111,7 +96,7 @@
 				<c:if test="${id != 'admin' }">
 							<li class="nav-item dropdown active" style="padding-left: 4%"><a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 마이페이지</a>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/member/update">정보수정</a> <a class="dropdown-item" href="#">게시글덧글관리</a> <a class="dropdown-item" href="#">구매관리</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/member/update">정보수정</a> <a class="dropdown-item" href="#">게시글덧글관리</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/member/userOrderView">구매관리</a>
 				</div></li>
 				</c:if>
 			</c:if>
@@ -120,7 +105,6 @@
 	</nav>
 	<br>
 	
-	<jsp:include page="../main/modal/login.jsp"/>
 
 </body>
 </html>

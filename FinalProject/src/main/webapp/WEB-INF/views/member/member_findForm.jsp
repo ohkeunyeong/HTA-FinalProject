@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
     <title>ID/PW찾기</title>
-<jsp:include page="header.jsp" /> 
+<jsp:include page="../main/header.jsp" /> 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>   
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/oky/find.css"></link>  
 <script>

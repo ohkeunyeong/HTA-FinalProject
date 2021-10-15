@@ -87,6 +87,15 @@ public class MynongDAO {
 		sqlSession.delete("Mynong.deletenong", name);
 	}
 
+	public int getSerachListAdminCount(Map<String, Object> map) {
+		return sqlSession.selectOne("Mynong.searchAdminCount", map);
+	}
+
+	public void okinvite(String id) {
+		sqlSession.update("Mynong.okinvite", id);
+		
+	}
+
 
 
 
