@@ -111,7 +111,7 @@
 </script>
 </head>
 <body>
-
+<br><br><br>
 	<form name="joinform" action="joinProcess" method="post"  enctype="multipart/form-data">
 		<h1>회원가입 페이지</h1>
 		<hr>

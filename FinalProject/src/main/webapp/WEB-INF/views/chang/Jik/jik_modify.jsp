@@ -6,7 +6,7 @@
 	<jsp:include page="../../main/header.jsp" />
 	<script src="../resources/js/chang/modifyform.js"></script>
 	<style>
-	.container{width:60%}
+	.container{width:60%} 
 	h1{font-sie:1.5rem; text-align:center; color:#1a92b9}
 	#upfile{display:none}
 	</style>

@@ -11,7 +11,7 @@
 	<select id="insert" parameterType="member">
  			INSERT INTO member
  			VALUES
- 			 (#{id},#{pass},#{name},#{nick},#{mail},#{tel}, '0', #{persnacon}, 0, '')
+ 			 (#{id},#{pass},#{name},#{nick},#{mail},#{tel}, '0', #{persnacon},#{original}, 0, '')
  	</select>
  	
 	<select id="count" resultType="int">

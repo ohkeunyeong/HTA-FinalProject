@@ -48,6 +48,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hta.project.domain.Jik;
+import com.hta.project.domain.Jik_Like;
 import com.hta.project.domain.Nong;
 import com.hta.project.service.JikService;
 import com.hta.project.service.Jik_CommService;
@@ -84,6 +85,7 @@ public class JikController {
 	}
 
 	
+	//파일 다중 업로드
 	@ResponseBody
 	@RequestMapping(value = "/file-upload", method = RequestMethod.POST)
 	public String fileUpload(
@@ -130,6 +132,7 @@ public class JikController {
 		}
 		return strResult;
 	}
+	
 	@PostMapping("/add")
 	
 	public String add(Jik jik, HttpServletRequest request)
@@ -278,6 +281,7 @@ public class JikController {
 		 return null;
 		 //매핑잘되면 -> 로그 -> 아까 코드 
 	 }*/
+
 	@GetMapping("/display")
 	public ResponseEntity<byte[]> getImage(String fileName){
 		File file = new File(saveFolder+ fileName);
@@ -297,14 +301,19 @@ public class JikController {
 		}
 		
 		return result;
-	}
-	
-	
+	}	
 	@GetMapping(value = "/detail")
 	public ModelAndView jik_detail(int num, String id, ModelAndView mv,
 			HttpServletRequest request) {
 		
 		Jik jik = jikService.getDetail(num,id);
+		int jik_like = jikService.isLike(id,num);
+		
+		if(jik_like == 1) {
+			mv.addObject("jik_like", 1);
+		}else {
+			mv.addObject("jik_like", 2);
+		}
 		
 		if(jik == null) {
 			logger.info("디테일 오류");
@@ -317,12 +326,12 @@ public class JikController {
 			mv.setViewName("chang/Jik/jik_view2");
 			mv.addObject("count", count);
 			mv.addObject("jikdata", jik);
-			mv.addObject("resourceFolder", resourceFolder);
 		}
 		return mv;
 		
 	}
 	
+
 	
 	@GetMapping("/modifyView")
 	public ModelAndView jikmodifyView(int num, ModelAndView mv,
@@ -469,6 +478,17 @@ public class JikController {
 		}
 	}
 	
+	@PostMapping("/like")
+	@ResponseBody
+	public int like(int num, String id){
+			int result = jikService.isLike(id, num);
+			if(result==1) {
+				return 1;
+			}else {
+				return jikService.like(num,id);
+			}
+			
+		}
 	
 }	
 

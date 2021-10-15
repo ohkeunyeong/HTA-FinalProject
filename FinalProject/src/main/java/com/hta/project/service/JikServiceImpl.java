@@ -112,6 +112,22 @@ public class JikServiceImpl implements JikService{
 		return dao.getSearchListCount(map);
 	}
 
+	@Override
+	public int isLike(String id, int num) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("num", num);
+		return dao.isLike(map);
+	}
+
+	@Override
+	public int like(int num, String id) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("num", num);
+		return dao.Like(map);
+	}
+
 
 
 }

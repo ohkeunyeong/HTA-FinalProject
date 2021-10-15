@@ -3,7 +3,9 @@ package com.hta.project.controller;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -20,9 +22,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -77,7 +83,26 @@ public class MemberController {
 		return "member/member_joinForm";
 	}
 	
-
+	@GetMapping("/display")
+	public ResponseEntity<byte[]> getImage(String fileName){
+		File file = new File(saveFolder+ fileName);
+		logger.info(fileName);
+		ResponseEntity<byte[]> result = null;
+		
+		try {
+			
+			HttpHeaders header = new HttpHeaders();
+			
+			header.add("Content-type", Files.probeContentType(file.toPath()));
+			
+			result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+			
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 	
 	@RequestMapping(value="/idcheck", method = RequestMethod.GET)
 	public void idcheck(String id, HttpServletResponse response) throws Exception {
@@ -102,7 +127,7 @@ public class MemberController {
 		
 		if (!uploadfile.isEmpty()) {
 			String fileName = uploadfile.getOriginalFilename();
-			
+			member.setPersnacon(fileName);
 			
 			String fileDBName = fileDBName(fileName, saveFolder);
 			logger.info("fileDBName =" + fileDBName);
@@ -111,9 +136,11 @@ public class MemberController {
 			uploadfile.transferTo(new File(saveFolder + fileDBName));
 			
 		
-			member.setPersnacon(fileName);
+			member.setOriginal(fileDBName);
 		}else {
+			String fileDBName = "/"+"profile.png";
 			member.setPersnacon("profile.png");
+			member.setOriginal(fileDBName);
 		}
 		
 		int result = memberService.insert(member);

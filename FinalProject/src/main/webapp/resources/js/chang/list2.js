@@ -114,4 +114,13 @@ $(function() {
 	$(document).keypress(function(e) { //엔터키 방지
 		if (e.keyCode == 13) e.preventDefault(); 
 		});
+	
+	 $("button").click(function(){
+		 if($("#Loginid").val()!=null || $("#Loginid").val()!=""){ 
+			location.href="write";
+			console.log("아이디:"+$("#Loginid").val());
+		 }else{
+			alert("로그인 시 가능합니다.")
+		 }
+	 })
 })   

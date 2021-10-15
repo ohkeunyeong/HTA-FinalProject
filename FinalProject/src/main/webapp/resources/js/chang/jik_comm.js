@@ -409,6 +409,32 @@ $(function(){
 		 
 	 })
 	 */
+	 //좋아요 버튼 클릭 시 
+	 $('#like').on('click',function(){
+	 	var output="";
+		if(jik_like==1){
+			alert("이미 좋아요를 누르셨습니다.")
+		}else{
+			 $.ajax({
+				 url : '../jik/like',
+				 data : {
+					 id : $("#Loginid").val(),
+					 num : $("#jik_num").val()
+				 },
+				 type : 'post',
+				 success : function(rdata){
+					 if(rdata==1){
+						 $('.center.noborder').empty();
+						 output += "<img src='../resources/image/chang/like.png' width='50px'>"
+						 output += "<button class='btn btn-light' id='like' name='like'>좋아요</button>"
+						
+					}//if
+					 $('.center.noborder').html(output);
+				 }
+			 })
+		}
+		 
+	 })
 	//답변달기 후 취소 버튼을 클릭한 경우
 	$('.CommentBox').on('click','.reply_cancel',function(){
 		$(this).parent().parent().parent().remove();
