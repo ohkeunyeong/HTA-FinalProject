@@ -16,7 +16,7 @@ public class Jik {
 	private String jik_original;
 	private MultipartFile uploadfile;
 	private int cnt;
-	private String p;
+	private String profile;
 	
 	public int getJik_num() {
 		return jik_num;
@@ -90,11 +90,11 @@ public class Jik {
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
 	}
-	public String getP() {
-		return p;
+	public String getProfile() {
+		return profile;
 	}
-	public void setP(String p) {
-		this.p = p;
+	public void setProfile(String profile) {
+		this.profile = profile;
 	}
 
 

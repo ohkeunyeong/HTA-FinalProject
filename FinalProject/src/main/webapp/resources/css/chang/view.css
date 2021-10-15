@@ -46,7 +46,12 @@ textarea.form-control {
 	margin-right: 12px;
 	font-size: 17px;
 }
-
+.center{
+	text-align: center;
+}
+.center.noborder{
+	border-top: none;
+}
 .CommentBox .comment_option .comment_tab .comment_tab_list {
 	display: inline-block;
 	margin-top: 4px;

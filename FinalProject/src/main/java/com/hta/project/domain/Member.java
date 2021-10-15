@@ -14,6 +14,7 @@ public class Member {
 	private int point;
 	private String mynong_name;
 	private MultipartFile uploadfile;
+	private String original;
 	
 	public String getId() {
 		return id;
@@ -101,6 +102,14 @@ public class Member {
 
 	public void setUploadfile(MultipartFile uploadfile) {
 		this.uploadfile = uploadfile;
+	}
+
+	public String getOriginal() {
+		return original;
+	}
+
+	public void setOriginal(String original) {
+		this.original = original;
 	}
 
 }

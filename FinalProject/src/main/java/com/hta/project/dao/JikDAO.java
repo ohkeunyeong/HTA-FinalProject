@@ -76,6 +76,14 @@ public class JikDAO {
 	public int getSearchListCount(HashMap<String, Object> map) {
 		return sqlSession.selectOne("Jiks.count2",map);
 	}
+
+	public int isLike(HashMap<String, Object> map) {
+		return sqlSession.selectOne("Jiks.isLike",map);
+	}
+
+	public int Like(HashMap<String, Object> map) {
+		return sqlSession.insert("Jiks.like", map);
+	}
 	
 	
 }

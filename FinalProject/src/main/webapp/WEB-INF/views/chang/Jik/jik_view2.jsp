@@ -14,16 +14,17 @@
   <input type="hidden" id="Jik_id" value="${jikdata.jik_id}" name="Jik_id">
   <input type="hidden" id="jik_subject" value="${jikdata.jik_subject}">
   <input type="hidden" id="jik_content" value="${jikdata.jik_content}" >
+  <input type="hidden" id="jik_like" value="${jik_like}">
   <br><br><br><br><br><br><br><br><br><br>
   
 
   <div class="container">
- 	<table class="table table-striped">
+ 	<table class="table">
  		<tr>
  			<th colspan="2">직거래 장터</th></tr>
  		<tr>
  			
- 			<td colspan="2"><div id="nick"> <img  src="${pageContext.request.contextPath}/resources/image/chang/${jikdata.p}" alt="프로필 사진" width="25px">&nbsp;&nbsp;${jikdata.nick}
+ 			<td colspan="2"><div id="nick"> <img width="25" class="display" src="display?fileName=${jikdata.profile}">&nbsp;&nbsp;${jikdata.nick}
  							<a href="#" class="report_button" onclick=" window.open('../jik/report', '신고하기', 'width=500, height=700, scrollbars=no, resizable=no')">신고하기</a>
  			</div></td>
  		</tr>
@@ -33,30 +34,41 @@
  		<tr>
  			<td colspan="2" style="padding-right:0px">	
  			<div contentEditable="false" >
+ 			<c:if test="${!empty jikdata.jik_file}">
  			<img width="90" height="90" class="display" src="display?fileName=${jikdata.jik_file}">
+ 			</c:if>
  			${jikdata.jik_content}
- 			${resourceFolder}
  			</div>
  			</td>
  		</tr>
- 		
+ 	<tr>
+ 		<td colspan="2" class="center noborder">
+ 		<c:if test="${jik_like ne 1}">
+ 			<img src="../resources/image/chang/dlike.png" width="50px">
+ 		</c:if>
+ 		 <c:if test="${jik_like eq 1}">
+ 			<img src="../resources/image/chang/like.png" width="50px">
+ 		</c:if>
+ 			 	<button class="btn btn-light" id="like" name="like">좋아요</button>
+ 		</td>
+ 	</tr>
  	
- 		<tr>
+ 	 	<tr>
  			<td><div>첨부파일</div></td>
  		<c:if test="${!empty jikdata.jik_file}"><%--파일 첨부한 경우 --%>
- 		<td><img src="../resources/image/chang/down.png" width="10px">
- 			<form method="post" action="down">
- 				<input type="hidden" value="${jikdata.jik_file}" name="filename">
- 				<input type="hidden" value="${jikdata.jik_original}" name="original">
- 				<input type="submit" value="${jikdata.jik_original}" >
- 			</form>
+ 			<td>
+ 				<img src="../resources/image/chang/down.png" width="10px">
+ 				<form method="post" action="down">
+ 					<input type="hidden" value="${jikdata.jik_file}" name="filename">
+ 					<input type="hidden" value="${jikdata.jik_original}" name="original">
+ 					<input type="submit" value="${jikdata.jik_original}" >
+ 				</form>
  			</td>
  		</c:if>
  		<c:if test="${empty jikdata.jik_file}"><%-- 파일첨부하지 않은 경우 --%>
  			<td></td>
  		</c:if>
- 		</tr>
- 		
+ 		</tr>	
  	<tr>
  		<td colspan="2" class="center">
  			

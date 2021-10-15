@@ -29,6 +29,10 @@ public interface JikService {
 
 	public int getSearchListCount(int type, String search);
 
+	public int isLike(String id, int num);
+
+	public int like(int num, String id);
+
 
 
 	

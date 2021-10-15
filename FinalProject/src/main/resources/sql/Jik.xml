@@ -43,7 +43,7 @@
  	</select>
  	
  	<select id="detail" resultType="jik" parameterType="map">
- 			select jik.*,member.persnacon p
+ 			select jik.*,member.original profile
  			from jik,member
  			where jik_num = #{num}
  			and member.id = #{id}
@@ -125,6 +125,17 @@
  			]]>
  			<include refid="search_"/>
  	 </select>
+ 	 
+ 	 <select id="isLike" resultType="int" parameterType="map">
+ 	 		select count(*)
+ 	 		from jik_like
+ 	 		where jik_id = #{id}
+ 	 		and jik_num = #{num}
+ 	 </select>
  	
+ 	 <insert id="like" parameterType="map">
+ 		insert into jik_like
+ 		values(#{num},#{id})
+ 	 </insert>
  	
  </mapper>
