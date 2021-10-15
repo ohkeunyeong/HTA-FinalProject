@@ -190,7 +190,7 @@ section.notice {
 .btn {
 	display: inline-block;
 	padding: 12px 20px;
-	background-color: #000000;
+	background-color: #28A745;
 	color: #fff;
 	text-align: center;
 	line-height: 1;
@@ -205,7 +205,7 @@ h1 {
 	border-left-width: 20px;
 	border-radius: 4px;
 	padding: 0.4em 0.6em 0.4em 0.25em;
-	color: black;
+	color: #28A745;
 	font-size: 38px;
 	font-weight: 700;
 	line-height: 1;
