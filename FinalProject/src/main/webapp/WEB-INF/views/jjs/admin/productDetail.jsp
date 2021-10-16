@@ -64,7 +64,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									<div class="row">
 										<div class="col-12 col-sm-6">
 											<div class="col-12">
-												<img src="${pageContext.request.contextPath}/resources/upload${product.product_img}" style="width: 400px; height: 300px;">
+												<img src="${pageContext.request.contextPath}/upload${product.product_img}" style="width: 400px; height: 300px;">
 											</div>
 										</div>
 										<div class="col-12 col-sm-6">

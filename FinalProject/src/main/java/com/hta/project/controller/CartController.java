@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -81,33 +82,20 @@ public class CartController {
 		return result;
 	}
 	
+	@ResponseBody
 	@RequestMapping(value = "/order", method = RequestMethod.POST)
-	public ModelAndView order(HttpServletRequest request, ModelAndView mv,
-			Order_Market order, String order_address3, int pricesum, int[] cartNumArr) {
-		HttpSession session = request.getSession();
-		String id = (String) session.getAttribute("id");
-		Calendar cal = Calendar.getInstance();
-		Date today = cal.getTime();
-		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
-		String order_num = sdf.format(today);
-		order_num = order_num.replace("-", "");
+	public int order(HttpServletRequest request,
+			Order_Market order, String imp_uid, int[] valueArr) {
+		logger.info("order()");
 		
-		String subNum = "";
-		for(int i = 0; i < 6; i++) {
-			subNum += (int)(Math.random() * 10);
+		int result = orderService.orderInsert(order, valueArr);
+		if(result == valueArr.length) {
+			return 1;
 		}
 		
-		order_num = order_num + "_" + subNum;
-		order.setOrder_num(order_num);
-		order.setOrder_totalprice(pricesum);
-		String address = order.getOrder_address2() + " " + order_address3;
-		order.setOrder_address2(address);
-		
-		orderService.orderInsert(order);
-		
-		mv.setViewName("jjs/userOrderView");
-		
-		return mv;
+		return 0;
 	}
+	
+	
 	
 }

@@ -39,7 +39,7 @@
 								</div>
 							<td>
 								<div>
-									<span>${orderdetail.user_address1} ${o.user_address2}</span>
+									<span>${o.user_address1} ${o.user_address2}</span>
 								</div>
 							<td>
 								<div>

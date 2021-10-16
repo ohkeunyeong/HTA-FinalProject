@@ -36,88 +36,19 @@ $(function(){
 		}).open();
 	}
 	
-	// 바로 구매 버튼 클릭시
-	$('#buybtn').click(function(){
-		var order_de_count = $(".order_de_count").val();
-		var price = $(".price").val();
-		var pricesum = parseInt(price * order_de_count);
-		var user_id = $('.checkid').val();
-		if(user_id == ''){
-			$('#productOrderModal').modal('show');
-			$(".productOrderErrorBtn").click(function(){
-				$('#productOrderModal').modal('hide');
-				$('#loginModal').modal('show');
-			});
-			return false;
-		}
-		$('#MainOrderInfoModal').modal('show');
-		$('input[name="order_de_count"]').remove();
-		$('input[name="pricesum"]').remove();
-		$('#OrderForm').append('<input type="hidden" value="' + order_de_count + '"name="order_de_count">');
-		$('#OrderForm').append('<input type="hidden" value="' + pricesum + '"name="pricesum">');
-		$('.total_price').text(Number(pricesum).toLocaleString('en') + "원");
-	});
-	
-	// 주문 정보 입력 유효성 검사
-	$('#OrderForm').submit(function(){
-		if($.trim($('#order_name').val()) == ''){
-			$('#DetailOrderInfoErrorModal').modal('show');
-			$('#DetailOrderInfoErrorModal-Title').text("주문 정보");
-			$('#DetailOrderInfoErrorModal-body').html("<h3>수령인을 입력해주세요.</h3>");
-			return false;
-		}
-		
-		if($.trim($('#order_phone').val()) == ''){
-			$('#DetailOrderInfoErrorModal').modal('show');
-			$('#DetailOrderInfoErrorModal-Title').text("주문 정보");
-			$('#DetailOrderInfoErrorModal-body').html("<h4>수령인 연락처를 입력해주세요.</h4>");
-			return false;
-		}
-		
-		var phoneReg = /^\d{3}-\d{3,4}-\d{4}$/;
-		if(!phoneReg.test($.trim($('#order_phone').val()))){
-			$('#DetailOrderInfoErrorModal').modal('show');
-			$('#DetailOrderInfoErrorModal-Title').text("주문 정보");
-			$('#DetailOrderInfoErrorModal-body').html("<h5>전화번호 형식에 맞게 입력해주세요</h5>");
-			$('#order_phone').val('');
-			return false;
-		}
-		
-		if($.trim($('#order_address1').val()) == ''){
-			$('#DetailOrderInfoErrorModal').modal('show');
-			$('#DetailOrderInfoErrorModal-Title').text("주문 정보");
-			$('#DetailOrderInfoErrorModal-body').html("<h3>주소검색을 해주세요.</h3>");
-			return false;
-		}
-		
-		if($.trim($('#order_address3').val()) == ''){
-			$('#OrderInfoErrorModal').modal('show');
-			$('#OrderInfoErrorModal-Title').text("주문 정보");
-			$('#OrderInfoErrorModal-body').html("<h3>상세주소를 입력해주세요.</h3>");
-			return false;
-		}
-		
-		if($.trim($('input[name="order_payment"]:checked').val()) == ''){
-			$('#OrderInfoErrorModal').modal('show');
-			$('#OrderInfoErrorModal-Title').text("주문 정보");
-			$('#OrderInfoErrorModal-body').html("<h4>결제방식을 체크해주세요</h4>");
-			return false;
-		}
-	});
-	
 	// 장바구니 담기 버튼 클릭시
 	$('#cartbtn').click(function(){
 		var user_id = $('.id').val();
 		var product_code = $('.code').val();
 		if(user_id == ''){
-			$('#CartErrorModal').modal('show');
+			$('#CartErrorModal').modal({backdrop: 'static', keyboard: false});
 			$("#cartErrorBtn").click(function(){
 				$('#CartErrorModal').modal('hide');
-				$('#loginModal').modal('show');
+				location.href="/project/member/login";
 			});
 			return false;
 		}
-		$('#CartModal').modal('show');
+		$('#CartModal').modal({backdrop: 'static', keyboard: false});
 		$('#addbtn').click(function(){
 			$('#CartModal').modal('hide');
 			$.ajax({
@@ -130,11 +61,11 @@ $(function(){
 				success : function(data){
 					console.log(data);
 					if(data == 1){
-						$('#CartAddConfirmModal').modal('show');
+						$('#CartAddConfirmModal').modal({backdrop: 'static', keyboard: false});
 						$('.CartAddConfirmModal_body').html("<h4>장바구니에 담았습니다.</h4>");
 						$(".order_de_count").val('1');
 					}else{
-						$('#CartAddErrorModal').modal('show');
+						$('#CartAddErrorModal').modal({backdrop: 'static', keyboard: false});
 					}
 				}
 			});

@@ -14,4 +14,6 @@ public interface CartService {
 	public int cartDelete(int cart_num);
 
 	public int cartSelectionDelete(int[] valueArr);
+
+	public int userCartDelete(String id, int[] valueArr);
 }

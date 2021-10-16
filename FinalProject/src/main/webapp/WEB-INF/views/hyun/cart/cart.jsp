@@ -6,6 +6,7 @@
 		<jsp:include page="../../main/header.jsp"/>
 		<title>주말장터 - 장바구니</title>
 		<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+		<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 		<script src="${pageContext.request.contextPath}/resources/js/jjs/CartView.js" type="text/javascript"></script>
 	</head>
 	<body>
@@ -28,8 +29,8 @@
 					<tbody>
 						<c:forEach var="c" items="${cartlist}">
 							<tr>
-								<td class="align-middle"><input name="RowCheck" type="checkbox" value="${c.product_price * c.order_de_count}" data-cartNum="${c.cart_num}"></td>
-								<td class="align-middle"><img src="${pageContext.request.contextPath}/resources/upload${c.product_img}" width="80px" height="80px"></td>
+								<td class="align-middle"><input name="RowCheck" type="checkbox" value="${c.product_price * c.order_de_count}" data-cartNum="${c.cart_num}" data-pro_name="${c.product_name}"></td>
+								<td class="align-middle"><img src="${pageContext.request.contextPath}/upload${c.product_img}" width="80px" height="80px"></td>
 								<td class="align-middle"><a href="/project/shop/shop_detail?product_code=${c.product_code}">${c.product_name}</a></td>
 								<td class="align-middle"><fmt:formatNumber pattern="###,###,###" value="${c.product_price}"/>원</td>
 								<td class="align-middle">
@@ -49,7 +50,7 @@
 		
 		<jsp:include page="cartModal.jsp" />
 		
-		<c:if test="${listcount == 0 }">
+		<c:if test="${listcount == 0 || empty listcount}">
 			<div class="container text-center"><h1>장바구니에 담긴 상품이 없습니다.</h1></div>
 		</c:if>
 		<hr>

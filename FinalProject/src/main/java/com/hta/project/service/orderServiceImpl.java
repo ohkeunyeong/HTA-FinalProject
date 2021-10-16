@@ -1,5 +1,8 @@
 package com.hta.project.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +16,11 @@ public class orderServiceImpl implements OrderService{
 	private OrderDAO orderdao;
 	
 	@Override
-	public void orderInsert(Order_Market order) {
-		orderdao.orderInsert(order);
+	public int orderInsert(Order_Market order, int[] valueArr) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("order", order);
+		map.put("arr", valueArr);
+		return orderdao.orderInsert(map);
 	}
 	
 

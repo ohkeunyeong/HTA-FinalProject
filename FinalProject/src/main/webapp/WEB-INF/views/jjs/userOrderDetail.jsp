@@ -78,7 +78,7 @@ hr, footer {
 				<div class="mb-2 ml-2 product">
 					<img class="img-fluid float-right" src="${pageContext.request.contextPath}/resources/upload${ol.product_img}" alt="productImg" width="200px" height="200px">
 					<p class="mt-5 ml-2">
-						상품명&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><a href="#">${ol.product_name}</a></span>
+						상품명&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><a href="${pageContext.request.contextPath}/shop/shop_detail?product_code=${ol.product_code}">${ol.product_name}</a></span>
 					</p>
 					<p class="ml-2">
 						가격&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>${price}원</span>

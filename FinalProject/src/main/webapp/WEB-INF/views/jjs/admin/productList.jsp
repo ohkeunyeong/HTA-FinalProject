@@ -121,7 +121,7 @@ text-decoration : none;
 															<input name="RowCheck" type="checkbox" value="${p.product_code}">
 														</td>
 														<td class="align-middle">
-															<img src="${pageContext.request.contextPath}/resources/upload${p.product_img}" style="width: 85px; height: 70px;">
+															<img src="${pageContext.request.contextPath}/upload${p.product_img}" style="width: 85px; height: 70px;">
 														</td>
 														<td class="align-middle">
 															<div>
@@ -179,7 +179,7 @@ text-decoration : none;
 									</div>
 								</c:if>
 
-								<c:if test="${listcount == 0 }">
+								<c:if test="${listcount == 0 || empty listcount}">
 									<div class="card-body">
 										<button class="btn btn-primary" id="productAddBtn">상품등록</button>
 									</div>

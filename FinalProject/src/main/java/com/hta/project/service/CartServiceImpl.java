@@ -46,5 +46,13 @@ public class CartServiceImpl implements CartService{
 		map.put("arr", valueArr);
 		return cartdao.cartSelectionDelete(map);
 	}
+
+	@Override
+	public int userCartDelete(String id, int[] valueArr) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("arr", valueArr);
+		return cartdao.userCartDelete(map);
+	}
 	
 }

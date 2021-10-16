@@ -4,7 +4,7 @@ $(function(){
 		if($.trim($('#order_name').val()) == ''){
 			$('#OrderInfoErrorModal').modal('show');
 			$('#OrderInfoErrorModal-Title').text("주문 정보");
-			$('#OrderInfoErrorModal-body').html("<h3>수령인을 입력해주세요.</h3>");
+			$('#OrderInfoErrorModal-body').html("<h4>수령인을 입력해주세요.</h4>");
 			return false;
 		}
 		
@@ -27,21 +27,14 @@ $(function(){
 		if($.trim($('#order_address1').val()) == ''){
 			$('#OrderInfoErrorModal').modal('show');
 			$('#OrderInfoErrorModal-Title').text("주문 정보");
-			$('#OrderInfoErrorModal-body').html("<h3>주소검색을 해주세요.</h3>");
+			$('#OrderInfoErrorModal-body').html("<h4>주소검색을 해주세요.</h4>");
 			return false;
 		}
 		
 		if($.trim($('#order_address3').val()) == ''){
 			$('#OrderInfoErrorModal').modal('show');
 			$('#OrderInfoErrorModal-Title').text("주문 정보");
-			$('#OrderInfoErrorModal-body').html("<h3>상세주소를 입력해주세요.</h3>");
-			return false;
-		}
-		
-		if($.trim($('input[name="order_payment"]:checked').val()) == ''){
-			$('#OrderInfoErrorModal').modal('show');
-			$('#OrderInfoErrorModal-Title').text("주문 정보");
-			$('#OrderInfoErrorModal-body').html("<h4>결제방식을 체크해주세요</h4>");
+			$('#OrderInfoErrorModal-body').html("<h4>상세주소를 입력해주세요.</h4>");
 			return false;
 		}
 	});
@@ -74,25 +67,40 @@ $(function(){
 			}
 		}
 		if(valueArr.length == 0){
-			$("#ErrorModal").modal('show');
+			$("#ErrorModal").modal({backdrop: 'static', keyboard: false});
 			$('#ErrorModal-Title').text('상품 주문');
-			$("#ErrorModal-body").html("<span style='font-size : 23px;'>주문 하실 상품을 선택해주세요.</span>");
+			$("#ErrorModal-body").html("<span style='font-size : 18px;'>주문 하실 상품을 선택해주세요.</span>");
 		}else{			
-			$('#OrderInfoModal').modal('show');
+			$('#OrderInfoModal').modal({backdrop: 'static', keyboard: false});
 		}
 	});
 	
 	$("#orderFrombtn").click(function(){
+		var product_name;
 		var valueArr = new Array();
 		var list = $("input[name='RowCheck']");
 		for(var i = 0; i < list.length; i++){
 			if(list[i].checked){
+				product_name = $(list[i]).attr("data-pro_name");
 				valueArr.push($(list[i]).attr("data-cartNum"));
 			}
 		}
 		console.log(valueArr);
 		$('input[name="cartNumArr"]').val(valueArr);
-		$('#OrderForm').submit();
+		
+		var order = {
+				id : $("input[name='id']").val(),
+				pricesum : $("input[name='pricesum']").val(),
+				cartNumArr : $('input[name="cartNumArr"]').val(),
+				order_name : $('#order_name').val(),
+				order_phone : $('#order_phone').val(),
+				order_address1 : $('#order_address1').val(),
+				order_address2 : $('#order_address2').val() + " " + $('#order_address3').val(),
+				creditcardPayment : $('#creditcardPayment').val(),
+				product_name : product_name
+		}
+		console.log(order);
+		iamport(order);
 	});
 	
 	// 다음 우편 검색 API
@@ -161,11 +169,11 @@ $(function(){
 			 }
 		 }
 		 if(valueArr.length == 0){
-			$("#ErrorModal").modal('show');
+			$("#ErrorModal").modal({backdrop: 'static', keyboard: false});
 			$('#ErrorModal-Title').text('장바구니 선택 삭제');
-			$("#ErrorModal-body").html("<h3>선택한 상품이 없습니다.</h3>");
+			$("#ErrorModal-body").html("<h4>선택한 상품이 없습니다.</h4>");
 		 }else{
-			 $("#CartDeleteModal").modal('show');
+			 $("#CartDeleteModal").modal({backdrop: 'static', keyboard: false});
 			 $("#cartmodaldelbtn").click(function(){
 				 $("#CartDeleteModal").modal('hide');
 				 $.ajax({
@@ -177,7 +185,7 @@ $(function(){
 						if(data == valueArr.length){
 							location.href="list?user_id=" + id;
 						}else{
-							$("#CartSelectionDeleteFailModal").modal('show');
+							$("#CartSelectionDeleteFailModal").modal({backdrop: 'static', keyboard: false});
 						}
 					}
 				 });
@@ -192,7 +200,7 @@ $(function(){
 	// 장바구니 삭제 부분
 	function cartDelete(cart_num){
 		var id = $(".id").val();
-		$('#CartDeleteModal').modal('show');
+		$('#CartDeleteModal').modal({backdrop: 'static', keyboard: false});
 		$('#cartmodaldelbtn').click(function(){
 			$('#CartDeleteModal').modal('hide');
 			$.ajax({
@@ -203,7 +211,7 @@ $(function(){
 					if(data == 1){
 						location.href="list?user_id=" + id;
 					}else{
-						$('#ErrorModal').modal('show');
+						$('#ErrorModal').modal({backdrop: 'static', keyboard: false});
 						$('#ErrorModal-Title').text('장바구니');
 						$('#ErrorModal-body').html("<span style='font-size : 21px;'>장바구니 상품 삭제 실패 했습니다.</span>");
 					}
@@ -217,3 +225,53 @@ $(function(){
 		cartDelete(cart_num);
 	});
 });
+
+function iamport(order){
+	var msg;
+	//가맹점 식별코드
+	IMP.init('imp63560217');
+	IMP.request_pay({
+	    pg : 'html5_inicis',
+	    pay_method : 'card',
+	    merchant_uid : 'merchant_' + new Date().getTime(),
+	    name :  order.product_name, //결제창에서 보여질 이름
+	    amount : Number(order.pricesum), //실제 결제되는 가격
+	    buyer_email : 'iamport@siot.do',
+	    buyer_name : order.order_name,
+	    buyer_tel : order.order_phone,
+	    buyer_addr : order.order_address2,
+	    buyer_postcode : order.order_address1
+	}, function(rsp) {
+		console.log(rsp);
+	    if ( rsp.success ) {
+            $.ajax({
+                url: "/project/cart/order",
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    imp_uid : rsp.imp_uid,
+                    order_num : rsp.merchant_uid,
+                    id : order.id,
+                    order_name : order.order_name,
+                    user_address1 : order.order_address1,
+                    user_address2 : order.order_address2,
+                    order_phone : order.order_phone,
+                    order_totalprice : order.pricesum,
+                    order_payment : order.creditcardPayment,
+                    valueArr : order.cartNumArr
+                },success : function(data){
+                	if(data == 1){
+                		location.replace('/project/orderSuccess');
+                	}
+                }
+            })
+            
+	    } else {
+	    	msg = '결제에 실패하였습니다.';
+            msg += '에러내용 : ' + rsp.error_msg;
+            //실패시 이동할 페이지
+            location.href="/project/cart/list?user_id=" + order.id;
+            alert(msg);
+	    }
+	});
+}

@@ -44,4 +44,8 @@ public class CartDAO {
 	public int cartSelectionDelete(Map<String, Object> map) {
 		return sqlSession.delete("Carts.selectionDelete", map);
 	}
+
+	public int userCartDelete(Map<String, Object> map) {
+		return sqlSession.delete("Carts.userCartDelete", map);
+	}
 }

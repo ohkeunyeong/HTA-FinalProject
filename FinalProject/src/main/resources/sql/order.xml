@@ -104,7 +104,22 @@
 	</select>
 	
 	<insert id="insert" parameterType="order">
-		insert 
+		insert into order_market
+		values(#{order_num}, #{id}, #{order_name}, #{user_address1}, #{user_address2},
+			   #{order_phone}, #{order_totalprice}, #{order_payment}, sysdate, '배송준비')
+	</insert>
+	
+	<insert id="orderDetailInsert" parameterType="map">
+		insert into order_detail
+			(order_de_num, order_num, product_code, order_de_count)
+		select order_detail_seq.nextval, #{order.order_num}, product_code, order_de_count
+		from cart
+		where id = #{order.id}
+		and cart_num in 
+		<foreach item="item" collection="arr" 
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
 	</insert>
  	
  </mapper>

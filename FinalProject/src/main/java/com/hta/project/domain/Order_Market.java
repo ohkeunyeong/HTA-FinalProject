@@ -7,8 +7,8 @@ public class Order_Market {
 	private String order_num;
 	private String id;
 	private String order_name;
-	private int order_address1;
-	private String order_address2;
+	private String user_address1;
+	private String user_address2;
 	private String order_phone;
 	private int order_totalprice;
 	private String order_payment;
@@ -34,17 +34,17 @@ public class Order_Market {
 		this.order_name = order_name;
 	}
 
-	public int getOrder_address1() {
-		return order_address1;
+	public String getUser_address1() {
+		return user_address1;
 	}
-	public void setOrder_address1(int order_address1) {
-		this.order_address1 = order_address1;
+	public void setUser_address1(String user_address1) {
+		this.user_address1 = user_address1;
 	}
-	public String getOrder_address2() {
-		return order_address2;
+	public String getUser_address2() {
+		return user_address2;
 	}
-	public void setOrder_address2(String order_address2) {
-		this.order_address2 = order_address2;
+	public void setUser_address2(String user_address2) {
+		this.user_address2 = user_address2;
 	}
 	public String getOrder_phone() {
 		return order_phone;

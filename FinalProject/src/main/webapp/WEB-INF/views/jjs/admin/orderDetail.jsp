@@ -66,8 +66,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 										<li class="list-group-item"><b>주문번호</b> <a class="float-right">${orderdetail.order_num}</a></li>
 										<li class="list-group-item"><b>수령인</b> <a class="float-right">${orderdetail.order_name}</a></li>
 										<li class="list-group-item"><b>전화번호</b> <a class="float-right">${orderdetail.order_phone}</a></li>
-										<c:set var="user_address1" value="${fn:substring(orderdetail.user_address1,0,3)}-${fn:substring(orderdetail.user_address1,3,6)}" />
-										<li class="list-group-item"><b>주소</b> <a class="float-right">${user_address1} ${orderdetail.user_address2}</a></li>
+										<li class="list-group-item"><b>주소</b> <a class="float-right">${orderdetail.user_address1} ${orderdetail.user_address2}</a></li>
 										<fmt:formatNumber var="totalPrice" value="${orderdetail.order_totalprice}" pattern="###,###,###" />
 										<li class="list-group-item"><b>주문가격</b> <a class="float-right">${totalPrice}원</a></li>
 										<li class="list-group-item"><b>결제방식</b> <a class="float-right">${orderdetail.order_payment}</a></li>

@@ -51,6 +51,13 @@ public class MainController {
 		  String id = (String)session.getAttribute("id");
 		  return mv;
 	}
+	
+	@RequestMapping(value = "/orderSuccess", method = RequestMethod.GET)
+	public String orderSuccess() {
+		logger.info("orderSuccess()");
+		
+		return "jjs/orderSuccess";
+	}
 
 	
 	//굿즈 장터 메인 이동 - 상품 목록 

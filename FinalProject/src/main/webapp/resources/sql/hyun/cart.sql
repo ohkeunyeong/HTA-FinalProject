@@ -7,7 +7,6 @@ CREATE TABLE CART(
   ORDER_DE_COUNT	 NUMBER(3)      not null,         -- 주문수량 
   ADD_DATE           DATE		    default sysdate,  -- 장바구니에 담은 날짜 
   PRIMARY KEY (CART_NUM),
-  FOREIGN KEY (PRODUCT_CODE) REFERENCES PRODUCT (PRODUCT_CODE),
   FOREIGN KEY (ID) REFERENCES MEMBER (ID)
 );
 

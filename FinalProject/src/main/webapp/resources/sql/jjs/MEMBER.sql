@@ -142,6 +142,3 @@ update MEMBER
 set mynong_name = ''
 where id = 'ajaxk';
 
-
-
-

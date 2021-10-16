@@ -38,4 +38,14 @@
 		</foreach>
 	</delete>
 	
+	<delete id="userCartDelete" parameterType="map">
+		delete cart
+		where id = #{order.id}
+		and cart_num in
+		<foreach item="item" collection="arr" 
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
 </mapper>

@@ -93,7 +93,7 @@ div.goods {
 	
 		<div class="goods">
 			<div class="goodsImg">
-				<img src="${pageContext.request.contextPath}/resources/upload${p.product_img}">
+				<img src="${pageContext.request.contextPath}/upload${p.product_img}">
 			</div>
 	
 		<div class="container goodsInfo p-3 border">

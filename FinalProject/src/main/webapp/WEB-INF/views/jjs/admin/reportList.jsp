@@ -148,7 +148,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									</div>
 								</c:if>
 
-								<c:if test="${listcount == 0 }">
+								<c:if test="${listcount == 0 || empty listcount}">
 									<p class="text-center h2 mt-3 mb-3">
 										<span>등록된 신고글이 없습니다.</span>
 									</p>

@@ -11,7 +11,7 @@
 
 			<!-- Modal body -->
 			<div class="modal-body">
-				<h5>선택하신 상품을 삭제하시겠습니까?</h5>
+				<span style="font-size : 16px;">선택하신 상품을 삭제하시겠습니까?</span>
 			</div>
 
 			<!-- Modal footer -->
@@ -37,7 +37,7 @@
 
 			<!-- Modal body -->
 			<div class="modal-body">
-				<form action="/project/cart/order" id="OrderForm" method="post" name="OrderFrom">
+				<form action="#" id="OrderForm" method="post" name="OrderFrom">
 					<input type="hidden" value="${id}" name="id"> 
 					<input type="hidden" value="" name="pricesum"> 
 					<input type="hidden" value="" name="cartNumArr">
@@ -56,18 +56,18 @@
 					<div class="form-group text-left">
 						<label for="order_address1">우편번호</label>
 						<div class="input-group">
-							<input type="text" class="form-control" id="order_address1" name="order_address1" readOnly> <input type="button" class="btn btn-info" id="postsearchbtn" value="주소 검색">
+							<input type="text" class="form-control" id="order_address1" name="user_address1" readOnly> <input type="button" class="btn btn-info" id="postsearchbtn" value="주소 검색">
 						</div>
 					</div>
 
 					<!-- 주소 -->
 					<div class="form-group text-left">
-						<label for="order_address2">주소</label> <input type="text" class="form-control" id="order_address2" name="order_address2" readOnly>
+						<label for="order_address2">주소</label> <input type="text" class="form-control" id="order_address2" name="user_address2" readOnly>
 					</div>
 
 					<!-- 상세 주소 -->
 					<div class="form-group text-left">
-						<label for="order_address3">상세 주소</label> <input type="text" class="form-control" id="order_address3" name="order_address3" placeholder="상세주소 입력">
+						<label for="order_address3">상세 주소</label> <input type="text" class="form-control" id="order_address3" name="user_address3" placeholder="상세주소 입력">
 					</div>
 
 					<!-- 결제 방식 -->
@@ -142,6 +142,31 @@
 				<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
 			</div>
 
+		</div>
+	</div>
+</div>
+
+<!-- 오류 모달창 -->
+<div class="modal hide fade" id="ErrorModal">
+	<div class="modal-dialog modal-sm modal-dialog-centered">
+		<div class="modal-content">
+      
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title" id="ErrorModal-Title"></h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+        
+			<!-- Modal body -->
+			<div class="modal-body" id="ErrorModal-body">
+			  
+			</div>
+        
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+			</div>
+        
 		</div>
 	</div>
 </div>

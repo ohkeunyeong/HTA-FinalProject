@@ -26,10 +26,14 @@
 		<div class="content--item">
 			<c:forEach items="${productlist}" var="p">
 				<div class="card mr-5 mb-5" style="width: 18rem;">
-					<img src="${pageContext.request.contextPath}/resources/upload${p.product_img}" class="card-img-top" alt="...">
+					<img src="${pageContext.request.contextPath}/upload${p.product_img}" class="card-img-top" alt="...">
 					<div class="card-body">
-						<h5 class="card-title">${p.product_name}</h5>
-						<p class="card-text">${p.product_detail}</p>
+						<h5 class="card-title">상품이름 : ${p.product_name}</h5>
+						<p class="card-text">
+							카테고리 : ${p.category_name}<br>
+							상품가격 : ${p.product_price}<br>
+							상품정보 : ${p.product_detail}<br>
+						</p>
 						<a href="shop/shop_detail?product_code=${p.product_code}" class="btn btn-primary">상세보기</a>
 					</div>
 				</div>

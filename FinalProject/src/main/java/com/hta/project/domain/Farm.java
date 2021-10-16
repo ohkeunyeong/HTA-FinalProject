@@ -4,6 +4,7 @@ public class Farm {
 	private String mynong_name;
 	private String name;
 	private int membercnt;
+	private String original;
 	private String mynong_date;
 	
 	public String getMynong_name() {
@@ -28,6 +29,15 @@ public class Farm {
 
 	public void setMembercnt(int membercnt) {
 		this.membercnt = membercnt;
+	}
+	
+
+	public String getOriginal() {
+		return original;
+	}
+
+	public void setOriginal(String original) {
+		this.original = original;
 	}
 	
 	public String getMynong_date() {
