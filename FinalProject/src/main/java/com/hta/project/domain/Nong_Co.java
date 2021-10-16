@@ -8,10 +8,11 @@ public class Nong_Co {
 	private String id;            //작성자
 	private String nong_co_con;   //댓글 내용
 	private String nong_co_date;  //댓글 작성날짜
-	private int nong_num;    //원문 글 번호
+	private int nong_num;         //원문 글 번호
 	public int getNong_co_num() {
 		return nong_co_num;
 	}
+
 	public void setNong_co_num(int nong_co_num) {
 		this.nong_co_num = nong_co_num;
 	}

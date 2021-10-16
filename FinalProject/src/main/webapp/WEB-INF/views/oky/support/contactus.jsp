@@ -6,42 +6,12 @@
      <title>메일문의</title>
      <jsp:include page="../../main/header.jsp" /> 
      <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
-     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/oky/mail.css">
-<script>
-      $(function(){ 
-   	        	   
-      	   $("#contact").click(function(){ //1:1 문의 클릭시 아이디 없으면 안넘어가게하기
-      		  if(!id){
-      			  alert("로그인 후 이용해 주세요");
-      			  return false;
-      		  }
-      	   });
-      	   
-      	   
-      	   
-    	   $("#send").click(function(){//아이디 저장 기능
-    	   if($.trim($("#subject").val()) == ""){
-    		   alert("제목을 입력하세요");
-    		   $("#subject").focus();
-    		   return false
-    		   }
-    		   
-    		 if($.trim($("#content").val()) == ""){
-        		   alert("내용을 입력하세요");
-        		   $("#content").focus();
-        		   return false
-	          }
-       });
-   	$('.cancelbtn').click(function(){
-		window.location ="index.jsp";
-	})
-      
-      });
-</script>        
+     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/oky/contactus.css">
+     <script src="${pageContext.request.contextPath}/resources/js/oky/contactus.js"></script>      
 </head>
 <body>
 <br><br><br>
-<header>1:1문의</header>
+<header style="color: #28A745">1:1문의</header>
 
 <form action="mailsend" method="post" id="form" class="topBefore">
 <input type="hidden" name="userid"  value= "${id}" readOnly>

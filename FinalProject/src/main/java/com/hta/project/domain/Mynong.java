@@ -1,7 +1,7 @@
 package com.hta.project.domain;
 
 public class Mynong {
-	private String mynong_name; //농장명
+	private String mynong_name; // 농장명
 
 	public String getMynong_name() {
 		return mynong_name;
@@ -11,6 +11,4 @@ public class Mynong {
 		this.mynong_name = mynong_name;
 	}
 
-	
-	
 }

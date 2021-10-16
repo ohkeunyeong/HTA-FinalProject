@@ -9,8 +9,8 @@ import com.hta.project.dao.AccDAO;
 import com.hta.project.domain.Account;
 
 @Service
-public class AccServiceImpl implements AccService{
-	
+public class AccServiceImpl implements AccService {
+
 	@Autowired
 	private AccDAO dao;
 
@@ -38,11 +38,5 @@ public class AccServiceImpl implements AccService{
 	public boolean accUpdate(Account account) {
 		return dao.accUpdate(account);
 	}
-
-
-	
-	
-	
-
 
 }

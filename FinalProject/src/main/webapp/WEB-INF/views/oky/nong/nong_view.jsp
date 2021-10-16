@@ -5,7 +5,9 @@
 <title>멤버게시판 view</title>
 <jsp:include page="../../main/header.jsp" /> 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/oky/view3.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/oky/nong_view.js"></script>
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,500,700"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/oky/nong_view.css"></link>
 <script>
     var result="${result}";
     if(result == 'passFail') {
@@ -22,81 +24,33 @@
    })
 
 </script>
-<style>
-body > div > table > tbody >tr:nth-child(1) {
-	text-align: center
-}
-
-td:nth-child(1) {
-	width: 20%
-}
-
-a {
-	color: white
-}
-
-body > div > table > tbody tr:last-child {
-	text-align: center;
-}
-
-.btn-primary {
-	background-color: #4f97e5
-}
-
-#myModal {
-	display: none
-}
-
-#comment > table > tbody > tr > td:nth-child(2){
- width:60%
-}
-#count{
-    position: relative;
-    top: -10px;
-    left: -10px;
-    background: orange;
-    color: white;
-    border-radius: 30%;
-}
-
-textarea{resize:none}
-
-form[action=down] > input[type=submit]{
-    position: relative;
-    top: -20;
-    left: 10px;
-    border: none;
-    cursor : pointer;
-}
-
-</style>
-
 </head>
-<body>
-<br><br><br>
+<body style="overflow-x:hidden; overflow-y:auto;">
+<br><br>
+<div class="wrapper">
+<main>
 <input type="hidden" id="id" value="${id}" name="id">
 <input type="hidden" id="nongname" value="${name}" name="name">
 <input type="hidden" id="path" value="${pageContext.request.contextPath}" name="path">
  <div class="container">
-   <table class="table table-striped">
-     <tr><th colspan="2">멤버게시판 상세보기</th></tr>
-     <tr>
-         <td><div>글쓴이</div></td>
+   <table class="table" id="bbstable" >
+     <tr id="bbstr">
+         <td id="bbstd"><div>글쓴이</div></td>
          <td><div>${boarddata.id}</div></td>
      </tr>
-     <tr>
-         <td><div>제목</div></td>
+     <tr id="bbstr">
+         <td id="bbstd"><div>제목</div></td>
          <td><c:out value="${boarddata.nong_sub}" /></td>
      </tr>     
-     <tr>
-         <td><div>내용</div></td>
-         <td style="padding-right:0px"><textarea class="form-control" rows="5"
+     <tr id="bbstr">
+         <td id="bbstd"><div>내용</div></td>
+         <td style="padding-right:0px"><textarea class="form-control" rows="5" style=" background-color:transparent;"
                readOnly >${boarddata.nong_con}</textarea></td>
      </tr>     
      
    <c:if test="${boarddata.nong_re_lev==0}"><%--원문글인 경우에만 첨부파일을 추가 할 수 있습니다. --%>
-    <tr>
-      <td><div>첨부파일</div></td>
+    <tr id="bbstr">
+      <td id="bbstd"><div>첨부파일</div></td>
      <c:if test="${!empty boarddata.nong_file}"><%-- 파일첨부한 경우 --%>
       <td><img src="${pageContext.request.contextPath}/resources/image/oky/down.png" width="10px">
           <form method="post" action="down">
@@ -186,6 +140,36 @@ form[action=down] > input[type=submit]{
                   <div id="message"></div>           
              </div><!-- comment end -->
           </div><!-- container end -->
+          </main>
+<sidebar>
+   <!--  <div class="logo">logo</div> -->
+    <div class="avatar">
+      <div class="avatar__img">
+        <img width="25" class="display" src="pdisplay?fileName=${user.original}">
+      </div>
+      <div class="avatar__name" style="color:black;">${user.nick} 님</div>
+    </div>
+    <nav class="menu">
+      <a class="menu__item" href="${pageContext.request.contextPath}/calprocess?id=${id}">
+      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/calendar.png" alt="by"/>
+        <span style="padding:0px 0px 0px 17px;" class="menu__text">캘린더</span>
+      </a>
+      <a class="menu__item" href="${pageContext.request.contextPath}/accprocess?id=${id}">
+      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/accounting.png" alt="by"/>
+        <span style="padding:0px 0px 0px 17px;" class="menu__text">가계부</span>
+      </a>    
+      <a class="menu__item menu__item--active" href="${pageContext.request.contextPath}/nongprocess?id=${id}">
+      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/bbs.png" alt="by"/>
+        <span style="padding:0px 0px 0px 17px;" class="menu__text">멤버게시판</span>
+      </a>
+      <a class="menu__item" href="${pageContext.request.contextPath}/mynongprocess?id=${id}">
+      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/setting.png" alt="by"/>
+        <!-- <i class="menu__icon fa fa-envelope"></i> -->
+      <span style="padding:0px 0px 0px 17px;" class="menu__text">농장관리</span>
+      </a>
+    </nav>
+  </sidebar>
+  </div>                   
 <jsp:include page="../../main/footer.jsp" />           
 </body>
 </html>

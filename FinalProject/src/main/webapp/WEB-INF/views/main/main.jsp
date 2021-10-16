@@ -12,7 +12,7 @@
 //oky 로그인시 농장 가입 받았을때 팝업 띄우기
 	$(function(){
 		if('${invite}' == '3'){
-			window.open("${pageContext.request.contextPath}/member/invite", "window_name","width=400,height=230,location=no,status=no,scrollbars=yes");
+			window.open("${pageContext.request.contextPath}/member/invite", "window_name","width=480,height=230,location=no,status=no,scrollbars=yes");
 		}	
 	});
 </script>

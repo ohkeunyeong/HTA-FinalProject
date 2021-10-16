@@ -3,7 +3,6 @@ package com.hta.project.dao;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,15 +11,15 @@ import com.hta.project.domain.Member;
 
 @Repository
 public class MynongDAO {
-	
+
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-	public int insert(String name) { //내 농장생성
-		return sqlSession.insert("Mynong.insert" , name);
+	public int insert(String name) { // 내 농장생성
+		return sqlSession.insert("Mynong.insert", name);
 	}
 
-	public String isName(String mynong_name) {//내 농장 이름중복확인
+	public String isName(String mynong_name) {// 내 농장 이름중복확인
 		return sqlSession.selectOne("Mynong.select", mynong_name);
 	}
 
@@ -28,14 +27,13 @@ public class MynongDAO {
 		return sqlSession.selectOne("Mynong.selectid", id);
 	}
 
-	public List<Member> getUserList(Member member) {//멤버 아이디와 닉 검색
+	public List<Member> getUserList(Member member) {// 멤버 아이디와 닉 검색
 		return sqlSession.selectList("Mynong.list", member);
 	}
 
-
-	public void insertNongName(Member member) { //농장 생성후 회원 정보에 농장 이름 넣기
+	public void insertNongName(Member member) { // 농장 생성후 회원 정보에 농장 이름 넣기
 		sqlSession.update("Mynong.addnong", member);
-		
+
 	}
 
 	public int insertusertonong(Member member) {
@@ -76,7 +74,7 @@ public class MynongDAO {
 
 	public void changeoption(Map<String, Object> map) {
 		sqlSession.update("Mynong.changeoption", map);
-		
+
 	}
 
 	public void deletenongmember(String name) {
@@ -93,11 +91,7 @@ public class MynongDAO {
 
 	public void okinvite(String id) {
 		sqlSession.update("Mynong.okinvite", id);
-		
+
 	}
-
-
-
-
 
 }

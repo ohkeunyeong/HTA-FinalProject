@@ -32,19 +32,11 @@
 	height: 15px;
 }
 
-/*     table td,th {
-    border-top:1px solid black;
-    border-bottom:1px solid black;
-    border-collapse: collapse;
-    text-align: center;
-    padding: 10px;
+    .display { /*프로필사진 사이즈*/
+    width: auto; height: auto;
+    max-width: 150px;
+    max-height: 150px;
 }
-
-table{
-    width: 40%;
-    border-collapse: collapse;
-    line-height: 24px;
-} */
 h1 {
 	margin-left: -0.8em;
 	border: 5px solid currentColor;
@@ -370,12 +362,12 @@ main {
 		</div>
 		</main>
 		<sidebar> <!--  <div class="logo">logo</div> -->
-		<div class="avatar">
-			<div class="avatar__img">
-				<img src="https://picsum.photos/70" alt="avatar">
-			</div>
-			<div class="avatar__name">John Smith</div>
-		</div>
+    <div class="avatar">
+      <div class="avatar__img">
+        <img width="25" class="display" src="pdisplay?fileName=${user.original}">
+      </div>
+      <div class="avatar__name" style="color:black;">${user.nick} 님</div>
+    </div>
 		<nav class="menu">
 			<a class="menu__item menu__item--active"
 				href="${pageContext.request.contextPath}/calprocess?id=${id}"> <img

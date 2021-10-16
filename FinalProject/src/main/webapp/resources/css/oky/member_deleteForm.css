@@ -1,0 +1,62 @@
+img {
+	display: block;
+	margin: 0px auto;
+}
+
+form {
+	background-color: #fefefe;
+	margin: 5% auto 15% auto;
+}
+
+h3 {
+	text-align: center;
+	color: red;
+}
+
+#logo {
+	background-color: #28A745;
+	padding: 10px 20px;
+}
+
+input {
+	width: 95%;
+	padding: 10px;
+	margin: 5px 0 22px 0;
+	display: inline-block;
+	margin: 0;
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+	border-radius: 3px;
+	border: 1px solid lightgray;
+}
+
+button {
+	background-color: #4CAF50;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	cursor: pointer; /* 손가락 커서 모양 */
+	width: 100%;
+	opacity: 0.9;
+}
+
+button:hover {
+	opacity: 1;
+}
+
+button:focus {
+	outline: none;
+}
+
+/* 취소 버튼*/
+.cancelbtn {
+	padding: 14px 20px;
+	background-color: #f44336;
+}
+
+.cancelbtn, .submitbtn {
+	float: left;
+	width: 50%;
+}
