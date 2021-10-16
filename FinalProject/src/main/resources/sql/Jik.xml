@@ -137,5 +137,25 @@
  		insert into jik_like
  		values(#{num},#{id})
  	 </insert>
+ 	 
+ 	  <delete id="dlike" parameterType="map">
+ 		delete from jik_like
+		where jik_num=#{num}
+		and jik_id = #{id}
+ 	 </delete>
+ 	 
+ 	  	
+ 	<update id="LikeUp" parameterType="int">
+ 			update jik 
+ 			set jik_like=jik_like+1
+ 			where jik_num = #{num}
+ 	</update>
+ 	
+ 	 	
+ 	<update id="LikeDown" parameterType="int">
+  			update jik 
+ 			set jik_like=jik_like-1
+ 			where jik_num = #{num}
+ 	</update>
  	
  </mapper>

@@ -127,7 +127,24 @@ public class JikServiceImpl implements JikService{
 		map.put("num", num);
 		return dao.Like(map);
 	}
+	
+	@Override
+	public int dlike(int num, String id) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("num", num);
+		return dao.dLike(map);
+	}
 
+	@Override
+	public void LikeUp(int num) {
+		dao.LikeUp(num);
+	}
+
+	@Override
+	public void LikeDown(int num) {
+		dao.LikeDown(num);
+	}
 
 
 }
