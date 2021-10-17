@@ -1,11 +1,9 @@
 package com.hta.project.controller;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,9 +11,9 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
+
+
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,9 +24,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hta.project.domain.Category;
 import com.hta.project.domain.Member;
-import com.hta.project.domain.OrderDetailList;
-import com.hta.project.domain.Order_Detail;
-import com.hta.project.domain.Order_Market;
 import com.hta.project.domain.Product;
 import com.hta.project.domain.Review;
 import com.hta.project.service.MemberService;
@@ -51,39 +46,39 @@ public class ShopController<ReviewList, CartList> {
     	@RequestMapping(value = "/shop_detail", method = RequestMethod.GET)
     	public ModelAndView main(ModelAndView mv, String product_code) {
     		Product product = shopService.getShopProductDetail(product_code);
-    		mv.addObject("p", product);
-    		mv.setViewName("hyun/shop/shop_detail");
-    		return mv;
+    		  //ModelAndView mv = new ModelAndView();
+    		  mv.addObject("product", product);
+    		  mv.setViewName("hyun/shop/shop_detail");
+    		  return mv;
     	}
     	
-    	//상품 목록 
-    	@RequestMapping(value = "/shop_list", method = RequestMethod.GET)
-    	public ModelAndView getProductsList(int category_code, ModelAndView mv,
-    			@RequestParam(value="page", defaultValue="1", required = false) int page,
-    			@RequestParam(value="limit", defaultValue="6", required=false) int limit) {
-    		logger.info("get products list");
+    	@PostMapping("/categoryList")
+    	@ResponseBody
+    	public Map<String, Object> categoryList() {
+    		logger.info("Shop categoryList()");
     		
-    		List<Product> productlist = shopService.getCategoryProductList(page, limit, category_code);
+    		Map<String, Object> map = new HashMap<String, Object>();
     		
-    		switch(category_code) {
-    			case 100:
-    				mv.setViewName("hyun/shop/seed");
-    			break;
-    			case 200:
-    				mv.setViewName("hyun/shop/soil");
-    			break;
-    			case 300:
-    				mv.setViewName("hyun/shop/pesticide");
-    			break;
-    			case 400:
-    				mv.setViewName("hyun/shop/tools");
-    			break;
-    			case 500:
-    				mv.setViewName("hyun/shop/goods");
-    			break;
-    		}
+    		List<Category> categoryList = shopService.getCategoryList();
     		
-    		int listcount = shopService.getCategoryProductListCount();
+    		map.put("categoryList", categoryList);
+    		
+    		return map;
+    	}
+    	
+    	@GetMapping("/productList")
+    	public ModelAndView productList(@RequestParam(value="page", defaultValue="1", required = false) int page,
+    			@RequestParam(value="limit", defaultValue="12", required=false) int limit,
+    			ModelAndView mv,
+    			@RequestParam(value="search_field", defaultValue="-1", required=false) int index,
+    			@RequestParam(value="search_word", defaultValue="", required=false) String search_word) {
+    		logger.info("Shop productList()");
+    		
+    		List<Product> productlist = null;
+    		int listcount = 0;
+    		
+    		productlist = shopService.getProductList(index, search_word, page, limit);
+    		listcount = shopService.getProductListCount(index, search_word);
     		
     		int maxpage = (listcount + limit - 1) / limit;
     		
@@ -102,23 +97,210 @@ public class ShopController<ReviewList, CartList> {
     		mv.addObject("listcount", listcount);
     		mv.addObject("productlist", productlist);
     		mv.addObject("limit", limit);
+    		mv.addObject("search_field", index);
+    		mv.addObject("search_word", search_word);
     		
+    		
+    		mv.setViewName("hyun/shop/shop_main");///////
     		return mv;
     	}
     	
-    	@PostMapping("/categoryList")
-    	@ResponseBody
-    	public Map<String, Object> categoryList() {
-    		logger.info("Shop categoryList()");
+    	@GetMapping("/toolsList1")
+    	public ModelAndView toolsList1(@RequestParam(value="page", defaultValue="1", required = false) int page,
+    			@RequestParam(value="limit", defaultValue="12", required=false) int limit,
+    			ModelAndView mv,
+    			@RequestParam(value="search_field", defaultValue="-1", required=false) int index,
+    			@RequestParam(value="search_word", defaultValue="", required=false) String search_word) {
+    		logger.info("Shop toolsList1()");
     		
-    		Map<String, Object> map = new HashMap<String, Object>();
+    		List<Product> toolslist1 = null;
+    		int listcount = 0;
     		
-    		List<Category> categoryList = shopService.getCategoryList();
+    		toolslist1 = shopService.getToolsList1(index, search_word, page, limit);
+    		listcount = shopService.getProductListCount(index, search_word);
     		
-    		map.put("categoryList", categoryList);
+    		int maxpage = (listcount + limit - 1) / limit;
     		
-    		return map;
+    		int startpage = ((page - 1) / 10) * 10 + 1;
+    		
+    		int endpage = startpage + 10 - 1;
+    		
+    		if(endpage > maxpage) {
+    			endpage = maxpage;
+    		}
+    		
+    		mv.addObject("page", page);
+    		mv.addObject("maxpage", maxpage);
+    		mv.addObject("startpage", startpage);
+    		mv.addObject("endpage", endpage);
+    		mv.addObject("listcount", listcount);
+    		mv.addObject("toolslist1", toolslist1);
+    		mv.addObject("limit", limit);
+    		mv.addObject("search_field", index);
+    		mv.addObject("search_word", search_word);
+    		
+    		
+    		mv.setViewName("hyun/shop/shop_tools");///////
+    		return mv;
     	}
+    	
+    	@GetMapping("/goodsList1")
+    	public ModelAndView goodsList1(@RequestParam(value="page", defaultValue="1", required = false) int page,
+    			@RequestParam(value="limit", defaultValue="12", required=false) int limit,
+    			ModelAndView mv,
+    			@RequestParam(value="search_field", defaultValue="-1", required=false) int index,
+    			@RequestParam(value="search_word", defaultValue="", required=false) String search_word) {
+    		logger.info("Shop goodsList1()");
+    		
+    		List<Product> goodslist1 = null;
+    		int listcount = 0;
+    		
+    		goodslist1 = shopService.getGoodsList1(index, search_word, page, limit);
+    		listcount = shopService.getProductListCount(index, search_word);
+    		
+    		int maxpage = (listcount + limit - 1) / limit;
+    		
+    		int startpage = ((page - 1) / 10) * 10 + 1;
+    		
+    		int endpage = startpage + 10 - 1;
+    		
+    		if(endpage > maxpage) {
+    			endpage = maxpage;
+    		}
+    		
+    		mv.addObject("page", page);
+    		mv.addObject("maxpage", maxpage);
+    		mv.addObject("startpage", startpage);
+    		mv.addObject("endpage", endpage);
+    		mv.addObject("listcount", listcount);
+    		mv.addObject("goodslist1", goodslist1);
+    		mv.addObject("limit", limit);
+    		mv.addObject("search_field", index);
+    		mv.addObject("search_word", search_word);
+    		
+    		
+    		mv.setViewName("hyun/shop/shop_goods");///////
+    		return mv;
+    	}
+    	
+    	
+    	@GetMapping("/seedList1")
+    	public ModelAndView seedList1(@RequestParam(value="page", defaultValue="1", required = false) int page,
+    			@RequestParam(value="limit", defaultValue="12", required=false) int limit,
+    			ModelAndView mv,
+    			@RequestParam(value="search_field", defaultValue="-1", required=false) int index,
+    			@RequestParam(value="search_word", defaultValue="", required=false) String search_word) {
+    		logger.info("Shop seedList1()");
+    		
+    		List<Product> seedlist1 = null;
+    		int listcount = 0;
+    		
+    		seedlist1 = shopService.getSeedList1(index, search_word, page, limit);
+    		listcount = shopService.getProductListCount(index, search_word);
+    		
+    		int maxpage = (listcount + limit - 1) / limit;
+    		
+    		int startpage = ((page - 1) / 10) * 10 + 1;
+    		
+    		int endpage = startpage + 10 - 1;
+    		
+    		if(endpage > maxpage) {
+    			endpage = maxpage;
+    		}
+    		
+    		mv.addObject("page", page);
+    		mv.addObject("maxpage", maxpage);
+    		mv.addObject("startpage", startpage);
+    		mv.addObject("endpage", endpage);
+    		mv.addObject("listcount", listcount);
+    		mv.addObject("seedlist1", seedlist1);
+    		mv.addObject("limit", limit);
+    		mv.addObject("search_field", index);
+    		mv.addObject("search_word", search_word);
+    		
+    		
+    		mv.setViewName("hyun/shop/shop_seed");///////
+    		return mv;
+    	}
+    	
+    	@GetMapping("/soilList1")
+    	public ModelAndView soilList1(@RequestParam(value="page", defaultValue="1", required = false) int page,
+    			@RequestParam(value="limit", defaultValue="12", required=false) int limit,
+    			ModelAndView mv,
+    			@RequestParam(value="search_field", defaultValue="-1", required=false) int index,
+    			@RequestParam(value="search_word", defaultValue="", required=false) String search_word) {
+    		logger.info("Shop soilList1()");
+    		
+    		List<Product> soillist1 = null;
+    		int listcount = 0;
+    		
+    		soillist1 = shopService.getSoilList1(index, search_word, page, limit);
+    		listcount = shopService.getProductListCount(index, search_word);
+    		
+    		int maxpage = (listcount + limit - 1) / limit;
+    		
+    		int startpage = ((page - 1) / 10) * 10 + 1;
+    		
+    		int endpage = startpage + 10 - 1;
+    		
+    		if(endpage > maxpage) {
+    			endpage = maxpage;
+    		}
+    		
+    		mv.addObject("page", page);
+    		mv.addObject("maxpage", maxpage);
+    		mv.addObject("startpage", startpage);
+    		mv.addObject("endpage", endpage);
+    		mv.addObject("listcount", listcount);
+    		mv.addObject("soillist1", soillist1);
+    		mv.addObject("limit", limit);
+    		mv.addObject("search_field", index);
+    		mv.addObject("search_word", search_word);
+    		
+    		
+    		mv.setViewName("hyun/shop/shop_soil");///////
+    		return mv;
+    	}
+    	
+    	@GetMapping("/pesticideList1")
+    	public ModelAndView pesticideList1(@RequestParam(value="page", defaultValue="1", required = false) int page,
+    			@RequestParam(value="limit", defaultValue="12", required=false) int limit,
+    			ModelAndView mv,
+    			@RequestParam(value="search_field", defaultValue="-1", required=false) int index,
+    			@RequestParam(value="search_word", defaultValue="", required=false) String search_word) {
+    		logger.info("Shop pesticideList1()");
+    		
+    		List<Product> pesticidelist1 = null;
+    		int listcount = 0;
+    		
+    		pesticidelist1 = shopService.getPesticideList1(index, search_word, page, limit);
+    		listcount = shopService.getProductListCount(index, search_word);
+    		
+    		int maxpage = (listcount + limit - 1) / limit;
+    		
+    		int startpage = ((page - 1) / 10) * 10 + 1;
+    		
+    		int endpage = startpage + 10 - 1;
+    		
+    		if(endpage > maxpage) {
+    			endpage = maxpage;
+    		}
+    		
+    		mv.addObject("page", page);
+    		mv.addObject("maxpage", maxpage);
+    		mv.addObject("startpage", startpage);
+    		mv.addObject("endpage", endpage);
+    		mv.addObject("listcount", listcount);
+    		mv.addObject("pesticidelist1", pesticidelist1);
+    		mv.addObject("limit", limit);
+    		mv.addObject("search_field", index);
+    		mv.addObject("search_word", search_word);
+    		
+    		
+    		mv.setViewName("hyun/shop/shop_pesticide");///////
+    		return mv;
+    	}
+    	
     	
     	@PostMapping("/productDetail")
     	@ResponseBody
@@ -175,9 +357,9 @@ public class ShopController<ReviewList, CartList> {
     	
     	// 상품 조회 - 소감(댓글) 작성
     	@ResponseBody   	
-    	@RequestMapping(value = "/registReview", method = RequestMethod.POST)
+    	@RequestMapping (value = "/registReview", method = RequestMethod.POST)
     	public void registReview(Review review, HttpSession session) throws Exception {
-    	 logger.info("regist review");
+    	 logger.info(review.getProduct_code());
     	 
     	 String id = (String)session.getAttribute("id");
     	 Member member = memberService.member_info(id);
@@ -189,8 +371,8 @@ public class ShopController<ReviewList, CartList> {
     	 
     	}
     	
-    	
-    	
+		
+		
     	// 상품 소감(댓글) 목록
     	@ResponseBody
     	@RequestMapping(value = "/reviewList", method = RequestMethod.GET)
@@ -253,74 +435,7 @@ public class ShopController<ReviewList, CartList> {
 
     		return result;
 
-    	}
+    	}	
 
-    	// 주문
-    	@RequestMapping(value = "/cartList", method = RequestMethod.POST)
-    	public String order(HttpSession session, Order_Market ordermarket, Order_Detail orderDetail) throws Exception {
-    		logger.info("order");
-
-    		Member member = (Member)session.getAttribute("member");		
-    		String userId = member.getId();
-
-    		// 캘린더 호출
-    		Calendar cal = Calendar.getInstance();
-    		int year = cal.get(Calendar.YEAR);  // 연도 추출
-    		String ym = year + new DecimalFormat("00").format(cal.get(Calendar.MONTH) + 1);  // 월 추출
-    		String ymd = ym +  new DecimalFormat("00").format(cal.get(Calendar.DATE));  // 일 추출
-    		String subNum = "";  // 랜덤 숫자를 저장할 문자열 변수
-
-    		for(int i = 1; i <= 6; i ++) {  // 6회 반복
-    			subNum += (int)(Math.random() * 10);  // 0~9까지의 숫자를 생성하여 subNum에 저장
-    		}
-
-    		String ordernum = ymd + "_" + subNum;  // [연월일]_[랜덤숫자] 로 구성된 문자
-
-    		ordermarket.setOrder_num(ordernum);
-    		ordermarket.setOrder_name(userId);
-
-    		shopService.orderInfo(ordermarket);
-
-    		orderDetail.setId(userId);			
-    		shopService.orderInfo_Details(orderDetail);
-
-    		// 주문 테이블, 주문 상세 테이블에 데이터를 전송하고, 카트 비우기
-    		shopService.cartAllDelete(userId);
-
-    		return "redirect:/shop/orderList";		
-    	}
-
-    	// 주문 목록
-    	@RequestMapping(value = "/orderList", method = RequestMethod.GET)
-    	public void getOrderList(HttpSession session,  Order_Market ordermarket, Model model) throws Exception {
-    		logger.info("get order list");
-
-    		Member member = (Member)session.getAttribute("member");
-    		String userId = member.getId();
-
-    		ordermarket.setId(userId);
-
-    		List<Order> orderList = shopService.orderList(ordermarket);
-
-    		model.addAttribute("orderList", orderList);
-    	}
-
-    	// 주문 상세 목록
-    	@RequestMapping(value = "/orderView", method = RequestMethod.GET)
-    	public void getOrderList(HttpSession session,
-    							@RequestParam("n") String orderId,
-    							 Order_Market ordermarket, Model model) throws Exception {
-    		logger.info("get order view");
-
-    		Member member = (Member)session.getAttribute("member");
-    		String userId = member.getId();
-
-    		ordermarket.setId(userId);
-    		ordermarket.setOrder_name(orderId);
-
-    		List<OrderDetailList> orderView = shopService.orderView(ordermarket);
-
-    		model.addAttribute("orderView", orderView);
-    	}
-
+    	
 }
