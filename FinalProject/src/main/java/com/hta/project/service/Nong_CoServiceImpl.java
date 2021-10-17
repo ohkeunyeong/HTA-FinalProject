@@ -11,8 +11,8 @@ import com.hta.project.dao.Nong_CoDAO;
 import com.hta.project.domain.Nong_Co;
 
 @Service
-public class Nong_CoServiceImpl implements Nong_CoService{
-	
+public class Nong_CoServiceImpl implements Nong_CoService {
+
 	@Autowired
 	private Nong_CoDAO dao;
 
@@ -24,8 +24,8 @@ public class Nong_CoServiceImpl implements Nong_CoService{
 	@Override
 	public List<Nong_Co> getCommentList(int nong_num, int page, String name) {
 		int startrow = 1;
-		int endrow = page*3;
-		
+		int endrow = page * 3;
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("nong_num", nong_num);
 		map.put("start", startrow);
@@ -48,6 +48,5 @@ public class Nong_CoServiceImpl implements Nong_CoService{
 	public int commentsUpdate(Nong_Co co) {
 		return dao.commentUpdate(co);
 	}
-
 
 }

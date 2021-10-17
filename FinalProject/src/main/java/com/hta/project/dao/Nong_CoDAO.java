@@ -13,8 +13,8 @@ import com.hta.project.domain.Nong_Co;
 public class Nong_CoDAO {
 
 	@Autowired
-	private SqlSessionTemplate sqlSession;	
-	
+	private SqlSessionTemplate sqlSession;
+
 	public int getListCount(int num) {
 		return sqlSession.selectOne("Nong_Cos.count", num);
 	}

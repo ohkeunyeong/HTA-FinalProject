@@ -14,20 +14,8 @@ function go(page) {
 	
 	if (!$("#search").val()) {
 	var data = "name=" + name +"&view=" + view + "&state=ajax&page=" + page;	
-//	{
-//	    		"view" : view,
-//			    "page" : page,		
-//			    "name" : name
-//		};
 	} else {
 	var data = "name=" + name +"&view=" + view + "&state=ajax&page=" + page + "&type=" + setype + "&search=" + search;	
-//	{
-//    		"view"  : view,
-//		    "page"  : page,		
-//		    "name"  : name,
-//		    "type"  : setype,
-//		    "search": search
-//	};
 	}
 	
 	console.log(data)

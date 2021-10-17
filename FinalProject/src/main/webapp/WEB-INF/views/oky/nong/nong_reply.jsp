@@ -5,22 +5,21 @@
      <title>멤버게시판 답글쓰기</title>
      <jsp:include page="../../main/header.jsp" /> 
      <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
-     <script src="${pageContext.request.contextPath}/resources/js/oky/reply.js"></script>
-     <style>
-     h1{font-size: 1.5rem; text-align:center; color:#1a92b9}
-     .container{width:60%}
-     label{font-weight: bold}
-     </style>
+     <script src="${pageContext.request.contextPath}/resources/js/oky/nong_reply.js"></script>
+     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,500,700"/>
+     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/oky/nong_reply.css"></link> 
 </head>
-<body>
-<br><br><br>
+<body style="overflow-x:hidden; overflow-y:auto;">
+<br><br>
+<div class="wrapper">
+<main>
  <div class="container">
    <form action = "nongreplyAction" method="post" name="boardform">
      <input type="hidden" id="name" value="${name}" name="name">
      <input type="hidden" name="nong_re_ref" value="${boarddata.nong_re_ref}">
      <input type="hidden" name="nong_re_lev" value="${boarddata.nong_re_lev}">
      <input type="hidden" name="nong_re_seq" value="${boarddata.nong_re_seq}">
-     <h1>멤버게시판 답글쓰기</h1>
+     <h1>답글쓰기</h1>
      <div class="form-group">
        <label for="board_name">글쓴이</label>
        <input name="id" id="board_name" value="${id}"   readOnly
@@ -51,6 +50,36 @@
       </div>           
    </form>
  </div>
+ </main>
+<sidebar>
+   <!--  <div class="logo">logo</div> -->
+    <div class="avatar">
+      <div class="avatar__img">
+        <img width="25" class="display" src="pdisplay?fileName=${user.original}">
+      </div>
+      <div class="avatar__name" style="color:black;">${user.nick} 님</div>
+    </div>
+    <nav class="menu">
+      <a class="menu__item" href="${pageContext.request.contextPath}/calprocess?id=${id}">
+      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/calendar.png" alt="by"/>
+        <span style="padding:0px 0px 0px 17px;" class="menu__text">캘린더</span>
+      </a>
+      <a class="menu__item" href="${pageContext.request.contextPath}/accprocess?id=${id}">
+      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/accounting.png" alt="by"/>
+        <span style="padding:0px 0px 0px 17px;" class="menu__text">가계부</span>
+      </a>    
+      <a class="menu__item menu__item--active" href="${pageContext.request.contextPath}/nongprocess?id=${id}">
+      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/bbs.png" alt="by"/>
+        <span style="padding:0px 0px 0px 17px;" class="menu__text">멤버게시판</span>
+      </a>
+      <a class="menu__item" href="${pageContext.request.contextPath}/mynongprocess?id=${id}">
+      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/setting.png" alt="by"/>
+        <!-- <i class="menu__icon fa fa-envelope"></i> -->
+      <span style="padding:0px 0px 0px 17px;" class="menu__text">농장관리</span>
+      </a>
+    </nav>
+  </sidebar>
+  </div>                   
 <jsp:include page="../../main/footer.jsp" />  
 </body>
 </html>

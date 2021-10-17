@@ -12,12 +12,12 @@ import com.hta.project.domain.Nong;
 
 @Repository
 public class NongDAO {
-	
+
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	
+
 	public int getListCount(String name) {
-		return sqlSession.selectOne("Nongs.count" ,name);
+		return sqlSession.selectOne("Nongs.count", name);
 	}
 
 	public List<Nong> getBoardList(HashMap<String, Object> map) {
@@ -26,11 +26,11 @@ public class NongDAO {
 
 	public void insertBoard(Nong nong) {
 		sqlSession.insert("Nongs.insert", nong);
-		
+
 	}
 
 	public int setReadCountUpdate(int num) {
-		return sqlSession.update("Nongs.readCountUpdate",num);
+		return sqlSession.update("Nongs.readCountUpdate", num);
 	}
 
 	public Nong getDetail(int num) {
@@ -65,9 +65,6 @@ public class NongDAO {
 		return sqlSession.selectList("Nongs.deleteFileList");
 	}
 
-
-
-
 	public List<Nong> getajaxBoardList1(HashMap<String, Object> map) {
 		return sqlSession.selectList("Nongs.ajaxlist1", map);
 	}
@@ -93,7 +90,7 @@ public class NongDAO {
 	}
 
 	public int getSearchListCount(HashMap<String, Object> map) {
-		return sqlSession.selectOne("Nongs.searchlistcount" ,map);
+		return sqlSession.selectOne("Nongs.searchlistcount", map);
 	}
 
 }

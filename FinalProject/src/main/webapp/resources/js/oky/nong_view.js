@@ -81,6 +81,11 @@ $(function(){
 	// 버튼의 라벨이 '등록'인 경우는 댓글을 추가하는 경우
 	// 버튼의 라벨이 '수정완료'인 경우는 댓글을 수정하는 경우
 	$("#write").click(function() {
+		if ($.trim($("#content").val()) == "") {
+			alert("내용을 입력하세요");
+			$("#content").focus();
+			return false;
+		}
 		buttonText = $("#write").text(); //버튼의 라벨로 add할지 update 할지 결정
 		$(".float-left").text('총 50자까지 가능합니다.');
 		if (buttonText== "등록") { // 댓글을 추가하는 경우

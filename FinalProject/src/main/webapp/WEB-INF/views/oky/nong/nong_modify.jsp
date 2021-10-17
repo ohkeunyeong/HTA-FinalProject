@@ -6,23 +6,19 @@
      <title>멤버게시판 수정</title>
      <jsp:include page="../../main/header.jsp" /> 
      <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
-     <script src="${pageContext.request.contextPath}/resources/js/oky/modify.js"></script>
-     <style>
-     h1{font-size: 1.5rem; text-align:center; color:#1a92b9}
-     .container{width:60%}
-     label{font-weight: bold}
-     #upfile{display: none}
-     .remove{width: 20px;}
-     </style>
-     
+     <script src="${pageContext.request.contextPath}/resources/js/oky/nong_modify.js"></script>
+     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/oky/nong_modify.css"></link>
+     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,500,700"/>
 <script>
   if('${result}'== 'passFail') {
 	  alert("비밀번호가 다릅니다.")
   }
 </script>
 </head>
-<body>
-<br><br><br>
+<body style="overflow-x:hidden; overflow-y:auto;">
+<br><br>
+<div class="wrapper">
+<main>
    <%-- 게시판 수정 --%>
   <div class="container">
    <form action="nongmodifyAction" 
@@ -31,7 +27,7 @@
         <input type="hidden" name="nong_num"       value="${boarddata.nong_num}">
         <input type="hidden" name="nong_file"      value="${boarddata.nong_file}">
         <input type="hidden" name="before_file"     value="${boarddata.nong_file}">
-     <h1>멤버 게시판 - 수정</h1>
+     <h1>수정하기</h1>
      <div class="form-group">
         <label for="board_name">글쓴이</label><input value="${boarddata.id}" 
         readOnly name="id" type="text" class="form-control">
@@ -74,6 +70,36 @@
      </div>
    </form>
   </div>
+</main>
+<sidebar>
+   <!--  <div class="logo">logo</div> -->
+    <div class="avatar">
+      <div class="avatar__img">
+        <img width="25" class="display" src="pdisplay?fileName=${user.original}">
+      </div>
+      <div class="avatar__name" style="color:black;">${user.nick} 님</div>
+    </div>
+    <nav class="menu">
+      <a class="menu__item" href="${pageContext.request.contextPath}/calprocess?id=${id}">
+      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/calendar.png" alt="by"/>
+        <span style="padding:0px 0px 0px 17px;" class="menu__text">캘린더</span>
+      </a>
+      <a class="menu__item" href="${pageContext.request.contextPath}/accprocess?id=${id}">
+      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/accounting.png" alt="by"/>
+        <span style="padding:0px 0px 0px 17px;" class="menu__text">가계부</span>
+      </a>    
+      <a class="menu__item menu__item--active" href="${pageContext.request.contextPath}/nongprocess?id=${id}">
+      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/bbs.png" alt="by"/>
+        <span style="padding:0px 0px 0px 17px;" class="menu__text">멤버게시판</span>
+      </a>
+      <a class="menu__item" href="${pageContext.request.contextPath}/mynongprocess?id=${id}">
+      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/setting.png" alt="by"/>
+        <!-- <i class="menu__icon fa fa-envelope"></i> -->
+      <span style="padding:0px 0px 0px 17px;" class="menu__text">농장관리</span>
+      </a>
+    </nav>
+  </sidebar>
+  </div>                   
 <jsp:include page="../../main/footer.jsp" />   
 </body>
 </html>

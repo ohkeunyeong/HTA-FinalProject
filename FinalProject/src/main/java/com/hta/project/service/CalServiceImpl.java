@@ -9,11 +9,11 @@ import com.hta.project.dao.MycalDAO;
 import com.hta.project.domain.MyCalendar;
 
 @Service
-public class CalServiceImpl implements CalService{
-	
+public class CalServiceImpl implements CalService {
+
 	@Autowired
 	private MycalDAO dao;
-	
+
 	@Override
 	public boolean insertCal(MyCalendar calendar) {
 		return dao.insertCal(calendar);
@@ -48,7 +48,5 @@ public class CalServiceImpl implements CalService{
 	public List<MyCalendar> calViewList(String name, String yyyyMM) {
 		return dao.calViewList(name, yyyyMM);
 	}
-	
-
 
 }
