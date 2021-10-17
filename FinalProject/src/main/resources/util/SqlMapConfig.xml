@@ -29,7 +29,9 @@
 		<typeAlias alias="review"  	    type="com.hta.project.domain.Review"/>
 		<typeAlias alias="reviewList"   type="com.hta.project.domain.ReviewList"/>
 		<typeAlias alias="cart"      	type="com.hta.project.domain.Cart"/>
-		<typeAlias alias="cartList"      type="com.hta.project.domain.CartList"/>
+		<typeAlias alias="cartList"     type="com.hta.project.domain.CartList"/>
+		<typeAlias alias="free" 		type="com.hta.project.domain.Free" />
+		<typeAlias alias="free_comm" 	type="com.hta.project.domain.Free_Comm" />
      </typeAliases>
          
      <mappers>
@@ -37,6 +39,8 @@
       	<mapper resource="sql/report.xml" />
        	<mapper resource="sql/Jik.xml" />
        	<mapper resource="sql/Jik_Comm.xml" />
+<!--  	<mapper resource="sql/Free.xml" />
+       	<mapper resource="sql/Free_Comm.xml" />           free 추가중-->  
        	<mapper resource="sql/notice.xml" />
        	<mapper resource="sql/member.xml" />
        	<mapper resource="sql/product.xml" />

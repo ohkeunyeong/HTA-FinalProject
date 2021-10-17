@@ -37,15 +37,9 @@
 			<!-- Dropdown -->
 			<li class="nav-item dropdown active" style="padding-left: 4%;"><a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 농장 모듬 </a>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" href="#">수다 농장</a> <a class="dropdown-item" href="#">궁금해요</a> <a class="dropdown-item" href="#">도움 구해요</a> <a class="dropdown-item" href="#">출석 도장</a>
+					<a class="dropdown-item" href="#">수다 농장</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/jik/list">직거래 장터</a>
 				</div></li>
-
-			<!-- Dropdown -->
-			<li class="nav-item dropdown active" style="padding-left: 4%"><a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 주말 장터 </a>
-				<div class="dropdown-menu">
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/jik/list">직거래 장터</a>
-				</div></li>
-
+				
 			<!-- Dropdown -->
 			<li class="nav-item dropdown active" style="padding-left: 4%"><a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 굿즈 장터 </a>
 				<div class="dropdown-menu">

@@ -49,11 +49,10 @@ textarea.form-control {
 .center{
 	text-align: center;
 }
-
 .noborder.right{
+	text-align: right;
 	border-top: none;
 	font-size: 12px;
-	text-align: right;
 }
 .center.noborder{
 	border-top: none;

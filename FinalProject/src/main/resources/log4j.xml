@@ -23,6 +23,14 @@
 		<level value="trace" />
 	</logger>
 	
+	<logger name="Frees">
+		<level value="trace" />
+	</logger>
+	
+	<logger name="Free_Comms">
+		<level value="trace" />
+	</logger>
+	
 	<logger name="Notices">
 		<level value="trace" />
 	</logger>
