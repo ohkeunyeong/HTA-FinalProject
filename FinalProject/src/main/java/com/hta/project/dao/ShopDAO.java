@@ -28,8 +28,8 @@ public class ShopDAO {
 		return sqlSession.selectList("Products.categoryList");
 	}
 	
-	public int getProductListCount() {
-		return sqlSession.selectOne("Products.shopProductCount");
+	public int getProductListCount(Map<String, String> map) {
+		return sqlSession.selectOne("Products.count", map);
 	}
 
 	public Product getShopProductDetail(String code) {
@@ -45,18 +45,38 @@ public class ShopDAO {
 	}
 
 	public List<Product> getProductList(Map<String, Object> map) {
-		return sqlSession.selectList("Products.productList", map);
+		return sqlSession.selectList("Products.list", map);
 	}
 
 
 	public List<Product> getToolsList(Map<String, Object> map) {
 		return sqlSession.selectList("Products.tools", map);
 	}
+	
+	public List<Product> getToolsList1(Map<String, Object> map) {
+		return sqlSession.selectList("Products.tools1", map);
+	}
 
 	public List<Product> getGoodsList(Map<String, Object> map) {
 		return sqlSession.selectList("Products.goods", map);
 	}
+	
+	public List<Product> getGoodsList1(Map<String, Object> map) {
+		return sqlSession.selectList("Products.goods1", map);
+	}
 
+	public List<Product> getSeedList1(Map<String, Object> map) {
+		return sqlSession.selectList("Products.seed1", map);
+	}
+	
+	public List<Product> getSoilList1(Map<String, Object> map) {
+		return sqlSession.selectList("Products.soil1", map);
+	}
+	
+	public List<Product> getPesticideList1(Map<String, Object> map) {
+		return sqlSession.selectList("Products.pesticide1", map);
+	}
+	
 	public List<Product> getReviewList(Map<String, Object> map) {
 		return sqlSession.selectList("Products.review", map);
 	}
@@ -134,5 +154,11 @@ public class ShopDAO {
 	public List<OrderDetailList> orderView(Order_Market ordermarket) throws Exception {
 		return sqlSession.selectList(namespace + ".orderView", ordermarket);
 	}
+
+	
+
+	
+
+	
 		
 }
