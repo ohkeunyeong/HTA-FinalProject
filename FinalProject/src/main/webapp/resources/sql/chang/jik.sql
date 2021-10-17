@@ -8,6 +8,7 @@ jik_content			varchar2(4000),
 jik_readcount		NUMBER(10),
 jik_like			NUMBER(10),
 jik_date			DATE default sysdate,
+jik_ldate			DATE default sysdate,
 jik_file			varchar2(100),
 jik_original		varchar2(100)
 )

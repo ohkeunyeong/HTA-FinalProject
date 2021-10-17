@@ -17,6 +17,7 @@ public class Jik {
 	private MultipartFile uploadfile;
 	private int cnt;
 	private String profile;
+	private String jik_ldate;
 	
 	public int getJik_num() {
 		return jik_num;
@@ -95,6 +96,12 @@ public class Jik {
 	}
 	public void setProfile(String profile) {
 		this.profile = profile;
+	}
+	public String getJik_ldate() {
+		return jik_ldate;
+	}
+	public void setJik_ldate(String jik_ldate) {
+		this.jik_ldate = jik_ldate;
 	}
 
 

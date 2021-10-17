@@ -351,7 +351,7 @@ public class JikController {
 		}else {
 			logger.info("디테일 뷰 페이지 불러오기 성공");
 			int count = jik_commService.getListCount(num);
-			mv.setViewName("chang/Jik/jik_view2");
+			mv.setViewName("chang/Jik/jik_view3");
 			mv.addObject("count", count);
 			mv.addObject("jikdata", jik);
 		}
