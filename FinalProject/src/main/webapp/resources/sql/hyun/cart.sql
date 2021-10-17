@@ -17,3 +17,15 @@ select * from cart;
 
 create sequence cart_seq;
 --실행함 9.19
+
+select cart.id, cart.order_de_count, product.*
+	  from cart, product
+	  where cart.id = 'ajaxk'
+	  and cart.cart_num in (32, 33)
+	  and cart.product_code = product.product_code
+	  
+select 'A00002', cart.id, cart.order_de_count, product.*
+		from cart, product
+		where id = 'ajaxk'
+		and cart_num in (32, 33)
+		and cart.product_code = product.product_code

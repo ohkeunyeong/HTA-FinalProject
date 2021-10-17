@@ -218,5 +218,19 @@ public class ShopServiceImpl implements ShopService{
 		public List<OrderDetailList> orderView(Order_Market ordermarket) throws Exception {
 			return dao.orderView(ordermarket);
 		}
+
+
+		@Override
+		public List getCategoryProductList(int page, int limit, int category_code) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+
+		@Override
+		public int getCategoryProductListCount() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
 	
 }

@@ -22,10 +22,7 @@ insert into CATEGORY
 values('400', '농기구');
 
 insert into CATEGORY
-values('500', '퍼스나콘');
-
-insert into CATEGORY
-values('600', '굿즈');
+values('500', '굿즈');
 
 select a.product_code, count(*) cnt
   from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,

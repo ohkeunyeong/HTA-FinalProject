@@ -95,12 +95,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						<c:forEach var="d" items="${orderlist}">
 							<div class="col-lg-6">
 								<div class="card card-primary">
-									<div class="card-header">
-										<fmt:formatNumber var="price" value="${d.product_price}" pattern="###,###,###" />
-										<span><a href="#">${d.product_name}</a></span> <span class="float-right">${price}원</span>
-									</div>
-									<div class="card-body">
-										<img class="img-fluid" src="${pageContext.request.contextPath}/resources/upload${d.product_img}" alt="productImg" width="200px" height="200px" style="margin-left: 85px;">
+									<div class="card-header"></div>
+									<div class="card-body d-flex">
+										<img class="img-fluid" src="${pageContext.request.contextPath}/upload${d.product_img}" alt="productImg" width="200px" height="200px">
+										<div class="h3 mt-2">
+											<p>상품이름 : <span>${d.product_name}</span></p>
+											<p>카테고리 : <span>${d.category_name}</span></p>
+											<p>주문수량 : <span>${d.order_de_count}</span></p>
+											<p>상품가격 : <span>${d.product_price}</span></p>
+										</div>
 									</div>
 								</div>
 							</div>

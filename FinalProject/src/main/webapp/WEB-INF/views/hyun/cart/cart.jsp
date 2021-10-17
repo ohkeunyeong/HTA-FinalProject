@@ -29,7 +29,7 @@
 					<tbody>
 						<c:forEach var="c" items="${cartlist}">
 							<tr>
-								<td class="align-middle"><input name="RowCheck" type="checkbox" value="${c.product_price * c.order_de_count}" data-cartNum="${c.cart_num}" data-pro_name="${c.product_name}"></td>
+								<td class="align-middle"><input name="RowCheck" type="checkbox" value="${c.product_price * c.order_de_count}" data-cartNum="${c.cart_num}" data-pro_name="${c.product_name}" data-code="${c.product_code}"></td>
 								<td class="align-middle"><img src="${pageContext.request.contextPath}/upload${c.product_img}" width="80px" height="80px"></td>
 								<td class="align-middle"><a href="/project/shop/shop_detail?product_code=${c.product_code}">${c.product_name}</a></td>
 								<td class="align-middle"><fmt:formatNumber pattern="###,###,###" value="${c.product_price}"/>원</td>

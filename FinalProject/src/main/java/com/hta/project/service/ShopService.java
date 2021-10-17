@@ -74,6 +74,10 @@ public interface ShopService<ReviewList, CartList> {
 	//주문 테이블, 주문 상세 테이블에 데이터를 전송하고, 카트 비우기
 	public void cartAllDelete(String userId)throws Exception;
 
+	public List<Product> getCategoryProductList(int page, int limit, int category_code);
+
+	public int getCategoryProductListCount();
+
 
 
 	

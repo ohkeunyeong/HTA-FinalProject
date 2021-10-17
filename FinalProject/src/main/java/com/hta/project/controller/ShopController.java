@@ -1,6 +1,7 @@
 package com.hta.project.controller;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.hta.project.domain.Cart;
 import com.hta.project.domain.Category;
 import com.hta.project.domain.Member;
 import com.hta.project.domain.OrderDetailList;
@@ -53,6 +53,56 @@ public class ShopController<ReviewList, CartList> {
     		Product product = shopService.getShopProductDetail(product_code);
     		mv.addObject("p", product);
     		mv.setViewName("hyun/shop/shop_detail");
+    		return mv;
+    	}
+    	
+    	//상품 목록 
+    	@RequestMapping(value = "/shop_list", method = RequestMethod.GET)
+    	public ModelAndView getProductsList(int category_code, ModelAndView mv,
+    			@RequestParam(value="page", defaultValue="1", required = false) int page,
+    			@RequestParam(value="limit", defaultValue="6", required=false) int limit) {
+    		logger.info("get products list");
+    		
+    		List<Product> productlist = shopService.getCategoryProductList(page, limit, category_code);
+    		
+    		switch(category_code) {
+    			case 100:
+    				mv.setViewName("hyun/shop/seed");
+    			break;
+    			case 200:
+    				mv.setViewName("hyun/shop/soil");
+    			break;
+    			case 300:
+    				mv.setViewName("hyun/shop/pesticide");
+    			break;
+    			case 400:
+    				mv.setViewName("hyun/shop/tools");
+    			break;
+    			case 500:
+    				mv.setViewName("hyun/shop/goods");
+    			break;
+    		}
+    		
+    		int listcount = shopService.getCategoryProductListCount();
+    		
+    		int maxpage = (listcount + limit - 1) / limit;
+    		
+    		int startpage = ((page - 1) / 10) * 10 + 1;
+    		
+    		int endpage = startpage + 10 - 1;
+    		
+    		if(endpage > maxpage) {
+    			endpage = maxpage;
+    		}
+    		
+    		mv.addObject("page", page);
+    		mv.addObject("maxpage", maxpage);
+    		mv.addObject("startpage", startpage);
+    		mv.addObject("endpage", endpage);
+    		mv.addObject("listcount", listcount);
+    		mv.addObject("productlist", productlist);
+    		mv.addObject("limit", limit);
+    		
     		return mv;
     	}
     	

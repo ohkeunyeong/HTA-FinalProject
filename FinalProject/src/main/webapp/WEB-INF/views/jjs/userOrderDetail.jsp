@@ -28,7 +28,7 @@ hr, footer {
 }
 
 .table {
-	width: 102%;
+	width: 100%;
 }
 
 .products {
@@ -76,12 +76,18 @@ hr, footer {
 			<c:forEach var="ol" items="${orderlist}">
 				<fmt:formatNumber var="price" value="${ol.product_price}" pattern="###,###,###" />
 				<div class="mb-2 ml-2 product">
-					<img class="img-fluid float-right" src="${pageContext.request.contextPath}/resources/upload${ol.product_img}" alt="productImg" width="200px" height="200px">
-					<p class="mt-5 ml-2">
-						상품명&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><a href="${pageContext.request.contextPath}/shop/shop_detail?product_code=${ol.product_code}">${ol.product_name}</a></span>
+					<img class="img-fluid float-right mr-5" src="${pageContext.request.contextPath}/upload${ol.product_img}" alt="productImg" width="200px" height="200px">
+					<p class="mt-2 ml-2">
+						상품이름 : <span><a href="${pageContext.request.contextPath}/shop/shop_detail?product_code=${ol.product_code}">${ol.product_name}</a></span>
 					</p>
 					<p class="ml-2">
-						가격&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>${price}원</span>
+						카테고리 : <span>${ol.category_name}</span>
+					</p>
+					<p class="ml-2">
+						주문수량 : <span>${ol.order_de_count}개</span>
+					</p>
+					<p class="ml-2">
+						상품가격 : <span>${price}원</span>
 					</p>
 				</div>
 			</c:forEach>
