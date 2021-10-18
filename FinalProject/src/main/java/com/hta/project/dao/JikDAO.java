@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.hta.project.domain.Jik;
+import com.hta.project.domain.Jik_File;
 
 @Repository
 public class JikDAO {
@@ -95,6 +96,15 @@ public class JikDAO {
 
 	public void LikeDown(int num) {
 		sqlSession.update("Jiks.LikeDown", num);
+	}
+
+
+	public void insert_JikFile(HashMap<String, Object> map) {
+		sqlSession.insert("Jiks.insertFile", map);
+	}
+
+	public List<Jik_File> getFile(int num) {
+		return sqlSession.selectList("Jiks.getFile", num);
 	}
 
 

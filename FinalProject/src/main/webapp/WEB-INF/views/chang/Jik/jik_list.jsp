@@ -31,6 +31,7 @@ select{
 	if('${result}'=='deleteSuccess'){
 		alert("글 삭제 성공")
 	}
+	
 	</script>
 </head>
  <title>직거래 장터</title>
@@ -69,7 +70,7 @@ select{
    </thead>
    <tbody>
 	<c:set var="num" value="${listcount-(page-1)*limit}"/>	
-	<c:forEach var="b" items="${jiklist}">	
+	<c:forEach var="b" items="${jiklist}">
 	<tr>
 	  <td><%--번호 --%>
 		<c:out value="${num}"/><%-- num 출력 --%>		

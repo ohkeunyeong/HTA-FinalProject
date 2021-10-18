@@ -17,7 +17,6 @@ import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
@@ -42,6 +41,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hta.project.domain.Jik;
+import com.hta.project.domain.Jik_File;
 import com.hta.project.service.JikService;
 import com.hta.project.service.Jik_CommService;
 
@@ -109,13 +109,12 @@ public class JikController {
 					if(!(path1.exists())) {
 						path1.mkdir();
 					}
-					
 					String save = saveFolder+ "/" + year + "-" + month + "-" + date + "/";
-					
 					File targetFile = new File(save + savedFileName);	
 					try {
 						InputStream fileStream = file.getInputStream();
 						FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
+						
 						
 					} catch (Exception e) {
 						//파일삭제
@@ -137,28 +136,54 @@ public class JikController {
 	}
 	
 	@PostMapping("/add")
-	
-	public String add(Jik jik, HttpServletRequest request)
+	@ResponseBody
+	public void add(Jik jik, @RequestParam("article_file") List<MultipartFile> multipartFile
+			, HttpServletRequest request, RedirectAttributes rattr)
 		throws Exception{
 		
-		MultipartFile uploadfile = jik.getUploadfile();
-		
-		if (!uploadfile.isEmpty()) {
-			String fileName = uploadfile.getOriginalFilename();//
-			jik.setJik_original(fileName);//
-			
-			String fileDBName = fileDBName(fileName, saveFolder);
-			logger.info("fileDBName =" + fileDBName);
-			
-			 
-			uploadfile.transferTo(new File(saveFolder + fileDBName));
-			
-		
-			jik.setJik_file(fileDBName);
-		}
 		jikService.insertJik(jik);
+		logger.info(""+jik.getJik_num());
+		try {
+			// 파일이 있을때 탄다.
+			if(multipartFile.size() > 0 && !multipartFile.get(0).getOriginalFilename().equals("")) {
+				
+				for(MultipartFile file:multipartFile) {
+					
+					String originalFileName = file.getOriginalFilename();	//오리지날 파일명
+					String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+					String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+					
+					Calendar c = Calendar.getInstance();
+					int year = c.get(Calendar.YEAR);
+					int month =  c.get(Calendar.MONTH) + 1; 
+					int date =  c.get(Calendar.DATE); 
+					
+					String homedir = saveFolder + year + "-" + month + "-" + date;
+					logger.info(homedir);
+					File path1 = new File(homedir);
+					if(!(path1.exists())) {
+						path1.mkdir();
+					}
+					String save = saveFolder+ "/" + year + "-" + month + "-" + date + "/";
+					File targetFile = new File(save + savedFileName);	
+					try {
+						InputStream fileStream = file.getInputStream();
+						FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
+						jikService.insert_JikFile(jik.getJik_num(),originalFileName,savedFileName);
+						
+					} catch (Exception e) {
+						//파일삭제
+						//FileUtils.deleteQuietly(targetFile);	//저장된 현재 파일 삭제
+						e.printStackTrace();
+						break;
+					}
+					
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		
-		return "redirect:list";
 	}
 	
 	private String fileDBName(String fileName, String saveFolder) {
@@ -344,7 +369,7 @@ public class JikController {
 			HttpServletRequest request) {
 		
 		Jik jik = jikService.getDetail(num,id);
-		
+		List<Jik_File> jik_file = jikService.getFile(num);
 		
 		if(jik == null) {
 			logger.info("디테일 오류");
@@ -357,6 +382,7 @@ public class JikController {
 			mv.setViewName("chang/Jik/jik_view3");
 			mv.addObject("count", count);
 			mv.addObject("jikdata", jik);
+			mv.addObject("jik_files",jik_file);
 		}
 		return mv;
 		

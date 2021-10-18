@@ -12,14 +12,12 @@
 	h1{font-sie:1.5rem; text-align:center; color:#1a92b9}
 	.container{width:60%}
 	label{font-wight:bold}
-	#upfile{display:none}
-	#f{width:20px}
-	.container.left{text-align: left;}
+	#input_file{display:none}
 	</style>
 </head>
 <body>
   <div class="container">
-   <form action="add" method="post" enctype="multipart/form-data" name="jikform" onsubmit="return registerAction()">
+   <form name="jikform" id="jikform">
      <h1>MVC 게시판 -write 페이지</h1>
      <div class="form-group">
      	<label for="nick">글쓴이</label>
@@ -36,15 +34,15 @@
      			class="form-control"	placeholder="Enter jik_subject">
      </div>	
      
-<div class="form-group">
-  	<button id="btn-upload" type="button" style="border: 1px solid #ddd; outline: none;">파일 추가</button>
-  	<input id="input_file" multiple="multiple" type="file" style="display:none;">
-  	<span style="font-size:10px; color: gray;">※첨부파일은 최대 10개까지 등록이 가능합니다.</span>
-  	<div class="data_file_txt" id="data_file_txt" style="margin:40px;">
-		<span>첨부 파일</span>
-		<br />
-		<div id="articlefileChange">
-		</div>
+	<div class="form-group file">
+  		<button id="btn-upload" type="button" style="border: 1px solid #ddd; outline: none;">파일 추가</button>
+  		<input id="input_file" multiple="multiple" type="file" style="display:none;">
+  		<span style="font-size:10px; color: gray;">※첨부파일은 최대 10개까지 등록이 가능합니다.</span>
+  		<div class="data_file_txt" id="data_file_txt" style="margin:40px;">
+			<span>첨부 파일(클릭시 제외됩니다.)</span>
+			<br />
+			<div id="articlefileChange">
+			</div>
 	</div>
 </div>
      
@@ -53,11 +51,12 @@
        <textarea name="jik_content" id="jik_content" 
      			rows="10" 	class="form-control"></textarea>
      </div>	
+     <input type="hidden" name="jik_id" id="jik_id" value="${id}">
      <div class="form-group">
-     	<button type=submit class="btn btn-primary">등록</button>
+     	<button type=button class="btn btn-primary" id="submit">등록</button>
      	<button type=reset  class="btn btn-danger">취소</button>
      </div>
-     <input type="hidden" name="jik_id" id="jik_id" value="${id}">
+     
    </form>
   </div>
   
@@ -72,6 +71,11 @@ $(document).ready(function()
  * 첨부파일로직
  */
 $(function () {
+	 $('#submit').click(function(e){
+		 e.preventDefault();
+		 registerAction();
+	 })
+	 
     $('#btn-upload').click(function (e) {
         e.preventDefault();
         $('#input_file').click();
@@ -135,7 +139,7 @@ function fileDelete(fileNum){
  */
 	function registerAction(){
 		
-	var form = $("form")[0];        
+	var form = $("form")[0];
  	var formData = new FormData(form);
 		for (var x = 0; x < content_files.length; x++) {
 			// 삭제 안한것만 담아 준다. 
@@ -145,27 +149,24 @@ function fileDelete(fileNum){
 		}
    /*
    * 파일업로드 multiple ajax처리
-   */    
+   */  
 	$.ajax({
    	      type: "POST",
    	   	  enctype: "multipart/form-data",
-   	      url: "../jik/file-upload",
+   	      url: "../jik/add",
        	  data : formData,
        	  processData: false,
    	      contentType: false,
-   	      success: function (data) {
-   	    	if(JSON.parse(data)['result'] == "OK"){
-   	    		alert("파일업로드 성공");
-			} else
-				alert("서버내 오류로 처리가 지연되고있습니다. 잠시 후 다시 시도해주세요");
+   	   	  success: function(data){
+   	   			  alert("글이 작성되었습니다.")
+   	    		  location.replace("list"); 
    	      },
-   	      error: function (xhr, status, error) {
-   	    	alert("서버오류로 지연되고있습니다. 잠시 후 다시 시도해주시기 바랍니다.");
-   	     return false;
+   	      error: function (error){
+				 alert("죄송합니다. 글 작성에 실패했습니다.")
+     	    	 location.replace("list");
    	      }
    	    });
-   	    return false;
-	}
+}
 </script>
 </body>
 </html>

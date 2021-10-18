@@ -13,6 +13,7 @@
         <typeAlias alias="report" 	 	type="com.hta.project.domain.Report" />
         <typeAlias alias="jik" 		   	type="com.hta.project.domain.Jik" />
 		<typeAlias alias="jik_comm" 	type="com.hta.project.domain.Jik_Comm" />
+		<typeAlias alias="jik_file" 	type="com.hta.project.domain.Jik_File" />
 		<typeAlias alias="notice" 		type="com.hta.project.domain.Notice"/>
 		<typeAlias alias="member" 		type="com.hta.project.domain.Member"/>
 		<typeAlias alias="product" 		type="com.hta.project.domain.Product"/>
