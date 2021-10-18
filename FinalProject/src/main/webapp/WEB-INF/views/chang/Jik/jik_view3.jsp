@@ -6,7 +6,7 @@
  <jsp:include page="../../main/header.jsp" />
   <script src="../resources/js/jquery-3.6.0.min.js"></script>
  <script src="../resources/js/chang/jik_comm.js"></script>
- <!-- <script src="../resources/js/chang/controller.js"></script> -->
+<script src="../resources/js/chang/controller.js"></script>
  <link rel="stylesheet" href="../resources/css/chang/view.css">
 </head>
 <body>
@@ -35,11 +35,10 @@
  		</tr>
  		<tr>
  			<td colspan="2" class="noborder right"> ${jikdata.jik_date}   조회수 : ${jikdata.jik_readcount}&nbsp;&nbsp;  좋아요 : ${jikdata.jik_like}
- 			asd: ${jikdata.jik_content} <c:forEach var="b" items="${jik_files}"> asd:${b.jik_file} </c:forEach>
  			</tr>
  		<tr>
  			<td colspan="2" style="padding-right:0px">	
- 			<c:if test="${!empty jik_files.jik_file}">
+ 			<c:if test="${!empty jik_files}">
  			<div contentEditable="false" >
  				
  			<div id=img>
@@ -49,8 +48,8 @@
  			
    <div id="slideShow">
    <ul class="slides">
-   		<c:forEach var="b" items="${jik_file}">
-     	<li><img width="300" src="display?fileName=${b.jik_file}" alt=""></li>
+   		<c:forEach var="b" items="${jik_files}">
+     	<li><img width="300" height="300" src="display?fileName=${b.jik_file}" alt=""></li>
      	</c:forEach>
     </ul>
     <p class="controller">

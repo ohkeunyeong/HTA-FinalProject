@@ -165,11 +165,12 @@ public class JikController {
 						path1.mkdir();
 					}
 					String save = saveFolder+ "/" + year + "-" + month + "-" + date + "/";
+					String gofile = "/" + year + "-" + month + "-" + date + "/" + savedFileName;
 					File targetFile = new File(save + savedFileName);	
 					try {
 						InputStream fileStream = file.getInputStream();
 						FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
-						jikService.insert_JikFile(jik.getJik_num(),originalFileName,savedFileName);
+						jikService.insert_JikFile(jik.getJik_num(),originalFileName,gofile);
 						
 					} catch (Exception e) {
 						//파일삭제
