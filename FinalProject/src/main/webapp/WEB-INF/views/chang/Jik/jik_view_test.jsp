@@ -6,7 +6,7 @@
  <jsp:include page="../../main/header.jsp" />
   <script src="../resources/js/jquery-3.6.0.min.js"></script>
  <script src="../resources/js/chang/jik_comm.js"></script>
-<script src="../resources/js/chang/controller.js"></script>
+  <script src="../resources/js/chang/controller.js"></script>
  <link rel="stylesheet" href="../resources/css/chang/view.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
   <input type="hidden" id="jik_subject" value="${jikdata.jik_subject}">
   <input type="hidden" id="jik_content" value="${jikdata.jik_content}" >
   <input type="hidden" id="jik_like" value="${jik_like}">
-  <!-- <input type="hidden" id="jik_file" value=" ${jikdata.jik_file}">-->
+  <input type="hidden" id="jik_file" value=" ${jikdata.jik_file}">
   <br><br><br><br><br><br><br><br><br><br>
   
 
@@ -35,34 +35,32 @@
  		</tr>
  		<tr>
  			<td colspan="2" class="noborder right"> ${jikdata.jik_date}   조회수 : ${jikdata.jik_readcount}&nbsp;&nbsp;  좋아요 : ${jikdata.jik_like}
- 			</tr>
+ 			
+ 		</tr>
  		<tr>
  			<td colspan="2" style="padding-right:0px">	
- 			<c:if test="${!empty jik_files}">
  			<div contentEditable="false" >
- 				
+ 			<c:if test="${!empty jikdata.jik_file}">
  			<div id=img>
- 			
+ 			<img width="500" height="500" class="display" src="display?fileName=${jikdata.jik_file}">
  			</div>
- 			
- 			
-   <div id="slideShow">
+ 			${jikdata.jik_content}
+  <div id="slideShow">
    <ul class="slides">
-   		<c:forEach var="b" items="${jik_files}">
-     	<li><img width="300" height="300" src="display?fileName=${b.jik_file}" alt=""></li>
-     	</c:forEach>
+   		<li><img width="300" src="../resources/image/chang/remove.png" alt=""></li>
+     	<li><img width="300" src="display?fileName=${jikdata.jik_file}" alt=""></li>
+      	<li><img width="300" src="display?fileName=${jikdata.jik_file}" alt=""></li>
     </ul>
     <p class="controller">
-       <!--  &lang: 왼쪽 방향 화살표 &rang: 오른쪽 방향 화살표 -->
+        <!-- &lang: 왼쪽 방향 화살표 &rang: 오른쪽 방향 화살표 --> 
         <span class="prev">&lang;</span> 
         <span class="next">&rang;</span> 
      </p> 
     </div>
 
- 
- 			</div> 
+
  			</c:if>
- 			${jikdata.jik_content}
+ 			</div>
  			</td>
  		</tr>
  	<tr>
@@ -71,7 +69,7 @@
  		</td>
  	</tr>
  	
- 	 	<!--<tr>
+ 	 	<tr>
  			<td><div>첨부파일</div></td>
  		<c:if test="${!empty jikdata.jik_file}"><%--파일 첨부한 경우 --%>
  			<td>
@@ -86,7 +84,7 @@
  		<c:if test="${empty jikdata.jik_file}"><%-- 파일첨부하지 않은 경우 --%>
  			<td></td>
  		</c:if>
- 		</tr>	-->
+ 		</tr>	
  	<tr>
  		<td colspan="2" class="center">
  			

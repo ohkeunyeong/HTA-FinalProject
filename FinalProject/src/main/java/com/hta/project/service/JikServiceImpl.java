@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.hta.project.dao.JikDAO;
 import com.hta.project.domain.Jik;
+import com.hta.project.domain.Jik_File;
 
 @Service
 public class JikServiceImpl implements JikService{
@@ -50,12 +51,9 @@ public class JikServiceImpl implements JikService{
 	@Override
 	public int jikDelete(int jik_num) {
 		int result = 0;
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("num", jik_num);
-		Jik jik = dao.getDetail(map);
+		Jik jik = dao.getDetail(jik_num);
 		if(jik != null) {
 			result=dao.jikDelete(jik);
-			
 		}
 		return result;
 	}
@@ -144,6 +142,20 @@ public class JikServiceImpl implements JikService{
 	@Override
 	public void LikeDown(int num) {
 		dao.LikeDown(num);
+	}
+
+	@Override
+	public void insert_JikFile(int jik_num, String originalFileName, String savedFileName) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("jik_num",jik_num);
+		map.put("jik_file", savedFileName);
+		map.put("jik_original", originalFileName);
+		dao.insert_JikFile(map);
+	}
+
+	@Override
+	public List<Jik_File> getFile(int num) {
+		return 	dao.getFile(num);
 	}
 
 
