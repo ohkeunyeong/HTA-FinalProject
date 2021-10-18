@@ -11,6 +11,13 @@ $("#insertacc").click(function(){
 	
 })
 
+$("#outmynong").click(function(){
+	if(confirm("농장에서 탈퇴 하시겠습니까?")){
+	}else {
+		return false
+	}	
+})
+
 $("#updateaccbtn").click(function(){
  num = /^[0-9]*$/;
  

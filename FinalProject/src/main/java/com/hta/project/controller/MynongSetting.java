@@ -262,5 +262,32 @@ public class MynongSetting {
 			return mv;
 		}
 	}
+	
+	//농장에서 탈퇴
+	@RequestMapping(value = "/outmynong", method = RequestMethod.GET)
+	public String outmynong(String id, HttpSession session, HttpServletResponse response)
+			throws ServletException, IOException {
+		logger.info("/outmynong 농장탈퇴");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		Member list = mynongservice.memberinfo(id);//검색한 맴버 모든 정보 가져오기
+		String myfarm=list.getMy_farm();//일반유저 0, 관리자 1, 멤버 2, 대기 3
+		if(myfarm.equals("1")) {//농장 관리자인지 판단
+				logger.info("/outmynong 농장관리자");
+				out.println("<script>");
+				out.println("alert('관리자는 탈퇴할 수 없습니다. \\n소속된 농장을 삭제하거나, 일반멤버로 변경 후 탈퇴 처리 가능합니다.');");
+				out.println("history.back()");
+				out.println("</script>");
+				out.close();		
+				return null;
+		}	
+		mynongservice.delete(id);		
+		out.println("<script>");
+		out.println("alert('농장에서 정상적으로 탈퇴하였습니다.');");
+		out.println("location.href = 'main';");
+		out.println("</script>");
+		out.close();
+		return null;
+	}
 
 }

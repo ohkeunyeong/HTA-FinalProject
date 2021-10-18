@@ -67,4 +67,11 @@ $(document).ready(function () {
 		$(this).css('display', 'none');
 	})
 	
+	$("#outmynong").click(function(){
+	if(confirm("농장에서 탈퇴 하시겠습니까?")){
+	}else {
+		return false
+	}	
+})
+	
 });// ready()end

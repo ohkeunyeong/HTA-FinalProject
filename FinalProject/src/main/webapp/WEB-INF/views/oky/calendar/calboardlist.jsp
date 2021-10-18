@@ -150,10 +150,12 @@
         <!-- <i class="menu__icon fa fa-envelope"></i> -->
       <span style="padding:0px 0px 0px 17px;" class="menu__text">농장관리</span>
       </a>
+      <span id="outmynong">
+      <a class="menu__item" href="${pageContext.request.contextPath}/outmynong?id=${id}"><span class="menu__text">농장탈퇴</span></a>
+      </span>
     </nav>
   </sidebar>
 </div>
-<jsp:include page="../../main/footer.jsp" /> 
 </body>
 <%!
 	public String toDates(String mdate){

@@ -594,7 +594,7 @@ public class NongController {
 					rattr.addAttribute("num", num);
 					mv.addObject("name", name);
 					mv.addObject("level", level);
-					mv.setViewName("redirect:nongmodifyView");
+					mv.setViewName("redirect:nongdetail");
 					return mv;
 				}
 
