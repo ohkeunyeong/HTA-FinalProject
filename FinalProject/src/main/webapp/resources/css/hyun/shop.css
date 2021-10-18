@@ -45,7 +45,7 @@ ul, li {list-style:none;} */
 label.left {
 	left:20px;
 	/* background-color:#FFFFFF; */
-	background-image:url('${pageContext.request.contextPath}/resources/image/banner/left-arrow.png');
+	background-image:url('/project/resources/image/banner/left-arrow.png');
 	background-position:center center;
 	background-size:50%;
 	background-repeat:no-repeat;
@@ -53,7 +53,7 @@ label.left {
 label.right {
 	right:20px;
 	/* background-color:#FFFFFF; */
-	background-image:url('${pageContext.request.contextPath}/resources/image/banner/right-arrow.png');
+	background-image:url('/project/resources/image/banner/right-arrow.png');
 	background-position:center center;
 	background-size:50%;
 	background-repeat:no-repeat;

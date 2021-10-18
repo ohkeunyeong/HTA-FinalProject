@@ -107,7 +107,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						<div class="col-lg-6">
 							<div class="card card-primary">
 								<div class="card-header">
-									<span>게시물 관리</span> <a class="float-right" href="postList">더보기></a>
+									<span>게시물 관리</span> <a class="float-right" href="reportList">더보기></a>
 								</div>
 								<div class="card-body">
 									<table class="table table-striped table-bordered">

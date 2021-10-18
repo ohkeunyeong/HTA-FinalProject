@@ -23,7 +23,30 @@
 		where p.category_code = c.category_code
 		<include refid="search_" />
 	</select>
-
+	
+	<select id="shopProductCount" resultType="int">
+		select count(*)
+		from product
+	</select>
+	
+	<select id="getCategoryProductListCount" resultType="int" parameterType="int">
+		select count(*)
+		from product
+		where category_code = #{category_code}
+	</select>
+	
+	<select id="getCategoryProductList" resultType="product" parameterType="map">  	   			
+		select *
+		from (select rownum rnum, pr.*
+			  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
+	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
+	  	   			from product p, CATEGORY c
+	  	   			where p.category_code = c.category_code
+	  	   			and p.category_code = #{category_code}
+	  	   			order by p.product_code) pr
+			 )
+		where rnum &gt;= #{start} and rnum &lt;= #{end}
+	</select>
 
 	<!-- 카테고리별 상품 리스트 -->	
 	<select id="list" resultType="product" parameterType="map">  	   			
@@ -37,6 +60,18 @@
 	  	   			<include refid="search_" />
 	  	   			order by o.ORDER_DE_COUNT, <!-- 주문수량순 -->
 	  	   			p.product_code) pr
+			 )
+		where rnum &gt;= #{start} and rnum &lt;= #{end}
+	</select>
+	
+	<select id="productList" resultType="product" parameterType="map">  	   			
+		select *
+		from (select rownum rnum, pr.*
+			  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
+	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
+	  	   			from product p, CATEGORY c
+	  	   			where p.category_code = c.category_code
+	  	   			order by p.product_code) pr
 			 )
 		where rnum &gt;= #{start} and rnum &lt;= #{end}
 	</select>
@@ -137,21 +172,6 @@
 		where rnum &gt;= #{start} and rnum &lt;= #{end}
 	</select>
 	
-	<!-- 카테고리별 상품 리스트 : 도구 페이지 리스트 -->	
-	<select id="tools1" resultType="product" parameterType="map">
-		select *
-		from (select rownum rnum, pr.*
-			  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
-	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
-	  	   			from product p, CATEGORY c
-	  	   			where p.category_code = c.category_code
-	  	   			and p.category_code = 400
-	  	   			<include refid="search_" />
-	  	   			order by p.product_code) pr
-			 )
-		where rnum &gt;= #{start} and rnum &lt;= #{end}
-	</select>
-	
 	<!-- 카테고리별 상품 리스트 : 굿즈 리스트 -->	
 	<select id="goods" resultType="product" parameterType="map">
 		select *
@@ -161,66 +181,6 @@
 	  	   			from product p, CATEGORY c
 	  	   			where p.category_code = c.category_code
 	  	   			and p.category_code = 600 
-	  	   			<include refid="search_" />
-	  	   			order by p.product_code) pr
-			 )
-		where rnum &gt;= #{start} and rnum &lt;= #{end}
-	</select>
-	
-	<!-- 카테고리별 상품 리스트 : 굿즈 페이지 리스트 -->	
-	<select id="goods1" resultType="product" parameterType="map">
-		select *
-		from (select rownum rnum, pr.*
-			  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
-	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
-	  	   			from product p, CATEGORY c
-	  	   			where p.category_code = c.category_code
-	  	   			and p.category_code = 600 
-	  	   			<include refid="search_" />
-	  	   			order by p.product_code) pr
-			 )
-		where rnum &gt;= #{start} and rnum &lt;= #{end}
-	</select>
-	
-	<!-- 카테고리별 상품 리스트 : 씨앗/모종 페이지 리스트 -->	
-	<select id="seed1" resultType="product" parameterType="map">
-		select *
-		from (select rownum rnum, pr.*
-			  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
-	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
-	  	   			from product p, CATEGORY c
-	  	   			where p.category_code = c.category_code
-	  	   			and p.category_code = 100 
-	  	   			<include refid="search_" />
-	  	   			order by p.product_code) pr
-			 )
-		where rnum &gt;= #{start} and rnum &lt;= #{end}
-	</select>
-	
-	<!-- 카테고리별 상품 리스트 : 비료/상토 페이지 리스트 -->	
-	<select id="soil1" resultType="product" parameterType="map">
-		select *
-		from (select rownum rnum, pr.*
-			  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
-	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
-	  	   			from product p, CATEGORY c
-	  	   			where p.category_code = c.category_code
-	  	   			and p.category_code = 200 
-	  	   			<include refid="search_" />
-	  	   			order by p.product_code) pr
-			 )
-		where rnum &gt;= #{start} and rnum &lt;= #{end}
-	</select>
-	
-	<!-- 카테고리별 상품 리스트 : 살충제 페이지 리스트 -->	
-	<select id="pesticide1" resultType="product" parameterType="map">
-		select *
-		from (select rownum rnum, pr.*
-			  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
-	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
-	  	   			from product p, CATEGORY c
-	  	   			where p.category_code = c.category_code
-	  	   			and p.category_code = 300 
 	  	   			<include refid="search_" />
 	  	   			order by p.product_code) pr
 			 )

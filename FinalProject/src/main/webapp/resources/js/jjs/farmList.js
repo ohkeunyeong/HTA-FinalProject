@@ -31,8 +31,7 @@ function farmSelect_ajax(sdata) {
 					output += "<div class='row border mb-3'>" 
 						    + "<div class='col-12 col-sm-5'>"
 						    + "<div class='col-12 mt-5 ml-5'>";
-					output += "<img src='/project/resources/image/jjs/among us.png' " 
-							+ "style='width: 200px; height: 200px'>";
+					output += "<img src='/project/upload" + item.original + "' style='width: 200px; height: 200px'>";
 					output += "</div></div>";
 					output += "<div class='col12 col-sm-6'>"
 							+ "<div class='col-12 mt-3'>"

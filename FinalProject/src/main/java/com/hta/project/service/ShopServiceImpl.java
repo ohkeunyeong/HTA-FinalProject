@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.hta.project.dao.ShopDAO;
 import com.hta.project.domain.Cart;
 import com.hta.project.domain.Category;
+import com.hta.project.domain.OrderDetailList;
 import com.hta.project.domain.Order_Detail;
 import com.hta.project.domain.Order_Market;
 import com.hta.project.domain.Product;
@@ -29,14 +30,8 @@ public class ShopServiceImpl implements ShopService{
 
 
 	@Override
-	public int getProductListCount(int index, String search_word) {
-		Map<String, String> map = new HashMap<String, String>();
-		if(index != -1) {
-			String[] search_field = new String[] {"product_name", "product_code", "category_name"};
-			map.put("search_field", search_field[index]);
-			map.put("search_word", "%" + search_word + "%");
-		}
-		return dao.getProductListCount(map);
+	public int getProductListCount() {
+		return dao.getProductListCount();
 	}
 
 	@Override
@@ -67,14 +62,8 @@ public class ShopServiceImpl implements ShopService{
 	}
 
 	@Override
-	public List<Product> getProductList(int index, String search_word, int page, int limit) {
-		
+	public List<Product> getProductList(int page, int limit) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		if(index != -1) {
-			String[] search_field = new String[] {"product_name", "product_code", "category_name"};
-			map.put("search_field", search_field[index]);
-			map.put("search_word", "%" + search_word + "%");
-		}
 		int startrow = (page - 1) * limit + 1;
 		int endrow = startrow + limit - 1;
 		map.put("start", startrow);
@@ -97,21 +86,6 @@ public class ShopServiceImpl implements ShopService{
 		map.put("end", endrow);
 		return dao.getToolsList(map);
 	}
-	
-	@Override
-	public List<Product> getToolsList1(int index, String search_word, int page, int limit) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		if(index != -1) {
-			String[] search_field = new String[] {"product_name", "product_code", "category_name"};
-			map.put("search_field", search_field[index]);
-			map.put("search_word", "%" + search_word + "%");
-		}
-		int startrow = (page - 1) * limit + 1;
-		int endrow = startrow + limit - 1;
-		map.put("start", startrow);
-		map.put("end", endrow);
-		return dao.getToolsList1(map);
-	}
 
 
 	@Override
@@ -130,69 +104,6 @@ public class ShopServiceImpl implements ShopService{
 	}
 
 
-	@Override
-	public List<Product> getGoodsList1(int index, String search_word, int page, int limit) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		if(index != -1) {
-			String[] search_field = new String[] {"product_name", "product_code", "category_name"};
-			map.put("search_field", search_field[index]);
-			map.put("search_word", "%" + search_word + "%");
-		}
-		int startrow = (page - 1) * limit + 1;
-		int endrow = startrow + limit - 1;
-		map.put("start", startrow);
-		map.put("end", endrow);
-		return dao.getGoodsList1(map);
-	}
-	
-	
-	@Override
-	public List<Product> getSeedList1(int index, String search_word, int page, int limit) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		if(index != -1) {
-			String[] search_field = new String[] {"product_name", "product_code", "category_name"};
-			map.put("search_field", search_field[index]);
-			map.put("search_word", "%" + search_word + "%");
-		}
-		int startrow = (page - 1) * limit + 1;
-		int endrow = startrow + limit - 1;
-		map.put("start", startrow);
-		map.put("end", endrow);
-		return dao.getSeedList1(map);
-	}
-	
-	
-	@Override
-	public List<Product> getSoilList1(int index, String search_word, int page, int limit) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		if(index != -1) {
-			String[] search_field = new String[] {"product_name", "product_code", "category_name"};
-			map.put("search_field", search_field[index]);
-			map.put("search_word", "%" + search_word + "%");
-		}
-		int startrow = (page - 1) * limit + 1;
-		int endrow = startrow + limit - 1;
-		map.put("start", startrow);
-		map.put("end", endrow);
-		return dao.getSoilList1(map);
-	}
-	
-	
-	@Override
-	public List<Product> getPesticideList1(int index, String search_word, int page, int limit) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		if(index != -1) {
-			String[] search_field = new String[] {"product_name", "product_code", "category_name"};
-			map.put("search_field", search_field[index]);
-			map.put("search_word", "%" + search_word + "%");
-		}
-		int startrow = (page - 1) * limit + 1;
-		int endrow = startrow + limit - 1;
-		map.put("start", startrow);
-		map.put("end", endrow);
-		return dao.getPesticideList1(map);
-	}
-	
 	@Override
 	public List<Product> getReviewProductList(int index, String search_word, int page, int limit) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -303,8 +214,26 @@ public class ShopServiceImpl implements ShopService{
 
 
 		@Override
-		public List orderView(Order_Market ordermarket) throws Exception {
+		public List<OrderDetailList> orderView(Order_Market ordermarket) throws Exception {
 			return dao.orderView(ordermarket);
+		}
+
+
+		@Override
+		public List<Product> getCategoryProductList(int page, int limit, int category_code) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			int startrow = (page - 1) * limit + 1;
+			int endrow = startrow + limit - 1;
+			map.put("start", startrow);
+			map.put("end", endrow);
+			map.put("category_code", category_code);
+			return dao.getCategoryProductList(map);
+		}
+
+
+		@Override
+		public int getCategoryProductListCount(int category_code) {
+			return dao.getCategoryProductListCount(category_code);
 		}
 	
 }

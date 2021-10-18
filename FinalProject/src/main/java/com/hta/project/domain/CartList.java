@@ -6,6 +6,7 @@ public class CartList {
 	private String user_id;
 	private int order_de_count;
 	private String adddate;
+	private int category_code;
 	private String product_name;
 	private int product_price;
 	private String product_img;
@@ -48,6 +49,15 @@ public class CartList {
 	
 	public void setAdddate(String adddate) {
 		this.adddate = adddate;
+	}
+	
+
+	public int getCategory_code() {
+		return category_code;
+	}
+
+	public void setCategory_code(int category_code) {
+		this.category_code = category_code;
 	}
 	
 	public String getProduct_name() {

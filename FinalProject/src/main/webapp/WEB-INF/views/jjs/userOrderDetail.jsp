@@ -74,11 +74,27 @@ hr, footer {
 		</table>
 		<div class="products">
 			<c:forEach var="ol" items="${orderlist}">
+				<c:if test="${ol.category_code == 100}">
+					<c:set var="pageName" value="shopSeed" />
+				</c:if>
+				<c:if test="${ol.category_code == 200}">
+					<c:set var="pageName" value="shopSoil" />
+				</c:if>
+				<c:if test="${ol.category_code == 300}">
+					<c:set var="pageName" value="shopPesticide" />
+				</c:if>
+				<c:if test="${ol.category_code == 400}">
+					<c:set var="pageName" value="shopTools" />
+				</c:if>
+				<c:if test="${ol.category_code == 500}">
+					<c:set var="pageName" value="shopGoods" />
+				</c:if>
+				
 				<fmt:formatNumber var="price" value="${ol.product_price}" pattern="###,###,###" />
 				<div class="mb-2 ml-2 product">
 					<img class="img-fluid float-right mr-5" src="${pageContext.request.contextPath}/upload${ol.product_img}" alt="productImg" width="200px" height="200px">
 					<p class="mt-2 ml-2">
-						상품이름 : <span><a href="${pageContext.request.contextPath}/shop/shop_detail?product_code=${ol.product_code}">${ol.product_name}</a></span>
+						상품이름 : <span><a href="${pageContext.request.contextPath}/shop/shop_detail?product_code=${ol.product_code}&pageName=${pageName}">${ol.product_name}</a></span>
 					</p>
 					<p class="ml-2">
 						카테고리 : <span>${ol.category_name}</span>

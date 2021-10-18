@@ -22,6 +22,12 @@
 		  return bool;
 	  });
 	  
+	  $("#outmynong").click(function(){
+			if(confirm("농장에서 탈퇴 하시겠습니까?")){
+			}else {
+				return false
+			}	
+		})
 	  //체크박스 처리: 전체선택 체크박스 체크/해제를 자동으로 하는 기능
 	  var chks=document.getElementsByName("seq");
 	  for(var i=0; i<chks.length; i++){

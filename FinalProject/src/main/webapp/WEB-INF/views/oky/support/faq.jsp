@@ -74,7 +74,5 @@
       <p class="faq-text"><br>파손의 경우 포장 또는 운송도중 발생이 대부분이며, 메일 문의해주시면 빠른 처리 도와드리도록 하겠습니다.<br></p>
   </label>
 </div>
- 
-<jsp:include page="../../main/footer.jsp" />  
 </body>
 </html>

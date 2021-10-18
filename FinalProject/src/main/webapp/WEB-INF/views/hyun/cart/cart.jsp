@@ -28,10 +28,26 @@
 					</thead>
 					<tbody>
 						<c:forEach var="c" items="${cartlist}">
+							<c:if test="${c.category_code == 100}">
+							<c:set var="pageName" value="shopSeed" />
+							</c:if>
+							<c:if test="${c.category_code == 200}">
+								<c:set var="pageName" value="shopSoil" />
+							</c:if>
+							<c:if test="${c.category_code == 300}">
+								<c:set var="pageName" value="shopPesticide" />
+							</c:if>
+							<c:if test="${c.category_code == 400}">
+								<c:set var="pageName" value="shopTools" />
+							</c:if>
+							<c:if test="${c.category_code == 500}">
+								<c:set var="pageName" value="shopGoods" />
+							</c:if>
+							
 							<tr>
 								<td class="align-middle"><input name="RowCheck" type="checkbox" value="${c.product_price * c.order_de_count}" data-cartNum="${c.cart_num}" data-pro_name="${c.product_name}" data-code="${c.product_code}"></td>
 								<td class="align-middle"><img src="${pageContext.request.contextPath}/upload${c.product_img}" width="80px" height="80px"></td>
-								<td class="align-middle"><a href="/project/shop/shop_detail?product_code=${c.product_code}">${c.product_name}</a></td>
+								<td class="align-middle"><a href="/project/shop/shop_detail?product_code=${c.product_code}&pageName=${pageName}">${c.product_name}</a></td>
 								<td class="align-middle"><fmt:formatNumber pattern="###,###,###" value="${c.product_price}"/>원</td>
 								<td class="align-middle">
 									<input class="text-center" type="number" value="${c.order_de_count}" readOnly style="width:40px;">

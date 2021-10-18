@@ -37,3 +37,13 @@ $(function() {
 						$(".cPreview").remove();// 마우스가 나가면 해당 엘리먼트를 삭제한다.
 					});
 });
+
+$(document).ready(function () {  
+	
+	$("#outmynong").click(function(){
+		if(confirm("농장에서 탈퇴 하시겠습니까?")){
+		}else {
+			return false
+		}	
+	})
+	});

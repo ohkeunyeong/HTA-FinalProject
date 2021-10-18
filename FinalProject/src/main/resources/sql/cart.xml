@@ -11,7 +11,7 @@
 	
 	<select id="list" resultType="cartlist" parameterType="map">
 		select c.cart_num, c.id, c.product_code, c.order_de_count,
-			   c.add_date, p.product_name, p.product_price, p.product_img
+			   c.add_date, p.product_name, p.category_code, p.product_price, p.product_img
 		from cart c, product p
 		where c.product_code = p.product_code
 		and c.id = #{id}

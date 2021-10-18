@@ -689,7 +689,6 @@ public class AdminController {
 		String url = "";
 		
 		MultipartFile uploadfile = Product.getUploadfile();
-		String saveFolder = request.getSession().getServletContext().getRealPath("resources") + "/upload/";
 		
 		if(check != null && !check.equals("")) { // 기존파일 그대로 사용하는 경우입니다.
 			logger.info("기존파일 그대로 사용합니다.");
