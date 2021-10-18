@@ -139,7 +139,7 @@
 				<b>프로필 사진</b>
 		<label>
 			<img src="../resources/image/chang/attach.png" width="25px">&nbsp;&nbsp;:&nbsp;&nbsp;
-			<span id="showImage"><img width="25px" src ="${pageContext.request.contextPath}/resources/image/chang/profile.png"></span>
+			<span id="showImage"><img width="25px" src ="../resources/image/chang/profile.png"></span>
 			<input type="file" name="uploadfile" accept="image/*">
 		</label>
 		

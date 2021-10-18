@@ -6,6 +6,7 @@
  <jsp:include page="../../main/header.jsp" />
   <script src="../resources/js/jquery-3.6.0.min.js"></script>
  <script src="../resources/js/chang/jik_comm.js"></script>
+<script src="../resources/js/chang/jik_controller.js"></script>
  <link rel="stylesheet" href="../resources/css/chang/view.css">
 </head>
 <body>
@@ -14,44 +15,55 @@
   <input type="hidden" id="Jik_id" value="${jikdata.jik_id}" name="Jik_id">
   <input type="hidden" id="jik_subject" value="${jikdata.jik_subject}">
   <input type="hidden" id="jik_content" value="${jikdata.jik_content}" >
+  <input type="hidden" id="jik_like" value="${jik_like}">
   <br><br><br><br><br><br><br><br><br><br>
   
 
   <div class="container">
- 	<table class="table table-striped">
+ 	<table class="table">
  		<tr>
- 			<th colspan="2">직거래 장터</th></tr>
+ 			<th colspan="2"><c:out value="${jikdata.jik_subject}" /></th></tr>
  		<tr>
  			
- 			<td colspan="2"><div id="nick"> <img  src="${pageContext.request.contextPath}/resources/image/chang/${jikdata.p}" alt="프로필 사진" width="25px">&nbsp;&nbsp;${jikdata.nick}
- 							<a href="#" class="report_button" onclick=" window.open('../jik/report', '신고하기', 'width=500, height=700, scrollbars=no, resizable=no')">신고하기</a>
- 			</div></td>
- 		</tr>
- 		<tr>
- 			<td colspan="2"><c:out value="${jikdata.jik_subject}" /></td>
- 		</tr>
- 		<tr>
- 			<td colspan="2" style="padding-right:0px"><textarea class="form-control" rows="5"
- 				readOnly >${jikdata.jik_content}</textarea></td>
- 		</tr>
- 		
- 	
- 		<tr>
- 			<td><div>첨부파일</div></td>
- 		<c:if test="${!empty jikdata.jik_file}"><%--파일 첨부한 경우 --%>
- 		<td><img src="../resources/image/chang/down.png" width="10px">
- 			<form method="post" action="down">
- 				<input type="hidden" value="${jikdata.jik_file}" name="filename">
- 				<input type="hidden" value="${jikdata.jik_original}" name="original">
- 				<input type="submit" value="${jikdata.jik_original}" >
- 			</form>
+ 			<td colspan="2">
+ 				<div id="nick"> 
+ 				<img width="25" class="display" src="display?fileName=${jikdata.profile}">&nbsp;&nbsp;${jikdata.nick}
+ 				<c:if test="${id !=null && id != ''}">
+ 				<a href="#" class="report_button" onclick=" window.open('../jik/report', '신고하기', 'width=500, height=700, scrollbars=no, resizable=no')">신고하기</a>
+ 				</c:if>
+ 				</div>
  			</td>
- 		</c:if>
- 		<c:if test="${empty jikdata.jik_file}"><%-- 파일첨부하지 않은 경우 --%>
- 			<td></td>
- 		</c:if>
  		</tr>
- 		
+ 		<tr>
+ 			<td colspan="2" class="noborder right"> 최종 작성 시간 : ${jikdata.jik_ldate}   조회수 : ${jikdata.jik_readcount}&nbsp;&nbsp;  좋아요 : ${jikdata.jik_like}
+ 			</tr>
+ 		<tr>
+ 			<td colspan="2" style="padding-right:0px">	
+ 		<c:if test="${!empty jik_files}">
+ 			<div contentEditable="false" >
+   				<div id="slideShow">
+   					<ul class="slides">
+   						<c:forEach var="b" items="${jik_files}">
+     						<li><img width="700" height="500" src="display?fileName=${b.jik_file}" alt=""></li>
+     					</c:forEach>
+    				</ul>
+   		 			<p class="controller">
+       					<!--  &lang: 왼쪽 방향 화살표 &rang: 오른쪽 방향 화살표 -->
+        				<span class="prev">&lang;</span> 
+       					<span class="next">&rang;</span> 
+     				</p> 
+    			</div>
+ 			</div> 
+ 			</c:if>
+ 			${jikdata.jik_content}
+ 			</td>
+ 		</tr>
+ 	<tr>
+ 		<td colspan="2" class="center noborder">
+ 	
+ 		</td>
+ 	</tr>
+ 	
  	<tr>
  		<td colspan="2" class="center">
  			
@@ -127,6 +139,7 @@
 		</div><!-- CommentWriter end -->
 	</div><!-- CommentBox end -->
   </div><!-- class="container" -->
+
 
 </body>
 </html>

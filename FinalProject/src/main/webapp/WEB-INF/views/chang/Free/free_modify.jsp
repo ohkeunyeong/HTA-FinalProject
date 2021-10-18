@@ -4,7 +4,7 @@
 <head>
 	<title>MVC 게시판</title>
 	<jsp:include page="../../main/header.jsp" />
-	<script src="../resources/js/chang/jik_modifyform.js"></script>
+	<script src="../resources/js/chang/free_modifyform.js"></script>
 	<style>
 	.container{width:60%} 
 	h1{font-sie:1.5rem; text-align:center; color:#1a92b9}
@@ -17,23 +17,23 @@
   <div class="container">
    <form action="modifyAction" 
    		 method="post" name="modifyform" enctype="multipart/form-data">
-   	  <input type="hidden" name="jik_num" 	value="${jikdata.jik_num}">
+   	  <input type="hidden" name="free_num" 	value="${freedata.free_num}">
      <h1>직거래 농장 - 수정</h1>
      <div class="form-group">
-     	<label for="nick">글쓴이</label><input value="${jikdata.nick}" 
+     	<label for="nick">글쓴이</label><input value="${freedata.nick}" 
      	readOnly name="nick" type="text" class="form-control">
      </div>
      
      <div class="form-group">
-       <label for="jik_subject">제목</label>
-       <textarea name="jik_subject" id="jik_subject" rows="1" 
-     			class="form-control"	maxlength="100">${jikdata.jik_subject}</textarea>
+       <label for="free_subject">제목</label>
+       <textarea name="free_subject" id="free_subject" rows="1" 
+     			class="form-control"	maxlength="100">${freedata.free_subject}</textarea>
      </div>	
      
      <div class="form-group">
-       <label for="jik_content">내용</label>
-       <textarea name="jik_content" id="jik_content" 
-     			rows="15" 	class="form-control">${jikdata.jik_content}</textarea>
+       <label for="free_content">내용</label>
+       <textarea name="free_content" id="free_content" 
+     			rows="15" 	class="form-control">${freedata.free_content}</textarea>
      </div>	
      
      <div class="form-group">

@@ -40,25 +40,25 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.hta.project.domain.Jik;
-import com.hta.project.domain.Jik_File;
-import com.hta.project.service.JikService;
-import com.hta.project.service.Jik_CommService;
+import com.hta.project.domain.Free;
+import com.hta.project.domain.Free_File;
+import com.hta.project.service.FreeService;
+import com.hta.project.service.Free_CommService;
 
 
 @Controller
-@RequestMapping(value="/jik")
-public class JikController {
+@RequestMapping(value="/free")
+public class FreeController {
 	
 
 	private static final Logger logger
-	= LoggerFactory.getLogger(JikController.class);
+	= LoggerFactory.getLogger(FreeController.class);
 	
 	@Autowired
-	private JikService jikService;
+	private FreeService freeService;
 	
 	@Autowired
-	private Jik_CommService jik_commService;
+	private Free_CommService free_commService;
 	
 	@Value("${savefoldername}")
 	private String saveFolder;
@@ -67,23 +67,23 @@ public class JikController {
 	private String resourceFolder;
 	
 	@GetMapping(value = "/write")
-	public String jik_write() {
-		return "chang/Jik/jik_write";
+	public String free_write() {
+		return "chang/Free/free_write";
 	}
 	
 	@RequestMapping(value = "/report")
 	public String report() {
-		return "chang/Jik/jik_report";
+		return "chang/Free/free_report";
 	}
 
 	@PostMapping("/add")
 	@ResponseBody
-	public void add(Jik jik, @RequestParam("article_file") List<MultipartFile> multipartFile
+	public void add(Free free, @RequestParam("article_file") List<MultipartFile> multipartFile
 			, HttpServletRequest request, RedirectAttributes rattr)
 		throws Exception{
 		
-		jikService.insertJik(jik);
-		logger.info(""+jik.getJik_num());
+		freeService.insertFree(free);
+		logger.info(""+free.getFree_num());
 		try {
 			// 파일이 있을때 탄다.
 			if(multipartFile.size() > 0 && !multipartFile.get(0).getOriginalFilename().equals("")) {
@@ -111,7 +111,7 @@ public class JikController {
 					try {
 						InputStream fileStream = file.getInputStream();
 						FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
-						jikService.insert_JikFile(jik.getJik_num(),originalFileName,gofile);
+						freeService.insert_FreeFile(free.getFree_num(),originalFileName,gofile);
 						
 					} catch (Exception e) {
 						//파일삭제
@@ -161,13 +161,13 @@ public class JikController {
 	}
 	
 	@RequestMapping(value = "/list", method=RequestMethod.GET)
-	public ModelAndView jiklist(
+	public ModelAndView freelist(
 			@RequestParam(value="page",defaultValue="1",required=false) int page,
 			ModelAndView mv) {
 		
 		int limit = 10;
 		
-		int listcount = jikService.getListCount();
+		int listcount = freeService.getListCount();
 		
 		
 		int maxpage = (listcount + limit - 1) / limit;
@@ -181,15 +181,15 @@ public class JikController {
 		if(endpage > maxpage)
 			endpage = maxpage;
 		
-		List<Jik> jiklist = jikService.getJikList(page, limit);
+		List<Free> freelist = freeService.getFreeList(page, limit);
 		
-		mv.setViewName("chang/Jik/jik_list");
+		mv.setViewName("chang/Free/free_list");
 		mv.addObject("page",page);
 		mv.addObject("maxpage",maxpage);
 		mv.addObject("startpage",startpage);
 		mv.addObject("endpage",endpage);
 		mv.addObject("listcount",listcount);
-		mv.addObject("jiklist",jiklist);
+		mv.addObject("freelist",freelist);
 		mv.addObject("page",page);
 		mv.addObject("limit",limit);
 		return mv;
@@ -197,24 +197,24 @@ public class JikController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/list_ajax")
-	public Map<String,Object> jikListAjax(
+	public Map<String,Object> freeListAjax(
 			@RequestParam(value="page",defaultValue="1",required=false) int page,
 			@RequestParam(value="limit",defaultValue="10",required=false) int limit,
 			@RequestParam(value="type", defaultValue="-1", required=false) int type,
 			@RequestParam(value="search", defaultValue="", required=false) String search
 			) {
 		
-		List<Jik> jiklist =  new ArrayList<Jik>();
+		List<Free> freelist =  new ArrayList<Free>();
 		int listcount;
 		
 		if(type==-1 && search.equals("")) {
 			logger.info("/list_ajax 검색어 적용안됨");
-			jiklist = jikService.getJikList(page, limit);
-			listcount = jikService.getListCount();
+			freelist = freeService.getFreeList(page, limit);
+			listcount = freeService.getListCount();
 		}else { //검색적용된리스트
 			logger.info("/list_ajax 검색어 적용됨");
-			jiklist = jikService.getJikListSearchList(page, limit, type, search);
-			listcount = jikService.getSearchListCount(type, search);
+			freelist = freeService.getFreeListSearchList(page, limit, type, search);
+			listcount = freeService.getSearchListCount(type, search);
 		}
 		
 		
@@ -236,7 +236,7 @@ public class JikController {
 		map.put("startpage",startpage);
 		map.put("endpage",endpage);
 		map.put("listcount",listcount);
-		map.put("jiklist",jiklist);
+		map.put("freelist",freelist);
 		map.put("limit",limit);
 		map.put("search_field", type);
 		map.put("search_word", search);
@@ -276,20 +276,20 @@ public class JikController {
 	@PostMapping(value= "/isLike")
 	@ResponseBody
 	public int isLike(int num, String id) {
-		int jik_like = jikService.isLike(id,num);
+		int free_like = freeService.isLike(id,num);
 		
-		return jik_like;
+		return free_like;
 	}
 	
 	@PostMapping("/like")
 	@ResponseBody
 	public int like(int num, String id){
-			int result = jikService.isLike(id, num);
+			int result = freeService.isLike(id, num);
 			if(result==1) {
 				return 0;
 			}else {
-				jikService.LikeUp(num);
-				return jikService.like(num,id);
+				freeService.LikeUp(num);
+				return freeService.like(num,id);
 			}
 			
 	}
@@ -297,34 +297,34 @@ public class JikController {
 	@PostMapping("/dlike")
 	@ResponseBody
 	public int dlike(int num, String id){
-			int result = jikService.isLike(id, num);
+			int result = freeService.isLike(id, num);
 			if(result==1) {
-				jikService.LikeDown(num);
-				return jikService.dlike(num,id);
+				freeService.LikeDown(num);
+				return freeService.dlike(num,id);
 			}else {
 				return 0;
 			}
 			
 	}
 	@GetMapping(value = "/detail")
-	public ModelAndView jik_detail(int num, String id, ModelAndView mv,
+	public ModelAndView free_detail(int num, String id, ModelAndView mv,
 			HttpServletRequest request) {
 		
-		Jik jik = jikService.getDetail(num,id);
-		List<Jik_File> jik_file = jikService.getFile(num);
+		Free free = freeService.getDetail(num,id);
+		List<Free_File> free_file = freeService.getFile(num);
 		
-		if(jik == null) {
+		if(free == null) {
 			logger.info("디테일 오류");
 			mv.setViewName("error/error");
 			mv.addObject("url", request.getRequestURL());
 			mv.addObject("message", "디테일 페이지 오류");
 		}else {
 			logger.info("디테일 뷰 페이지 불러오기 성공");
-			int count = jik_commService.getListCount(num);
-			mv.setViewName("chang/Jik/jik_view");
+			int count = free_commService.getListCount(num);
+			mv.setViewName("chang/Free/free_view");
 			mv.addObject("count", count);
-			mv.addObject("jikdata", jik);
-			mv.addObject("jik_files",jik_file);
+			mv.addObject("freedata", free);
+			mv.addObject("free_files",free_file);
 		}
 		return mv;
 		
@@ -333,12 +333,12 @@ public class JikController {
 
 	
 	@GetMapping("/modifyView")
-	public ModelAndView jikmodifyView(int num, ModelAndView mv,
+	public ModelAndView freemodifyView(int num, ModelAndView mv,
 								   HttpServletRequest request) {
 			
-			Jik jikdata =jikService.getDetail2(num);
+			Free freedata =freeService.getDetail2(num);
 			
-			if(jikdata == null) {
+			if(freedata == null) {
 				logger.info("�������� ����");
 				mv.setViewName("error/error");
 				mv.addObject("url", request.getRequestURL());
@@ -347,21 +347,21 @@ public class JikController {
 			}
 			logger.info("���� �󼼺��� ����");
 			
-			mv.addObject("jikdata", jikdata);
+			mv.addObject("freedata", freedata);
 			
-			mv.setViewName("chang/Jik/jik_modify");
+			mv.setViewName("chang/Free/free_modify");
 			return mv;
 		}
 	
 	@PostMapping("/modifyAction")
-	public String BoardModifyAction(Jik jikdata,
+	public String BoardModifyAction(Free freedata,
 			String check, Model mv, HttpServletRequest request,
 			RedirectAttributes rattr
 			) throws Exception {
 
 		String url="";
 
-		int result = jikService.jikModify(jikdata);
+		int result = freeService.FreeModify(freedata);
 		
 		if(result == 0) {
 			logger.info("�Խ��� ���� ����");
@@ -371,21 +371,20 @@ public class JikController {
 			logger.info("�Խ��� ���� �Ϸ�");
 	
 			url = "redirect:detail";
-			rattr.addAttribute("num", jikdata.getJik_num());
-			rattr.addAttribute("id", jikdata.getJik_id());
-			
+			rattr.addAttribute("num", freedata.getFree_num());
+			rattr.addAttribute("id", freedata.getFree_id());
 		}
 		return url;
 	}
 	
 	@PostMapping("/delete")	
-	public String JikDeleteAction(int jik_num,
+	public String freeDeleteAction(int free_num,
 			Model mv,RedirectAttributes rattr,
 			HttpServletRequest request
 			)throws Exception {
 
 
-		int result = jikService.jikDelete(jik_num);
+		int result = freeService.FreeDelete(free_num);
 		
 		if(result == 0) {
 			logger.info("�Խ��� ���� ����");
@@ -400,7 +399,7 @@ public class JikController {
 	}
 	
 	@PostMapping("/down")
-	public void jikFileDown(String filename,
+	public void FreeFileDown(String filename,
 			HttpServletRequest request, String original,
 			HttpServletResponse response) throws Exception{
 		
