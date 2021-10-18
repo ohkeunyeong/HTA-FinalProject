@@ -38,6 +38,13 @@ $(document).ready(function() {
 			return false;
 		}
 	});// submit end
+	
+	$("#outmynong").click(function(){
+		if(confirm("농장에서 탈퇴 하시겠습니까?")){
+		}else {
+			return false
+		}	
+	})
 });// ready()end
 </script>
 </head>
@@ -163,9 +170,11 @@ $(document).ready(function() {
 				alt="by" /> <!-- <i class="menu__icon fa fa-envelope"></i> --> <span
 				style="padding: 0px 0px 0px 17px;" class="menu__text">농장관리</span>
 			</a>
+      <span id="outmynong">
+      <a class="menu__item" href="${pageContext.request.contextPath}/outmynong?id=${id}"><span class="menu__text">농장탈퇴</span></a>
+      </span>
 		</nav>
 		</sidebar>
 	</div>
-<jsp:include page="../../main/footer.jsp" /> 
 </body>
 </html>

@@ -348,7 +348,6 @@ main {
       </a>
     </nav>
   </sidebar>
-  </div>   
-<jsp:include page="../../main/footer.jsp" /> 
+  </div>    
 </body>
 </html>
