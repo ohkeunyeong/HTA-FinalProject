@@ -109,7 +109,7 @@
 					<li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/admin/main"> 관리자페이지</a></li>
 				</c:if>
 				<c:if test="${id != 'admin' }">
-					<li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/member/update"> 정보수정</a></li>
+					<li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/member/updatebefore"> 정보수정</a></li>
 				</c:if>
 			</c:if>
 

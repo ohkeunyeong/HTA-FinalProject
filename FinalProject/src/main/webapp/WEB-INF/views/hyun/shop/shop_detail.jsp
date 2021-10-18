@@ -187,7 +187,7 @@ div.goods {
 				  
 				  var data = {
 					  product_code : product_code,
-					  review_content : review_content
+					  review_content : review_content,
 					  product_name : product_name
 				    };
 				  
@@ -220,7 +220,7 @@ div.goods {
 	<script>
 	$("#shop_login").click(function(){
 		$.ajax({
-			url : "member/login",
+			url : "../member/login",
 			type : "post",
 			success : function(data){
 				console.log(data.saveid);

@@ -51,8 +51,6 @@ import com.hta.project.service.MynongService;
 import com.hta.project.task.SendMail;
 
 
-
-
 @Controller
 @RequestMapping(value="/member")
 public class MemberController {
@@ -72,8 +70,12 @@ public class MemberController {
 	@Autowired
 	private AdminService adminService;
 
-	@Value("${savefoldername}")
-	private String saveFolder;
+//	@Value("${savefoldername}")
+//	private String saveFolder;
+	
+	//<util:properties id="folder" location="classpath:pro/savefolder.properties"/>
+		@Value("#{folder['savefoldername']}")
+		private String saveFolder;
 	
 	@Autowired
 	private SendMail sendMail;
@@ -317,10 +319,43 @@ public class MemberController {
 		  return mv;
 	  }
 	  
+	  @RequestMapping(value = "/updatebefore", method = RequestMethod.GET)
+	  public String member_updatebefore(HttpSession session,
+			  							ModelAndView mv)     {
+		  return "/member/member_updatecheck";
+	  }
+	  
+	  @RequestMapping(value = "/updatebeforeProcess", method = RequestMethod.POST)
+	  public String member_updatebeforeProcess(String password,HttpSession session,
+			  									Model model)     {
+		  String id = (String)session.getAttribute("id");
+		  Map<String, Object> member = memberService.isId(id, password);
+			int result = (int) member.get("result");
+			if(result == 1) {
+				return "redirect:update";
+			}else {
+				model.addAttribute("message", "비밀번호가 일치하지 않습니다.");
+				return "/member/member_updatecheck";
+			}
+			
+		  
+	  }
+	  
 	  @RequestMapping(value = "/updateProcess", method = RequestMethod.POST)
-	  public String updateProcess(Member member, Model model,
+	  public String updateProcess( Member member, Model model,
 			  					  HttpServletRequest request,
+			
 			  					  RedirectAttributes rattr)   {
+		 
+//		  String OriginPass = memberService.OriginPass(member.getId(),member.getPass());
+//		  if(OriginPass!=null && OriginPass.equals( member.getPass())){
+//			  logger.info(OriginPass, member.getPass());
+//		  }else {
+//			  String encPassword = passwordEncoder.encode(member.getPass());
+//			  logger.info(encPassword);
+//			  member.setPass(encPassword);
+//		  }
+		  
 		  	String encPassword = passwordEncoder.encode(member.getPass());
 			logger.info(encPassword);
 			member.setPass(encPassword);

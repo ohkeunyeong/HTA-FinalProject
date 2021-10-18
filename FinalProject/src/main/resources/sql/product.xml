@@ -121,21 +121,6 @@
 		where category_code like #{word}
 	</select>
 	
-	<!-- 카테고리별 상품 리스트 : 퍼스나콘 리스트 -->	
-	<select id="personacon" resultType="product" parameterType="map">
-		select *
-		from (select rownum rnum, pr.*
-			  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
-	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
-	  	   			from product p, CATEGORY c
-	  	   			where p.category_code = c.category_code
-	  	   			and p.category_code = 500 
-	  	   			<include refid="search_" />
-	  	   			order by p.product_code) pr
-			 )
-		where rnum &gt;= #{start} and rnum &lt;= #{end}
-	</select>
-	
 	
 	<!-- 카테고리별 상품 리스트 : 도구 리스트 -->	
 	<select id="tools" resultType="product" parameterType="map">
