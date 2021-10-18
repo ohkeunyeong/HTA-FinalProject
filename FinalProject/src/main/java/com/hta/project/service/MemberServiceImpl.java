@@ -143,4 +143,13 @@ public class MemberServiceImpl implements MemberService{
 		return result;
 	}
 
+	@Override
+	public String OriginPass(String id , String pass) {
+		Member member = dao.isId(id);
+		String result = null;
+		if(member != null) {
+				result = member.getPass();
+		}
+		return result;
+	}
 }

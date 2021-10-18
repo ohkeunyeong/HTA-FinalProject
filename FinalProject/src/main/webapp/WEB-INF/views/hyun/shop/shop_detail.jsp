@@ -117,7 +117,6 @@ div.goods {
 		
 		<div class="gdsDes">상품설명 : ${p.product_detail}</div>
 		</div>
-		
 	</script>	
 	<jsp:include page="shopModal.jsp" />
 	<jsp:include page="../../main/footer.jsp" />
