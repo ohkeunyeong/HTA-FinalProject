@@ -14,104 +14,66 @@ h4{padding-top:30px;}
 </style>
 </head>
 <body>
-<jsp:include page="shop_header.jsp" />  
+<jsp:include page="../../main/header.jsp" />  
 
-<br><br><br>    	
-    <div class="slidebox">
-	<input type="radio" name="slide" id="slide01" checked>
-	<input type="radio" name="slide" id="slide02">
-	<input type="radio" name="slide" id="slide03">
-	<input type="radio" name="slide" id="slide04">
-	<ul class="slidelist">
-		<li class="slideitem">
-			<div>
-				<label for="slide04" class="left"></label>
-				<label for="slide02" class="right"></label>
-				<a><img src="${pageContext.request.contextPath}/resources/image/banner/slideimg01.jpg"></a>
-			</div>
-		</li>
-		<li class="slideitem">
-			<div>
-				<label for="slide01" class="left"></label>
-				<label for="slide03" class="right"></label>
-				<a><img src="${pageContext.request.contextPath}/resources/image/banner/slideimg02.jpg"></a>
-			</div>
-		</li>
-		<li class="slideitem">
-			<div>
-				<label for="slide02" class="left"></label>
-				<label for="slide04" class="right"></label>
-				<a><img src="${pageContext.request.contextPath}/resources/image/banner/slideimg03.jpg"></a>
-			</div>
-		</li>
-		<li class="slideitem">
-			<div>
-				<label for="slide03" class="left"></label>
-				<label for="slide01" class="right"></label>
-				<a><img src="${pageContext.request.contextPath}/resources/image/banner/slideimg04.jpg"></a>
-			</div>
-		</li>
-	</ul>
-	</div>
+<jsp:include page="shopSlidebar.jsp" />
 	
-	
-<!-- 굿즈 장터 내 네비게이션 바 -->
-<div class="container nav">
-		<ul class="nav nav-tabs nav-justified">
-			<li class="nav-item"><a class="nav-link" href="home">장터홈</a>
-			</li>
-			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/products/list?category_code=100">씨앗/모종</a></li>
-			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}products/list?category_code=200">비료/상토</a></li>
-			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}products/list?category_code=300">살충제</a>
-			</li>
-			<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}products/list?category_code=400">농기구</a></li>
-			<%-- <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}products/list?category_code=500">퍼스나콘</a>
-			</li> --%>
-			<li class="nav-item"><a class="nav-link active" href="${pageContext.request.contextPath}products/list?category_code=600">굿즈</a></li>
-		</ul>
-	</div>
+<jsp:include page="shop_nav.jsp" />
 
-
-<div class="container">
-<br><br>
-  <h4>비료/상토 제품</h4>
-</div>
+	<c:if test="${listcount > 0}">
+		<div class="container shop--content">
+			<div class="text-center mt-3 mb-3">
+				<h1>비료/상토 제품</h1>
+			</div>
+			<div class="content--item">
+				<c:forEach items="${productlist}" var="p">
+					<div class="card mr-5 mb-5" style="width: 18rem;">
+						<img src="${pageContext.request.contextPath}/upload${p.product_img}" class="card-img-top" alt="...">
+						<div class="card-body">
+							<h5 class="card-title">상품이름 : ${p.product_name}</h5>
+							<p class="card-text">
+								카테고리 : ${p.category_name}<br>
+								상품가격 : ${p.product_price}<br>
+								상품정보 : ${p.product_detail}<br>
+							</p>
+							<a href="${pageContext.request.contextPath}/shop/shop_detail?product_code=${p.product_code}&pageName=${pageName}" class="btn btn-primary">상세보기</a>
+						</div>
+					</div>
+				</c:forEach>
 	
-<div class="container">	
-		<div class="soil">
-		 <c:forEach items="${soilList1}" var="soil" varStatus="status">
-		
-		 <c:if test="${status.index % 4 == 0}">
-		  <div class="products card-deck">
-		 </c:if>
-		 
-			<div class="card" style="width:20%" >
-				<img class="card-img-top" style="height:300px;"
-					src="${pageContext.request.contextPath}/resources/image/hyun/${soil.product_img}"
-					alt="Card image" style="width:100%; height:300px">
-				<div class="card-body">
-					<h5 class="card-title">${soil.product_name}</h5>
-					<p class="card-text">${soil.product_detail}</p>
-					<a href="shop/shop_detail?product_code=${soil.product_code}" class="btn btn-info">제품 보기</a>
+				<div class="container justify-content-center mb-3">
+					<ul class="pagination m-0 justify-content-center">
+						<c:if test="${page <= 1 }">
+							<li class="page-item"><a class="page-link gray">«</a></li>
+						</c:if>
+						<c:if test="${page > 1 }">
+							<li class="page-item"><a href="shop_list?page=${page-1}&category_code=${category_code}&pageName=${pageName}" class="page-link">«</a></li>
+						</c:if>
+	
+						<c:forEach var="a" begin="${startpage}" end="${endpage}">
+							<c:if test="${a == page }">
+								<li class="page-item "><a class="page-link gray">${a}</a></li>
+							</c:if>
+							<c:if test="${a != page }">
+								<li class="page-item"><a href="shop_list?page=${a}&category_code=${category_code}&pageName=${pageName}" class="page-link">${a}</a></li>
+							</c:if>
+						</c:forEach>
+	
+						<c:if test="${page >= maxpage }">
+							<li class="page-item"><a class="page-link gray">»</a></li>
+						</c:if>
+						<c:if test="${page < maxpage }">
+							<li class="page-item"><a href="shop_list?page=${page+1}&category_code=${category_code}&pageName=${pageName}" class="page-link">»</a></li>
+						</c:if>
+					</ul>
 				</div>
 			</div>
-				<c:if test="${status.index % 4 == 3}">
-		   </div>
-		  </c:if>
-		  </c:forEach>
 		</div>
-		</div>	
-
-		<!--  페이지네이션 -->
-	<ul class="pagination justify-content-center" style="margin:20px 0">
-	  <li class="page-item"><a class="page-link" href="#">이전</a></li>
-	  <li class="page-item"><a class="page-link" href="#">1</a></li>
-	  <li class="page-item"><a class="page-link" href="#">2</a></li>
-	  <li class="page-item"><a class="page-link" href="#">3</a></li>
-	  <li class="page-item"><a class="page-link" href="#">4</a></li>
-	  <li class="page-item"><a class="page-link" href="#">5</a></li>
-	  <li class="page-item"><a class="page-link" href="#">다음</a></li>
-	</ul>
+	</c:if>
+	
+	<c:if test="${listcount == 0 || empty listcount}">
+		<div class="container text-center"><h1>올라온 상품이 없습니다.</h1></div>
+	</c:if>
 
 <jsp:include page="../../main/footer.jsp" />  
 </body>

@@ -25,7 +25,7 @@
  	</select>
  	
  	<select id="selectList" resultType="farm" parameterType="map">
- 		select mynong_name, name, cnt membercnt, mynong_date
+ 		select mynong_name, name, cnt membercnt, original, mynong_date
 		from (select rownum rnum, om.*
 	  		  from (select member.*, cnt, nong.mynong_date
 					from member inner join (select m.mynong_name, count(*) cnt, n.mynong_date

@@ -14,7 +14,7 @@ public interface ShopService<ReviewList, CartList> {
 
 	public List<Category> getCategoryList();
 
-	public int getProductListCount(int index, String search_word);
+	public int getProductListCount();
 
 	public Product getShopProductDetail(String code);
 	
@@ -22,22 +22,12 @@ public interface ShopService<ReviewList, CartList> {
 
 	public List<Product> getProductCategoryList(int page, int limit, String category_name);
 	
-	public List<Product> getProductList(int index, String search_word, int page, int limit);
+	public List<Product> getProductList(int page, int limit);
 
 	public List<Product> getToolsList(int index, String search_word, int page, int limit );
 
-	public List<Product> getToolsList1(int index, String search_word, int page, int limit );
-	
 	public List<Product> getGoodsList(int index, String search_word, int page, int limit );
 
-	public List<Product> getGoodsList1(int index, String search_word, int page, int limit);
-	
-	public List<Product> getSeedList1(int index, String search_word, int page, int limit);
-	
-	public List<Product> getSoilList1(int index, String search_word, int page, int limit);
-	
-	public List<Product> getPesticideList1(int index, String search_word, int page, int limit);
-	
 	public List<Product> getReviewProductList(int index, String search_word, int page, int limit);
 	
 	public List<Product> getReviewList(int index, String search_word, int page, int limit );
@@ -84,25 +74,8 @@ public interface ShopService<ReviewList, CartList> {
 	//주문 테이블, 주문 상세 테이블에 데이터를 전송하고, 카트 비우기
 	public void cartAllDelete(String userId)throws Exception;
 
-	
+	public List<Product> getCategoryProductList(int page, int limit, int category_code);
 
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-	
-	
-	
-
-	
+	public int getCategoryProductListCount(int category_code);
 
 }

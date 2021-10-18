@@ -43,50 +43,15 @@ div.goods {
 
 
 </style>
-<!--리뷰 목록 스크립트 -->
- <script> 
-		   function reviewList() {
-			   
-			   
-			 var product_code = ${product.product_code};
-			 $.getJSON("/shop/shop_detail/reviewList" + "?n=" + product_code, function(data){
-			  var str = "";
-			  
-			  $(data).each(function(){
-			   
-			   console.log(data);
-			   
-			   var review_Date = new Date(this.review_Date);
-			   review_Date = review_Date.toLocaleDateString("ko-US")
-			   
-			   str += "<li data-product_code='" + this.product_code + "'>"
-			     + "<div class='userInfo'>"
-			     + "<span class='ID'>" + this.ID + "</span>"
-			     + "<span class='date'>" + review_Date + "</span>"
-			     + "</div>"
-			     + "<div class='review_Content'>" + this.review_content + "</div>"
-			     + "<div class='product_code' type='hidden'>" + this.product_code + "</div>"
-			     + "<div class='product_name' type='hidden'>" + this.product_name + "</div>"
-			     + "<div class='category_code'type='hidden'>" + this.category_code + "</div>"
-			     + "</li>";           
-			  });
-			  
-			  $("section.reviewList ol").html(str);
-			 });
-			 
-			 }
-			</script>
-
 </head>
 <body>
 	<jsp:include page="../../main/header.jsp" />
-		<jsp:include page="shop_nav.jsp" />
-		<div class="section1" style="width:80%; margin:auto" >
+	<jsp:include page="shop_nav.jsp" />
+		<div class="section1 mt-3" style="width:80%; margin:auto;" >
 			<span>제품 상세 > ${p.product_name}</span> 
 		</div>
 		<br><br>
 		
-		<section id="content" style="margin-top:0rem;">
 			
 		<input type="hidden" class="code" value="${p.product_code}" />
 		<input type="hidden" class="id" value="${id}" />
@@ -150,88 +115,9 @@ div.goods {
 			</div>
 		</div>
 		
-		<div class="gdsDes">${p.product_detail}</div>
+		<div class="gdsDes">상품설명 : ${p.product_detail}</div>
 		</div>
-	
-	
-			<div id="review">
 		
-		 <c:if test="${id == null }"> <!-- 세션아이디 = id -->
-		  <p>리뷰를 남기시려면 <a id="shop_login" style="color:blue">로그인</a>해주세요</p>
-		 </c:if>
-		 
-		 <c:if test="${id != null}">
-		 <section class="reviewForm">
-		  <form role="form" method="post" autocomplete="off" action="/project/shop/registReview">
-		  	
-		  	<input type="hidden" name="product_code" value="${product.product_code}">
-		  	<input type="hidden" name="product_name" value="${product.product_name}">
-		  	<input type="hidden" name="category_code" value="${product.category_code}">
-		  	
-		   <div class="input_area">
-		    <textarea name="review_content" id="review_content"></textarea>
-		   </div>
-		   
-		   <div class="input_area">
-		    <button type="submit" id="review_btn">리뷰 남기기</button>
-		   </div>
-		   
-		   		<script>
-				 $("#review_btn").click(function(){
-				  
-				  var formObj = $(".reviewForm form[role='form']");
-				  var product_code = $("#product_code").val();
-				  var review_content = $("#review_content").val();
-				  var product_name = $("#product_name").val();
-				  var category_code = $("#category_code").val();
-				  
-				  var data = {
-					  product_code : product_code,
-					  review_content : review_content
-					  product_name : product_name
-				    };
-				  
-				  $.ajax({
-				   url : "/shop/registReview",
-				   type : "post",
-				   data : data,
-				   success : function(){
-				    reviewList();
-				    $("#review_content").val("");
-				   }
-				  });
-				 });
-				</script>
-		  </form>
-		 </section>
-		 </c:if>
-		 
-		 <section class="reviewList">
-		  <ol>
-		   <li>댓글 목록</li>
-		   </ol>    
-		    <script>
-		   reviewList();
-		   </script>
-		 </section>
-		</div>
-	</section>
-	
-	<script>
-	$("#shop_login").click(function(){
-		$.ajax({
-			url : "member/login",
-			type : "post",
-			success : function(data){
-				console.log(data.saveid);
-				if(data.saveid != null){
-					$('#id').val(data.saveid);
-					$('#remember').prop('checked', true);
-				}
-			}
-		})
-		$("#loginModal").modal({backdrop : 'static', keyboard: false});
-	});
 	</script>	
 	<jsp:include page="shopModal.jsp" />
 	<jsp:include page="../../main/footer.jsp" />

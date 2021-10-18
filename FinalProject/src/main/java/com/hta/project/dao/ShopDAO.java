@@ -28,8 +28,8 @@ public class ShopDAO {
 		return sqlSession.selectList("Products.categoryList");
 	}
 	
-	public int getProductListCount(Map<String, String> map) {
-		return sqlSession.selectOne("Products.count", map);
+	public int getProductListCount() {
+		return sqlSession.selectOne("Products.shopProductCount");
 	}
 
 	public Product getShopProductDetail(String code) {
@@ -45,38 +45,18 @@ public class ShopDAO {
 	}
 
 	public List<Product> getProductList(Map<String, Object> map) {
-		return sqlSession.selectList("Products.list", map);
+		return sqlSession.selectList("Products.productList", map);
 	}
 
 
 	public List<Product> getToolsList(Map<String, Object> map) {
 		return sqlSession.selectList("Products.tools", map);
 	}
-	
-	public List<Product> getToolsList1(Map<String, Object> map) {
-		return sqlSession.selectList("Products.tools1", map);
-	}
 
 	public List<Product> getGoodsList(Map<String, Object> map) {
 		return sqlSession.selectList("Products.goods", map);
 	}
-	
-	public List<Product> getGoodsList1(Map<String, Object> map) {
-		return sqlSession.selectList("Products.goods1", map);
-	}
 
-	public List<Product> getSeedList1(Map<String, Object> map) {
-		return sqlSession.selectList("Products.seed1", map);
-	}
-	
-	public List<Product> getSoilList1(Map<String, Object> map) {
-		return sqlSession.selectList("Products.soil1", map);
-	}
-	
-	public List<Product> getPesticideList1(Map<String, Object> map) {
-		return sqlSession.selectList("Products.pesticide1", map);
-	}
-	
 	public List<Product> getReviewList(Map<String, Object> map) {
 		return sqlSession.selectList("Products.review", map);
 	}
@@ -155,10 +135,12 @@ public class ShopDAO {
 		return sqlSession.selectList(namespace + ".orderView", ordermarket);
 	}
 
-	
+	public int getCategoryProductListCount(int category_code) {
+		return sqlSession.selectOne("Products.getCategoryProductListCount", category_code);
+	}
 
-	
-
-	
+	public List<Product> getCategoryProductList(Map<String, Object> map) {
+		return sqlSession.selectList("Products.getCategoryProductList", map);
+	}
 		
 }
