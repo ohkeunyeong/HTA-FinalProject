@@ -325,7 +325,7 @@ public class JikController {
 
 	
 	@GetMapping("/modifyView")
-	public ModelAndView jikmodifyView(int num, String id, ModelAndView mv,
+	public ModelAndView jikmodifyView(int num, ModelAndView mv,
 								   HttpServletRequest request) {
 			
 			Jik jikdata =jikService.getDetail2(num);
@@ -362,10 +362,8 @@ public class JikController {
 		}else { 
 			logger.info("정보수정에 성공하여 디테일페이지로 이동");
 	
-			url = "redirect:detail";
-			rattr.addAttribute("num", jikdata.getJik_num());
-			rattr.addAttribute("id", jikdata.getJik_id());
-			
+			url = "redirect:detail?num="+jikdata.getJik_num()+"&id="+jikdata.getJik_id();
+	
 		}
 		return url;
 	}

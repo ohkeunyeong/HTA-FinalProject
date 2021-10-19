@@ -370,9 +370,7 @@ public class FreeController {
 		}else { 
 			logger.info("정보수정에 성공하여 디테일페이지로 이동");
 	
-			url = "redirect:detail";
-			rattr.addAttribute("num", freedata.getFree_num());
-			rattr.addAttribute("id", freedata.getFree_id());
+			url = "redirect:detail?num="+freedata.getFree_num()+"&id="+freedata.getFree_id();
 		}
 		return url;
 	}

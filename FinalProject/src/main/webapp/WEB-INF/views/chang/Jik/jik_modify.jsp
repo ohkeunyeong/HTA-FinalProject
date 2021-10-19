@@ -19,6 +19,7 @@
    <form action="modifyAction" 
    		 method="post" name="modifyform" enctype="multipart/form-data">
    	  <input type="hidden" name="jik_num" 	value="${jikdata.jik_num}">
+   	  <input type="hidden" name="jik_id" 	value="${jikdata.jik_id}">
      <h1>직거래 장터 - 글 수정</h1>
      <div class="form-group">
      	<label for="nick">글쓴이</label><input value="${jikdata.nick}" 

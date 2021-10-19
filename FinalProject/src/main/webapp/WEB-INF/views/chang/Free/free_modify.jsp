@@ -19,6 +19,7 @@
    <form action="modifyAction" 
    		 method="post" name="modifyform" enctype="multipart/form-data">
    	  <input type="hidden" name="free_num" 	value="${freedata.free_num}">
+   	  <input type="hidden" name="free_id" 	value="${freedata.free_id}">
      <h1>수다 농장 - 수정</h1>
      <div class="form-group">
      	<label for="nick">글쓴이</label><input value="${freedata.nick}" 

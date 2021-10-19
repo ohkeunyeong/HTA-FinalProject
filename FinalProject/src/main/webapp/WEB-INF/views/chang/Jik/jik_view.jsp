@@ -68,7 +68,7 @@
  		<td colspan="2" class="center">
  			
  			<c:if test="${jikdata.jik_id == id || id =='admin' }">
- 			 <a href="modifyView?num=${jikdata.jik_num}&id=${jikdata.jik_id}">
+ 			 <a href="modifyView?num=${jikdata.jik_num}">
  			 	<button class="btn btn-warning">수정</button>
  			 </a>
  			 <a href="#">
