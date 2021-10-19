@@ -37,7 +37,7 @@
 			<!-- Dropdown -->
 			<li class="nav-item dropdown active" style="padding-left: 4%;"><a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> 농장 모듬 </a>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" href="#">수다 농장</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/jik/list">직거래 장터</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/free/list">수다 농장</a> <a class="dropdown-item" href="${pageContext.request.contextPath}/jik/list">직거래 장터</a>
 				</div></li>
 				
 			<!-- Dropdown -->

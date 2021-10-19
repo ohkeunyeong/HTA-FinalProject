@@ -13,6 +13,7 @@
 		var checkid=false;
 		var checkemail=false;
 		var check=0;
+		var checknick=false;
 		
 		$('input[type=file]').change(function(event){
 			check++;
@@ -53,6 +54,11 @@
 			if(!checkemail){
 				alert("email 형식을 확인하세요");
 				$("#joinemail").focus();
+				return false;
+			}
+			if(!checknick){
+				alert("사용가능한 닉네임으로 입력하세요.");
+				$("#joinnick").val('').focus();
 				return false;
 			}
 		}); //submit
@@ -107,6 +113,28 @@
 						}
 					})//ajax end
 		})//id keyup end
+		
+		$("#joinnick").on('input',
+				function() {
+			        $("#message2").empty();
+			        var nick = $("#joinnick").val();
+			        
+					$.ajax({
+						url : "nickcheck",
+						data : {"nick" : nick},
+						success : function(resp){
+							if(resp == -1){ // db에 해당 닉네임이 없는 경우
+								$("#message2").css('color','green').html(
+										"사용 가능한 닉네임 입니다.");
+								checknick=true;
+							} else {//db에 해당 닉네임이 있는 경우 (0)
+								$("#message2").css('color','blue').html(
+										"사용중인 닉네임 입니다.");
+								checknick=false;
+							}
+						}
+					})//ajax end
+		})//id keyup end
 	})//ready
 </script>
 </head>
@@ -127,6 +155,7 @@
 						
 		<b>닉네임</b><input type="text" name="nick" id="joinnick" placeholder="닉네임"
 			maxLength="8" required> 
+		<span id="message2"></span>
 		
 		<b>이메일 주소 </b>
 		<input type="text" name="mail" id="joinmail" placeholder="이메일" maxLength="30" required>
@@ -136,10 +165,10 @@
 			maxLength="11" required> 
 		
 		
-				<b>프로필 사진</b>
+		<b>프로필 사진</b>
 		<label>
 			<img src="../resources/image/chang/attach.png" width="25px">&nbsp;&nbsp;:&nbsp;&nbsp;
-			<span id="showImage"><img width="25px" src ="${pageContext.request.contextPath}/resources/image/chang/profile.png"></span>
+			<span id="showImage"><img width="25px" src ="../resources/image/chang/profile.png"></span>
 			<input type="file" name="uploadfile" accept="image/*">
 		</label>
 		

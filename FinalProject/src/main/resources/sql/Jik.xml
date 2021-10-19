@@ -11,12 +11,10 @@
   	</selectKey>
  			INSERT INTO jik
  			(jik_num, jik_id, nick, jik_subject,
- 			 jik_content, jik_file, jik_original,
- 			 jik_readcount, jik_date, jik_like)
+ 			 jik_content,jik_readcount, jik_date, jik_like,jik_ldate)
  			VALUES
  			 (#{jik_num},#{jik_id}, #{nick}, #{jik_subject},
- 			  #{jik_content}, #{jik_file}, #{jik_original},
- 			  #{jik_readcount}, sysdate, #{jik_like})
+ 			  #{jik_content}, #{jik_readcount}, sysdate, #{jik_like},sysdate)
  	</insert>
  
  	 <select id="count" resultType="int">
@@ -66,8 +64,7 @@
  		set 
  			jik_subject=#{jik_subject},
  			jik_content=#{jik_content},
- 			jik_file=#{jik_file},
- 			jik_original=#{jik_original}
+ 			jik_ldate=sysdate
  		where jik_num=#{jik_num}
  	</update>
  	
@@ -86,7 +83,7 @@
  		select board_file from delete_file
  	</select>
  	
- 	 	<sql id="search_">
+ 	 <sql id="search_">
  		<if test="search_field!=null">
  				and
  				<choose>

@@ -14,6 +14,7 @@ public class Jik_Comm {
 	private String jik_comm_secret;
 	private int state;
 	private String jik_id;
+	private String comm_nick;
 	
 	public int getState() {
 		return state;
@@ -86,6 +87,12 @@ public class Jik_Comm {
 	}
 	public void setJik_id(String jik_id) {
 		this.jik_id = jik_id;
+	}
+	public String getComm_nick() {
+		return comm_nick;
+	}
+	public void setComm_nick(String comm_nick) {
+		this.comm_nick = comm_nick;
 	}
 	
 	

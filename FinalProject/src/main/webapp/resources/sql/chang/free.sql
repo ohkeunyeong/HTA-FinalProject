@@ -1,17 +1,15 @@
 
 create table free(
 free_num				NUMBER(10) primary key,
-id					varchar2(20),
-nick				varchar2(20),
+free_id					varchar2(20),
+nick					varchar2(20),
 free_subject			varchar2(300),
 free_content			varchar2(4000),
-free_readcount		NUMBER(10),
-free_like			NUMBER(10),
-free_date			DATE default sysdate,
-free_ldate			DATE default sysdate,
-free_file			varchar2(100),
-free_original		varchar2(100),
-free_type			NUMBER(1)
+free_readcount			NUMBER(10),
+free_like				NUMBER(10),
+free_date				DATE default sysdate,
+free_ldate				DATE default sysdate,
+free_type				NUMBER(1)
 )
 INSERT INTO free
  			(free_num,

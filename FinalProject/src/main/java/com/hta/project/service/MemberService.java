@@ -40,7 +40,9 @@ public interface MemberService {
 
 	public int isPass(String id, String pass);
 
-//	public String OriginPass(String id , String pass);
+	public String OriginPass(String id , String pass);
+
+	public int isNick(String nick);
 	
 
 }

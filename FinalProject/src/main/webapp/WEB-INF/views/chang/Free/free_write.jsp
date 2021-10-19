@@ -1,36 +1,66 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<html lang="en">
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<html>
 <head>
-  <title>파일업로드예제</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<jsp:include page="../../main/header.jsp" />
+	<script src="../resources/js/chang/free_writeform.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<style>
+	h1{font-sie:1.5rem; text-align:center; color:#1a92b9}
+	.container{width:60%}
+	label{font-wight:bold}
+	#input_file{display:none}
+	</style>
 </head>
 <body>
+  <div class="container">
+   <form name="freeform" id="freeform">
+     <h1>MVC 게시판 -write 페이지</h1>
+     <div class="form-group">
+     	<label for="nick">글쓴이</label>
+     	<input name="nick" id="nick" value="${nick}"
+     		   readOnly
+     		   type="text"	size="10" maxlength="30"
+     		   class="form-control"
+     		   placeholder="Enter nick">
+     </div>
 
-<div class="container">
-  <h2>파일업로드</h2>
-  <form name="dataForm" id="dataForm" onsubmit="return registerAction()">
-  	<button id="btn-upload" type="button" style="border: 1px solid #ddd; outline: none;">파일 추가</button>
-  	<input id="input_file" multiple="multiple" type="file" style="display:none;">
-  	<span style="font-size:10px; color: gray;">※첨부파일은 최대 10개까지 등록이 가능합니다.</span>
-  	<div class="data_file_txt" id="data_file_txt" style="margin:40px;">
-		<span>첨부 파일</span>
-		<br />
-		<div id="articlefileChange">
-		</div>
+     <div class="form-group">
+       <label for="free_subject">제목</label>
+       <input name="free_subject" id="free_subject" type="text" maxlength="100"
+     			class="form-control"	placeholder="Enter free_subject">
+     </div>	
+     
+	<div class="form-group file">
+  		<button id="btn-upload" type="button" style="border: 1px solid #ddd; outline: none;">파일 추가</button>
+  		<input id="input_file" multiple="multiple" type="file" style="display:none;">
+  		<span style="font-size:10px; color: gray;">※첨부파일은 최대 10개까지 등록이 가능합니다.</span>
+  		<div class="data_file_txt" id="data_file_txt" style="margin:40px;">
+			<span>첨부 파일(클릭시 제외됩니다.)</span>
+			<br />
+			<div id="articlefileChange">
+			</div>
 	</div>
-  	<button type="submit" style="border: 1px solid #ddd; outline: none;">전송</button>
-  </form>
 </div>
-
-
-<!-- 파일 업로드 스크립트 -->
-<script>
+     
+     <div class="form-group">
+       <label for="free_content">내용</label>
+       <textarea name="free_content" id="free_content" 
+     			rows="10" 	class="form-control"></textarea>
+     </div>	
+     <input type="hidden" name="free_id" id="free_id" value="${id}">
+     <div class="form-group">
+     	<button type=button class="btn btn-primary" id="submit">등록</button>
+     	<button type=reset  class="btn btn-danger">취소</button>
+     </div>
+     
+   </form>
+  </div>
+  
+  <script>
 $(document).ready(function()
 		// input file 파일 첨부시 fileCheck 함수 실행
 		{
@@ -41,6 +71,11 @@ $(document).ready(function()
  * 첨부파일로직
  */
 $(function () {
+	 $('#submit').click(function(e){
+		 e.preventDefault();
+		 registerAction();
+	 })
+	 
     $('#btn-upload').click(function (e) {
         e.preventDefault();
         $('#input_file').click();
@@ -64,7 +99,7 @@ function fileCheck(e) {
     
     // 파일 개수 확인 및 제한
     if (fileCount + filesArr.length > totalCount) {
-      $.alert('파일은 최대 '+totalCount+'개까지 업로드 할 수 있습니다.');
+       alert('파일은 최대 '+totalCount+'개까지 업로드 할 수 있습니다.');
       return;
     } else {
     	 fileCount = fileCount + filesArr.length;
@@ -104,7 +139,7 @@ function fileDelete(fileNum){
  */
 	function registerAction(){
 		
-	var form = $("form")[0];        
+	var form = $("form")[0];
  	var formData = new FormData(form);
 		for (var x = 0; x < content_files.length; x++) {
 			// 삭제 안한것만 담아 준다. 
@@ -114,27 +149,24 @@ function fileDelete(fileNum){
 		}
    /*
    * 파일업로드 multiple ajax처리
-   */    
+   */  
 	$.ajax({
    	      type: "POST",
    	   	  enctype: "multipart/form-data",
-   	      url: "../jik/file-upload",
+   	      url: "../free/add",
        	  data : formData,
        	  processData: false,
    	      contentType: false,
-   	      success: function (data) {
-   	    	if(JSON.parse(data)['result'] == "OK"){
-   	    		alert("파일업로드 성공");
-			} else
-				alert("서버내 오류로 처리가 지연되고있습니다. 잠시 후 다시 시도해주세요");
+   	   	  success: function(data){
+   	   			  alert("글이 작성되었습니다.")
+   	    		  location.replace("list"); 
    	      },
-   	      error: function (xhr, status, error) {
-   	    	alert("서버오류로 지연되고있습니다. 잠시 후 다시 시도해주시기 바랍니다.");
-   	     return false;
+   	      error: function (error){
+				 alert("죄송합니다. 글 작성에 실패했습니다.")
+     	    	 location.replace("list");
    	      }
    	    });
-   	    return false;
-	}
+}
 </script>
 </body>
 </html>
