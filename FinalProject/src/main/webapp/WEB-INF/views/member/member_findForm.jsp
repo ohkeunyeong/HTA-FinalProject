@@ -83,25 +83,5 @@
 			<!-- wrapper -->
 		</div>
 	</form>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<jsp:include page="../main/footer.jsp" />
 </body>
 </html>
