@@ -55,7 +55,7 @@ select{
   <table class="table table-striped">
    <thead>
 	<tr>
-	   <th colspan="3">직거래 장터</th>
+	   <th colspan="3">수다 농장</th>
 	   <th></th>
 	   <th colspan="2">
 			<font size=3>글 개수 : ${listcount}</font>

@@ -13,9 +13,9 @@
  
  	<select id="getList" resultType="free_comm" parameterType="map">
  		select *
- 		from (select rownum rnum, free_comm_num, id, nick, free_comm_content, free_comm_date,free_comm_re_ref,free_comm_re_lev,free_comm_re_seq,free_comm_secret,free_id
+ 		from (select rownum rnum, free_comm_num, id, nick, free_comm_content, free_comm_date,free_comm_re_ref,free_comm_re_lev,free_comm_re_seq,free_comm_secret,free_id,comm_nick
  			  from(
- 			  		select free_comm_num, id, nick, free_comm_content, free_comm_date,free_comm_re_ref,free_comm_re_lev,free_comm_re_seq,free_comm_secret,free_id
+ 			  		select *
  			  		from free_comm
  			  		where free_board_num = #{free_num}
  			  		<if test="state!=null">
@@ -35,7 +35,7 @@
  			INSERT INTO free_comm
  			values
  			 (free_comm_seq.nextval, #{free_board_num},#{id}, #{nick}, #{free_comm_content}, sysdate,
- 			  free_comm_seq.nextval, #{free_comm_re_lev}, #{free_comm_re_seq},#{free_comm_secret},#{free_id})
+ 			  free_comm_seq.nextval, #{free_comm_re_lev}, #{free_comm_re_seq},#{free_comm_secret},#{free_id},#{comm_nick})
  	</insert>
  	
  	<delete id="delete" parameterType="int">
@@ -61,11 +61,11 @@
  		insert into free_comm
  		(free_comm_num, id,nick,free_board_num,
  		 free_comm_content,free_comm_re_ref, free_comm_re_lev,free_comm_re_seq,
- 		 free_comm_date,free_id,free_comm_secret)
+ 		 free_comm_date,free_id,free_comm_secret,comm_nick)
  		 values
  		 (free_comm_seq.nextval,#{id},#{nick},#{free_board_num},
  		 #{free_comm_content},#{free_comm_re_ref},#{free_comm_re_lev},
- 		 #{free_comm_re_seq},sysdate,#{free_id},#{free_comm_secret})
+ 		 #{free_comm_re_seq},sysdate,#{free_id},#{free_comm_secret},#{comm_nick})
  	</insert>
  	
  	<select id="ref_select" resultType="int" parameterType="int">

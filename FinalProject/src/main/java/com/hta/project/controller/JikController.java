@@ -243,15 +243,7 @@ public class JikController {
 		return map;
 	}
 	
-	/* @GetMapping(path = "/detail/{dir}/{id}")
-	 public ModelAndView image(@PathVariable(name = "dir") String dir,
-			 				   @PathVariable(name = "id") String id) {
-			logger.info(dir);
-			logger.info(id);
-		 return null;
-		 //매핑잘되면 -> 로그 -> 아까 코드 
-	 }*/
-
+	
 	@GetMapping("/display")
 	public ResponseEntity<byte[]> getImage(String fileName){
 		File file = new File(saveFolder+ fileName);

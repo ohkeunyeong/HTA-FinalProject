@@ -19,6 +19,8 @@ public class Free {
 	private String profile;
 	private String free_ldate;
 	private int free_type;
+	
+	
 	public int getFree_num() {
 		return free_num;
 	}
@@ -109,6 +111,7 @@ public class Free {
 	public void setFree_type(int free_type) {
 		this.free_type = free_type;
 	}
+
 	
 
 	

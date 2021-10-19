@@ -14,6 +14,8 @@ public class Free_Comm {
 	private String free_comm_secret;
 	private int state;
 	private String free_id;
+	private String comm_nick;
+	
 	public int getFree_comm_num() {
 		return free_comm_num;
 	}
@@ -85,6 +87,12 @@ public class Free_Comm {
 	}
 	public void setFree_id(String free_id) {
 		this.free_id = free_id;
+	}
+	public String getComm_nick() {
+		return comm_nick;
+	}
+	public void setComm_nick(String comm_nick) {
+		this.comm_nick = comm_nick;
 	}
 
 	
