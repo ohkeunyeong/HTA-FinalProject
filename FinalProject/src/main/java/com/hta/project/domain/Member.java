@@ -10,7 +10,7 @@ public class Member {
 	private String mail;
 	private String tel;
 	private String my_farm;
-	private String personacon;
+	private String persnacon;
 	private int point;
 	private String mynong_name;
 	private MultipartFile uploadfile;
@@ -72,12 +72,12 @@ public class Member {
 		this.my_farm = my_farm;
 	}
 	
-	public String getPersonacon() {
-		return personacon;
+	public String getPersnacon() {
+		return persnacon;
 	}
 	
-	public void setPersonacon(String personacon) {
-		this.personacon = personacon;
+	public void setPersnacon(String persnacon) {
+		this.persnacon = persnacon;
 	}
 	
 	public int getPoint() {
@@ -111,5 +111,6 @@ public class Member {
 	public void setOriginal(String original) {
 		this.original = original;
 	}
+
 
 }

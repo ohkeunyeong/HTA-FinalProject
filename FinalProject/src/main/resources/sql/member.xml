@@ -11,7 +11,7 @@
 	<select id="insert" parameterType="member">
  			INSERT INTO member
  			VALUES
- 			 (#{id},#{pass},#{name},#{nick},#{mail},#{tel}, '0', #{personacon},#{original}, 0, '')
+ 			 (#{id},#{pass},#{name},#{nick},#{mail},#{tel}, '0', #{persnacon},#{original}, 0, '')
  	</select>
  	
 	<select id="count" resultType="int">
@@ -58,7 +58,7 @@
 	
 	<update id="update" parameterType="member">
     	update member
-    	set name = #{name}, pass = #{pass} , personacon = #{personacon}, original = #{original},
+    	set name = #{name}, pass = #{pass} , persnacon = #{persnacon}, original = #{original},
     		nick = #{nick} , mail = #{mail}, tel = #{tel}
     	where id = #{id}
     </update>

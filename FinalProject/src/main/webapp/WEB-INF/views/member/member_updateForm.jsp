@@ -64,7 +64,7 @@ input[type=file]{
           <button type="button" class="cancelbtn" onclick="window.open('${pageContext.request.contextPath}/member/delete','window_name','width=470,height=520,location=no,status=no,scrollbars=yes')">탈퇴하기</button>          
         </div> 
         
-        <input type="hidden" name="personacon" value="${member.personacon}">      
+        <input type="hidden" name="persnacon" value="${member.persnacon}">      
      </form>
 
 <script>
