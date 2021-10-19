@@ -10,6 +10,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/jjs/login.js"></script>
 <script>
 	$(function(){
+		console.log('${result}')
 		if('${result}' == '-1'){
 			$('#loginFailModal').modal({backdrop: 'static', keyboard: false});
 			$('#loginFailModal-body').html("<h4>아이디가 존재하지 않습니다.</h4>");
@@ -53,6 +54,26 @@
 			</p>
 		</form>
 	</div>
+	
+	<div class="modal fade" id="loginFailModal">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header text-center">
+				<h3 class="modal-title">로그인 실패</h3>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body text-center" id="loginFailModal-body"></div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+			</div>
+		</div>
+	</div>
+</div>
 	<jsp:include page="../main/footer.jsp" />
 </body>
 </html>
