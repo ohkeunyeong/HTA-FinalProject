@@ -12,7 +12,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+//import java.util.Random;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
@@ -127,7 +127,7 @@ public class JikController {
 		}
 		
 	}
-	
+/*	
 	private String fileDBName(String fileName, String saveFolder) {
 		Calendar c = Calendar.getInstance();
 		int year = c.get(Calendar.YEAR);
@@ -159,7 +159,7 @@ public class JikController {
 		logger.info("fileDBName = " + fileDBName);
 		return fileDBName;
 	}
-	
+*/	
 	@RequestMapping(value = "/list", method=RequestMethod.GET)
 	public ModelAndView jiklist(
 			@RequestParam(value="page",defaultValue="1",required=false) int page,
