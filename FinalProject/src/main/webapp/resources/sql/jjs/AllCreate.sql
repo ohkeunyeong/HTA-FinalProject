@@ -87,8 +87,7 @@ create table jik(
 	jik_readcount		NUMBER(10),
 	jik_like			NUMBER(10),
 	jik_date			DATE default sysdate,
-	jik_file			varchar2(100),
-	jik_original		varchar2(100)
+	jik_ldate			DATE default sysdate
 );
 
 -- 직거래 게시판 댓글 테이블
@@ -103,7 +102,8 @@ create table jik_comm(
 	jik_comm_re_lev			NUMBER(10),
 	jik_comm_re_seq			NUMBER(10),
 	jik_comm_secret			CHAR(2),
-	jik_id					VARCHAR2(50)
+	jik_id					VARCHAR2(50),
+	comm_nick				VARCHAR2(50)
 );
 
 -- 직거래 게시판 좋아요 테이블
@@ -115,25 +115,24 @@ create table jik_like(
 
 -- 직거래 게시판 이미지 파일 저장 테이블
 create table jik_files(
-	jik_num				NUMBER(10),
+	jik_num				NUMBER(10) references jik(jik_num) on delete cascade,
 	jik_file			varchar2(100),
 	jik_original		varchar2(100)
-);
+)
+
 
 -- 자유게시판 테이블
 create table free(
 	free_num				NUMBER(10) primary key,
-	id					varchar2(20),
-	nick				varchar2(20),
+	free_id					varchar2(20),
+	nick					varchar2(20),
 	free_subject			varchar2(300),
 	free_content			varchar2(4000),
-	free_readcount		NUMBER(10),
-	free_like			NUMBER(10),
-	free_date			DATE default sysdate,
-	free_ldate			DATE default sysdate,
-	free_file			varchar2(100),
-	free_original		varchar2(100),
-	free_type			NUMBER(1)
+	free_readcount			NUMBER(10),
+	free_like				NUMBER(10),
+	free_date				DATE default sysdate,
+	free_ldate				DATE default sysdate,
+	free_type				NUMBER(1)
 );
 
 -- 자유게시판 댓글 테이블
@@ -141,22 +140,31 @@ create table free_comm(
 	free_comm_num			NUMBER(10) primary key,
 	free_board_num			NUMBER(20) references free(free_num) on delete cascade,
 	id						VARCHAR2(50),
-	nick					VARCHAR2(20),
+	nick					VARCHAR2(50),
 	free_comm_content		VARCHAR2(3000),
 	free_comm_date			DATE default sysdate,
-	free_comm_re_ref			NUMBER(10),
-	free_comm_re_lev			NUMBER(10),
-	free_comm_re_seq			NUMBER(10),
-	free_comm_secret			CHAR(2),
-	free_id					VARCHAR2(50)
-);
+	free_comm_re_ref		NUMBER(10),
+	free_comm_re_lev		NUMBER(10),
+	free_comm_re_seq		NUMBER(10),
+	free_comm_secret		CHAR(2),
+	free_id					VARCHAR2(50),
+	comm_nick				VARCHAR2(50)
+)
+
+--자유게시판 파일 테이블
+create table free_files(
+	free_num			NUMBER(10) references free(free_num) on delete cascade,
+	free_file			varchar2(100),
+	free_original		varchar2(100)
+)
+
 
 -- 자유게시판 좋아요 테이블
 create table free_like(
 	free_num			NUMBER(10),
 	free_id			varchar2(20),
 	foreign key (free_num) REFERENCES free(free_num)
-);
+)
 
 -- 이미지 삭제 파일 저장 테이블
 create table delete_File(

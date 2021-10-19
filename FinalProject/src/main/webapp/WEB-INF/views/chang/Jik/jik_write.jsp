@@ -18,7 +18,7 @@
 <body>
   <div class="container">
    <form name="jikform" id="jikform">
-     <h1>MVC 게시판 -write 페이지</h1>
+     <h1>직거래 장터 - 글쓰기</h1>
      <div class="form-group">
      	<label for="nick">글쓴이</label>
      	<input name="nick" id="nick" value="${nick}"
