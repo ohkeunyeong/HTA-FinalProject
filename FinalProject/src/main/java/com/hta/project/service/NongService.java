@@ -2,6 +2,7 @@ package com.hta.project.service;
 
 import java.util.List;
 
+import com.hta.project.domain.Mynong;
 import com.hta.project.domain.Nong;
 
 public interface NongService {

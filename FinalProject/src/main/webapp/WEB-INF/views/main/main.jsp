@@ -60,9 +60,9 @@ width:100%
 </style>
 </head>
 <body>
-<br><br><br><br><br>
+<br><br>
 <div class="container justify-content-center">
-		<img src="${pageContext.request.contextPath}/resources/image/farm4.jpeg" alt="Logo" style="height: 400px; margin-bottom: 30px; margin-left:15%">
+		<img src="${pageContext.request.contextPath}/resources/image/farm2.png" alt="Logo" style="height: 400px; margin-bottom: 30px; margin-left:25%">
 	</div>
 	<!--  <a href='https://www.freepik.com/vectors/water'>Water vector created by upklyak - www.freepik.com</a> -->
 	
@@ -106,20 +106,22 @@ width:100%
 </div>
 		
 		<div class="btn-group a">
-			<a href="#" class="button">
-				&nbsp;&nbsp;&nbsp;&nbsp;고객센터<br>
-				<p>
-				&nbsp;&nbsp;&nbsp;&nbsp;고객의 소리를 적극 경청하고 고객만족 향상 활동<br>
-				&nbsp;&nbsp;&nbsp;&nbsp;을 지속적으로 실천합니다.		
-				</p>		
-			</a>
-			<a href="#" class="button">
+			<a href="${pageContext.request.contextPath}/notice/noticeList" class="button">
 				&nbsp;&nbsp;&nbsp;&nbsp;공지사항<br>
 				<p>
-				&nbsp;&nbsp;&nbsp;&nbsp;주말농장의 공지사항을 확인하세요.
+				&nbsp;&nbsp;&nbsp;&nbsp;주말농장의 공지사항을 확인하세요.<br>	
+				
+				</p>		
+			</a>
+			<a href="${pageContext.request.contextPath}/emailprocess?id=${id}" class="button">
+				&nbsp;&nbsp;&nbsp;&nbsp;메일 문의<br>
+				<p>
+				&nbsp;&nbsp;&nbsp;&nbsp;주말농부님들의 의견을 들려주세요.<br>
+				
 				</p>
 			</a>
 		</div>
+		
 		
 		
 <jsp:include page="footer.jsp" />  

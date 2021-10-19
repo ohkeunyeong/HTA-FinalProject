@@ -52,5 +52,12 @@
 			)
 	  WHERE RN BETWEEN 1 AND 3      
    </select>
+   
+   <select id="main_calBoardList" parameterType="Map" resultType="calendar">
+      SELECT SEQ, NAME, TITLE, CONTENT, MDATE, REGDATE
+      FROM CALBOARD
+      WHERE NAME=#{name} AND SUBSTR(MDATE,1,8) = #{yyyyMMdd}
+      ORDER BY MDATE 
+   </select>
 </mapper>
 

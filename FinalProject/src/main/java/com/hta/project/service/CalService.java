@@ -26,5 +26,8 @@ public interface CalService {
 
 	// 달력에 존재하는 일정조회하기(일일별 최대 3개씩 가져오기)
 	public List<MyCalendar> calViewList(String name, String yyyyMM);
+	
+	// 메인에서 일정목록조회하기: select문, 결과:List, 파라미터 id, yyyyMMdd
+		public List<MyCalendar> main_calboardList(String name, String yyyyMMdd);
 
 }

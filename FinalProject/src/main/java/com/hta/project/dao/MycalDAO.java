@@ -69,4 +69,15 @@ public class MycalDAO {
 		return sqlSession.selectList("Calendars.calViewList", map);
 	}
 
+	// 메인에서 일정목록조회하기: select문, 결과:List, 파라미터 id, yyyyMMdd
+		public List<MyCalendar> main_calboardList(String name, String yyyyMMdd) {
+			// mapper.xml에 전달할 파라미터가 2개 이상이면 Map에 담아서 전달한다.
+			Map<String, String> map = new HashMap<>();
+			map.put("name", name);
+			map.put("yyyyMMdd", yyyyMMdd);
+			List<MyCalendar> list = sqlSession.selectList("Calendars.main_calBoardList", map);
+			return list;
+		}
+	
+
 }

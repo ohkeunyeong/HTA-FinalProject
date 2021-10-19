@@ -320,7 +320,7 @@ public class NongController {
 			logger.info("비회원 접근");
 			mv.setViewName("oky/error/error");
 			mv.addObject("url", request.getRequestURL());
-			mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");
+			mv.addObject("message", "해당페이지를 볼 권한이 없습니다.");
 			return mv;
 		}
 	}
@@ -345,7 +345,7 @@ public class NongController {
 				logger.info("답글쓰기 프로세스실패");
 				mv.setViewName("oky/error/error");
 				mv.addObject("url", request.getRequestURL());
-				mv.addObject("message", "해당 멤버게시판을 볼  권한이 없습니다.");
+				mv.addObject("message", "해당 멤버게시판을 볼 권한이 없습니다.");
 			} else { // 해당 농장 멤버 접근시
 				Nong nong = nongservice.getDetail(num);
 				if (nong == null) {
@@ -365,7 +365,7 @@ public class NongController {
 			logger.info("비회원 접근");
 			mv.setViewName("oky/error/error");
 			mv.addObject("url", request.getRequestURL());
-			mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");
+			mv.addObject("message", "해당페이지를 볼 권한이 없습니다.");
 			return mv;
 		}
 	}
@@ -408,7 +408,7 @@ public class NongController {
 			logger.info("비회원 접근");
 			mv.setViewName("oky/error/error");
 			mv.addObject("url", request.getRequestURL());
-			mv.addObject("message", "해당페이지를 볼  권한이 없습니다.");
+			mv.addObject("message", "해당페이지를 볼 권한이 없습니다.");
 			return mv;
 		}
 	}
