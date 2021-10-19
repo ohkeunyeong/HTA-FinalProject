@@ -62,7 +62,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 								<div class="card-body box-profile">
 									<div class="text-center">
 										<c:if test="${memberInfo.original == '/profile.png'}">
-											<img class="profile-user-img img-fluid img-circle" src="${pageContext.request.contextPath}/resources/image/chang/${memberInfo.original}" alt="User profile picture">
+											<img class="profile-user-img img-fluid img-circle" src="${pageContext.request.contextPath}/upload${memberInfo.original}" alt="User profile picture">
 										</c:if>
 										<c:if test="${memberInfo.original != '/profile.png'}">
 											<img class="profile-user-img img-fluid img-circle" src="${pageContext.request.contextPath}/upload${memberInfo.original}" alt="User profile picture">

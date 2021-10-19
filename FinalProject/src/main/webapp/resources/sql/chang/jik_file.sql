@@ -5,7 +5,7 @@ jik_file			varchar2(100),
 jik_original		varchar2(100)
 )
 
-drop table jik_file
+drop table jik_files
 
 
 select * from jik_files;

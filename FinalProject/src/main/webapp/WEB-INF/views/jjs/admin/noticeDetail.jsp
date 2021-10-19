@@ -51,7 +51,7 @@ textarea{
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
 								<li class="breadcrumb-item"><a href="main">Home</a></li>
-								<li class="breadcrumb-item"><a href="postList">게시물 관리</a></li>
+								<li class="breadcrumb-item"><a href="noticeList">게시물 관리</a></li>
 								<li class="breadcrumb-item active">공지사항 상세보기</li>
 							</ol>
 						</div>

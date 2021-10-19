@@ -8,10 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hta.project.domain.Category;
 import com.hta.project.domain.Farm;
+import com.hta.project.domain.Free;
 import com.hta.project.domain.Jik;
 import com.hta.project.domain.Member;
 import com.hta.project.domain.Notice;
@@ -450,9 +449,7 @@ public class AdminController {
 				adminService.numReportDelete(board_num, board_table);
 			}
 		}else if(board_table.equals("free")) {
-			
-		}else if(board_table.equals("work")) {
-			
+			Free free = new Free();
 		}
 		return "redirect:reportList";
 	}

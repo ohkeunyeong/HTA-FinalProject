@@ -77,7 +77,7 @@ h4 {
 	</c:if>
 	
 	<c:if test="${listcount == 0 || empty listcount}">
-		<div class="container text-center"><h1>올라온 상품이 없습니다.</h1></div>
+		<div class="container text-center mt-5 mb-5"><h1>올라온 상품이 없습니다.</h1></div>
 	</c:if>
 
 	<jsp:include page="../../main/footer.jsp" />
