@@ -89,7 +89,7 @@ create table jik(
 	jik_date			DATE default sysdate,
 	jik_ldate			DATE default sysdate
 );
-
+drop table jik
 -- 직거래 게시판 댓글 테이블
 create table jik_comm(
 	jik_comm_num			NUMBER(10) primary key,
@@ -105,21 +105,23 @@ create table jik_comm(
 	jik_id					VARCHAR2(50),
 	comm_nick				VARCHAR2(50)
 );
-
+drop table jik_comm
 -- 직거래 게시판 좋아요 테이블
 create table jik_like(
 	jik_num			NUMBER(10),
 	jik_id			varchar2(20),
 	foreign key (jik_num) REFERENCES jik(jik_num)
 );
-
+drop table jik_like
 -- 직거래 게시판 이미지 파일 저장 테이블
 create table jik_files(
 	jik_num				NUMBER(10) references jik(jik_num) on delete cascade,
 	jik_file			varchar2(100),
 	jik_original		varchar2(100)
-);
 
+)
+
+drop table jik_files
 
 -- 자유게시판 테이블
 create table free(
@@ -134,7 +136,7 @@ create table free(
 	free_ldate				DATE default sysdate,
 	free_type				NUMBER(1)
 );
-
+drop table free
 -- 자유게시판 댓글 테이블
 create table free_comm(
 	free_comm_num			NUMBER(10) primary key,
@@ -150,14 +152,14 @@ create table free_comm(
 	free_id					VARCHAR2(50),
 	comm_nick				VARCHAR2(50)
 );
-
+drop table free_comm
 --자유게시판 파일 테이블
 create table free_files(
 	free_num			NUMBER(10) references free(free_num) on delete cascade,
 	free_file			varchar2(100),
 	free_original		varchar2(100)
 );
-
+drop table free_files
 
 -- 자유게시판 좋아요 테이블
 create table free_like(
@@ -165,12 +167,12 @@ create table free_like(
 	free_id			varchar2(20),
 	foreign key (free_num) REFERENCES free(free_num)
 );
-
+drop table free_like
 -- 이미지 삭제 파일 저장 테이블
 create table delete_File(
 	BOARD_FILE		VARCHAR2(50) primary key
 );
-
+drop table delete_File
 -- 카테고리 테이블
 CREATE TABLE CATEGORY( 
   CATEGORY_CODE       VARCHAR2(50),         	-- 카테고리 코드 
@@ -193,7 +195,7 @@ values('400', '농기구');
 insert into CATEGORY
 values('500', '굿즈');
 
-
+drop table CATEGORY
 -- 상품 테이블
 CREATE TABLE PRODUCT(
   PRODUCT_CODE       VARCHAR2(6),          		-- 상품코드 
@@ -208,6 +210,7 @@ CREATE TABLE PRODUCT(
   FOREIGN KEY (CATEGORY_CODE) REFERENCES CATEGORY (CATEGORY_CODE)
 );
 
+drop table PRODUCT
 -- 장바구니 테이블
 CREATE TABLE CART(
   CART_NUM       	 NUMBER(15)	not null,         -- 장바구니 번호 VARCHAR2(15)
@@ -219,7 +222,7 @@ CREATE TABLE CART(
   FOREIGN KEY (ID) REFERENCES MEMBER (ID),
   FOREIGN KEY (PRODUCT_CODE) REFERENCES PRODUCT (PRODUCT_CODE)
 );
-
+drop table CART
 -- 주문 테이블
 CREATE TABLE ORDER_MARKET(
   ORDER_NUM          VARCHAR2(50)	not null,         -- 주문번호 
@@ -235,7 +238,7 @@ CREATE TABLE ORDER_MARKET(
   PRIMARY KEY(ORDER_NUM),
   FOREIGN KEY (ID) REFERENCES MEMBER (ID)
 );
-
+drop table ORDER_MARKET cascade constraints;
 -- 주문 상세 테이블
 CREATE TABLE ORDER_DETAIL(
   ORDER_DE_NUM       VARCHAR2(15)	not null,   -- 주문상세번호 
@@ -251,7 +254,7 @@ CREATE TABLE ORDER_DETAIL(
   PRIMARY KEY(ORDER_DE_NUM),
   FOREIGN KEY (ORDER_NUM) REFERENCES ORDER_MARKET (ORDER_NUM)
 );
-
+drop table ORDER_DETAIL cascade constraints;
 -- 공지사항 테이블
 create table notice(
 	notice_num				number(10) primary key,
@@ -261,7 +264,7 @@ create table notice(
 	notice_date				DATE default sysdate,
 	notice_fix				varchar2(10)
 );
-
+drop table notice cascade constraints;
 -- 관리자 신고글 테이블
 create TABLE REPORT(
 	REPORT_NUM NUMBER(3) PRIMARY KEY,
@@ -273,4 +276,4 @@ create TABLE REPORT(
 	BOARD_TABLE VARCHAR2(50),
 	REPORT_DATE DATE
 );
-
+drop table REPORT cascade constraints;
