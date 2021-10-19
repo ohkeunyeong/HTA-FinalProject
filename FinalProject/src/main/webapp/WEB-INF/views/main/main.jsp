@@ -25,10 +25,10 @@ width:100%
 
 .a .button {
   text-align:left;
-  height:150px;
+  height:170px;
   background-color:#94b8b8; 
   border: none; 
-  padding: 20px 60px 20px 30px;
+  padding: 40px 60px 20px 30px;
   cursor: pointer;
   float: left;
   color: white; 
@@ -77,9 +77,9 @@ width:100%
   <div class="col-sm-4">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">2021.09.19</h5>
+        <h5 class="card-title">2021.10.19</h5>
         <p class="card-text">오전 9시:약치기</p>
-        <a href="#" class="btn btn-primary">상세보기</a>
+        <a href="${pageContext.request.contextPath}/caldetailmain?name=4farm&seq=3" class="btn btn-primary">상세보기</a>
       </div>
     </div>
   </div>
@@ -88,7 +88,7 @@ width:100%
       <div class="card-body">
         <h5 class="card-title">2021.09.20</h5>
         <p class="card-text">일정 내용 적는 부분</p>
-        <a href="#" class="btn btn-primary">상세보기</a>
+        <a href="${pageContext.request.contextPath}/caldetailmain?name=4farm&seq=3" class="btn btn-primary">상세보기</a>
       </div>
     </div>
   </div>
@@ -97,7 +97,7 @@ width:100%
       <div class="card-body">
         <h5 class="card-title">2021.09.21</h5>
         <p class="card-text">일정 내용 적는 부분</p>
-        <a href="#" class="btn btn-primary">상세보기</a>
+        <a href="${pageContext.request.contextPath}/caldetailmain?name=4farm&seq=3" class="btn btn-primary">상세보기</a>
       </div>
     </div>
   </div>

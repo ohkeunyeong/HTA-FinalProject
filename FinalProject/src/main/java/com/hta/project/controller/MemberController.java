@@ -140,7 +140,7 @@ public class MemberController {
 		
 		if (!uploadfile.isEmpty()) {
 			String fileName = uploadfile.getOriginalFilename();
-			member.setPersonacon(fileName);
+			member.setPersnacon(fileName);
 			
 			String fileDBName = fileDBName(fileName, saveFolder);
 			logger.info("fileDBName =" + fileDBName);
@@ -152,7 +152,7 @@ public class MemberController {
 			member.setOriginal(fileDBName);
 		}else {
 			String fileDBName = "/"+"profile.png";
-			member.setPersonacon("profile.png");
+			member.setPersnacon("profile.png");
 			member.setOriginal(fileDBName);
 		}
 		
@@ -394,12 +394,12 @@ public class MemberController {
 			    uploadfile.transferTo(new File(saveFolder + fileName));
 			    
 			    // 바뀐 파일명으로 저장 
-			    member.setPersonacon(fileDBName);
+			    member.setPersnacon(fileDBName);
 			} else { // uploadfile.isEmpty() 인 경우 - 파일 선택하지 않은 경우 
 				logger.info("선택 파일 없습니다.");
 				//<input type="hidden" name="BOARD_FILE" value="$boarddata.BOARD_FILE}">
 				//위 태그에 값이 있다면 ""로 값을 변경합니다.
-				member.setPersonacon("");//""로 초기화합니다.
+				member.setPersnacon("");//""로 초기화합니다.
 				member.setOriginal("");//""로 초기화합니다.
 			} //else end
 		} //else end 
