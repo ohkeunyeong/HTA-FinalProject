@@ -13,9 +13,9 @@
  
  	<select id="getList" resultType="jik_comm" parameterType="map">
  		select *
- 		from (select rownum rnum, jik_comm_num, id, nick, jik_comm_content, jik_comm_date,jik_comm_re_ref,jik_comm_re_lev,jik_comm_re_seq,jik_comm_secret,jik_id
+ 		from (select rownum rnum, jik_comm_num, id, nick, jik_comm_content, jik_comm_date,jik_comm_re_ref,jik_comm_re_lev,jik_comm_re_seq,jik_comm_secret,jik_id,comm_nick
  			  from(
- 			  		select jik_comm_num, id, nick, jik_comm_content, jik_comm_date,jik_comm_re_ref,jik_comm_re_lev,jik_comm_re_seq,jik_comm_secret,jik_id
+ 			  		select *
  			  		from jik_comm
  			  		where jik_board_num = #{jik_num}
  			  		<if test="state!=null">
@@ -35,7 +35,7 @@
  			INSERT INTO jik_comm
  			values
  			 (jik_comm_seq.nextval, #{jik_board_num},#{id}, #{nick}, #{jik_comm_content}, sysdate,
- 			  jik_comm_seq.nextval, #{jik_comm_re_lev}, #{jik_comm_re_seq},#{jik_comm_secret},#{jik_id})
+ 			  jik_comm_seq.nextval, #{jik_comm_re_lev}, #{jik_comm_re_seq},#{jik_comm_secret},#{jik_id},#{comm_nick})
  	</insert>
  	
  	<delete id="delete" parameterType="int">
@@ -61,11 +61,11 @@
  		insert into jik_comm
  		(jik_comm_num, id,nick,jik_board_num,
  		 jik_comm_content,jik_comm_re_ref, jik_comm_re_lev,jik_comm_re_seq,
- 		 jik_comm_date,jik_id,jik_comm_secret)
+ 		 jik_comm_date,jik_id,jik_comm_secret,comm_nick)
  		 values
  		 (jik_comm_seq.nextval,#{id},#{nick},#{jik_board_num},
  		 #{jik_comm_content},#{jik_comm_re_ref},#{jik_comm_re_lev},
- 		 #{jik_comm_re_seq},sysdate,#{jik_id},#{jik_comm_secret})
+ 		 #{jik_comm_re_seq},sysdate,#{jik_id},#{jik_comm_secret},#{comm_nick})
  	</insert>
  	
  	<select id="ref_select" resultType="int" parameterType="int">

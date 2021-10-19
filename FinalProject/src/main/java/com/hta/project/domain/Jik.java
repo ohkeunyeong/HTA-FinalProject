@@ -1,8 +1,6 @@
 
 package com.hta.project.domain;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class Jik {
 	private int jik_num;
 	private String jik_id;    
@@ -11,10 +9,7 @@ public class Jik {
 	private String jik_content; 
 	private int jik_readcount;
 	private int jik_like;
-	private String jik_date;	
-	private String jik_file;  
-	private String jik_original;
-	private MultipartFile uploadfile;
+	private String jik_date;
 	private int cnt;
 	private String profile;
 	private String jik_ldate;
@@ -61,24 +56,6 @@ public class Jik {
 	public void setJik_date(String jik_date) {
 		this.jik_date = jik_date.substring(0,10);
 	}
-	public String getJik_file() {
-		return jik_file;
-	}
-	public void setJik_file(String jik_file) {
-		this.jik_file = jik_file;
-	}
-	public String getJik_original() {
-		return jik_original;
-	}
-	public void setJik_original(String jik_original) {
-		this.jik_original = jik_original;
-	}
-	public MultipartFile getUploadfile() {
-		return uploadfile;
-	}
-	public void setUploadfile(MultipartFile uploadfile) {
-		this.uploadfile = uploadfile;
-	}
 	public String getJik_id() {
 		return jik_id;
 	}
@@ -103,6 +80,7 @@ public class Jik {
 	public void setJik_ldate(String jik_ldate) {
 		this.jik_ldate = jik_ldate;
 	}
+	
 
 
 	

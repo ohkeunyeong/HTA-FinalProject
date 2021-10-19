@@ -1,11 +1,11 @@
  // $('.center.noborder')영역에 좋아요 이미지와 버튼 달리 보여주기
 function getLike(){
 	if( $("#Loginid").val()!=null && $("#Loginid").val()!=""){
-	 $.ajax({
-		 url : '../jik/isLike',
+	$.ajax({
+		 url : '../free/isLike',
 		 data : {
 			 id : $("#Loginid").val(),
-			 num : $("#jik_num").val()
+			 num : $("#free_num").val()
 		 },
 		 type : 'post',
 		 success : function(rdata){
@@ -22,7 +22,7 @@ function getLike(){
 			}
 			 $('.center.noborder').html(output);
 		 }
-	 })
+	 })//ajax
 	}
 }
 
@@ -31,10 +31,10 @@ function like(){
 	
 	var output="";
 	 $.ajax({
-			 url : '../jik/like',
+			 url : '../free/like',
 			 data : {
 				 id : $("#Loginid").val(),
-				 num : $("#jik_num").val()
+				 num : $("#free_num").val()
 			 },
 			 type : 'post',
 			 success : function(rdata){
@@ -46,10 +46,10 @@ function like(){
 				}else{
 					if(confirm("좋아요를 취소 하시겠습니까?")){
 					$.ajax({
-							url : '../jik/dlike',
+							url : '../free/dlike',
 								data : {
 										id : $("#Loginid").val(),
-										num : $("#jik_num").val()
+										num : $("#free_num").val()
 										},
 										type : 'post',
 										success : function(rdata){
@@ -75,9 +75,9 @@ function getList(currentPage,state){
 	    
 		$.ajax({
 			type: "post",
-			url: "../jik_comm/list",
+			url: "../free_comm/list",
 			data : {
-				"jik_num" : $("#jik_num").val(),
+				"free_num" : $("#free_num").val(),
 				"page" : currentPage,
 				"state" : state
 			},
@@ -103,15 +103,15 @@ function getList(currentPage,state){
                if(rdata.listcount > 0){    
 				    output='';
 					$(rdata.list).each(function(){
-						var lev = this.jik_comm_re_lev;
+						var lev = this.free_comm_re_lev;
 						var comment_reply='';
-						var s = this.jik_comm_secret.toString().trim();
+						var s = this.free_comm_secret.toString().trim();
 						//레벨에 따라 왼쪽 여백줍니다.
 						if(lev>=1){
 							comment_reply = ' CommentItem--reply lev1';//margin-left: 46px;
 						}
 						
-					   output  += '<li id="' + this.jik_comm_num + '" class="CommentItem' + comment_reply + '">'
+					   output  += '<li id="' + this.free_comm_num + '" class="CommentItem' + comment_reply + '">'
 							   + '   <div class="comment_area">'
 							   + '    <div class="comment_box">'
 							   + '      <div class="comment_nick_box">'
@@ -126,11 +126,11 @@ function getList(currentPage,state){
 							   + '    <div class="comment_text_box">'
 							   + '       <p class="comment_text_view">';
 							   if(s=='Y'){
-								   if(this.jik_id== $("#Loginid").val() || this.id== $("#Loginid").val()){
+								   if(this.free_id== $("#Loginid").val() || this.id== $("#Loginid").val()){
 									   if(this.comm_nick!=null && this.comm_nick!=""){
-									   output += '         <span class="text_comment"><span class="comment_nick">'+this.comm_nick+'</span>' +"   "+ this.jik_comm_content + '</span>';
+									   output += '         <span class="text_comment"><span class="comment_nick">'+this.comm_nick+'</span>' +"   "+ this.free_comm_content + '</span>';
 									   }else{
-										output += '         <span class="text_comment">' + this.jik_comm_content + '</span>';   
+										output += '         <span class="text_comment">' + this.free_comm_content + '</span>';   
 									   }
 									   
 									  }else{
@@ -142,20 +142,20 @@ function getList(currentPage,state){
 								   }
 							   }else if(s=='N'){
 								   if(this.comm_nick!=null && this.comm_nick!=""){
-									   output += '         <span class="text_comment"><span class="comment_nick">'+this.comm_nick+'</span>' +"  "+ this.jik_comm_content + '</span>';
+									   output += '         <span class="text_comment"><span class="comment_nick">'+this.comm_nick+'</span>' +"  "+ this.free_comm_content + '</span>';
 									   }else{
-										output += '         <span class="text_comment">' + this.jik_comm_content + '</span>';   
+										output += '         <span class="text_comment">' + this.free_comm_content + '</span>';   
 									   }
 							   }
 						
 					   output  += '       </p>'
 							   + '    </div>' //comment_text_box
 							   + '    <div class="comment_info_box">'
-							   + '      <span class="comment_info_date">' + this.jik_comm_date + '</span>';
+							   + '      <span class="comment_info_date">' + this.free_comm_date + '</span>';
 						
-						   	  output += '  <a href="javascript:replyform(' + this.jik_comm_num +',' 
-						   	         + lev + ',' + this.jik_comm_re_seq +','+'\''+ this.nick+'\'' + ',' 
-						   	         + this.jik_comm_re_ref + ')"  class="comment_info_button">답글쓰기</a>'
+						   	  output += '  <a href="javascript:replyform(' + this.free_comm_num +',' 
+						   	         + lev + ',' + this.free_comm_re_seq +','+'\''+ this.nick+'\'' + ',' 
+						   	         + this.free_comm_re_ref + ')"  class="comment_info_button">답글쓰기</a>'
 						     
 						   	  output += '   </div>' //comment_info_box;
 							   
@@ -167,12 +167,12 @@ function getList(currentPage,state){
 							   + '    <div title="더보기" class="comment_tool_button">'
 							   + '       <div>&#46;&#46;&#46;</div>' 
 							   + '    </div>'
-							   + '    <div id="commentItem' +  this.jik_comm_num + '"  class="LayerMore">' //스타일에서 display:none; 설정함
+							   + '    <div id="commentItem' +  this.free_comm_num + '"  class="LayerMore">' //스타일에서 display:none; 설정함
 							   + '     <ul class="layer_list">'							   
 							   + '      <li class="layer_item">'
-							   + '       <a href="javascript:updateForm(' + this.jik_comm_num + ')"'
+							   + '       <a href="javascript:updateForm(' + this.free_comm_num + ')"'
 							   + '          class="layer_button">수정</a>&nbsp;&nbsp;'
-							   + '       <a href="javascript:del(' + this.jik_comm_num + ')"'
+							   + '       <a href="javascript:del(' + this.free_comm_num + ')"'
 							   + '          class="layer_button">삭제</a></li></ul>'
 							   + '     </div>'//LayerMore
 							   + '   </div>'//comment_tool
@@ -181,7 +181,7 @@ function getList(currentPage,state){
 								   + '    <div title="더보기" class="comment_tool_button">'
 								   + '       <div>&#46;&#46;&#46;</div>' 
 								   + '    </div>'
-								   + '    <div id="commentItem' +  this.jik_comm_num + '"  class="LayerMore">' //스타일에서 display:none; 설정함
+								   + '    <div id="commentItem' +  this.free_comm_num + '"  class="LayerMore">' //스타일에서 display:none; 설정함
 								   + '     <ul class="layer_list">'							   
 								   + '      <li class="layer_item">'
 								   + ' 		<a href="javascript:void(0);" onclick="#" class="layer_button">신고하기 </a>'
@@ -210,17 +210,17 @@ function getList(currentPage,state){
 		 
 	}//function(getList) end
 //더보기 클릭 후 - > 수정 클릭한 경우에 수정 폼을 보여줍니다.
-function updateForm(jik_comm_num){ //num : 수정할 댓글 글번호
+function updateForm(free_comm_num){ //num : 수정할 댓글 글번호
 	
 	//선택한 내용을 구합니다.
-	var content=$('#'+jik_comm_num).find('.text_comment').text();
+	var content=$('#'+free_comm_num).find('.text_comment').text();
 	
-	var selector = '#'+jik_comm_num+'.comment_area'
+	var selector = '#'+free_comm_num+'.comment_area'
 	$(selector).hide(); //selector 영역  숨겨요 - 수정에서 취소를 선택하면 보여줄 예정입니다.
 	
 	//$('.comment_list+.CommentWriter').clone() : 기본 글쓰기 영역 복사합니다.
 	//글이 있던 영역에 글을 수정할 수 있는 폼으로 바꿉니다.
-	selector=$('#'+jik_comm_num);
+	selector=$('#'+free_comm_num);
 	selector.append($('#message+.CommentWriter').clone());
 	
 	//댓글쓰기 영역 숨깁니다.
@@ -231,7 +231,7 @@ function updateForm(jik_comm_num){ //num : 수정할 댓글 글번호
 	
 	
 	//'.btn_register' 영역에 수정할 글 번호를 속성 'data-id'에 나타내고 클래스 'update'를 추가하며 등록을 수정완료
-	selector.find('.btn_register').attr('data-id',jik_comm_num).addClass('update').text('수정완료');
+	selector.find('.btn_register').attr('data-id',free_comm_num).addClass('update').text('수정완료');
 	
 	//폼에서 취소를 사용할 수 있도록 보이게 합니다.
 	selector.find('.btn_cancel').css('display','block').addClass('update_cancel');
@@ -240,14 +240,14 @@ function updateForm(jik_comm_num){ //num : 수정할 댓글 글번호
 }//function(updateForm) end
 
 //더보기 -> 삭제 클릭한 경우 실행하는 함수
-function del(jik_comm_num){//num : 댓글 번호
+function del(free_comm_num){//num : 댓글 번호
 	if(!confirm('정말 삭제하시겠습니까')){
 		return;
 	}
 	
 	$.ajax({
-		url:'../jik_comm/delete',
-		data:{jik_comm_num:jik_comm_num},
+		url:'../free_comm/delete',
+		data:{free_comm_num:free_comm_num},
 		success:function(rdata){
 			if(rdata==1){
 				getList(1,option);
@@ -258,13 +258,13 @@ function del(jik_comm_num){//num : 댓글 번호
 
 
 //답글 달기 폼
-function replyform(jik_comm_num,lev,seq,nick,ref){
+function replyform(free_comm_num,lev,seq,nick,ref){
 	//댓글달기 폼이 열려있다는 것은 다른 폼이 열려있지 않은 경우입니다.
 	if($('#message+.CommentWriter').css('display')=='block'){
 		var output = '<li class="CommentItem CommentItem--reply lev'
 				   +  lev 	+ ' CommentItem-form"></li>'
 				   
-		var selector = $('#'+jik_comm_num);
+		var selector = $('#'+free_comm_num);
 		
 		//선택한 글 뒤에 답글 폼을 추가합니다.
 		selector.after(output);
@@ -326,11 +326,11 @@ $(function(){
 	
 	
 	$('.CommentBox').on('keyup','.comment_inbox_text',function(){
-		jik_comm_content = $(this).val();
+		free_comm_content = $(this).val();
 		length = $(this).val().length;
 		if(length > 200){
 			length = 200;
-			jik_comm_content = jik_comm_content.substring(0, length);
+			free_comm_content = free_comm_content.substring(0, length);
 		}
 		$(this).prev().text(length+'/200');
 	})//'keyup','.comment_inbox_text',function(){
@@ -350,16 +350,16 @@ $(function(){
 		}
 		
 		$.ajax({
-			url : "../jik_comm/add",
+			url : "../free_comm/add",
 			data : {
-					"jik_comm_content" : $(".comment_inbox_text").val(),
+					"free_comm_content" : $(".comment_inbox_text").val(),
 					"id" : $("#Loginid").val(),
 					"nick" : $("#Loginnick").val(),
-					"jik_board_num" : $("#jik_num").val(),
-					"jik_comm_re_lev" : 0,
-					"jik_comm_re_seq" : 0,
-					"jik_comm_secret" : secret,
-					"jik_id" : $("#Jik_id").val()
+					"free_board_num" : $("#free_num").val(),
+					"free_comm_re_lev" : 0,
+					"free_comm_re_seq" : 0,
+					"free_comm_secret" : secret,
+					"free_id" : $("#Free_id").val()
 			},
 			type : 'post',
 			success : function(rdata){
@@ -416,8 +416,8 @@ $(function(){
 				secret='N'
 			}
 		 $.ajax({
-			 url :'../jik_comm/update',
-			 data:{jik_comm_num:$(this).attr('data-id'), jik_comm_content:content, jik_comm_secret:secret},
+			 url :'../free_comm/update',
+			 data:{free_comm_num:$(this).attr('data-id'), free_comm_content:content, free_comm_secret:secret},
 			 success:function(rdata){
 				 if(rdata==1){
 					getList(page,option); 
@@ -429,8 +429,8 @@ $(function(){
 	 //수정 후 취소 클릭한 경우
 	 $('.CommentBox').on('click','.update_cancel',function(){
 		 //댓글 번호를 구합니다.
-		 var jik_comm_num=$(this).next().attr('data-id');
-		 var selector='#' +jik_comm_num;
+		 var free_comm_num=$(this).next().attr('data-id');
+		 var selector='#' +free_comm_num;
 		 
 		 //selector의 후손 중 .CommentWriter 영역 삭제 합니다.
 		 $(selector + ' .CommentWriter').remove();
@@ -462,19 +462,18 @@ $(function(){
 			}else{
 				secret='N'
 			}
-		var nick = $(this).attr('nick');
 		 $.ajax({
-			 url : '../jik_comm/reply',
+			 url : '../free_comm/reply',
 			 data : {
 				 id : $("#Loginid").val(),
 				 nick : $("#Loginnick").val(),
-				 jik_comm_content : content,
-				 jik_board_num : $("#jik_num").val(),
-				 jik_comm_re_lev : $(this).attr('data-lev'),
-				 jik_comm_re_ref : $(this).attr('data-ref'),
-				 jik_comm_re_seq : $(this).attr('data-seq'),
-				 jik_comm_secret : secret,
-				 jik_id : $("#Jik_id").val(),
+				 free_comm_content : content,
+				 free_board_num : $("#free_num").val(),
+				 free_comm_re_lev : $(this).attr('data-lev'),
+				 free_comm_re_ref : $(this).attr('data-ref'),
+				 free_comm_re_seq : $(this).attr('data-seq'),
+				 free_comm_secret : secret,
+				 free_id : $("#Free_id").val(),
 				 comm_nick : $(this).attr('data-nick')
 			 },
 			 type : 'post',
@@ -489,7 +488,7 @@ $(function(){
 	 * 새창띄우기 -- 이상하게 작동됨.
 		function popupOpen(){
 	
-		 window.open("../jik/report", "신고", "width=500, height=700, scrollbars=no, resizable=no");
+		 window.open("../free/report", "신고", "width=500, height=700, scrollbars=no, resizable=no");
 		 return false;
 		
 	}
@@ -503,13 +502,13 @@ $(function(){
 	 
 	 //좋아요 버튼 클릭 시 
 	 $('#like').click(function(){
-	   if( $("#Loginid").val()!=null && $("#Loginid").val()!=""){
+		 if( $("#Loginid").val()!=null && $("#Loginid").val()!=""){
 	 	var output="";
 		 $.ajax({
-				 url : '../jik/like',
+				 url : '../free/like',
 				 data : {
 					 id : $("#Loginid").val(),
-					 num : $("#jik_num").val()
+					 num : $("#free_num").val()
 				 },
 				 type : 'post',
 				 success : function(rdata){
@@ -521,8 +520,10 @@ $(function(){
 					}
 					 $('.center.noborder').html(output);
 				 }
-			 })
-	   	}
+			 })//ajax
+		 }else{
+			 alert("로그인 후에 좋아요를 누를 수 있습니다.")
+		 }
 		})
 	//답변달기 후 취소 버튼을 클릭한 경우
 	$('.CommentBox').on('click','.reply_cancel',function(){

@@ -20,11 +20,18 @@ public class Free {
 	private String free_ldate;
 	private int free_type;
 	
-	public int getfree_num() {
+	
+	public int getFree_num() {
 		return free_num;
 	}
-	public void setfree_num(int free_num) {
+	public void setFree_num(int free_num) {
 		this.free_num = free_num;
+	}
+	public String getFree_id() {
+		return free_id;
+	}
+	public void setFree_id(String free_id) {
+		this.free_id = free_id;
 	}
 	public String getNick() {
 		return nick;
@@ -32,46 +39,46 @@ public class Free {
 	public void setNick(String nick) {
 		this.nick = nick;
 	}
-	public String getfree_subject() {
+	public String getFree_subject() {
 		return free_subject;
 	}
-	public void setfree_subject(String free_subject) {
+	public void setFree_subject(String free_subject) {
 		this.free_subject = free_subject;
 	}
-	public String getfree_content() {
+	public String getFree_content() {
 		return free_content;
 	}
-	public void setfree_content(String free_content) {
+	public void setFree_content(String free_content) {
 		this.free_content = free_content;
 	}
-	public int getfree_readcount() {
+	public int getFree_readcount() {
 		return free_readcount;
 	}
-	public void setfree_readcount(int free_readcount) {
+	public void setFree_readcount(int free_readcount) {
 		this.free_readcount = free_readcount;
 	}
-	public int getfree_like() {
+	public int getFree_like() {
 		return free_like;
 	}
-	public void setfree_like(int free_like) {
+	public void setFree_like(int free_like) {
 		this.free_like = free_like;
 	}
-	public String getfree_date() {
+	public String getFree_date() {
 		return free_date;
 	}
-	public void setfree_date(String free_date) {
+	public void setFree_date(String free_date) {
 		this.free_date = free_date.substring(0,10);
 	}
-	public String getfree_file() {
+	public String getFree_file() {
 		return free_file;
 	}
-	public void setfree_file(String free_file) {
+	public void setFree_file(String free_file) {
 		this.free_file = free_file;
 	}
-	public String getfree_original() {
+	public String getFree_original() {
 		return free_original;
 	}
-	public void setfree_original(String free_original) {
+	public void setFree_original(String free_original) {
 		this.free_original = free_original;
 	}
 	public MultipartFile getUploadfile() {
@@ -79,12 +86,6 @@ public class Free {
 	}
 	public void setUploadfile(MultipartFile uploadfile) {
 		this.uploadfile = uploadfile;
-	}
-	public String getfree_id() {
-		return free_id;
-	}
-	public void setfree_id(String free_id) {
-		this.free_id = free_id;
 	}
 	public int getCnt() {
 		return cnt;
@@ -98,10 +99,10 @@ public class Free {
 	public void setProfile(String profile) {
 		this.profile = profile;
 	}
-	public String getfree_ldate() {
+	public String getFree_ldate() {
 		return free_ldate;
 	}
-	public void setfree_ldate(String free_ldate) {
+	public void setFree_ldate(String free_ldate) {
 		this.free_ldate = free_ldate;
 	}
 	public int getFree_type() {
@@ -111,6 +112,7 @@ public class Free {
 		this.free_type = free_type;
 	}
 
+	
 
 	
 	

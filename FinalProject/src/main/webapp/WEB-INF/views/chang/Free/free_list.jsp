@@ -26,7 +26,7 @@ select{
 }
 .input-group{ display : block;}
  </style>
-<script src="../resources/js/chang/jik_list2.js"></script>
+<script src="../resources/js/chang/free_list2.js"></script>
   	<script>
 	if('${result}'=='deleteSuccess'){
 		alert("글 삭제 성공")
@@ -34,7 +34,7 @@ select{
 	
 	</script>
 </head>
- <title>직거래 장터</title>
+ <title>수다 농장</title>
 </head>
 <body>
 <br><br><br><br><br><br><br>
@@ -55,7 +55,7 @@ select{
   <table class="table table-striped">
    <thead>
 	<tr>
-	   <th colspan="3">직거래 장터</th>
+	   <th colspan="3">수다 농장</th>
 	   <th></th>
 	   <th colspan="2">
 			<font size=3>글 개수 : ${listcount}</font>
@@ -72,7 +72,7 @@ select{
    </thead>
    <tbody>
 	<c:set var="num" value="${listcount-(page-1)*limit}"/>	
-	<c:forEach var="b" items="${jiklist}">
+	<c:forEach var="b" items="${freelist}">
 	<tr>
 	  <td><%--번호 --%>
 		<c:out value="${num}"/><%-- num 출력 --%>		
@@ -80,16 +80,16 @@ select{
 	  </td>
 	  <td><%--제목 --%>
 	     <div>			
-			<a href="detail?num=${b.jik_num}&id=${b.jik_id}" >
-				 <c:out value="${b.jik_subject}" escapeXml="true"/>  
+			<a href="detail?num=${b.free_num}&id=${b.free_id}" >
+				 <c:out value="${b.free_subject}" escapeXml="true"/>  
 			<span class="gray small">[<c:out value="${b.cnt}" />]</span>
 			</a>
 		  </div>
 		</td>
 		<td><div>${b.nick}</div></td>
-		<td><div>${b.jik_date}</div></td>	
-		<td><div>${b.jik_readcount}</div></td>
-		<td><div>${b.jik_like}</div></td>
+		<td><div>${b.free_date}</div></td>	
+		<td><div>${b.free_readcount}</div></td>
+		<td><div>${b.free_like}</div></td>
 	   </tr>
 	  </c:forEach>
 	 </tbody>	

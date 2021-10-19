@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><!--  SQL 맵퍼 파일은 xml이기 때문에 제일 먼저 xml 선언이 옵니다. -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="Frees">
+ 
+ 	<insert id="insert" parameterType="free">
+  	
+  	<selectKey keyProperty="free_num" resultType="int" order="BEFORE">
+  		select NVL(max(free_num),0)+1 from free
+  	</selectKey>
+ 			INSERT INTO free
+ 			(free_num, free_id, nick, free_subject,
+ 			 free_content,free_readcount, free_date, free_like,free_ldate)
+ 			VALUES
+ 			 (#{free_num},#{free_id}, #{nick}, #{free_subject},
+ 			  #{free_content}, #{free_readcount}, sysdate, #{free_like},sysdate)
+ 	</insert>
+ 
+ 	 <select id="count" resultType="int">
+ 			select count(*) from free
+ 	 </select>
+ 	 
+ 	
+ 	<select id="list" resultType="free" parameterType="map">
+ 			select * from
+ 			( select ROWNUM RNUM, b.*
+				   from 
+				   		(select free.*, nvl(cnt,0) cnt
+						 from
+						 free left outer join (select free_board_num, count(*) cnt
+							  					from free_comm
+							  					group by free_board_num) c
+						  on c.free_board_num=free.free_num
+						  order by free_num desc) b
+					) 
+			where		
+			 <![CDATA[
+			  RNUM>= #{start} and RNUM <= #{end}
+ 			]]>
+ 	</select>
+ 	
+ 	<select id="detail" resultType="free" parameterType="map">
+ 			select free.*,member.original profile
+ 			from free,member
+ 			where free_num = #{num}
+ 			and member.id = #{id}
+ 	</select>
+ 	
+ 	<select id="detail2" resultType="free" parameterType="int">
+ 			select *
+ 			from free
+ 			where free_num = #{num}
+ 	</select>
+ 	
+ 	<update id="readCountUpdate" parameterType="int">
+ 			update free 
+ 			set free_readcount=free_readcount+1
+ 			WHERE free_num = #{free_num}
+ 	</update>
+ 	
+ 	 <update id= "modify" parameterType="map">
+ 		update free
+ 		set 
+ 			free_subject=#{free_subject},
+ 			free_content=#{free_content},
+ 			free_ldate=sysdate
+ 		where free_num=#{free_num}
+ 	</update>
+ 	
+ 	<delete id= "delete" parameterType="free">
+		delete from free
+		where free_num=#{free_num}
+	</delete>
+ 	
+ 	 <insert id="insert_deleteFile" parameterType="String">
+ 		insert into delete_file
+ 		values(#{file})
+ 	</insert>
+ 	
+ 	<!-- 삭제할 파일들의 목록을 구합니다. -->
+ 	<select id="deleteFileList" resultType="String">
+ 		select board_file from delete_file
+ 	</select>
+ 	
+ 	 <sql id="search_">
+ 		<if test="search_field!=null">
+ 				and
+ 				<choose>
+ 					<when test="search_field=='(free_subject || free_content)'">(free_subject || free_content)</when>
+ 					<when test="search_field=='free_subject'">free_subject</when>
+ 					<when test="search_field=='free_content'">free_content</when>
+ 					<when test="search_field=='nick'">nick</when>
+ 				</choose>
+ 				like #{search_word}
+ 		</if>
+ 	</sql>
+ 	 	<select id="list2" resultType="free" parameterType="map">
+ 			select * from
+ 			( select ROWNUM RNUM, b.*
+				   from 
+				   		(select free.*, nvl(cnt,0) cnt
+						 from
+						 free left outer join (select free_board_num, count(*) cnt
+							  					from free_comm
+							  					group by free_board_num) c
+						  on c.free_board_num=free.free_num
+						  order by free_num desc) b
+					) 
+			where		
+			 <![CDATA[
+			  RNUM>= #{start} and RNUM <= #{end}
+ 			]]>
+ 			<include refid="search_"/>
+ 	</select>
+ 	
+ 	 <select id="count2" resultType="int" parameterType="map">
+ 			select count(*) 
+ 			from free
+ 			<![CDATA[
+ 			where free_num > 0
+ 			]]>
+ 			<include refid="search_"/>
+ 	 </select>
+ 	 
+ 	 <select id="isLike" resultType="int" parameterType="map">
+ 	 		select count(*)
+ 	 		from free_like
+ 	 		where free_id = #{id}
+ 	 		and free_num = #{num}
+ 	 </select>
+ 	
+ 	 <insert id="like" parameterType="map">
+ 		insert into free_like
+ 		values(#{num},#{id})
+ 	 </insert>
+ 	 
+ 	  <delete id="dlike" parameterType="map">
+ 		delete from free_like
+		where free_num=#{num}
+		and free_id = #{id}
+ 	 </delete>
+ 	 
+ 	  	
+ 	<update id="LikeUp" parameterType="int">
+ 			update free 
+ 			set free_like=free_like+1
+ 			where free_num = #{num}
+ 	</update>
+ 	
+ 	 	
+ 	<update id="LikeDown" parameterType="int">
+  			update free 
+ 			set free_like=free_like-1
+ 			where free_num = #{num}
+ 	</update>
+ 	
+ 	 <insert id="insertFile" parameterType="map">
+ 		insert into free_files
+ 		values(#{free_num},#{free_file},#{free_original})
+ 	 </insert>
+ 	 
+ 	 <select id="getFile" parameterType="int" resultType="free_file">
+ 	 	select free_file
+ 	 	from free_files
+ 	 	where free_num=#{num}
+ 	 </select>
+ </mapper>

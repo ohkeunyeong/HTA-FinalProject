@@ -97,6 +97,12 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
+	public int isNick(String nick) {
+		Member rmember = dao.isNick(nick);
+		return (rmember==null) ? -1 : 1;
+	}
+	
+	@Override
 	public int insert(Member member) {
 		return dao.insert(member);
 	}
@@ -143,13 +149,15 @@ public class MemberServiceImpl implements MemberService{
 		return result;
 	}
 
-//	@Override
-//	public String OriginPass(String id , String pass) {
-//		Member member = dao.isId(id);
-//		String result = null;
-//		if(member != null) {
-//				result = member.getPass();
-//		}
-//		return result;
-//	}
+
+	@Override
+	public String OriginPass(String id , String pass) {
+		Member member = dao.isId(id);
+		String result = null;
+		if(member != null) {
+				result = member.getPass();
+		}
+		return result;
+	}
+
 }

@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
- <jsp:include page="../../main/header.jsp" />
+ <jsp:include page="../main/header.jsp" />
 <style>
    select.form-control{
          width:auto;margin-bottom:2em;display:inline-block}
@@ -24,17 +24,9 @@ select{
 	transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 	outline:none;
 }
-.input-group{ display : block;}
  </style>
-<script src="../resources/js/chang/jik_list2.js"></script>
-  	<script>
-	if('${result}'=='deleteSuccess'){
-		alert("글 삭제 성공")
-	}
-	
-	</script>
 </head>
- <title>직거래 장터</title>
+ <title>주말농장 - 작성한 댓글보기</title>
 </head>
 <body>
 <br><br><br><br><br><br><br>
@@ -42,20 +34,11 @@ select{
 <input type="hidden" id="Loginid" value="${id}" name="loginid">
 <%-- 게시글이 있는 경우--%> 
 <c:if test="${listcount > 0 }">
-  <div class="rows">
-  	<span>줄보기</span>
-  	<select class="form-control" id="viewcount">
-  		<option value="1">1</option>
-  		<option value="3">3</option>
-  		<option value="5">5</option>
-  		<option value="7">7</option>
-  		<option value="10" selected>10</option>
-  	</select>
-  </div>
+
   <table class="table table-striped">
    <thead>
 	<tr>
-	   <th colspan="3">직거래 장터</th>
+	   <th colspan="3">작성한 댓글</th>
 	   <th></th>
 	   <th colspan="2">
 			<font size=3>글 개수 : ${listcount}</font>
@@ -63,16 +46,16 @@ select{
 	</tr>
 	<tr>
 		<th><div>번호</div></th>
-		<th><div>제목</div></th>
-		<th><div>작성자</div></th>
+		<th><div>원글 제목</div></th>
+		<th><div>원글 내용</div></th>
+		<th><div>내가 쓴 댓글</div></th>
 		<th><div>날짜</div></th>
-		<th><div>조회수</div></th>
-		<th><div>좋아요</div></th>
+		<th><div>삭제하기</div></th>
 	</tr>	
    </thead>
    <tbody>
 	<c:set var="num" value="${listcount-(page-1)*limit}"/>	
-	<c:forEach var="b" items="${jiklist}">
+	<c:forEach var="b" items="${freelist}">
 	<tr>
 	  <td><%--번호 --%>
 		<c:out value="${num}"/><%-- num 출력 --%>		
@@ -80,16 +63,16 @@ select{
 	  </td>
 	  <td><%--제목 --%>
 	     <div>			
-			<a href="detail?num=${b.jik_num}&id=${b.jik_id}" >
-				 <c:out value="${b.jik_subject}" escapeXml="true"/>  
+			<a href="detail?num=${b.free_num}&id=${b.free_id}" >
+				 <c:out value="${b.free_subject}" escapeXml="true"/>  
 			<span class="gray small">[<c:out value="${b.cnt}" />]</span>
 			</a>
 		  </div>
 		</td>
 		<td><div>${b.nick}</div></td>
-		<td><div>${b.jik_date}</div></td>	
-		<td><div>${b.jik_readcount}</div></td>
-		<td><div>${b.jik_like}</div></td>
+		<td><div>${b.free_date}</div></td>	
+		<td><div>${b.free_readcount}</div></td>
+		<td><div>${b.free_like}</div></td>
 	   </tr>
 	  </c:forEach>
 	 </tbody>	
@@ -140,24 +123,9 @@ select{
 	
 <%-- 게시글이 없는 경우--%>
 <c:if test="${listcount == 0 }">
-	<font size=5>등록된 글이 없습니다.</font>
+	<font size=5>작성한 글이 없습니다.</font>
 </c:if>
-<br>
-          <form  method="get" action="" name="search">
-             <div class="input-group">
- 				<select name="searchType" id="searchType">
-					<option value="0" selected>제목+내용</option>
-					<option value="1">제목</option>
-					<option value="2">내용</option>
-					<option value="3">글쓴이</option>
-                </select>
-                <input type="text" placeholder="검색어를 입력해주세요." name="search" id="search">
-                <input type="button" id="searchbtn" class="btn" value="검색">
-              </div>
-           </form>
-<c:if test="${id !=null && id != ''}">
-<button type="button" class="btn btn-info float-right">글 쓰 기</button>
-</c:if>
+
 </div>
 </body>
 </html>
