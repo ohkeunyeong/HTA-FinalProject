@@ -55,7 +55,7 @@
     //해당 달의 일정 받기
     List<MyCalendar> clist=(List<MyCalendar>)request.getAttribute("clist");
 %>
-<body style="overflow-x:hidden; overflow-y:auto;">
+<body style="overflow-x:hidden; overflow-y:hidden;">
 <br><br>
 <input type="hidden" id="id" value="${id}" name="id">
 <div class="wrapper">

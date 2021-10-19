@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/oky/caldetail.css"></link>
 <script src="${pageContext.request.contextPath}/resources/js/oky/calupdateform.js"></script>
 </head>
-<body style="overflow-x: hidden; overflow-y: auto;">
+<body style="overflow-x: hidden; overflow-y:hidden;">
 <br><br>
 <div class="wrapper">
 <main>

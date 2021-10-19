@@ -48,7 +48,7 @@ $(document).ready(function() {
 });// ready()end
 </script>
 </head>
-<body style="overflow-x: hidden; overflow-y: auto;">
+<body style="overflow-x: hidden; overflow-y:hidden;">
 <br><br>
 <div class="wrapper">
 <main>
