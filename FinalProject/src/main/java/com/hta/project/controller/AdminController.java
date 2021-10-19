@@ -38,6 +38,7 @@ import com.hta.project.domain.Order_Market;
 import com.hta.project.domain.Product;
 import com.hta.project.domain.Report;
 import com.hta.project.service.AdminService;
+import com.hta.project.service.FreeService;
 import com.hta.project.service.JikService;
 import com.hta.project.service.MemberService;
 
@@ -55,6 +56,9 @@ public class AdminController {
 	
 	@Autowired
 	private JikService jikService;
+	
+	@Autowired
+	private FreeService freeService;
 	
 	@Value("${savefoldername}")
 	private String saveFolder;
@@ -450,6 +454,10 @@ public class AdminController {
 			}
 		}else if(board_table.equals("free")) {
 			Free free = new Free();
+			free = freeService.getDetail2(board_num);
+			if(free == null) {
+				adminService.numReportDelete(board_num, board_table);
+			}
 		}
 		return "redirect:reportList";
 	}
