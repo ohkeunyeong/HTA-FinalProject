@@ -149,14 +149,14 @@ create table free_comm(
 	free_comm_secret		CHAR(2),
 	free_id					VARCHAR2(50),
 	comm_nick				VARCHAR2(50)
-)
+);
 
 --자유게시판 파일 테이블
 create table free_files(
 	free_num			NUMBER(10) references free(free_num) on delete cascade,
 	free_file			varchar2(100),
 	free_original		varchar2(100)
-)
+);
 
 
 -- 자유게시판 좋아요 테이블
@@ -164,7 +164,7 @@ create table free_like(
 	free_num			NUMBER(10),
 	free_id			varchar2(20),
 	foreign key (free_num) REFERENCES free(free_num)
-)
+);
 
 -- 이미지 삭제 파일 저장 테이블
 create table delete_File(

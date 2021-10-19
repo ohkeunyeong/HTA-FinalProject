@@ -52,7 +52,6 @@
 				<a href="${pageContext.request.contextPath}/member/join">회원가입</a>
 			</p>
 		</form>
-		<jsp:include page="modal/login.jsp" />
 	</div>
 	<jsp:include page="../main/footer.jsp" />
 </body>
