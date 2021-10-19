@@ -70,13 +70,14 @@ public class MemberController {
 	@Autowired
 	private AdminService adminService;
 
-//	@Value("${savefoldername}")
-//	private String saveFolder;
+	@Value("${savefoldername}")
+	private String saveFolder;
 	
 	//<util:properties id="folder" location="classpath:pro/savefolder.properties"/>
-		@Value("#{folder['savefoldername']}")
-		private String saveFolder;
+//		@Value("#{folder['savefoldername']}")
+//		private String saveFolder;
 	
+		
 	@Autowired
 	private SendMail sendMail;
 	
@@ -88,7 +89,9 @@ public class MemberController {
 	@GetMapping("/display")
 	public ResponseEntity<byte[]> getImage(String fileName){
 		File file = new File(saveFolder+ fileName);
-		logger.info(fileName);
+		logger.info("fileName"+fileName);
+
+		
 		ResponseEntity<byte[]> result = null;
 		
 		try {
@@ -129,7 +132,7 @@ public class MemberController {
 		
 		if (!uploadfile.isEmpty()) {
 			String fileName = uploadfile.getOriginalFilename();
-			member.setPersnacon(fileName);
+			member.setPersonacon(fileName);
 			
 			String fileDBName = fileDBName(fileName, saveFolder);
 			logger.info("fileDBName =" + fileDBName);
@@ -141,7 +144,7 @@ public class MemberController {
 			member.setOriginal(fileDBName);
 		}else {
 			String fileDBName = "/"+"profile.png";
-			member.setPersnacon("profile.png");
+			member.setPersonacon("profile.png");
 			member.setOriginal(fileDBName);
 		}
 		
@@ -342,10 +345,10 @@ public class MemberController {
 	  }
 	  
 	  @RequestMapping(value = "/updateProcess", method = RequestMethod.POST)
-	  public String updateProcess( Member member, Model model,
+	  public String updateProcess( String check, Member member, Model model,
 			  					  HttpServletRequest request,
 			
-			  					  RedirectAttributes rattr)   {
+			  					  RedirectAttributes rattr) throws Exception, IOException   {
 		 
 //		  String OriginPass = memberService.OriginPass(member.getId(),member.getPass());
 //		  if(OriginPass!=null && OriginPass.equals( member.getPass())){
@@ -360,6 +363,38 @@ public class MemberController {
 			logger.info(encPassword);
 			member.setPass(encPassword);
 			
+			MultipartFile uploadfile = member.getUploadfile();
+			
+			if (check != null && !check.equals("")) { //기존 파일 그대로 사용하는 경우입니다. 
+				  logger.info("기존파일 그대로 사용합니다.");
+				  member.setOriginal(check);
+				  // <input type= "hidden" name="BOARD_FILE" value="${boarddata.BOARD_FILE}">
+				  // 위 문장 때문에 board.setBOARD_FILE()값은 자동 저장됩니다.
+		} else {
+			
+			if (uploadfile!=null && !uploadfile.isEmpty()) {
+				logger.info("파일 변경되었습니다.");
+				//답변글을 수정할 경우 <input type="file" id="upfile" name="uploadfile" > 엘리먼트
+				//private MultipartFile uploadfile;에서 uploadfile은 null입니다.
+				
+				String fileName = uploadfile.getOriginalFilename(); //원래 파일명
+				member.setOriginal(fileName);
+				
+				String fileDBName = fileDBName(fileName, saveFolder);
+				
+				// transferTo(File path) : 업로드한 파일을 매개변수의 경로에 저장합니다.
+			    uploadfile.transferTo(new File(saveFolder + fileName));
+			    
+			    // 바뀐 파일명으로 저장 
+			    member.setPersonacon(fileDBName);
+			} else { // uploadfile.isEmpty() 인 경우 - 파일 선택하지 않은 경우 
+				logger.info("선택 파일 없습니다.");
+				//<input type="hidden" name="BOARD_FILE" value="$boarddata.BOARD_FILE}">
+				//위 태그에 값이 있다면 ""로 값을 변경합니다.
+				member.setPersonacon("");//""로 초기화합니다.
+				member.setOriginal("");//""로 초기화합니다.
+			} //else end
+		} //else end 
 		  int result = memberService.update(member);
 		  if (result == 1) {
 			  rattr.addFlashAttribute("result", "updateSuccess");

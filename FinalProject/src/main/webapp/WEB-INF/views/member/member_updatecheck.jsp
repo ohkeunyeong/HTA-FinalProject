@@ -34,6 +34,6 @@ alert('${message}')
           <button type="reset" class="cancelbtn">취소</button>          
         </div>       
      </form>
-
+<jsp:include page="../main/footer.jsp"/>
 </body>
 </html>

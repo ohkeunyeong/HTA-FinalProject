@@ -19,6 +19,8 @@ input[type=file]{
 
 <form name="updateform" action="updateProcess" method="post" enctype="multipart/form-data"
       enctype="multipart/form-data">
+       
+      
          <h3>회원 정보 수정</h3>
          <hr>
          <b>아이디</b>
@@ -56,10 +58,13 @@ input[type=file]{
 			<input type="file" name="uploadfile" accept="image/*">
 			</label>
          
+         
          <div class="clearfix">
           <button type="submit" class="submitbtn">수정</button>
           <button type="button" class="cancelbtn" onclick="window.open('${pageContext.request.contextPath}/member/delete','window_name','width=470,height=520,location=no,status=no,scrollbars=yes')">탈퇴하기</button>          
-        </div>       
+        </div> 
+        
+        <input type="hidden" name="personacon" value="${member.personacon}">      
      </form>
 
 <script>
@@ -116,7 +121,7 @@ input[type=file]{
 		   //읽어온 결과는 reader 객체의 result 속성에 저장됩니다.
 		   //event.target.files[0] : 선택한 그림의 파일객체에서 첫번째 객체를 가져옵니다.
 		     reader.readAsDataURL(event.target.files[0]);
-		     console.log(event.target.result);
+		     console.log(event.target.files[0]);
 		     
 		     reader.onload = function(event) {//읽기에 성공했을 때 실행되는 이벤트 핸들러 
 		    	 $('#showImage').empty();
