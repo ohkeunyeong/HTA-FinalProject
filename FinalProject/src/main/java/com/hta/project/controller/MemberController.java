@@ -114,6 +114,14 @@ public class MemberController {
 		out.print(result);
 	}
 	
+	@RequestMapping(value="/nickcheck", method = RequestMethod.GET)
+	public void nickcheck(String nick, HttpServletResponse response) throws Exception {
+		int result = memberService.isNick(nick);
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.print(result);
+	}
+	
 	
 	@RequestMapping(value="/joinProcess", method = RequestMethod.POST)
 	public String joinProcess(Member member,
