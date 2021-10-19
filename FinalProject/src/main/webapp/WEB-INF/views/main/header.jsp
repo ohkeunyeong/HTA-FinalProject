@@ -73,9 +73,6 @@
     			
 				<!-- Links -->
 				<li class="nav-item active">
-					<a class="nav-link" href="${pageContext.request.contextPath}/cart">장바구니</a>
-				</li>
-				<li class="nav-item active">
 					<a class="nav-link" href="${pageContext.request.contextPath}/member/login">로그인</a>
 				</li>
 				<li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/member/join">회원가입</a></li>
