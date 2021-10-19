@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +19,15 @@
 	});
 </script>
 <style>
+h2{
+font-weight:bold;
+color:MediumSeaGreen;
+padding-left:5%
+}
+
+h6{
+padding-left:90%
+}
 /* 고객센터 / 공지사항 버튼 */
 
 .a{
@@ -69,42 +80,68 @@ width:100%
 	
 <div class="container">
 
-  <h4>내 농장 일정</h4>
-  <p>오늘 우리 농장의 할일을 확인해요</p>
+  <h2>직거래 장터</h2>
+  <span><h5 style="padding-left:5%">장터의 글을 확인해요</h5>
+  <h6><a href="${pageContext.request.contextPath}/jik/list">더보기</a></h6></span>
+   
+<div class="row" style="margin:20px 20px 50px 20px">
+
+<c:set var="num" value="${listcount-(page-1)*limit}"/>	
+<c:forEach var="b" items="${mainjiklist}">
+  <div class="col-sm-4" style="margin-bottom:20px;">
+    <div class="card" style="padding-top:10px; height:330px;">
+      <div class="card-body" >
+        <h5 class="card-title" style="font-weight:bold">${b.jik_subject}</h5>
+        <p class="card-text" maxlength="30" style="margin:0; font-weight:bold">${b.jik_date}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        조회수:${b.jik_readcount} &nbsp;&nbsp;좋아요:${b.jik_like}
+        <br>${b.nick}</p>
+        <p class="card-text" style="color:gray;"><br>${b.jik_content}</p>
+        <a href="${pageContext.request.contextPath}/jik/detail?num=${b.jik_num}&id=${b.jik_id}" class="btn btn-primary">상세보기</a>
+      </div>
+    </div>
+  </div>
+</c:forEach>
+  </div>
+</div>
+		
+<div class="container">
+
+  <h2>수다농장</h2>
+  <span><h5 style="padding-left:5%">항상 즐거운 우리들~</h5>
+  <h6><a href="${pageContext.request.contextPath}/free/list">더보기</a></h6></span>
 
 
 <div class="row" style="margin:20px 20px 50px 20px">
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">2021.10.19</h5>
-        <p class="card-text">오전 9시:약치기</p>
-        <a href="${pageContext.request.contextPath}/caldetailmain?name=4farm&seq=3" class="btn btn-primary">상세보기</a>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">2021.09.20</h5>
-        <p class="card-text">일정 내용 적는 부분</p>
-        <a href="${pageContext.request.contextPath}/caldetailmain?name=4farm&seq=3" class="btn btn-primary">상세보기</a>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">2021.09.21</h5>
-        <p class="card-text">일정 내용 적는 부분</p>
-        <a href="${pageContext.request.contextPath}/caldetailmain?name=4farm&seq=3" class="btn btn-primary">상세보기</a>
-      </div>
-    </div>
-  </div>
-</div>
 
+<c:set var="num" value="${listcount-(page-1)*limit}"/>	
+<c:forEach var="b" items="${mainfreelist}">
+  <div class="col-sm-4" style="margin-bottom:20px;">
+    <div class="card" style="padding-top:10px; height:330px;">
+      <div class="card-body" >
+        <h5 class="card-title" style="font-weight:bold">${b.free_subject}</h5>
+        <p class="card-text" maxlength="30" style=" margin:0; font-weight:bold">${b.free_date}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        조회수:${b.free_readcount} &nbsp;&nbsp;좋아요:${b.free_like}
+        <br>${b.nick}</p>
+        <p class="card-text" style="color:gray;"><br>${b.free_content}</p>
+        <a href="${pageContext.request.contextPath}/free/detail?num=${b.free_num}&id=${b.free_id}" class="btn btn-primary">상세보기</a>
+      </div>
+    </div>
+  </div>
+</c:forEach>
+  </div>
 </div>
 		
+	
+
+<%-- 게시글이 없는 경우--%>
+<c:if test="${listcount == 0 }">
+	<font size=5>등록된 글이 없습니다.</font>
+</c:if>
+<br>
+	
+	
 		<div class="btn-group a">
 			<a href="${pageContext.request.contextPath}/notice/noticeList" class="button">
 				&nbsp;&nbsp;&nbsp;&nbsp;공지사항<br>
@@ -122,7 +159,7 @@ width:100%
 			</a>
 		</div>
 		
-		
+
 		
 <jsp:include page="footer.jsp" />  
 </body>

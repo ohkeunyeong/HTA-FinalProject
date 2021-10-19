@@ -44,6 +44,8 @@ public interface JikService {
 
 	public List<Jik_File> getFile(int num);
 
+	public List<Jik> getMainjikList(int page, int limit);
+
 
 
 	

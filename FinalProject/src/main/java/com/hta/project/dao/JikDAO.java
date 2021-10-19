@@ -107,6 +107,10 @@ public class JikDAO {
 		return sqlSession.selectList("Jiks.getFile", num);
 	}
 
+	public List<Jik> getMainjikList(HashMap<String, Integer> map) {
+		return sqlSession.selectList("Jiks.list3", map);
+	}
+
 
 	
 	

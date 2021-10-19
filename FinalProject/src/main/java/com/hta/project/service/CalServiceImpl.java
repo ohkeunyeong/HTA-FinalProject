@@ -49,9 +49,5 @@ public class CalServiceImpl implements CalService {
 		return dao.calViewList(name, yyyyMM);
 	}
 	
-	@Override
-	public List<MyCalendar> main_calboardList(String name, String yyyyMMdd) {
-		return dao.main_calboardList(name, yyyyMMdd);
-	}
 
 }
