@@ -69,7 +69,7 @@
  		<td colspan="2" class="center">
  			
  			<c:if test="${freedata.free_id == id || id =='admin' }">
- 			 <a href="modifyView?num=${freedata.free_num}">
+ 			 <a href="modifyView?num=${freedata.free_num}&id=${freedata.free_id}">
  			 	<button class="btn btn-warning">수정</button>
  			 </a>
  			 <a href="#">

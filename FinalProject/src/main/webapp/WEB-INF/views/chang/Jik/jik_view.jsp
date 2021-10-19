@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-<title>MVC 게시판 - view</title>
+<title>직거래 장터</title>
  <jsp:include page="../../main/header.jsp" />
   <script src="../resources/js/jquery-3.6.0.min.js"></script>
  <script src="../resources/js/chang/jik_comm.js"></script>
@@ -68,7 +68,7 @@
  		<td colspan="2" class="center">
  			
  			<c:if test="${jikdata.jik_id == id || id =='admin' }">
- 			 <a href="modifyView?num=${jikdata.jik_num}">
+ 			 <a href="modifyView?num=${jikdata.jik_num}&id=${jikdata.jik_id}">
  			 	<button class="btn btn-warning">수정</button>
  			 </a>
  			 <a href="#">
