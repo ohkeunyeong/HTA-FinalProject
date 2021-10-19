@@ -9,7 +9,7 @@
      <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,500,700"/>
      <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/oky/nong_reply.css"></link> 
 </head>
-<body style="overflow-x:hidden; overflow-y:auto;">
+<body style="overflow-x:hidden; overflow-y:hidden;">
 <br><br>
 <div class="wrapper">
 <main>
