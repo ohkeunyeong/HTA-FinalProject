@@ -129,7 +129,7 @@
       <div class="modal-body">
 		   <table>
 		       <tr>
-		            <th>일정</th>
+		            <th>지출시간</th>
 		            <td>
 		            <input type="hidden"  value="${name}" name="name">
 		            <input type="hidden"  value="${year}" name="year">
@@ -195,7 +195,7 @@
       <div class="modal-body">
 		   <table>
 		       <tr>
-		            <th>일정</th>
+		            <th>지출시간</th>
 		            <td> 	               
  		            <input type="hidden"  value="${name}" name="name">
  		            <input type="hidden"  id="upseq" name="seq">
