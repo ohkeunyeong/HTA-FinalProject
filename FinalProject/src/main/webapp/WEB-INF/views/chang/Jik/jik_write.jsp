@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 	<jsp:include page="../../main/header.jsp" />
@@ -16,6 +17,7 @@
 	</style>
 </head>
 <body>
+<br><br><br><br><br>
   <div class="container">
    <form name="jikform" id="jikform">
      <h1>직거래 장터 - 글쓰기</h1>
@@ -36,7 +38,7 @@
      
 	<div class="form-group file">
   		<button id="btn-upload" type="button" style="border: 1px solid #ddd; outline: none;">파일 추가</button>
-  		<input id="input_file" multiple="multiple" type="file" style="display:none;">
+  		<input id="input_file" multiple="multiple" type="file" style="display:none;" accept="image/*">
   		<span style="font-size:10px; color: gray;">※첨부파일은 최대 10개까지 등록이 가능합니다.</span>
   		<div class="data_file_txt" id="data_file_txt" style="margin:40px;">
 			<span>첨부 파일(클릭시 제외됩니다.)</span>
@@ -52,10 +54,12 @@
      			rows="10" 	class="form-control"></textarea>
      </div>	
      <input type="hidden" name="jik_id" id="jik_id" value="${id}">
+     <c:if test="${id !=null && id != ''}">
      <div class="form-group">
      	<button type=button class="btn btn-primary" id="submit">등록</button>
      	<button type=reset  class="btn btn-danger">취소</button>
      </div>
+     </c:if>
      
    </form>
   </div>

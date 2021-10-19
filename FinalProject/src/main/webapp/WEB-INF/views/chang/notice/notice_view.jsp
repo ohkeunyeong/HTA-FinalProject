@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-<title>MVC 게시판 - view</title>
+<title>공 지 사 항</title>
  <jsp:include page="../../main/header.jsp" />
   <script src="../resources/js/jquery-3.6.0.min.js"></script>
  <link rel="stylesheet" href="../resources/css/chang/view.css">

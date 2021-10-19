@@ -43,6 +43,7 @@ textarea {
 
 	});
 	</script>
+	<title>신고하기</title>
 </head>
 <body>
   <div class="container">

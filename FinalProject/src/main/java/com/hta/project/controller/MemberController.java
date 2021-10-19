@@ -165,7 +165,7 @@ public class MemberController {
 		}else {
 			model.addAttribute("url", request.getRequestURL());
 			model.addAttribute("message", "회원 가입 실패");
-			return "error/error";
+			return "chang/error/error";
 		}
 	}
 	

@@ -307,7 +307,7 @@ public class JikController {
 		
 		if(jik == null) {
 			logger.info("디테일 오류");
-			mv.setViewName("error/error");
+			mv.setViewName("chang/error/error");
 			mv.addObject("url", request.getRequestURL());
 			mv.addObject("message", "디테일 페이지 오류");
 		}else {
@@ -331,13 +331,13 @@ public class JikController {
 			Jik jikdata =jikService.getDetail2(num);
 			
 			if(jikdata == null) {
-				logger.info("�������� ����");
-				mv.setViewName("error/error");
+				logger.info("디테일 오류");
+				mv.setViewName("chang/error/error");
 				mv.addObject("url", request.getRequestURL());
-				mv.addObject("message", "���� ������ �ε�����");
+				mv.addObject("message", "디테일 오류");
 				return mv;
 			}
-			logger.info("���� �󼼺��� ����");
+			logger.info("정보수정 창으로 이동");
 			
 			mv.addObject("jikdata", jikdata);
 			
@@ -356,16 +356,14 @@ public class JikController {
 		int result = jikService.jikModify(jikdata);
 		
 		if(result == 0) {
-			logger.info("�Խ��� ���� ����");
+			logger.info("정보수정 실패");
 			mv.addAttribute("url", request.getRequestURL());
-			mv.addAttribute("message", "�Խ��� ���� ����");
+			mv.addAttribute("message", "정보수정에 실패 했습니다.");
 		}else { 
-			logger.info("�Խ��� ���� �Ϸ�");
+			logger.info("정보수정에 성공하여 디테일페이지로 이동");
 	
-			url = "redirect:detail";
-			rattr.addAttribute("num", jikdata.getJik_num());
-			rattr.addAttribute("id", jikdata.getJik_id());
-			
+			url = "redirect:detail?num="+jikdata.getJik_num()+"&id="+jikdata.getJik_id();
+	
 		}
 		return url;
 	}
@@ -380,13 +378,13 @@ public class JikController {
 		int result = jikService.jikDelete(jik_num);
 		
 		if(result == 0) {
-			logger.info("�Խ��� ���� ����");
+			logger.info("삭제 실패");
 				mv.addAttribute("url", request.getRequestURL());
-				mv.addAttribute("message", "���� ����");
-				return "error/error";
+				mv.addAttribute("message", "삭제 실패");
+				return "chang/error/error";
 		}
 		
-		logger.info("�Խ��� ���� ����");
+		logger.info("삭제 성공");
 		rattr.addFlashAttribute("result", "deleteSuccess");
 		return "redirect:list";
 	}

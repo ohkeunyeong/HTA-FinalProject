@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-	<title>MVC 게시판</title>
+	<title>직거래 장터 - 글 수정</title>
 	<jsp:include page="../../main/header.jsp" />
 	<script src="../resources/js/chang/jik_modifyform.js"></script>
 	<style>
@@ -13,12 +13,14 @@
 
 </head>
 <body>
+<br><br><br><br><br>
 	<%-- 게시판 수정 --%>
   <div class="container">
    <form action="modifyAction" 
    		 method="post" name="modifyform" enctype="multipart/form-data">
    	  <input type="hidden" name="jik_num" 	value="${jikdata.jik_num}">
-     <h1>직거래 농장 - 수정</h1>
+   	  <input type="hidden" name="jik_id" 	value="${jikdata.jik_id}">
+     <h1>직거래 장터 - 글 수정</h1>
      <div class="form-group">
      	<label for="nick">글쓴이</label><input value="${jikdata.nick}" 
      	readOnly name="nick" type="text" class="form-control">
@@ -35,12 +37,13 @@
        <textarea name="jik_content" id="jik_content" 
      			rows="15" 	class="form-control">${jikdata.jik_content}</textarea>
      </div>	
-     
+      <c:if test="${id !=null && id != ''}">
      <div class="form-group">
      	<button type=submit class="btn btn-primary">수정</button>
      	<button type=reset  class="btn btn-danger"
      			onClick="history.go(-1)">취소</button>
      </div>
+     </c:if>
    </form>
   </div>
 </body>
