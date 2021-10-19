@@ -40,6 +40,24 @@
  			]]>
  	</select>
  	
+ 	<select id="mainlist" resultType="free" parameterType="map">
+ 			select * from
+ 			( select ROWNUM RNUM, b.*
+				   from 
+				   		(select free.*, nvl(cnt,0) cnt
+						 from
+						 free left outer join (select free_board_num, count(*) cnt
+							  					from free_comm
+							  					group by free_board_num) c
+						  on c.free_board_num=free.free_num
+						  order by free_num desc) b
+					) 
+			where		
+			 <![CDATA[
+			  RNUM>= #{start} and RNUM <= #{end}
+ 			]]>
+ 	</select>
+ 	
  	<select id="detail" resultType="free" parameterType="map">
  			select free.*,member.original profile
  			from free,member

@@ -44,6 +44,8 @@ public interface FreeService {
 
 	public List<Free_File> getFile(int num);
 
+	public List<Free> getMainfreeList(int page, int limit);
+
 
 
 	

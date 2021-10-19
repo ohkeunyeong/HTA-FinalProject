@@ -30,6 +30,16 @@ public class FreeServiceImpl implements FreeService{
 		map.put("end", endrow);
 		return dao.getFreeList(map);
 	}
+	
+	@Override
+	public List<Free> getMainfreeList(int page, int limit) {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		int startrow=(page-1)*limit+1;
+		int endrow=startrow+limit-1;
+		map.put("start", startrow);
+		map.put("end", endrow);
+		return dao.getMainfreeList(map);
+	}
 
 	@Override
 	public Free getDetail(int num, String id) {

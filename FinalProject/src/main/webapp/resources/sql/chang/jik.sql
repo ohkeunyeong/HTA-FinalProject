@@ -34,4 +34,6 @@ on c.jik_board_num=jik.jik_num order by jik_num desc) b )
 where RNUM>= 10 and RNUM <= 1 
 and jik_content like %d% 
 
+
+
 drop table jik cascade constraints;

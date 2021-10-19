@@ -32,6 +32,16 @@ public class JikServiceImpl implements JikService{
 	}
 
 	@Override
+	public List<Jik> getMainjikList(int page, int limit) {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		int startrow=(page-1)*limit+1;
+		int endrow=startrow+limit-1;
+		map.put("start", startrow);
+		map.put("end", endrow);
+		return dao.getMainjikList(map);
+	}
+	
+	@Override
 	public Jik getDetail(int num, String id) {
 		if(setReadCountUpdate(num)!=1)
 			return null;

@@ -107,6 +107,10 @@ public class FreeDAO {
 		return sqlSession.selectList("Frees.getFile", num);
 	}
 
+	public List<Free> getMainfreeList(HashMap<String, Integer> map) {
+		return sqlSession.selectList("Frees.mainlist", map);
+	}
+
 
 	
 	
