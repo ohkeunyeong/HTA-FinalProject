@@ -20,3 +20,7 @@ select * from order_market;
 
 
 -- 실행함 9.19
+
+insert into ORDER_MARKET(id, ORDER_NUM, ORDER_NAME, USER_ADDRESS1, USER_ADDRESS2, 
+ORDER_PHONE , ORDER_TOTALPRICE, ORDER_PAYMENT, ORDER_DATE, ORDER_DELIVERY)
+values('user7','20211014001', 'user7', '123456', '일산동구', '00000000000', 35000, '333311555546', sysdate, '결제완료')

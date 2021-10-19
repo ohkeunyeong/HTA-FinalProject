@@ -11,12 +11,10 @@
   	</selectKey>
  			INSERT INTO jik
  			(jik_num, jik_id, nick, jik_subject,
- 			 jik_content, jik_file, jik_original,
- 			 jik_readcount, jik_date, jik_like)
+ 			 jik_content,jik_readcount, jik_date, jik_like,jik_ldate)
  			VALUES
  			 (#{jik_num},#{jik_id}, #{nick}, #{jik_subject},
- 			  #{jik_content}, #{jik_file}, #{jik_original},
- 			  #{jik_readcount}, sysdate, #{jik_like})
+ 			  #{jik_content}, #{jik_readcount}, sysdate, #{jik_like},sysdate)
  	</insert>
  
  	 <select id="count" resultType="int">
@@ -42,10 +40,17 @@
  			]]>
  	</select>
  	
- 	<select id="detail" resultType="jik" parameterType="int">
- 			select * 
- 			from jik 
- 			where jik_num = #{jik_num}
+ 	<select id="detail" resultType="jik" parameterType="map">
+ 			select jik.*,member.original profile
+ 			from jik,member
+ 			where jik_num = #{num}
+ 			and member.id = #{id}
+ 	</select>
+ 	
+ 	<select id="detail2" resultType="jik" parameterType="int">
+ 			select *
+ 			from jik
+ 			where jik_num = #{num}
  	</select>
  	
  	<update id="readCountUpdate" parameterType="int">
@@ -54,13 +59,12 @@
  			WHERE jik_num = #{jik_num}
  	</update>
  	
- 	 <update id= "modify" parameterType="jik">
+ 	 <update id= "modify" parameterType="map">
  		update jik
  		set 
  			jik_subject=#{jik_subject},
  			jik_content=#{jik_content},
- 			jik_file=#{jik_file},
- 			jik_original=#{jik_original}
+ 			jik_ldate=sysdate
  		where jik_num=#{jik_num}
  	</update>
  	
@@ -78,4 +82,87 @@
  	<select id="deleteFileList" resultType="String">
  		select board_file from delete_file
  	</select>
+ 	
+ 	 <sql id="search_">
+ 		<if test="search_field!=null">
+ 				and
+ 				<choose>
+ 					<when test="search_field=='(jik_subject || jik_content)'">(jik_subject || jik_content)</when>
+ 					<when test="search_field=='jik_subject'">jik_subject</when>
+ 					<when test="search_field=='jik_content'">jik_content</when>
+ 					<when test="search_field=='nick'">nick</when>
+ 				</choose>
+ 				like #{search_word}
+ 		</if>
+ 	</sql>
+ 	 	<select id="list2" resultType="jik" parameterType="map">
+ 			select * from
+ 			( select ROWNUM RNUM, b.*
+				   from 
+				   		(select jik.*, nvl(cnt,0) cnt
+						 from
+						 jik left outer join (select jik_board_num, count(*) cnt
+							  					from jik_comm
+							  					group by jik_board_num) c
+						  on c.jik_board_num=jik.jik_num
+						  order by jik_num desc) b
+					) 
+			where		
+			 <![CDATA[
+			  RNUM>= #{start} and RNUM <= #{end}
+ 			]]>
+ 			<include refid="search_"/>
+ 	</select>
+ 	
+ 	 <select id="count2" resultType="int" parameterType="map">
+ 			select count(*) 
+ 			from jik
+ 			<![CDATA[
+ 			where jik_num > 0
+ 			]]>
+ 			<include refid="search_"/>
+ 	 </select>
+ 	 
+ 	 <select id="isLike" resultType="int" parameterType="map">
+ 	 		select count(*)
+ 	 		from jik_like
+ 	 		where jik_id = #{id}
+ 	 		and jik_num = #{num}
+ 	 </select>
+ 	
+ 	 <insert id="like" parameterType="map">
+ 		insert into jik_like
+ 		values(#{num},#{id})
+ 	 </insert>
+ 	 
+ 	  <delete id="dlike" parameterType="map">
+ 		delete from jik_like
+		where jik_num=#{num}
+		and jik_id = #{id}
+ 	 </delete>
+ 	 
+ 	  	
+ 	<update id="LikeUp" parameterType="int">
+ 			update jik 
+ 			set jik_like=jik_like+1
+ 			where jik_num = #{num}
+ 	</update>
+ 	
+ 	 	
+ 	<update id="LikeDown" parameterType="int">
+  			update jik 
+ 			set jik_like=jik_like-1
+ 			where jik_num = #{num}
+ 	</update>
+ 	
+ 	 <insert id="insertFile" parameterType="map">
+ 		insert into jik_files
+ 		values(#{jik_num},#{jik_file},#{jik_original})
+ 	 </insert>
+ 	 
+ 	 <select id="getFile" parameterType="int" resultType="jik_file">
+ 	 	select jik_file
+ 	 	from jik_files
+ 	 	where jik_num=#{num}
+ 	 </select>
  </mapper>

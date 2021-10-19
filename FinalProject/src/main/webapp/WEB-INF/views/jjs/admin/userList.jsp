@@ -165,7 +165,7 @@ a:not([href]) {
 									</div>
 								</c:if>
 
-								<c:if test="${listcount == 0 }">
+								<c:if test="${listcount == 0 || empty listcount}">
 									<p class="text-center h2 mt-3 mb-3">
 										<span>등록된 회원이 없습니다.</span>
 									</p>

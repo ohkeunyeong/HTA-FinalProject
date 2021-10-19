@@ -16,9 +16,6 @@
 	</properties>
 
 	<dependencies>
-	<!-- 채팅 관련 라이브러리 -->
-		
-    <!-- 채팅 관련 라이브러리 -->
 	
 	<!-- 스프링 시큐리티 web 라이브러리 -->
 	    <dependency>
@@ -222,6 +219,32 @@
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api -->
+		<dependency>
+			<groupId>javax.websocket</groupId>
+			<artifactId>javax.websocket-api</artifactId>
+			<version>1.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>3.8</version>
+		</dependency>
+		
+		<!-- 제품 상세 페이지 리뷰 ajax를 위해 사용합니다. -->
+		<dependency>
+    		<groupId>com.fasterxml.jackson.core</groupId>
+    		<artifactId>jackson-databind</artifactId>
+   		 	<version>2.9.6</version>
+		</dependency>
+		
+		<dependency>
+    		<groupId>org.codehaus.jackson</groupId>
+    		<artifactId>jackson-mapper-asl</artifactId>
+    		<version>1.9.13</version>
 		</dependency>
 	</dependencies>
 	<build>

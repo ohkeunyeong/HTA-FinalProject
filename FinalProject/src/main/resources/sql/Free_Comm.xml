@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  SQL 맵퍼 파일은 xml이기 때문에 제일 먼저 xml 선언이 옵니다. -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="Free_Comms">
+ 
+ 	<select id="count" resultType="int" parameterType="int">
+ 		select count(*)
+ 		from free_comm
+ 		where free_board_num = #{free_num}
+ 	</select>
+ 
+ 	<select id="getList" resultType="free_comm" parameterType="map">
+ 		select *
+ 		from (select rownum rnum, free_comm_num, id, nick, free_comm_content, free_comm_date,free_comm_re_ref,free_comm_re_lev,free_comm_re_seq,free_comm_secret,free_id,comm_nick
+ 			  from(
+ 			  		select *
+ 			  		from free_comm
+ 			  		where free_board_num = #{free_num}
+ 			  		<if test="state!=null">
+ 					order by free_comm_re_ref 
+ 						<choose>
+ 							<when test="state==1">desc</when>
+ 							<when test="state==2">asc</when>
+ 						</choose>
+ 					, free_comm_re_seq asc
+ 					</if>
+ 			  		)
+ 			  )
+ 		where rnum between #{start} and #{end}
+	</select>
+
+ 	<insert id="insert" parameterType="free_comm">
+ 			INSERT INTO free_comm
+ 			values
+ 			 (free_comm_seq.nextval, #{free_board_num},#{id}, #{nick}, #{free_comm_content}, sysdate,
+ 			  free_comm_seq.nextval, #{free_comm_re_lev}, #{free_comm_re_seq},#{free_comm_secret},#{free_id},#{comm_nick})
+ 	</insert>
+ 	
+ 	<delete id="delete" parameterType="int">
+ 			delete from free_comm
+ 			where free_comm_num=#{free_comm_num}
+ 	</delete>
+ 	
+ 	 <update id="update" parameterType="free_comm">
+ 			update free_comm
+ 			set free_comm_content = #{free_comm_content}, free_comm_secret = #{free_comm_secret}
+ 			where free_comm_num= #{free_comm_num}
+ 	</update>
+ 	
+	<update id= "reply_update" parameterType="free_comm">
+ 		update free_comm
+ 		set free_comm_re_seq=free_comm_re_seq+1
+ 		where free_comm_re_ref=#{free_comm_re_seq}
+ 		and free_comm_re_seq <![CDATA[ > ]]> #{free_comm_re_seq}
+ 	</update>
+ 	
+ 	 	
+ 	<insert id="reply_insert" parameterType="free_comm">
+ 		insert into free_comm
+ 		(free_comm_num, id,nick,free_board_num,
+ 		 free_comm_content,free_comm_re_ref, free_comm_re_lev,free_comm_re_seq,
+ 		 free_comm_date,free_id,free_comm_secret,comm_nick)
+ 		 values
+ 		 (free_comm_seq.nextval,#{id},#{nick},#{free_board_num},
+ 		 #{free_comm_content},#{free_comm_re_ref},#{free_comm_re_lev},
+ 		 #{free_comm_re_seq},sysdate,#{free_id},#{free_comm_secret},#{comm_nick})
+ 	</insert>
+ 	
+ 	<select id="ref_select" resultType="int" parameterType="int">
+ 		select free_comm_re_ref
+ 		from free_comm
+ 		where free_comm_num = #{free_comm_num}
+ 	</select>
+ 	
+ 	 <select id="ref_select2" resultType="int" parameterType="int">
+ 		select count(*)
+ 		from free_comm
+ 		where free_comm_re_ref = #{select}
+ 	</select>
+ 	
+ 	<update id= "delete2" parameterType="free_comm">
+ 		update free_comm
+ 		set free_comm_content='삭제된 글입니다.'
+ 		where free_comm_num=#{free_comm_num}
+ 	</update>
+ 	
+ 	
+ </mapper>

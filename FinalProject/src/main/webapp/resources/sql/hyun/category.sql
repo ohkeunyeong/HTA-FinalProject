@@ -22,8 +22,14 @@ insert into CATEGORY
 values('400', '농기구');
 
 insert into CATEGORY
-values('500', '퍼스나콘');
+values('500', '굿즈');
 
-insert into CATEGORY
-values('600', '굿즈');
-
+select a.product_code, count(*) cnt
+  from (select p.product_code, p.category_code, c.category_name, p.product_name, p.product_price,
+	  	   		  		   p.product_detail, p.product_img, p.product_original, p.product_date
+	  	   			from product p, CATEGORY c, review r
+	  	   			where p.category_code = c.category_code
+	  	   			and p.category_code = r.category_code) a
+  group by a.product_code
+  order by cnt desc
+  

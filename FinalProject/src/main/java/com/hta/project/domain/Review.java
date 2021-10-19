@@ -1,12 +1,29 @@
 package com.hta.project.domain;
 
-import java.util.Date;
+import java.sql.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 
 public class Review {
 
+	private String id;
 	private String product_code;
-	
-	
+	private String category_code;
+	private String product_name;
+	private String review_content;
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+	private Date review_date;
+	private String member_nick;
+	private int review_num;
+		
+		
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public String getProduct_code() {
 		return product_code;
 	}
@@ -31,12 +48,7 @@ public class Review {
 	public void setReview_content(String review_content) {
 		this.review_content = review_content;
 	}
-	public String getReview_img() {
-		return review_img;
-	}
-	public void setReview_img(String review_img) {
-		this.review_img = review_img;
-	}
+	
 	public Date getReview_date() {
 		return review_date;
 	}
@@ -49,17 +61,12 @@ public class Review {
 	public void setMember_nick(String member_nick) {
 		this.member_nick = member_nick;
 	}
-	public int getReview_star() {
-		return review_star;
+	public int getReview_num() {
+		return review_num;
 	}
-	public void setReview_star(int review_star) {
-		this.review_star = review_star;
+	public void setReview_num(int review_num) {
+		this.review_num = review_num;
 	}
-	private String category_code;
-	private String product_name;
-	private String review_content;
-	private String review_img;
-	private Date review_date;
-	private String member_nick;
-	private int review_star;
+	
+	
 }

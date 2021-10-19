@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- SQL맵퍼 파일은 xml이기 때문에 제일 먼저 xml 선언이 옵니다. -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Nong_Cos">
+
+    <select id="count" resultType="int" parameterType="int">
+      select count(*)
+      from   NONG_CO
+      where NONG_NUM  = #{num}
+    </select>
+    
+    <select id="getList" resultType="nong_co" parameterType="map">
+     select *
+     from( select rownum rnum, nong_co_num, name, id, nong_co_con, nong_co_date, nong_num
+           from(
+                 select nong_co_num, name, id, nong_co_con, nong_co_date, nong_num
+                 from NONG_CO
+                 where NONG_NUM = #{nong_num} and
+                 Name = #{name} 
+                 order by nong_co_date desc
+                 )
+         )
+     where rnum between #{start} and #{end}   
+    </select>
+    
+    <insert id= "insert" parameterType="nong_co">
+      insert into nong_co
+      values(nong_co_seq.nextval, #{name}, #{id}, #{nong_co_con}, sysdate, #{nong_num})
+    </insert>
+    
+    <delete id = "delete" parameterType="int">
+      delete nong_co
+      where NONG_CO_NUM = #{num}
+    </delete>
+
+    <update id= "update" parameterType="nong_co">
+      update nong_co
+      set NONG_CO_CON = #{nong_co_con}
+      where NONG_CO_NUM = #{nong_co_num}
+    </update>
+
+</mapper>
+

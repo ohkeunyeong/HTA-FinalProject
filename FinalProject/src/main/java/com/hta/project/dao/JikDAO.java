@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.hta.project.domain.Jik;
+import com.hta.project.domain.Jik_File;
 
 @Repository
 public class JikDAO {
@@ -29,8 +30,8 @@ public class JikDAO {
 		return sqlSession.selectList("Jiks.list", map);
 	}
 
-	public Jik getDetail(int num) {
-		return sqlSession.selectOne("Jiks.detail", num);
+	public Jik getDetail(HashMap<String, Object> map) {
+		return sqlSession.selectOne("Jiks.detail", map);
 		
 	}
 
@@ -64,6 +65,49 @@ public class JikDAO {
 		return sqlSession.insert("Jiks.insert_deleteFile", before_file);
 		
 	}
+
+	public Jik getDetail(int num) {
+		return sqlSession.selectOne("Jiks.detail2", num);
+	}
+
+	public List<Jik> getJikListSearchList(HashMap<String, Object> map) {
+		return sqlSession.selectList("Jiks.list2", map);
+	}
+
+	public int getSearchListCount(HashMap<String, Object> map) {
+		return sqlSession.selectOne("Jiks.count2",map);
+	}
+
+	public int isLike(HashMap<String, Object> map) {
+		return sqlSession.selectOne("Jiks.isLike",map);
+	}
+
+	public int Like(HashMap<String, Object> map) {
+		return sqlSession.insert("Jiks.like", map);
+	}
+
+	public int dLike(HashMap<String, Object> map) {
+		return sqlSession.delete("Jiks.dlike", map);
+	}
+
+	public void LikeUp(int num) {
+		sqlSession.update("Jiks.LikeUp", num);
+	}
+
+	public void LikeDown(int num) {
+		sqlSession.update("Jiks.LikeDown", num);
+	}
+
+
+	public void insert_JikFile(HashMap<String, Object> map) {
+		sqlSession.insert("Jiks.insertFile", map);
+	}
+
+	public List<Jik_File> getFile(int num) {
+		return sqlSession.selectList("Jiks.getFile", num);
+	}
+
+
 	
 	
 }

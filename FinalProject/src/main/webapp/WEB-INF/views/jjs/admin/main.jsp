@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -74,6 +75,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
 											</tr>
 										</thead>
 										<tbody>
+											<c:forEach items="${userlist}" var="u">
+												<tr>
+													<td>${u.name}</td>
+													<td>${u.id}</td>
+													<td>${u.nick}</td>
+													<c:if test="${u.mynong_name == null}">
+														<td></td>
+													</c:if>
+													<c:if test="${u.mynong_name != null}">
+														<td>${u.mynong_name}</td>
+													</c:if>
+													<c:if test="${u.my_farm == '0'}">
+														<td>일반멤버</td>
+													</c:if>
+													<c:if test="${u.my_farm == '1'}">
+														<td>농장관리자</td>
+													</c:if>
+													<c:if test="${u.my_farm == '2'}">
+														<td>농장멤버</td>
+													</c:if>
+												</tr>
+											</c:forEach>
 										</tbody>
 									</table>
 								</div>
@@ -84,7 +107,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						<div class="col-lg-6">
 							<div class="card card-primary">
 								<div class="card-header">
-									<span>게시물 관리</span> <a class="float-right" href="postList">더보기></a>
+									<span>게시물 관리</span> <a class="float-right" href="reportList">더보기></a>
 								</div>
 								<div class="card-body">
 									<table class="table table-striped table-bordered">
@@ -92,20 +115,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
 											<tr>
 												<th>신고번호</th>
 												<th>신고글 제목</th>
-												<th>작성자</th>
+												<th>신고날짜</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>1</td>
-												<td>신고글 제목</td>
-												<td>스프링</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>신고글 제목</td>
-												<td>자바</td>
-											</tr>
+											<c:forEach items="${reportlist}" var="r">
+												<tr>
+													<td>${r.report_num}</td>
+													<td>${r.board_subject}</td>
+													<td>${r.report_date}</td>
+												</tr>
+											</c:forEach>
 										</tbody>
 									</table>
 								</div>
@@ -124,14 +144,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>JavaFarm</td>
-												<td>자바</td>
-											</tr>
-											<tr>
-												<td>SpringFarm</td>
-												<td>스프링</td>
-											</tr>
+											<c:forEach items="${farmlist}" var="f">
+												<tr>
+													<td>${f.mynong_name}</td>
+													<td>${f.name}</td>
+												</tr>
+											</c:forEach>
 										</tbody>
 									</table>
 								</div>
@@ -152,16 +170,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>곡괭이</td>
-												<td>농장용품</td>
-												<td>1,000원</td>
-											</tr>
-											<tr>
-												<td>이모티콘</td>
-												<td>굿즈</td>
-												<td>10원</td>
-											</tr>
+											<c:forEach items="${productlist}" var="p">
+												<tr>
+													<td>${p.product_name}</td>
+													<td>${p.category_name}</td>
+													<td>${p.product_price}원</td>
+												</tr>
+											</c:forEach>
 										</tbody>
 									</table>
 								</div>
@@ -181,16 +196,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 											</tr>
 										</thead>
 										<tbody>
+											<c:forEach items="${orderlist}" var="o">
 											<tr>
-												<td>곡괭이</td>
-												<td>자바</td>
-												<td>1,000원</td>
+												<td>${o.order_num}</td>
+												<td>${o.order_name}</td>
+												<td>${o.order_totalprice}원</td>
 											</tr>
-											<tr>
-												<td>이모티콘</td>
-												<td>스프링</td>
-												<td>10원</td>
-											</tr>
+											</c:forEach>
 										</tbody>
 									</table>
 								</div>
@@ -219,7 +231,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<jsp:include page="include/footer.jsp" />
 	</div>
 	<!-- ./wrapper -->
-
+	
 	<!-- REQUIRED SCRIPTS -->
 	<jsp:include page="include/plugin_js.jsp" />
 

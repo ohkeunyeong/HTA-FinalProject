@@ -8,10 +8,14 @@
 		select * from member where id = #{id}
 	</select>
 	
+	<select id="nickcheck" resultType="member" parameterType="String">
+		select * from member where nick = #{nick}
+	</select>
+	
 	<select id="insert" parameterType="member">
  			INSERT INTO member
  			VALUES
- 			 (#{id},#{pass},#{name},#{nick},#{mail},#{tel}, '0', '', 0, '')
+ 			 (#{id},#{pass},#{name},#{nick},#{mail},#{tel}, '0', #{persnacon},#{original}, 0, '')
  	</select>
  	
 	<select id="count" resultType="int">
@@ -55,4 +59,26 @@
 		where ID = #{id}
 	</delete>
 	
+	<update id="update" parameterType="member">
+    	update member
+    	set name = #{name}, pass = #{pass} , 
+    		nick = #{nick} , mail = #{mail}, tel = #{tel}
+    	where id = #{id}
+    </update>
+ 	
+ 	<select id="findid" resultType="String" parameterType="map">
+		select ID
+		from member
+		where NAME = #{name}
+		and   TEL  = #{tel}
+		and   MAIL = #{email}
+	</select>
+	
+	<update id="findpw" parameterType="map">
+    	update member
+    	set   PASS = #{pass}
+    	where NAME = #{name}
+		and   TEL  = #{tel}
+		and   MAIL = #{email}
+    </update>
 </mapper>

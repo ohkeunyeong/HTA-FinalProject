@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+#productDetail > p > span{
+	font-size : 30px;	
+}
+
+#productDetail > p{
+	font-size : 25px;
+}
+
+#showImage{
+	margin-top: 20px;
+    margin-left: 30px;
+    margin-right : 50px;
+    width: 38%;
+    height: 60%;
+    float: left;
+}
+
+#productDetail{
+	margin-left : 645px;
+	width: 50%;
+    height: 100%;
+    margin-top: 20px;
+}
+
+#productDetail > div > button{
+	font-size : 25px;
+}
+
+#productDetail > p > button{
+	height: 30px;
+    font-size: 25px;
+    background: none;
+    outline: none;
+    border: none;
+}
+
+#productDetail > p > button:hover{
+	color : green;
+}
+
+#productDetail > p > input{
+	height: 30px;
+    width: 40px;
+    font-size: 20px;
+}

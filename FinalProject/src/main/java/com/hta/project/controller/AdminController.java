@@ -8,12 +8,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,10 +57,27 @@ public class AdminController {
 	@Autowired
 	private JikService jikService;
 	
+	@Value("${savefoldername}")
+	private String saveFolder;
+	
 	@GetMapping(value="/main")
-	public String main() {
+	public ModelAndView main(ModelAndView mv) {
 		logger.info("Admin main()");
-		return "jjs/admin/main";
+		
+		List<Member> userlist = memberService.getUserList(1, 2);
+		List<Report> reportlist = adminService.getReportList(1, 2);
+		List<Product> productlist = adminService.getProductList(-1, "",  1, 2);
+		List<Farm> farmlist = adminService.farmList(1, 2); 
+		List<Order_Market> orderlist = adminService.getOrderList(1, 2);
+		
+		mv.addObject("userlist", userlist);
+		mv.addObject("reportlist", reportlist);
+		mv.addObject("productlist", productlist);
+		mv.addObject("farmlist", farmlist);
+		mv.addObject("orderlist", orderlist);
+		mv.setViewName("jjs/admin/main");
+		
+		return mv;
 	}
 	
 	@GetMapping("/userList")
@@ -425,7 +445,7 @@ public class AdminController {
 		logger.info("신고글 삭제 성공");
 		if(board_table.equals("jik")) {
 			Jik jik = new Jik();
-			jik = jikService.getDetail(board_num);
+			jik = jikService.getDetail2(board_num);
 			if(jik == null) {
 				adminService.numReportDelete(board_num, board_table);
 			}
@@ -527,7 +547,6 @@ public class AdminController {
 		if(!uploadfile.isEmpty()) {
 			String fileName = uploadfile.getOriginalFilename(); // 원래 파일명
 			product.setProduct_original(fileName); // 원래 파일명 저장
-			String saveFolder = request.getSession().getServletContext().getRealPath("resources") + "/upload/";
 			String fileDBName = fileDBName(fileName, saveFolder);
 			logger.info("fileDBName = " + fileDBName);
 			
@@ -670,7 +689,6 @@ public class AdminController {
 		String url = "";
 		
 		MultipartFile uploadfile = Product.getUploadfile();
-		String saveFolder = request.getSession().getServletContext().getRealPath("resources") + "/upload/";
 		
 		if(check != null && !check.equals("")) { // 기존파일 그대로 사용하는 경우입니다.
 			logger.info("기존파일 그대로 사용합니다.");

@@ -13,12 +13,19 @@
  
  	<select id="getList" resultType="jik_comm" parameterType="map">
  		select *
- 		from (select rownum rnum, jik_comm_num, id, nick, jik_comm_content, jik_comm_date,jik_comm_re_ref,jik_comm_re_lev,jik_comm_re_seq,jik_comm_secret
+ 		from (select rownum rnum, jik_comm_num, id, nick, jik_comm_content, jik_comm_date,jik_comm_re_ref,jik_comm_re_lev,jik_comm_re_seq,jik_comm_secret,jik_id,comm_nick
  			  from(
- 			  		select jik_comm_num, id, nick, jik_comm_content, jik_comm_date,jik_comm_re_ref,jik_comm_re_lev,jik_comm_re_seq,jik_comm_secret
+ 			  		select *
  			  		from jik_comm
  			  		where jik_board_num = #{jik_num}
- 			  		order by jik_comm_date desc
+ 			  		<if test="state!=null">
+ 					order by jik_comm_re_ref 
+ 						<choose>
+ 							<when test="state==1">desc</when>
+ 							<when test="state==2">asc</when>
+ 						</choose>
+ 					, jik_comm_re_seq asc
+ 					</if>
  			  		)
  			  )
  		where rnum between #{start} and #{end}
@@ -28,7 +35,7 @@
  			INSERT INTO jik_comm
  			values
  			 (jik_comm_seq.nextval, #{jik_board_num},#{id}, #{nick}, #{jik_comm_content}, sysdate,
- 			  jik_comm_seq.nextval, #{jik_comm_re_lev}, #{jik_comm_re_seq},#{jik_comm_secret})
+ 			  jik_comm_seq.nextval, #{jik_comm_re_lev}, #{jik_comm_re_seq},#{jik_comm_secret},#{jik_id},#{comm_nick})
  	</insert>
  	
  	<delete id="delete" parameterType="int">
@@ -38,11 +45,46 @@
  	
  	 <update id="update" parameterType="jik_comm">
  			update jik_comm
- 			set jik_comm_content = #{jik_comm_content}
+ 			set jik_comm_content = #{jik_comm_content}, jik_comm_secret = #{jik_comm_secret}
  			where jik_comm_num= #{jik_comm_num}
  	</update>
  	
-
+	<update id= "reply_update" parameterType="jik_comm">
+ 		update jik_comm
+ 		set jik_comm_re_seq=jik_comm_re_seq+1
+ 		where jik_comm_re_ref=#{jik_comm_re_seq}
+ 		and jik_comm_re_seq <![CDATA[ > ]]> #{jik_comm_re_seq}
+ 	</update>
+ 	
+ 	 	
+ 	<insert id="reply_insert" parameterType="jik_comm">
+ 		insert into jik_comm
+ 		(jik_comm_num, id,nick,jik_board_num,
+ 		 jik_comm_content,jik_comm_re_ref, jik_comm_re_lev,jik_comm_re_seq,
+ 		 jik_comm_date,jik_id,jik_comm_secret,comm_nick)
+ 		 values
+ 		 (jik_comm_seq.nextval,#{id},#{nick},#{jik_board_num},
+ 		 #{jik_comm_content},#{jik_comm_re_ref},#{jik_comm_re_lev},
+ 		 #{jik_comm_re_seq},sysdate,#{jik_id},#{jik_comm_secret},#{comm_nick})
+ 	</insert>
+ 	
+ 	<select id="ref_select" resultType="int" parameterType="int">
+ 		select jik_comm_re_ref
+ 		from jik_comm
+ 		where jik_comm_num = #{jik_comm_num}
+ 	</select>
+ 	
+ 	 <select id="ref_select2" resultType="int" parameterType="int">
+ 		select count(*)
+ 		from jik_comm
+ 		where jik_comm_re_ref = #{select}
+ 	</select>
+ 	
+ 	<update id= "delete2" parameterType="jik_comm">
+ 		update jik_comm
+ 		set jik_comm_content='삭제된 글입니다.'
+ 		where jik_comm_num=#{jik_comm_num}
+ 	</update>
  	
  	
  </mapper>

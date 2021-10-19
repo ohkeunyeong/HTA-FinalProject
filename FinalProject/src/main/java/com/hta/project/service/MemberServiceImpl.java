@@ -97,6 +97,12 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
+	public int isNick(String nick) {
+		Member rmember = dao.isNick(nick);
+		return (rmember==null) ? -1 : 1;
+	}
+	
+	@Override
 	public int insert(Member member) {
 		return dao.insert(member);
 	}
@@ -108,5 +114,50 @@ public class MemberServiceImpl implements MemberService{
 	public int update(Member m) {
 		return dao.update(m);
 	}
+
+//---------------------------------------/oky 아이디/비밀번호 찾기 작업영역--------------------
+	@Override
+	public String findid(String name, String tel, String email) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", name);
+		map.put("tel", tel);
+		map.put("email", email);
+		return dao.findid(map);
+	}
+
+	@Override
+	public int findpw(String name, String tel, String email, String encPassword) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", name);
+		map.put("tel", tel);
+		map.put("email", email);
+		map.put("pass", encPassword);
+		return dao.findpw(map);
+	}
+
+	@Override
+	public int isPass(String id, String pass) {
+		Member member = dao.isId(id);
+		int result = -1;
+		if(member != null) {
+			if(passwordEncoder.matches(pass, member.getPass())){
+				result = 1;
+			}else {
+				result = 0;
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public String OriginPass(String id , String pass) {
+		Member member = dao.isId(id);
+		String result = null;
+		if(member != null) {
+				result = member.getPass();
+		}
+		return result;
+	}
+
 
 }

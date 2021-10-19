@@ -59,4 +59,101 @@
 		from product 
 		where category_code like #{word}
 	</select>
+	
+	<!-- 상품 소감(댓글) 작성 -->
+	<insert id="registReview" parameterType="review">
+	 insert into review
+	values
+	 (#{id}, #{product_code}, #{category_code}, #{product_name}, #{review_content},
+	  'a', sysdate,  #{member_nick}, review_seq.nextval)
+	</insert>
+	
+	<!-- 상품 소감(댓글) 리스트 -->
+	<select id="reviewList" resultType="com.hta.project.domain.ReviewList">
+		select
+		    r.product_code, r.product_name, r.category_code, r.Id, r.REVIEW_NUM, r.review_content, r.review_date, m.id, m.nick
+		from review r
+		    inner join member m
+		        on r.Id = m.Id
+		    where product_code = #{product_code}
+	</select>
+
+	<!-- 상품 소감(댓글) 삭제 -->
+	<delete id="deleteReview">
+		delete reply
+	   		where review_num = #{review_num}
+	       		and Id = #{Id}
+	</delete>
+
+	<!-- 아이디 체크 -->
+	<select id="reviewIdCheck" resultType="String">
+		select Id
+			from review
+	   			where review_num = #{review_num}
+	</select>
+
+	<!-- 상품 소감(댓글) 수정 -->
+	<update id="modifyReview">
+		update review
+		    set
+		        review_content = #{review_content}
+		    where review_num = #{review_num}
+		        and Id = #{Id}
+	</update>
+
+	<!-- 카트 담기 -->
+	<insert id="addCart">
+		insert into cart (cart_Num, Id, product_code)
+	   		values (cart_seq.nextval, #{Id}, #{product_code})
+	</insert>
+
+	<!-- 카트 리스트 -->
+	<select id="cartList" resultType="com.hta.project.domain.Cart">
+		select
+		    row_number() over(order by c.cart_Num desc) as num,
+		    c.cart_Num, c.Id, c.product_code,
+		    p.product_Name, p.product_Price, p.product_Img
+		from tbl_cart c
+		    inner join product p
+		        on c.product_code = p.product_code    
+		    where c.Id = #{Id}
+	</select>
+
+	<!-- 카트 삭제 -->
+	<delete id="deleteCart">
+		delete cart
+		    where cart_Num = #{cart_Num}
+		        and Id = #{Id}
+	</delete>
+
+	<!-- 주문 정보 -->
+	<insert id="orderInfo">
+		insert into order_market(order_num, Id, order_name, userAddress1, userAddress2, orderPhone, order_totalprice)
+	    	values(#{order_num}, #{Id}, #{order_name}, #{userAddress1}, #{userAddress2}, #{orderPhone}, #{order_totalprice})
+	</insert>
+
+	<!-- 주문 상세 정보 -->  
+	<insert id="orderInfo_Details">
+		insert into order_detail(order_de_Num, Id, product_code, order_de_count)
+		    select order_detail_seq.nextval, #{Id}, product_code, order_de_count
+		        from cart   
+	</insert>	    
+
+	<!-- 카트 비우기 -->
+	<delete id="cartAllDelete">
+		delete cart
+		    where Id = #{Id}
+	</delete>
+
+	<!-- 특정 유저의 주문 목록 -->
+	<!--<select id="orderList" resultType="com.hta.project.domain.Order_Market">
+		select 
+		    order_num, Id, order_name,
+		    userAddress1, userAddress2, 
+		    orderPhone, order_totalprice, order_Date, order_delivery
+		from order  
+		    where Id = #{Id}
+	</select> -->
+
+	
 </mapper>

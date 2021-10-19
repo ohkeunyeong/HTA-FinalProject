@@ -9,29 +9,40 @@
 	</settings>
 	
      <typeAliases>
-        <typeAlias alias="mynong"    	type="com.hta.project.domain.OkyMynong" />
+        <typeAlias alias="mynong"    	type="com.hta.project.domain.Mynong" />
         <typeAlias alias="report" 	 	type="com.hta.project.domain.Report" />
         <typeAlias alias="jik" 		   	type="com.hta.project.domain.Jik" />
 		<typeAlias alias="jik_comm" 	type="com.hta.project.domain.Jik_Comm" />
+		<typeAlias alias="jik_file" 	type="com.hta.project.domain.Jik_File" />
 		<typeAlias alias="notice" 		type="com.hta.project.domain.Notice"/>
 		<typeAlias alias="member" 		type="com.hta.project.domain.Member"/>
 		<typeAlias alias="product" 		type="com.hta.project.domain.Product"/>
-		<typeAlias alias="product1" 	type="com.hta.project.domain.Product"/> <!-- 추 -->
+		<typeAlias alias="product1" 	type="com.hta.project.domain.Product"/> 
 		<typeAlias alias="category" 	type="com.hta.project.domain.Category"/>
 		<typeAlias alias="farm" 		type="com.hta.project.domain.Farm"/>
 		<typeAlias alias="order" 		type="com.hta.project.domain.Order_Market"/>
 		<typeAlias alias="orderList" 	type="com.hta.project.domain.OrderDetailList"/>
 		<typeAlias alias="orderDetail" 	type="com.hta.project.domain.OrderDetail"/>
-		<typeAlias alias="calendar"    	type="com.hta.project.domain.MyCalendar" />
-		<typeAlias alias="reportdetail" type="com.hta.project.domain.ReportDetail" />
+		<typeAlias alias="calendar"    	type="com.hta.project.domain.MyCalendar" />		
 		<typeAlias alias="account"      type="com.hta.project.domain.Account" />
+		<typeAlias alias="nong"         type="com.hta.project.domain.Nong"/>
+		<typeAlias alias="nong_co"      type="com.hta.project.domain.Nong_Co"/>
+		<typeAlias alias="review"  	    type="com.hta.project.domain.Review"/>
+		<typeAlias alias="reviewList"   type="com.hta.project.domain.ReviewList"/>
+		<typeAlias alias="cart"      	type="com.hta.project.domain.Cart"/>
+		<typeAlias alias="cartList"     type="com.hta.project.domain.CartList"/>
+		<typeAlias alias="free" 		type="com.hta.project.domain.Free" />
+		<typeAlias alias="free_comm" 	type="com.hta.project.domain.Free_Comm" />
+		<typeAlias alias="free_file" 	type="com.hta.project.domain.Free_File" />
      </typeAliases>
          
      <mappers>
-        <mapper resource="sql/okymynong.xml" />
+        <mapper resource="sql/mynong.xml" />
       	<mapper resource="sql/report.xml" />
        	<mapper resource="sql/Jik.xml" />
        	<mapper resource="sql/Jik_Comm.xml" />
+  		<mapper resource="sql/Free.xml" />
+       	<mapper resource="sql/Free_Comm.xml" />           
        	<mapper resource="sql/notice.xml" />
        	<mapper resource="sql/member.xml" />
        	<mapper resource="sql/product.xml" />
@@ -40,5 +51,9 @@
        	<mapper resource="sql/order.xml" />
        	<mapper resource="sql/calendar.xml" />
        	<mapper resource="sql/account.xml" />
+       	<mapper resource="sql/nong.xml" />
+       	<mapper resource="sql/nong_co.xml" />
+       	<mapper resource="sql/cart.xml" />
+       	
      </mappers>
 </configuration>

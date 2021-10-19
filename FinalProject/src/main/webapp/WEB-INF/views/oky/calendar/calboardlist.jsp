@@ -11,99 +11,151 @@
 <head>
 <meta charset="UTF-8">
 <title>일정목록보기</title>
+<jsp:include page="../../main/header.jsp" /> 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
-<script>
-  function allSel(val){
-	  
-	  var chks=document.getElementsByName("seq");
-	  for(var i=0; i<chks.length; i++){
-		  chks[i].checked=val;
-	  }
-	  
-  }
-  
-  $(function(){
-	  $("form").submit(function(){
-		  var bool=true;
-		  var count=$(this).find("input[name=seq]:checked").length;
-		  if(count==0){
-			  alert('하나 이상 체크하세요');
-			  bool=false;			  
-		  }else if(confirm("삭제하시겠습니까?")){
-			  bool=true;
-		  }else{
-			  bool=false;
-		  }
-		  return bool;
-	  });
-	  
-	  //체크박스 처리: 전체선택 체크박스 체크/해제를 자동으로 하는 기능
-	  var chks=document.getElementsByName("seq");
-	  for(var i=0; i<chks.length; i++){
-		  chks[i].onclick = function(){//체크박스 클릭 이벤트 시
-			  var checkedObjs=document.querySelectorAll("input[name=seq]:checked");
-		  	  if(checkedObjs.length==chks.length){
-		  		document.getElementsByName("all")[0].checked=true;//체크해줌
-		  	  }else{
-		  		document.getElementsByName("all")[0].checked=false;//체크해줌  
-		  	  }			  
-		   }
-		}
-  })
-</script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/oky/list.css"></link>
+<script src="${pageContext.request.contextPath}/resources/js/oky/calboardlist.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/oky/calboardlist.css"></link>
 </head>
 <%
     List<MyCalendar> list = (List<MyCalendar>)request.getAttribute("list");
 %>
-<body>
-<jsp:include page="../../main/header.jsp" /> 
+<body style="overflow-x:hidden; overflow-y:auto;">
+<br><br>
+<div class="wrapper">
+<main>
 <input type="hidden" id="id" value="${id}" name="id">
-<h1>일정목록보기</h1>
 <form action="calmuldel" method="post">
 <input type="hidden" name="name" value="${name}"/>
 <input type="hidden" name="year" value="${param.year}">
 <input type="hidden" name="month" value="${param.month}">
 <input type="hidden" name="date" value="${param.date}">
-<table border="1">
-     <col width="50px">
-     <col width="300px">
-     <col width="250px">
-     <col width="250px">
-     <tr>
-     <c:if test="${level ==1}">
-         <th><input type="checkbox" name="all" onclick="allSel(this.checked)" /></th>
-     </c:if>
-         <th>제목</th>
-         <th>일정</th>
-         <th>작성일</th>
-     </tr>
-     <%
-        if(list==null || list.size()==0) {
-        	out.print("<tr><td colspan='4'>---작성된 일정이 없습니다.---</td></tr>");
-        }else {
+
+<div class="container1" role="main">
+      <div class="page-title">
+        <div class="container2">         
+            <h1>일정목록</h1>
+         </div>
+         </div>
+      <div id="board-search">
+         <div class="container2">
+         </div>
+      </div>
+         
+     <c:if test="${level ==1 && list.size() != 0}"> <!--접속자가 관리자이며 목록이 한개 이상 있을 경우 -->
+            <div id="board-list">
+            	<div class="container">
+            		<table class="board-table">
+               <thead>              
+                  <tr>
+                     <th scope="col" class="th-num"><input type="checkbox" name="all" onclick="allSel(this.checked)" /></th>
+                     <th style="font-size:20px;" scope="col" class="th-date">제목</th>
+                     <th style="font-size:20px;" scope="col" class="th-date">일정 시간</th>
+                     <th style="font-size:20px;" scope="col" class="th-date">작성일</th>
+                  </tr>
+               </thead>
+               <tbody>
+        		<tr>
+        <%            
         	for(MyCalendar dao:list) {
         		%>
-        		<tr>
-        		    <c:if test="${level ==1}">
         		    <td><input type="checkbox" name="seq" value="<%=dao.getSeq()%>"/></td>
-        		    </c:if>
-        		    <td><a href="caldetail?name=${name}&seq=<%=dao.getSeq()%>"><%=dao.getTitle()%></a></td>
-        		    <td><%=toDates(dao.getMdate())%></td>
-        		    <td><fmt:formatDate pattern="yyyy-MM-dd" value="<%=dao.getRegdate()%>"/> </td>
+        		    <td><div><a href="caldetail?name=${name}&seq=<%=dao.getSeq()%>"><%=dao.getTitle()%></a></div></td>
+        		    <td><div><%=toDates(dao.getMdate())%></div></td>
+        		    <td><div><fmt:formatDate pattern="yyyy-MM-dd" value="<%=dao.getRegdate()%>"/></div></td>
         		</tr>
         		<% 
-        	}
-        }
+        	}        
      %>
-     <tr>
-         <td colspan="4">
-         <c:if test="${level ==1}">
-         	 <input type="submit" value="삭제" />
-         </c:if>
-             <a href="calendar?name=${name}&year=${sessionScope.ymd.year}&month=${sessionScope.ymd.month}">달력보기</a>
-         </td>
+     </tbody>
+  </table>
+   <br>
+   <div class="center-block">	
+      <div class="btn-wrap">   
+       <button type="submit" style="background-color:red;" class="btn">삭제</button>  
+       <button type="button" onclick="location.href='calendar?name=${name}&year=${sessionScope.ymd.year}&month=${sessionScope.ymd.month}'" class="btn">돌아가기</button>  
+      </div>
+		</div>
+	</div>
+   </div>
+     </c:if>
+     <c:if test="${level !=1 && list.size() != 0}"> <!--접속자가 일반멤버이며 목록이 한개 이상 있을 경우 -->
+       <div id="board-list">
+       	<div class="container">
+       		<table class="board-table">
+          <thead>              
+             <tr>                
+                <th style="font-size:20px;" scope="col" class="th-date">제목</th>
+                <th style="font-size:20px;" scope="col" class="th-date">일정</th>
+                <th style="font-size:20px;" scope="col" class="th-date">작성일</th>
+             </tr>
+          </thead>
+          <tbody>
+   		<tr>
+   <%            
+   	for(MyCalendar dao:list) {
+   		%>
+   		    <td><div><a href="caldetail?name=${name}&seq=<%=dao.getSeq()%>"><%=dao.getTitle()%></a></div></td>
+   		    <td><div><%=toDates(dao.getMdate())%></div></td>
+   		    <td><div><fmt:formatDate pattern="yyyy-MM-dd" value="<%=dao.getRegdate()%>"/></div></td>
+   		</tr>
+   		<% 
+   	}        
+%>
+   </tbody>
 </table>
-</form>
+ <br>
+ <div class="center-block">	
+    <div class="btn-wrap">    
+     <button type="button" onclick="location.href='calendar?name=${name}&year=${sessionScope.ymd.year}&month=${sessionScope.ymd.month}'" class="btn">돌아가기</button>
+     </div>
+	</div>
+</div>
+  </div>
+    </c:if>
+    <c:if test="${list.size() == 0}"> <!-- 접속자가 관리자이며 달력이 없을 경우 -->
+    <div class="container">
+<font size=5>등록된 글이 없습니다.</font>
+<div class="btn-wrap">   
+       <button type="button" onclick="location.href='calendar?name=${name}&year=${sessionScope.ymd.year}&month=${sessionScope.ymd.month}'" class="btn">돌아가기</button>
+      </div>
+</div>
+     </c:if>
+ </div>    
+</form>		
+  </main>
+  <sidebar>
+   <!--  <div class="logo">logo</div> -->
+    <div class="avatar">
+      <div class="avatar__img">
+        <img width="25" class="display" src="pdisplay?fileName=${user.original}">
+      </div>
+      <div class="avatar__name" style="color:black;">${user.nick} 님</div>
+    </div>
+    <nav class="menu">
+      <a class="menu__item menu__item--active" href="${pageContext.request.contextPath}/calprocess?id=${id}">
+      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/calendar.png" alt="by"/>
+        <span style="padding:0px 0px 0px 17px;" class="menu__text">캘린더</span>
+      </a>
+      <a class="menu__item" href="${pageContext.request.contextPath}/accprocess?id=${id}">
+      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/accounting.png" alt="by"/>
+        <span style="padding:0px 0px 0px 17px;" class="menu__text">가계부</span>
+      </a>    
+      <a class="menu__item" href="${pageContext.request.contextPath}/nongprocess?id=${id}">
+      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/bbs.png" alt="by"/>
+        <span style="padding:0px 0px 0px 17px;" class="menu__text">멤버게시판</span>
+      </a>
+      <a class="menu__item" href="${pageContext.request.contextPath}/mynongprocess?id=${id}">
+      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/setting.png" alt="by"/>
+        <!-- <i class="menu__icon fa fa-envelope"></i> -->
+      <span style="padding:0px 0px 0px 17px;" class="menu__text">농장관리</span>
+      </a>
+      <span id="outmynong">
+      <a class="menu__item" href="${pageContext.request.contextPath}/outmynong?id=${id}"><span class="menu__text">농장탈퇴</span></a>
+      </span>
+    </nav>
+  </sidebar>
+</div>
 </body>
 <%!
 	public String toDates(String mdate){

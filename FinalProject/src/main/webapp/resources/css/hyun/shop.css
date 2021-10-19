@@ -1,68 +1,16 @@
-<style>
-h5 {
-	padding-top: 10px;
-	font-weight:bold;
+.content--item{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 }
 
-.container .nav {
-	margin-top: 80px;
-	font-size: 20px;
-}
-
-.recommendation {
-	margin-top: 1%;
-	margin-left: 14%;
-}
-
-.section1 {
-	text-align: center;
-}
-
-.section1 > span {
-	font-size: 30px;
-	font-weight: bold;
-	margin-right:48%;
-}
-
-.section1  .button {
-	font-size: 20px;
-	font-weight: medium;
+.gray {
 	color: gray;
 }
 
-.section2 {
-	margin-left:14%;
-}
-
-#p1 {
-	font-size: 30px;
-}
-
-#p2 {
-	font-size: 30px;
-	font-weight: bold;
-}
-
-.section2  .button {
-	font-size: 20px;
-	font-weight: medium;
-	color: gray;
-}
-
-
-.recommendation .products {
-	margin-top: 2%;
-	margin-bottom: 2%;
-	margin-right: 15%;
-}
-
-.recommendation .products card-deck .card {
-	width: 300px;
-	height: 250px;
-}
-
-.recommendation .products>card-img-top {
-	height: 200px;
+a:not([href]) {
+    color: gray;
+    text-decoration: none;
 }
 
 /* 슬라이드 배너 */
@@ -97,7 +45,7 @@ ul, li {list-style:none;} */
 label.left {
 	left:20px;
 	/* background-color:#FFFFFF; */
-	background-image:url('${pageContext.request.contextPath}/resources/image/banner/left-arrow.png');
+	background-image:url('/project/resources/image/banner/left-arrow.png');
 	background-position:center center;
 	background-size:50%;
 	background-repeat:no-repeat;
@@ -105,7 +53,7 @@ label.left {
 label.right {
 	right:20px;
 	/* background-color:#FFFFFF; */
-	background-image:url('${pageContext.request.contextPath}/resources/image/banner/right-arrow.png');
+	background-image:url('/project/resources/image/banner/right-arrow.png');
 	background-position:center center;
 	background-size:50%;
 	background-repeat:no-repeat;
@@ -166,5 +114,3 @@ label.right {
 	98% {left:100%;}
 	100% {left:0%;}
 }
-
-</style>

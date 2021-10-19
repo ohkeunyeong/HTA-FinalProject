@@ -1,10 +1,10 @@
 package com.hta.project.domain;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Member {
 	private String id;
 	private String pass;
-	private String age;
-	private String email;
 	private String name;
 	private String nick;
 	private String mail;
@@ -13,6 +13,8 @@ public class Member {
 	private String persnacon;
 	private int point;
 	private String mynong_name;
+	private MultipartFile uploadfile;
+	private String original;
 	
 	public String getId() {
 		return id;
@@ -94,20 +96,20 @@ public class Member {
 		this.mynong_name = mynong_name;
 	}
 
-	public String getAge() {
-		return age;
+	public MultipartFile getUploadfile() {
+		return uploadfile;
 	}
 
-	public void setAge(String age) {
-		this.age = age;
+	public void setUploadfile(MultipartFile uploadfile) {
+		this.uploadfile = uploadfile;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getOriginal() {
+		return original;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setOriginal(String original) {
+		this.original = original;
 	}
 
 }

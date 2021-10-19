@@ -206,7 +206,7 @@ $(function() {
 			return false;
 		}
 		
-		if($.trim($("#noticeModify_content").val()) == ''){
+		if($.trim($("#notice_content").val()) == ''){
 			$("#NoticeValidationModal").modal({backdrop: 'static', keyboard: false});
 			$("#NoticeValidationModal-body").html("<h3>내용을 입력해주세요</h3>");
 			return false;

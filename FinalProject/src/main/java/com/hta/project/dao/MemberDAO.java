@@ -42,6 +42,10 @@ public class MemberDAO {
 	public Member isId(String id) {
 		return sqlSession.selectOne("Members.idcheck",id);
 	}
+	
+	public Member isNick(String nick) {
+		return sqlSession.selectOne("Members.nickcheck",nick);
+	}
 
 	public int insert(Member member) {
 		return sqlSession.insert("Members.insert",member);
@@ -50,5 +54,15 @@ public class MemberDAO {
 	public int update(Member m) {
 		return sqlSession.update("Members.update", m);
 	}
+
+	public String findid(Map<String, Object> map) {
+		return sqlSession.selectOne("Members.findid", map);
+	}
+
+	public int findpw(Map<String, Object> map) {
+		return sqlSession.update("Members.findpw", map);
+	}
+
+	
 
 }

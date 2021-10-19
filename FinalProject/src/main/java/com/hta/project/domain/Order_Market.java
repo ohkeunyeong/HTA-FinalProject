@@ -7,7 +7,7 @@ public class Order_Market {
 	private String order_num;
 	private String id;
 	private String order_name;
-	private int user_address1;
+	private String user_address1;
 	private String user_address2;
 	private String order_phone;
 	private int order_totalprice;
@@ -33,10 +33,11 @@ public class Order_Market {
 	public void setOrder_name(String order_name) {
 		this.order_name = order_name;
 	}
-	public int getUser_address1() {
+
+	public String getUser_address1() {
 		return user_address1;
 	}
-	public void setUser_address1(int user_address1) {
+	public void setUser_address1(String user_address1) {
 		this.user_address1 = user_address1;
 	}
 	public String getUser_address2() {
@@ -66,7 +67,6 @@ public class Order_Market {
 	public String getOrder_date() {
 		return order_date;
 	}
-
 	public void setOrder_date(String order_date) {
 		this.order_date = order_date;
 	}

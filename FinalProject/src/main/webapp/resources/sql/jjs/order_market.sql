@@ -1,10 +1,10 @@
 drop table order_market  cascade constraints;
 
 CREATE TABLE ORDER_MARKET(
-  ORDER_NUM          VARCHAR2(20)	not null,         -- 주문번호 
+  ORDER_NUM          VARCHAR2(50)	not null,         -- 주문번호 
   ID  		         VARCHAR2(50)	not null,         -- 아이디 
   ORDER_NAME         VARCHAR2(20)	not null,         -- 주문자 이름 
-  USER_ADDRESS1   	 NUMBER(10)		not null,         -- 우편번호 
+  USER_ADDRESS1   	 VARCHAR2(20)	not null,         -- 우편번호 
   USER_ADDRESS2      VARCHAR2(100)	not null,         -- 주소 
   ORDER_PHONE        VARCHAR2(20)	not null,         -- 전화번호 
   ORDER_TOTALPRICE   NUMBER(10)     not null, 		  -- 총 가격      
@@ -14,6 +14,11 @@ CREATE TABLE ORDER_MARKET(
   PRIMARY KEY(ORDER_NUM),
   FOREIGN KEY (ID) REFERENCES MEMBER (ID)
 );
+
+delete ORDER_MARKET;
+
+update ORDER_MARKET
+set id = 'ajaxk'
 
 
 select * from order_market;

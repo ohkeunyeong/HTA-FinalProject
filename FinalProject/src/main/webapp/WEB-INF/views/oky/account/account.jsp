@@ -8,132 +8,49 @@
 <head>
 <meta charset="UTF-8">
 <title>가계부</title>
-<script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
-</head>
-<script>
-$(document).ready(function () {  
-	
-$("#insertacc").click(function(){
- num = /^[0-9]*$/;
- 
- if(!num.test($("#amount").val())){
-	 alert("금액은 숫자만 입력 가능합니다.")
-	 $("#amount").val('').focus();		
-	 return false;
- }
-	
-})
-	
-});
-function checkTarget(num) {
-	var element = document.getElementById('thisdate');
-	  element.innerHTML = num;
-	$("#inputdate").val(num);
- }
-
-</script>
-<style>
-* {
-	font-family: Arial, sans;
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-}
-h1, h2 {
-	margin: 1em 0 0 0;
-	text-align: center;
-}
-h2 {
-	margin: 0 0 1em 0;
-}
-#container {
-    margin: 0 auto;
-    width: 50%;
-}
-#accordion input {
-	display: none;
-}
-#accordion label {
-	background: #eee;
-	border-radius: .25em;
-	cursor: pointer;
-	display: block;
-	margin-bottom: .125em;
-	padding: .25em 1em;
-	z-index: 20;
-}
-#accordion label:hover {
-	background: #ccc;
-}
-
-#accordion input:checked + label {
-	background: #ccc;
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0;
-	color: white;
-	margin-bottom: 0;
-}
-#accordion article {
-	background: #f7f7f7;
-	height:0px;
-	overflow:hidden;
-	z-index:10;
-}
-#accordion article p {
-	padding: 1em;
-}
-#accordion input:checked article {
-}
-#accordion input:checked ~ article {
-	border-bottom-left-radius: .25em;
-	border-bottom-right-radius: .25em;
-	height: auto;
-	margin-bottom: .125em;
-}
-
-#pen{
-width: 15px; height: 15px;
-} /* 연필그림 사이즈*/
-</style>
-<body>
-<jsp:useBean id="util" class="com.hta.project.controller.OkyAccountController" />
+<jsp:useBean id="util" class="com.hta.project.controller.AccountController" />
 <jsp:include page="../../main/header.jsp" /> 
-<input type="hidden" id="id" value="${id}" name="id">
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/oky/account.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/oky/account.css"></link>
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,500,700"/>
+</head>
 
-<div>농장명 : ${name} <br>
-          아이디 : ${id}   <br>
- 관리자 레벨 : ${level}   <br>
-          연도 : ${year}   <br>
-          월    : ${month}   <br>      
-     요일 :    ${dayofweek}  <br>  
-   리스트: ${alist}
-</div>
-	<div id="container">
-		<section id="accordion">
-		<a href="account?name=${name}&year=${year-1}&month=${month}">◁</a>
-        <a href="account?name=${name}&year=${year}&month=${month-1}">◀</a>
+<body style="overflow-x:hidden; overflow-y:auto;">
+<br><br>
+<input type="hidden" id="id" value="${id}" name="id">
+<div class="wrapper">
+ <main>
+     <div class="toolbar" style="margin-left: 407px;">
+      <div class="caption" style="color:black; font-size:18px;">
+        <a href="account?name=${name}&year=${year-1}&month=${month}"><img id="arrowy" src="${pageContext.request.contextPath}/resources/image/oky/by.png" alt="by"/></a>
+        <a href="account?name=${name}&year=${year}&month=${month-1}"><img id="arrowm" src="${pageContext.request.contextPath}/resources/image/oky/bm.png" alt="bm"/></a>
         <span class="y">
         ${year}
         </span>년
         <span class="m">
         ${month}
         </span>월 
-        <a href="account?name=${name}&year=${year}&month=${month+1}">▶</a>
-        <a href="account?name=${name}&year=${year+1}&month=${month}">▷</a>   
+        <a href="account?name=${name}&year=${year}&month=${month+1}"><img id="arrowm" src="${pageContext.request.contextPath}/resources/image/oky/fm.png" alt="fm"/></a>
+        <a href="account?name=${name}&year=${year+1}&month=${month}"><img id="arrowy" src="${pageContext.request.contextPath}/resources/image/oky/fy.png" alt="fy"/></a>   
+	</div>
+    </div>
+	<div id="container" >
+		<section id="accordion" style="width: 872px;"> 
 		<h3>${year}년 ${month} 월 합계:
 		<span>
 		<c:set var = "total" value = "0" />
-			<c:forEach var="result" items="${alist}" varStatus="status">     
-			<c:set var= "total" value="${total + result.amount}"/>
+			<c:forEach var="result" items="${alist}" varStatus="status">  
+			<c:set var= "total" value="${total + result.amount}"/>   
 			</c:forEach>
         <fmt:formatNumber value="${total}" pattern="#,###"/>
 		</span>원
 		</h3>
+		<br>
 		<c:set var="yoil" value="${dayofweek}"/>
 		<c:forEach var="a" begin="1" end="${lastday}">
 			<div>
-				 <input type="checkbox" id="${a}" />
+				<input type="checkbox" id="${a}" />
 				<label for="${a}" id="date"> 
 				${month} 월 ${a}일
 				<c:if test="${yoil ==1 }">일요일</c:if>
@@ -143,8 +60,8 @@ width: 15px; height: 15px;
 	            <c:if test="${yoil ==5 }">목요일</c:if>
 		        <c:if test="${yoil ==6 }">금요일</c:if>
 		        <c:if test="${yoil ==0 ||yoil ==7 }">토요일</c:if>   
-		         		합계:
-		        <span>		          
+		        <div style="margin-left: 518px;">
+		             합계:		          
 		             <c:set var = "total" value = "0" />  
                    <c:forEach var="b" items="${alist}">
 				   <c:set var="date" value="${fn:substring(b.mdate, 6, 8)}"/>
@@ -153,20 +70,21 @@ width: 15px; height: 15px;
 			       </c:if>
 			       </c:forEach>		        		        
                        <fmt:formatNumber value="${total}" pattern="#,###"/>				   		        
-		        </span>원
+              		        원
 		        <c:if test="${level ==1}"> 
-			        <a href="#" onClick="checkTarget(${a})" data-toggle="modal" data-target="#largeModal" id="addacc" >
+			        <a href="#" onClick="checkTarget(${a})" data-toggle="modal" data-target="#insertModal" id="addacc" >
 		     	     	<img id="pen" src="${pageContext.request.contextPath}/resources/image/oky/pen.png" alt="가계부추가"/>
             		</a>
                 </c:if>
+		        </div>
 		        </label>                               
 				<article>
 		        <table class="table table-striped">
 		         <thead>
 					<tr>
-						<th>지출시간</th>
-						<th>지출금액</th>
-						<th>지출내역</th>
+						<th width="33%">지출시간</th>
+						<th width="33%">지출금액</th>
+						<th width="33%">지출내역</th>
 					</tr>	
 				  </thead>
 				   <tbody>
@@ -179,7 +97,13 @@ width: 15px; height: 15px;
 	             				<jsp:getProperty property="toDates2" name="util"/>
 	             			</td>
 							<td><fmt:formatNumber value="${b.amount}" pattern="#,###"/>원</td>	
-							<td>${b.title}</td>
+							<td>
+							${b.title}
+				                <c:if test="${level ==1}"> 
+							    <button onClick="accupdate(${b.seq}, '${b.title}', ${b.amount}, ${a}, ${fn:substring(b.mdate, 8, 10)}, ${fn:substring(b.mdate, 10, 12)})" data-toggle="modal" data-target="#updateModal" id="updateacc" type="button" class="btn btn-primary" id="insertacc">수정</button>
+        						<button onClick="accdelete(${b.seq}, '${name}', '${year}', '${month}')"type="button" class="btn btn-danger" data-dismiss="modal">삭제</button>
+        						</c:if>
+							</td>
 					   </tr>	
 			       </c:if>
 			       </c:forEach>
@@ -191,9 +115,9 @@ width: 15px; height: 15px;
 			</c:forEach>
 		</section>
   </div>  
-  <!-- modal -->
-<div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true" style="disply:none;">
-  <div class="modal-dialog modal-lg">
+  <!-- 지출입력 modal -->
+<div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true" style="disply:none;">
+  <div class="modal-dialog">
     <div class="modal-content">
       <form name="insertacc" action="insertacc" method="post">
       <div class="modal-header">
@@ -203,7 +127,7 @@ width: 15px; height: 15px;
         </button>
       </div>
       <div class="modal-body">
-		   <table border="1">
+		   <table>
 		       <tr>
 		            <th>일정</th>
 		            <td>
@@ -211,7 +135,7 @@ width: 15px; height: 15px;
 		            <input type="hidden"  value="${year}" name="year">
 		            <input type="hidden"  value="${month}" name="month">
 		            <input type="hidden"  id="inputdate" name="date">
-		               <span>${year}년  </span> 
+		               <span style="margin-left: 7px;">${year}년  </span> 
 		               <span>${month}월</span> 
 		               <span><span id="thisdate"></span>일</span>
 		                 <select name="hour">  
@@ -236,18 +160,15 @@ width: 15px; height: 15px;
 		                 </select>분
 		            </td>
 		       </tr>
+		       <tr class="space"></tr>
 		       <tr>
 		            <th>금액</th>
-		            <td><input type="text" id="amount" name="amount" placeholder="예) 5만원 => 50000" required/></td>
-		       </tr>        
+		            <td><input type="text" style="margin-left: 7px;" id="amount" name="amount" placeholder="예) 5만원 => 50000" required/></td>
+		       </tr>   
+		       <tr class="space"></tr>     
 		       <tr>
 		            <th>지출내역</th>
-		            <td><input type="text" name="title" required/></td>
-		       </tr>
-		       
-		       <tr>
-		            <th>내용</th>
-		            <td><textarea rows="10" cols="50" name="content" style="resize: none;"></textarea></td>
+		            <td><input type="text" style="margin-left: 7px;" name="title" required/></td>
 		       </tr>
 		   </table>     
       </div>
@@ -258,6 +179,112 @@ width: 15px; height: 15px;
      </form>            
     </div>
   </div>
+</div>
+
+  <!-- 지출수정 modal -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true" style="disply:none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form name="accupdateform" action="accupdate" method="post">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">내역수정</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		   <table>
+		       <tr>
+		            <th>일정</th>
+		            <td> 	               
+ 		            <input type="hidden"  value="${name}" name="name">
+ 		            <input type="hidden"  id="upseq" name="seq">
+		               	<select name="year" id="upyear" style="margin-left: 7px;">  
+		                   <c:set var="year" value="${year}"/>
+                      		<c:forEach var="i"  begin="${year-2}"   end="${year+2}"   step="1">
+                             <option ${year==i?"selected":""} value="${i}">${i}</option>
+                      		</c:forEach> 		                                                   
+		                 </select>년
+		                 
+		                 <select name="month" id="upmonth">  
+		                   <c:set var="month" value="${month}"/>
+                      		<c:forEach var="i"  begin="1"   end="12"   step="1">
+                             <option ${month==i?"selected":""} value="${i}">${i}</option>
+                      		</c:forEach> 		                                                   
+		                 </select>월
+		                 
+		                 <select name="date" id="update">
+                      		 <c:forEach var="thisupdate"  begin="1"   end="31"   step="1">
+                              <option value="${thisupdate}">${thisupdate}</option>
+                      		 </c:forEach>                
+                  		 </select>일
+		               
+		                 <select name="hour" id="uphour">  
+		                   <c:forEach var="thishour" begin="0" end="24">
+		                   <option value="${thishour}" > ${thishour}</option>                   
+		                   </c:forEach>                                  
+		                 </select>시
+		                 <select name="min" id="upmin">
+		                   <c:forEach var="thismin" begin="0" end="60">
+		                   <option value="${thismin}" >${thismin}</option>                     
+		                   </c:forEach>                     
+		                 </select>
+		            </td>
+		       </tr>
+		       <tr class="space"></tr>
+		       <tr>
+		            <th>금액</th>
+		            <td><input type="text" style="margin-left: 7px;" id="upamount" name="amount" placeholder="예) 5만원 => 50000" required/></td>
+		       </tr>
+		       <tr class="space"></tr>        
+		       <tr>
+		            <th>지출내역</th>
+		            <td><input type="text" style="margin-left: 7px;" id="uptitle" name="title" required/></td>
+		       </tr>
+		   </table>     
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" id="updateaccbtn">수정</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+      </div>
+     </form>            
+    </div>
+  </div>
+</div>
+</main>
+<sidebar>
+   <!--  <div class="logo">logo</div> -->
+    <div class="avatar">
+      <div class="avatar__img">
+        <img width="25" class="display" src="pdisplay?fileName=${user.original}">
+      </div>
+      <div class="avatar__name" style="color:black;">${user.nick} 님</div>
+    </div>
+    <nav class="menu">
+      <a class="menu__item" href="${pageContext.request.contextPath}/calprocess?id=${id}">
+      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/calendar.png" alt="by"/>
+        <span style="padding:0px 0px 0px 17px;" class="menu__text">캘린더</span>
+      </a>
+      <a class="menu__item menu__item--active" href="${pageContext.request.contextPath}/accprocess?id=${id}">
+      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/accounting.png" alt="by"/>
+        <span style="padding:0px 0px 0px 17px;" class="menu__text">가계부</span>
+      </a>    
+      <a class="menu__item" href="${pageContext.request.contextPath}/nongprocess?id=${id}">
+      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/bbs.png" alt="by"/>
+        <span style="padding:0px 0px 0px 17px;" class="menu__text">멤버게시판</span>
+      </a>
+      <a class="menu__item" href="${pageContext.request.contextPath}/mynongprocess?id=${id}">
+      <img id="sideicon" src="${pageContext.request.contextPath}/resources/image/oky/setting.png" alt="by"/>
+        <!-- <i class="menu__icon fa fa-envelope"></i> -->
+      <span style="padding:0px 0px 0px 17px;" class="menu__text">농장관리</span>
+      </a>
+      <span id="outmynong">
+      <a class="menu__item" href="${pageContext.request.contextPath}/outmynong?id=${id}"><span class="menu__text">농장탈퇴</span></a>
+      </span>
+    </nav>
+  </sidebar>
+  </div>   
+  <div id="footer" >
 </div>
 </body>
 </html>

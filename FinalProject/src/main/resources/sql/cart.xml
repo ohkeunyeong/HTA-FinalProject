@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Carts">
+	
+	<insert id="insert" parameterType="map">
+		insert into cart(cart_num, product_code, id, order_de_count)
+		values(cart_seq.nextval, #{product_code}, #{id}, #{order_de_count})
+	</insert>
+	
+	<select id="list" resultType="cartlist" parameterType="map">
+		select c.cart_num, c.id, c.product_code, c.order_de_count,
+			   c.add_date, p.product_name, p.category_code, p.product_price, p.product_img
+		from cart c, product p
+		where c.product_code = p.product_code
+		and c.id = #{id}
+		order by c.cart_num
+	</select>
+	
+	<select id="count" resultType="int" parameterType="String">
+		select count(*)
+		from cart
+		where id = #{id}
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		delete cart
+		where cart_num = #{cart_num}
+	</delete>
+	
+	<delete id="selectionDelete" parameterType="map">
+		delete cart
+		where cart_num in
+		<foreach item="item" collection="arr" 
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<delete id="userCartDelete" parameterType="map">
+		delete cart
+		where id = #{order.id}
+		and cart_num in
+		<foreach item="item" collection="arr" 
+				 open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+</mapper>

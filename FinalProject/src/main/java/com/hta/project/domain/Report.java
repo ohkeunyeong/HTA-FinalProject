@@ -7,7 +7,7 @@ public class Report {
 	
 	private int report_num;
 	private int board_num;
-	private String board_nick;
+	private String board_id;
 	private String board_subject;
 	private String board_content;
 	private String report_content;
@@ -46,12 +46,12 @@ public class Report {
 		this.board_subject = board_subject;
 	}
 
-	public String getBoard_nick() {
-		return board_nick;
+	public String getBoard_id() {
+		return board_id;
 	}
 
-	public void setBoard_nick(String board_nick) {
-		this.board_nick = board_nick;
+	public void setBoard_id(String board_id) {
+		this.board_id = board_id;
 	}
 
 	public String getBoard_content() {

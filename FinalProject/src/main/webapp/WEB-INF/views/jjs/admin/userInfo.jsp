@@ -61,11 +61,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<div class="card card-primary card-outline">
 								<div class="card-body box-profile">
 									<div class="text-center">
-										<c:if test="${memberInfo.persnacon == 'null'}">
-											<img class="profile-user-img img-fluid img-circle" src="${pageContext.request.contextPath}/resources/image/jjs/BasicPersonacon.png" alt="User profile picture">
+										<c:if test="${memberInfo.original == '/profile.png'}">
+											<img class="profile-user-img img-fluid img-circle" src="${pageContext.request.contextPath}/resources/image/chang/${memberInfo.original}" alt="User profile picture">
 										</c:if>
-										<c:if test="${memberInfo.persnacon != 'null'}">
-											<img class="profile-user-img img-fluid img-circle" src="${pageContext.request.contextPath}/upload/${memberInfo.persnacon}" alt="User profile picture">
+										<c:if test="${memberInfo.original != '/profile.png'}">
+											<img class="profile-user-img img-fluid img-circle" src="${pageContext.request.contextPath}/upload${memberInfo.original}" alt="User profile picture">
 										</c:if>
 									</div>
 

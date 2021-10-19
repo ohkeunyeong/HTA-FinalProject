@@ -66,8 +66,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 										<li class="list-group-item"><b>주문번호</b> <a class="float-right">${orderdetail.order_num}</a></li>
 										<li class="list-group-item"><b>수령인</b> <a class="float-right">${orderdetail.order_name}</a></li>
 										<li class="list-group-item"><b>전화번호</b> <a class="float-right">${orderdetail.order_phone}</a></li>
-										<c:set var="user_address1" value="${fn:substring(orderdetail.user_address1,0,3)}-${fn:substring(orderdetail.user_address1,3,6)}" />
-										<li class="list-group-item"><b>주소</b> <a class="float-right">${user_address1} ${orderdetail.user_address2}</a></li>
+										<li class="list-group-item"><b>주소</b> <a class="float-right">${orderdetail.user_address1} ${orderdetail.user_address2}</a></li>
 										<fmt:formatNumber var="totalPrice" value="${orderdetail.order_totalprice}" pattern="###,###,###" />
 										<li class="list-group-item"><b>주문가격</b> <a class="float-right">${totalPrice}원</a></li>
 										<li class="list-group-item"><b>결제방식</b> <a class="float-right">${orderdetail.order_payment}</a></li>
@@ -96,12 +95,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						<c:forEach var="d" items="${orderlist}">
 							<div class="col-lg-6">
 								<div class="card card-primary">
-									<div class="card-header">
-										<fmt:formatNumber var="price" value="${d.product_price}" pattern="###,###,###" />
-										<span><a href="#">${d.product_name}</a></span> <span class="float-right">${price}원</span>
-									</div>
-									<div class="card-body">
-										<img class="img-fluid" src="${pageContext.request.contextPath}/resources/upload${d.product_img}" alt="productImg" width="200px" height="200px" style="margin-left: 85px;">
+									<div class="card-header"></div>
+									<div class="card-body d-flex">
+										<img class="img-fluid" src="${pageContext.request.contextPath}/upload${d.product_img}" alt="productImg" width="200px" height="200px">
+										<div class="h3 mt-2">
+											<p>상품이름 : <span>${d.product_name}</span></p>
+											<p>카테고리 : <span>${d.category_name}</span></p>
+											<p>주문수량 : <span>${d.order_de_count}</span></p>
+											<p>상품가격 : <span>${d.product_price}</span></p>
+										</div>
 									</div>
 								</div>
 							</div>

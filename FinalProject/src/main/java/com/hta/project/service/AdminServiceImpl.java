@@ -339,4 +339,45 @@ public class AdminServiceImpl implements AdminService{
 		dao.numReportDelete(map);
 	}
 
+	@Override
+	public int reportInsert(Report report) {
+		return dao.reportInsert(report);
+	}
+
+	@Override
+	public int getUserOrderListCount(String id) {
+		return dao.getUserOrderListCount(id);
+	}
+
+	@Override
+	public List<Order_Market> getUserOrderList(String id, int page, int limit) {
+		List<Order_Market> list = new ArrayList<Order_Market>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		int startrow = (page - 1) * limit + 1;
+		int endrow = startrow + limit - 1;
+		map.put("start", startrow);
+		map.put("end", endrow);
+		map.put("id", id);
+		
+		list = dao.getUserOrderList(map);
+		
+		return list;
+	}
+
+	@Override
+	public OrderDetail getUserOrderDetail(String id, String order_num) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("order_num", order_num);
+		return dao.getUserOrderDetail(map);
+	}
+
+	@Override
+	public List<OrderDetailList> getUserOrderDetailList(String id, String order_num) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("order_num", order_num);
+		return dao.getUserOrderDetailList(map);
+	}
+
 }

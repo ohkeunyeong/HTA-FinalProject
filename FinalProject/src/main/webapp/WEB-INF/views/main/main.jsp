@@ -4,10 +4,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>주말농장 메인</title>
+<title>주말 농장 메인</title>
 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
-
+<jsp:include page="header.jsp" />  
+<script>
+//oky 로그인시 농장 가입 받았을때 팝업 띄우기
+	$(function(){
+		if('${invite}' == '3'){
+			window.open("${pageContext.request.contextPath}/member/invite", "window_name","width=480,height=230,location=no,status=no,scrollbars=yes");
+		}	
+	});
+</script>
 <style>
 /* 고객센터 / 공지사항 버튼 */
 
@@ -53,9 +61,12 @@ width:100%
 </head>
 <body>
 <br><br><br><br><br>
-
-<jsp:include page="header.jsp" />  
-
+<div class="container justify-content-center">
+		<img src="${pageContext.request.contextPath}/resources/image/farm4.jpeg" alt="Logo" style="height: 400px; margin-bottom: 30px; margin-left:15%">
+	</div>
+	<!--  <a href='https://www.freepik.com/vectors/water'>Water vector created by upklyak - www.freepik.com</a> -->
+	
+	
 <div class="container">
 
   <h4>내 농장 일정</h4>
@@ -109,6 +120,7 @@ width:100%
 				</p>
 			</a>
 		</div>
+		
 		
 <jsp:include page="footer.jsp" />  
 </body>

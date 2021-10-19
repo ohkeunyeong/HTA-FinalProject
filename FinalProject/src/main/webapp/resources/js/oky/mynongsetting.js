@@ -1,3 +1,22 @@
+	  function checkTarget(id) {
+			$("#userid").text(id);		
+			$("#usersetid").val(id);	
+	  }
+	  
+	  function deletecheck(name, id){
+		  if (confirm("정말 삭제하시겠습니까??") == true){    
+			  location.href='deletemynong?name='+ name + '&id=' + id; 
+			}else{   
+			 return;
+	        }
+	  }
+	  function deletemem(id){
+		  if (confirm("정말 삭제하시겠습니까??") == true){    
+			  location.href='deletenongmem?id=' + id; 
+			}else{   
+			 return;
+	        }
+	  }
 $(function() {
 	$(document).keypress(function(e) { //엔터키 방지
 		if (e.keyCode == 13) e.preventDefault(); 
@@ -23,7 +42,7 @@ $(function() {
         			  $("#message2").css('color', 'blue').html(
         					 "회원 아이디: " + item.id + "<br>"  + "회원 닉네임: "  + item.nick );
         			  $("#message3").html(
-        					  '<button type="submit"  id="add" name="add">'+"추가하기"+ '</button>');
+        					  '<button type="submit" class="btn-primary" id="add" name="add">'+"추가하기"+ '</button>');
         			  $("#okuse").show();			
         				}	  
         			  )
@@ -35,4 +54,6 @@ $(function() {
         	  }
           });//ajax end 
 	  }); //$("#search").on('click') end
+
 })//function end
+

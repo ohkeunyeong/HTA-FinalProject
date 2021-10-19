@@ -39,6 +39,26 @@ public class Jik_CommDAO {
 		return sqlSession.update("Jik_Comms.update",co);
 	}
 
+	public int Jik_CommsReply(Jik_Comm co) {
+		return sqlSession.insert("Jik_Comms.reply_insert", co);
+	}
+
+	public int Jik_CommsReplyUpdate(Jik_Comm co) {
+		return sqlSession.update("Jik_Comms.reply_update", co);
+	}
+
+	public int Jik_comm_ref_select(int jik_comm_num) {
+		return sqlSession.selectOne("Jik_Comms.ref_select", jik_comm_num);
+	}
+
+	public int Jik_comm_ref_select2(int select) {
+		return sqlSession.selectOne("Jik_Comms.ref_select2", select);
+	}
+
+	public int Jik_CommsDelete2(int jik_comm_num) {
+		return sqlSession.update("Jik_Comms.delete2",jik_comm_num);
+	}
+
 
 
 }

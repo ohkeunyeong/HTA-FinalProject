@@ -84,7 +84,7 @@ a:not([href]) {
 												<div class="row border mb-3">
 													<div class="col-12 col-sm-5">
 														<div class="col-12 mt-5 ml-5">
-															<img src="${pageContext.request.contextPath}/resources/image/jjs/among us.png" style="width: 200px; height: 200px">
+															<img src="${pageContext.request.contextPath}/upload${f.original}" style="width: 200px; height: 200px">
 														</div>
 													</div>
 													<div class="col12 col-sm-6">
@@ -143,7 +143,7 @@ a:not([href]) {
 									</div>
 								</c:if>
 
-								<c:if test="${listcount == 0 }">
+								<c:if test="${listcount == 0 || empty listcount}">
 									<p class="text-center h2 mt-3 mb-3">
 										<span>등록된 농장이 없습니다.</span>
 									</p>
