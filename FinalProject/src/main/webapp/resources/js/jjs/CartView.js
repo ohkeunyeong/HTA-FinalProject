@@ -1,44 +1,4 @@
 $(function(){
-	// OrderForm submit 유효성 검사
-	$('#OrderForm').submit(function(){
-		if($.trim($('#order_name').val()) == ''){
-			$('#OrderInfoErrorModal').modal('show');
-			$('#OrderInfoErrorModal-Title').text("주문 정보");
-			$('#OrderInfoErrorModal-body').html("<h4>수령인을 입력해주세요.</h4>");
-			return false;
-		}
-		
-		if($.trim($('#order_phone').val()) == ''){
-			$('#OrderInfoErrorModal').modal('show');
-			$('#OrderInfoErrorModal-Title').text("주문 정보");
-			$('#OrderInfoErrorModal-body').html("<h4>수령인 연락처를 입력해주세요.</h4>");
-			return false;
-		}
-		
-		var phoneReg = /^\d{3}-\d{3,4}-\d{4}$/;
-		if(!phoneReg.test($.trim($('#order_phone').val()))){
-			$('#OrderInfoErrorModal').modal('show');
-			$('#OrderInfoErrorModal-Title').text("주문 정보");
-			$('#OrderInfoErrorModal-body').html("<h5>전화번호 형식에 맞게 입력해주세요</h5>");
-			$('#order_phone').val('');
-			return false;
-		}
-		
-		if($.trim($('#order_address1').val()) == ''){
-			$('#OrderInfoErrorModal').modal('show');
-			$('#OrderInfoErrorModal-Title').text("주문 정보");
-			$('#OrderInfoErrorModal-body').html("<h4>주소검색을 해주세요.</h4>");
-			return false;
-		}
-		
-		if($.trim($('#order_address3').val()) == ''){
-			$('#OrderInfoErrorModal').modal('show');
-			$('#OrderInfoErrorModal-Title').text("주문 정보");
-			$('#OrderInfoErrorModal-body').html("<h4>상세주소를 입력해주세요.</h4>");
-			return false;
-		}
-	});
-	
 	function cartSum(){
 		var sum = 0;
 		var list = $("input[name='RowCheck']");
@@ -87,6 +47,43 @@ $(function(){
 		}
 		console.log(valueArr);
 		$('input[name="cartNumArr"]').val(valueArr);
+		
+		if($.trim($('#order_name').val()) == ''){
+			$('#OrderInfoErrorModal').modal('show');
+			$('#OrderInfoErrorModal-Title').text("주문 정보");
+			$('#OrderInfoErrorModal-body').html("<h4>수령인을 입력해주세요.</h4>");
+			return false;
+		}
+		
+		if($.trim($('#order_phone').val()) == ''){
+			$('#OrderInfoErrorModal').modal('show');
+			$('#OrderInfoErrorModal-Title').text("주문 정보");
+			$('#OrderInfoErrorModal-body').html("<h4>수령인 연락처를 입력해주세요.</h4>");
+			return false;
+		}
+		
+		var phoneReg = /^\d{3}-\d{3,4}-\d{4}$/;
+		if(!phoneReg.test($.trim($('#order_phone').val()))){
+			$('#OrderInfoErrorModal').modal('show');
+			$('#OrderInfoErrorModal-Title').text("주문 정보");
+			$('#OrderInfoErrorModal-body').html("<h5>전화번호 형식에 맞게 입력해주세요</h5>");
+			$('#order_phone').val('');
+			return false;
+		}
+		
+		if($.trim($('#order_address1').val()) == ''){
+			$('#OrderInfoErrorModal').modal('show');
+			$('#OrderInfoErrorModal-Title').text("주문 정보");
+			$('#OrderInfoErrorModal-body').html("<h4>주소검색을 해주세요.</h4>");
+			return false;
+		}
+		
+		if($.trim($('#order_address3').val()) == ''){
+			$('#OrderInfoErrorModal').modal('show');
+			$('#OrderInfoErrorModal-Title').text("주문 정보");
+			$('#OrderInfoErrorModal-body').html("<h4>상세주소를 입력해주세요.</h4>");
+			return false;
+		}
 		
 		var order = {
 				id : $("input[name='id']").val(),

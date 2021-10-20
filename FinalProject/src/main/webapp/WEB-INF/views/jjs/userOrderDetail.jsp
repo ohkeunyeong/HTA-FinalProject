@@ -15,6 +15,15 @@ hr, footer {
 	width: 48%;
 	height: 200px;
 	border: 1px dotted gray;
+	display:flex;
+	flex-direction : row-reverse;
+	justify-content: space-between;
+}
+
+.product-info{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
 }
 
 .product>p {
@@ -92,19 +101,21 @@ hr, footer {
 				
 				<fmt:formatNumber var="price" value="${ol.product_price}" pattern="###,###,###" />
 				<div class="mb-2 ml-2 product">
-					<img class="img-fluid float-right mr-5" src="${pageContext.request.contextPath}/upload${ol.product_img}" alt="productImg" width="200px" height="200px">
-					<p class="mt-2 ml-2">
-						상품이름 : <span><a href="${pageContext.request.contextPath}/shop/shop_detail?product_code=${ol.product_code}&pageName=${pageName}">${ol.product_name}</a></span>
-					</p>
-					<p class="ml-2">
-						카테고리 : <span>${ol.category_name}</span>
-					</p>
-					<p class="ml-2">
-						주문수량 : <span>${ol.order_de_count}개</span>
-					</p>
-					<p class="ml-2">
-						상품가격 : <span>${price}원</span>
-					</p>
+					<img class="img-fluid" src="${pageContext.request.contextPath}/upload${ol.product_img}" alt="productImg" width="200px" height="200px">
+					<div class="product-info h5">
+						<p class="mt-4 ml-2">
+							상품이름 : <span><a href="${pageContext.request.contextPath}/shop/shop_detail?product_code=${ol.product_code}&pageName=${pageName}">${ol.product_name}</a></span>
+						</p>
+						<p class="ml-2">
+							카테고리 : <span>${ol.category_name}</span>
+						</p>
+						<p class="ml-2">
+							주문수량 : <span>${ol.order_de_count}개</span>
+						</p>
+						<p class="ml-2">
+							상품가격 : <span>${price}원</span>
+						</p>
+					</div>
 				</div>
 			</c:forEach>
 		</div>
