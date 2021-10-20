@@ -71,11 +71,10 @@ public class MainController {
 		return "jjs/orderSuccess";
 	}
 	
-//	@RequestMapping(value = "/main", method = RequestMethod.GET)
-//	public ModelAndView main(ModelAndView mv) {
-//		  mv.setViewName("main/main");
-//		  return mv;
-//	}
+	@RequestMapping(value = "/farm_info", method = RequestMethod.GET)
+	public String farm_info () {
+		  return "main/farm_info";
+	}
 	
 	@RequestMapping(value = "/main", method=RequestMethod.GET)
 	public ModelAndView mainjiklistANDmainfreelist(
@@ -131,39 +130,6 @@ public class MainController {
 		return mv;
 	}
 	
-//	@RequestMapping(value = "/main", method=RequestMethod.GET)
-//	public ModelAndView mainfreelist(
-//			@RequestParam(value="page",defaultValue="1",required=false) int page,
-//			ModelAndView mv) {
-//		
-//		int limit = 6;
-//		
-//		int freelistcount = freeService.getListCount();
-//		
-//		
-//		int freemaxpage = (freelistcount + limit - 1) / limit;
-//		
-//		
-//		int freestartpage = ((page-1)/10) * 10 + 1;
-//		
-//	
-//		int freeendpage = freestartpage + 10 - 1;
-//		
-//		if(freeendpage > freemaxpage)
-//			freeendpage = freemaxpage;
-//		
-//		List<Free> mainfreelist = freeService.getMainfreeList(page, limit);
-//		
-//		mv.setViewName("main/main");
-//		mv.addObject("page",page);
-//		mv.addObject("maxpage",freemaxpage);
-//		mv.addObject("startpage",freestartpage);
-//		mv.addObject("endpage",freeendpage);
-//		mv.addObject("freelistcount",freelistcount);
-//		mv.addObject("mainfreelist",mainfreelist);
-//		mv.addObject("page",page);
-//		mv.addObject("limit",limit);
-//		return mv;
-//	}
+
 	
 }

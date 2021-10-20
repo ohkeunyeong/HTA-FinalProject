@@ -28,13 +28,13 @@ padding:5% 5% 2% 10%
 <br><br>
 <h2>주말농장</h2>
 
-<h5 style="padding:0% 5% 5% 10%; color:gray">
+<h5 style="padding:0% 5% 5% 10%; color:gray; line-height: 2;">
 주말농장의 수 및 신선하고 안전한 농작물에 대한 수요가 늘어남에 따라<br>
 주말농장의 관리 및 수확물 거래에 대한 가이드가 점점 더 필요해지고 있습니다.<br>
 </h5>
 
 <h2>주말농장은</h2>
-<h5 style="padding:0 5% 10% 10%; color:gray">
+<h5 style="padding:0 5% 10% 10%; color:gray; line-height: 2;">
 농장의 운영자와 멤버에게는 주말농장의 운영에 도움이 되며 <br>
 수확물로 이익을 얻을 수 있는 관리 및 판매 플랫폼을 제공하고 <br>
 지역 소비자에게는 안전한 먹거리를 확보할 수 있는 소비처 제공을 위해 <br>
