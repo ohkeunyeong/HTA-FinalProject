@@ -93,7 +93,7 @@ width:100%
       <div class="card-body" >
         <h5 class="card-title" style="font-weight:bold">${b.jik_subject}</h5>
         <p class="card-text" maxlength="30" style="margin:0; font-weight:bold">${b.jik_date}
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         조회수:${b.jik_readcount} &nbsp;&nbsp;좋아요:${b.jik_like}
         <br>${b.nick}</p>
         <p class="card-text" style="color:gray;"><br>${b.jik_content}</p>
@@ -121,7 +121,7 @@ width:100%
       <div class="card-body" >
         <h5 class="card-title" style="font-weight:bold">${b.free_subject}</h5>
         <p class="card-text" maxlength="30" style=" margin:0; font-weight:bold">${b.free_date}
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         조회수:${b.free_readcount} &nbsp;&nbsp;좋아요:${b.free_like}
         <br>${b.nick}</p>
         <p class="card-text" style="color:gray;"><br>${b.free_content}</p>
