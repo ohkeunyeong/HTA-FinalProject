@@ -16,9 +16,10 @@
   <input type="hidden" id="jik_subject" value="${jikdata.jik_subject}">
   <input type="hidden" id="jik_content" value="${jikdata.jik_content}" >
   <input type="hidden" id="jik_like" value="${jik_like}">
+  <input type="hidden" id="jik_files" value="${jik_files}">
   <br><br><br><br><br><br><br><br><br><br>
   
-
+  
   <div class="container">
  	<table class="table">
  		<tr>
