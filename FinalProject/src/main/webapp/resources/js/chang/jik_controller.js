@@ -1,5 +1,5 @@
 $(function(){
-	if($("#jik_files")!=null){
+	if(document.querySelector(".slides") != null && document.querySelector != ""){
 	let slides = document.querySelector(".slides"); 
 	let slideImg = document.querySelectorAll(".slides li"); 
 	currentIdx = 0; slideCount = slideImg.length;
