@@ -32,7 +32,7 @@
 			</span>
 		</div>
 		<div>
-			<b>비밀번호 </b> <span class="box int_name"> <input type="text"
+			<b>비밀번호 </b> <span class="box int_name"> <input type="password"
 				id="pass" name="pass">
 			</span>
 		</div>
