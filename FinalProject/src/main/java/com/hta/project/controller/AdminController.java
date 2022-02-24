@@ -18,6 +18,7 @@ import com.hta.project.domain.Report;
 import com.hta.project.service.AdminService;
 import com.hta.project.service.MemberService;
 
+//
 @Controller
 @RequestMapping(value="/admin")
 public class AdminController {
